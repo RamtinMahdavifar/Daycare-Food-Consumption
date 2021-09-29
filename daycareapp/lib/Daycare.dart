@@ -15,11 +15,36 @@ class Daycare extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Daycare Menu",
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("daycare Menu"),
-        ),
-      )
+      home: DaycareMenu()
+        );
+  }
+}
+
+class DaycareMenu extends StatefulWidget {
+  @override
+  State<DaycareMenu> createState() => _DaycareMenuState();
+}
+
+class _DaycareMenuState extends State<DaycareMenu> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Menu"),
+      ),
     );
   }
+
+  Widget _DaycareMenu(){
+      return Container(
+          child: Card(
+            child:InkWell(
+
+              onTap: () {},
+              child: const Icon(Icons.arrow_back)
+
+            )
+          )
+        );
+      }
 }
