@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Daycare.dart';
 
 void main() {
   runApp(
@@ -150,9 +151,12 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
 
           Expanded(
             child: ListView(
-                children: const <Widget> [
+                children: <Widget> [
                   Card(
                       child: ListTile(
+                          onTap: (){
+                            runApp(Daycare());
+                          },
                           leading: const Icon(Icons.flight_land_rounded),
                           title: Text("First School")
                       )
