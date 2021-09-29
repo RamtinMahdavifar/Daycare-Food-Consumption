@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>467115419472-bt00m3sv2gri9haj2t0ut3q7ihskmp3g.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.467115419472-bt00m3sv2gri9haj2t0ut3q7ihskmp3g</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDWRJw4Kf-YnnNtN4oRgHKMfA_4pKciy2M</string>
+	<key>GCM_SENDER_ID</key>
+	<string>467115419472</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.plateWasteRecorder</string>
+	<key>PROJECT_ID</key>
+	<string>testproject-4db53</string>
+	<key>STORAGE_BUCKET</key>
+	<string>testproject-4db53.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:467115419472:ios:6a02cb697503147b3f2e55</string>
+	<key>DATABASE_URL</key>
+	<string>https://testproject-4db53-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
