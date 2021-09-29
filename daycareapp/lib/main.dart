@@ -54,7 +54,7 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
                   builder: (context) {
                     return Dialog(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-                      elevation: 5,
+                      elevation: 3,
                       child: Form(
                         child: Column(
                           children: <Widget>[
@@ -65,6 +65,31 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
                                 }
                                 return null;
                               },
+                              decoration: const InputDecoration(
+                                labelText: "Name"
+                              )
+                            ),
+                            TextFormField(
+                                validator: (value) {
+                                  if (value == null || value.isEmpty){
+                                    return 'missing fields';
+                                  }
+                                  return null;
+                                },
+                                decoration: const InputDecoration(
+                                    labelText: "Location"
+                                )
+                            ),
+                            TextFormField(
+                                validator: (value) {
+                                  if (value == null || value.isEmpty){
+                                    return 'missing fields';
+                                  }
+                                  return null;
+                                },
+                                decoration: const InputDecoration(
+                                    labelText: "other information"
+                                )
                             ),
                             ElevatedButton(
                                 onPressed: (){
@@ -102,7 +127,7 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
                                   color: Colors.white)
                           )
                       ),
-                      Expanded(
+                      const Expanded(
                           flex: 3,
                           child: Padding(
                               padding: EdgeInsets.only(left: 15),
@@ -114,10 +139,12 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
             ),
           ),
 
-          Flexible(
+          const Flexible(
             child: Card(
+                color: Colors.white60,
+                elevation: 2,
                 child: ListTile(
-                    leading: const Icon(Icons.search),
+                    leading: Icon(Icons.search),
                     title: Text("Search Institutions"))),
           ),
 
@@ -129,7 +156,19 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
                           leading: const Icon(Icons.flight_land_rounded),
                           title: Text("First School")
                       )
-                  )
+                  ),
+                  Card(
+                      child: ListTile(
+                          leading: const Icon(Icons.flight_land_rounded),
+                          title: Text("Second School")
+                      )
+                  ),
+                  Card(
+                      child: ListTile(
+                          leading: const Icon(Icons.flight_land_rounded),
+                          title: Text("Third School")
+                      )
+                  ),
 
                 ]
             ),
