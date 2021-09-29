@@ -1,0 +1,119 @@
+{
+  "project_info": {
+    "project_number": "467115419472",
+    "firebase_url": "https://testproject-4db53-default-rtdb.firebaseio.com",
+    "project_id": "testproject-4db53",
+    "storage_bucket": "testproject-4db53.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467115419472:android:1f23084b2d657a1c3f2e55",
+        "android_client_info": {
+          "package_name": "com.cmpt371.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "467115419472-l4b5omsvkub10sgb6d9fkdgk7623ud4k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgqcj7ykRsiG6uim_YacpYDJscsTKO4n8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "467115419472-l4b5omsvkub10sgb6d9fkdgk7623ud4k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "467115419472-jurgq4521c3ffn7pr817btgg1a9chofe.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467115419472:android:5b098821eb748a903f2e55",
+        "android_client_info": {
+          "package_name": "com.example.flutter_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "467115419472-l4b5omsvkub10sgb6d9fkdgk7623ud4k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgqcj7ykRsiG6uim_YacpYDJscsTKO4n8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "467115419472-l4b5omsvkub10sgb6d9fkdgk7623ud4k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "467115419472-jurgq4521c3ffn7pr817btgg1a9chofe.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467115419472:android:b5fce02e066857c53f2e55",
+        "android_client_info": {
+          "package_name": "com.example.plate_waste_recorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "467115419472-l4b5omsvkub10sgb6d9fkdgk7623ud4k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgqcj7ykRsiG6uim_YacpYDJscsTKO4n8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "467115419472-l4b5omsvkub10sgb6d9fkdgk7623ud4k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "467115419472-jurgq4521c3ffn7pr817btgg1a9chofe.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
