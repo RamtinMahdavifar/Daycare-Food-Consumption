@@ -94,11 +94,13 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
                             ),
                             ElevatedButton(
                                 onPressed: (){
+                                  Navigator.of(context, rootNavigator: true).pop();
                                   if(_formKey.currentState!.validate()){
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         const SnackBar(content: Text("Submited")),
                                     );
                                   }
+                                  
                                 },
                                 child: const Text("Submit"))
                           ]
