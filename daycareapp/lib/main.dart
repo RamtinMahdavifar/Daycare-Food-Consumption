@@ -49,7 +49,7 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
     );
   }
 
-  Widget formEntry(String labelName){
+  Widget formEntry(String labelName, Icon icon){
     return TextFormField(
         validator: (value) {
           if (value == null || value.isEmpty){
@@ -58,6 +58,7 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
           return null;
         },
         decoration: InputDecoration(
+            icon: icon,
             labelText: labelName
         )
     );
@@ -78,17 +79,28 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
     );
   }
 
+  Widget formCancel(){
+    return ElevatedButton(
+        onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+        child: const Text("Cancel")
+    );
+  }
+
   Widget enterSchoolForm(){
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
       elevation: 3,
       child: Form(
           child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                formEntry("name"),
-                formEntry("location"),
-                formEntry("other information"),
-                formSubmit()
+                formEntry("name", Icon(Icons.home)),
+                formEntry("location", Icon(Icons.location_on_outlined)),
+                formEntry("other information", Icon(Icons.info_outline)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [formCancel(), formSubmit()],
+                )
               ]
           )
 
