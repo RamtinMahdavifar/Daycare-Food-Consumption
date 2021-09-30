@@ -1,4 +1,6 @@
 
+import 'package:plate_waste_recorder/Model/institution_info.dart';
+
 /// Class representing an institution
 class Institution {
   String _name;
@@ -21,5 +23,9 @@ class Institution {
 
   set address(String newAddress){
     this._address = newAddress;
+  }
+  
+  InstitutionInfo getInstitutionInfo(){
+    return InstitutionInfo(this.name, this.address);
   }
 }
