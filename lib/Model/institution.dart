@@ -28,4 +28,8 @@ class Institution {
   InstitutionInfo getInstitutionInfo(){
     return InstitutionInfo(this.name, this.address);
   }
+
+  static Institution fromJSON(Map<String, dynamic> json){
+    return Institution(json["_name"].toString(), json["_address"].toString());
+  }
 }
