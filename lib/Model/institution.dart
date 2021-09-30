@@ -31,4 +31,6 @@ class Institution {
 
   Institution.fromJSON(Map<String, dynamic> json)
   : _name = json["_name"].toString(), _address = json["_address"].toString();
+
+
 }
