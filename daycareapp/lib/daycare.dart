@@ -33,7 +33,7 @@ class _DaycareMenuState extends State<DaycareMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("nameOfSchool"), leading: BackButton()),
+      appBar: AppBar(title: const Text("nameOfSchool"), leading: BackButton(), actions: [modifyButton()]),
         body: _DaycareMenu()
     );
   }
@@ -45,6 +45,12 @@ class _DaycareMenuState extends State<DaycareMenu> {
     );
   }
 
+  Widget modifyButton(){
+    return InkWell(
+        onTap: () {},
+        child: Icon(Icons.edit)
+    );
+  }
   Widget MenuButton(String btnName){
     return Flexible(
         child: SizedBox(
