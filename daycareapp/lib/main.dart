@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'Daycare.dart';
+import 'daycare.dart';
 
 void main() {
   runApp(
-    SelectInstitute(),
+    const SelectInstitute(),
   );
 }
 
@@ -100,7 +100,7 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
                                         const SnackBar(content: Text("Submited")),
                                     );
                                   }
-                                  
+
                                 },
                                 child: const Text("Submit"))
                           ]
