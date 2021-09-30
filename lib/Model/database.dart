@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:plate_waste_recorder/Model/institution.dart';
+import 'package:plate_waste_recorder/Model/research_group_info.dart';
+import 'package:plate_waste_recorder/Model/institution_info.dart';
 
 /// Class to a access the firebase database, this class is implemented using the
 /// singleton pattern and provides methods to read and write data to and from
@@ -22,5 +25,10 @@ class Database {
   // at once
   factory Database() {
     return _instance;
+  }
+
+  void writeInstitution(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo){
+    _databaseInstance.reference().child(currentResearchGroupInfo.databaseKey)
+        .child(institutionInfo.databaseKey);
   }
 }
