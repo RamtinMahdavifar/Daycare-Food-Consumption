@@ -1,9 +1,10 @@
-import 'package:daycareapp/main.dart';
+
+import 'main.dart';
 import 'package:flutter/material.dart';
 
 void main() {
     runApp(
-      Daycare()
+      const Daycare()
   );
 }
 
@@ -30,21 +31,21 @@ class _DaycareMenuState extends State<DaycareMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Menu"),),
+      appBar: AppBar(title: Text("nameOfSchool"), leading: BackButton()),
         body: _DaycareMenu()
     );
   }
 
+  Widget BackButton(){
+    return InkWell(
+      onTap: () => runApp(SelectInstitute()),
+      child: Icon(Icons.arrow_back)
+    );
+  }
+
   Widget _DaycareMenu(){
-      return Container(
-          child: Card(
-            child:InkWell(
-
-              onTap: () {runApp(SelectInstitute());},
-              child: const Icon(Icons.arrow_back)
-
-            )
-          )
-        );
+      return const Scaffold(
+          body: Text("School location and information"),
+      );
       }
 }
