@@ -16,5 +16,7 @@ class ResearchGroup{
 
   ResearchGroup(this._groupName, this._groupOwner);
 
-
+  ResearchGroup.fromJSON(Map<String, dynamic> json)
+      : _groupName = json["_groupName"].toString(), _groupOwner = json["_groupOwner"],
+        _groupMembers = json["_groupMembers"]; // TODO: need null checks here, ie what if there aren't any group members so that field isn't even stored on the db
 }

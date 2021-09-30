@@ -4,6 +4,7 @@ import 'package:plate_waste_recorder/Model/institution.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'dart:convert';
+import 'package:plate_waste_recorder/Model/research_group.dart';
 
 /// Class to a access the firebase database, this class is implemented using the
 /// singleton pattern and provides methods to read and write data to and from
@@ -34,7 +35,7 @@ class Database {
   }
 
   void readInstitution(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
-        Function callback){
+        Function(Institution) callback){
     DatabaseReference desiredInstitutionReference = _databaseInstance.reference()
         .child(currentResearchGroupInfo.databaseKey)
         .child(institutionInfo.databaseKey);
@@ -43,5 +44,20 @@ class Database {
             Institution.fromJSON(jsonDecode(dataSnapshot.value.toString()))
         )
     ));
+  }
+
+  void readResearchGroup(ResearchGroupInfo researchGroupInfo,
+      Function(ResearchGroup) callback){
+    DatabaseReference desiredResearchGroupReference = _databaseInstance.reference()
+        .child(researchGroupInfo.databaseKey);
+    // use onValue instead of once() to read data here as we want to read data and
+    // then also update data if any changes have occurred to the database
+    desiredResearchGroupReference.onValue.listen((event) {
+      DataSnapshot dataSnapshot = event.snapshot;
+      Map<String, dynamic> researchGroupJSON = jsonDecode(dataSnapshot.value.toString());
+      ResearchGroup retrievedResearchGroup = ResearchGroup.fromJSON(researchGroupJSON);
+      callback(retrievedResearchGroup);
+    });
+
   }
 }
