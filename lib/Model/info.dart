@@ -9,4 +9,9 @@ abstract class Info{
   // key on the database that can be used to lookup the item being represented
   // by this info object
   late String databaseKey;
+
+  @override
+  String toString(){
+    return this.name;
+  }
 }
