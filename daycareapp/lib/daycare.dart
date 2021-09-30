@@ -91,7 +91,7 @@ class _DaycareMenuState extends State<DaycareMenu> {
               ),
             ],
 
-          ),
+          )
 
       );
       }

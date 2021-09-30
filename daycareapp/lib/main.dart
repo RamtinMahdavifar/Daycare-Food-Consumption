@@ -37,145 +37,145 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
     );
   }
 
+  Widget listedInst(String name){
+    return Card(
+        child: ListTile(
+            onTap: (){
+              runApp(Daycare());
+            },
+            leading: const Icon(Icons.flight_land_rounded),
+            title: Text(name)
+        )
+    );
+  }
+
+  Widget formEntry(String labelName){
+    return TextFormField(
+        validator: (value) {
+          if (value == null || value.isEmpty){
+            return 'missing fields';
+          }
+          return null;
+        },
+        decoration: InputDecoration(
+            labelText: labelName
+        )
+    );
+  }
+
+  Widget formSubmit(){
+    return ElevatedButton(
+        onPressed: (){
+          Navigator.of(context, rootNavigator: true).pop();
+          if(_formKey.currentState!.validate()){
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Submited")),
+            );
+          }
+
+        },
+        child: const Text("Submit")
+    );
+  }
+
+  Widget enterSchoolForm(){
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+      elevation: 3,
+      child: Form(
+          child: Column(
+              children: <Widget>[
+                formEntry("name"),
+                formEntry("location"),
+                formEntry("other information"),
+                formSubmit()
+              ]
+          )
+
+      ),
+    );
+  }
+
+  Widget addInstitute(){
+    return InkWell(
+      onTap: (){
+        showDialog(
+            context: context,
+            builder: (context) {
+              return enterSchoolForm();
+            }
+        );
+      }, //pop up form entry window
+      child: Card(
+          shape: BeveledRectangleBorder(
+              borderRadius: BorderRadius.circular(5.0)
+          ),
+          color: Colors.green,
+          elevation: 2,
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Expanded(
+                    flex: 1,
+                    child: Container(
+                        height: 55,
+                        width: 30,
+                        child: const Icon(
+                            Icons.add,
+                            color: Colors.white)
+                    )
+                ),
+                const Expanded(
+                    flex: 3,
+                    child: Padding(
+                        padding: EdgeInsets.only(left: 15),
+                        child: Text("Add Institute", style: TextStyle(fontSize: 25, color: Colors.white))
+                    )
+                )
+              ]
+          )
+      ),
+    );
+  }
+
+  Widget searchInstitution(){
+    return const Flexible(
+      child: Card(
+          color: Colors.white60,
+          elevation: 2,
+          child: ListTile(
+              leading: Icon(Icons.search),
+              title: Text("Search Institutions"))),
+    );
+  }
+
   Widget _mainMenu(){
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
+
         children: [
-          InkWell(
-            onTap: (){
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return Dialog(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-                      elevation: 3,
-                      child: Form(
-                        child: Column(
-                          children: <Widget>[
-                            TextFormField(
-                              validator: (value) {
-                                if (value == null || value.isEmpty){
-                                  return 'missing fields';
-                                }
-                                return null;
-                              },
-                              decoration: const InputDecoration(
-                                labelText: "Name"
-                              )
-                            ),
-                            TextFormField(
-                                validator: (value) {
-                                  if (value == null || value.isEmpty){
-                                    return 'missing fields';
-                                  }
-                                  return null;
-                                },
-                                decoration: const InputDecoration(
-                                    labelText: "Location"
-                                )
-                            ),
-                            TextFormField(
-                                validator: (value) {
-                                  if (value == null || value.isEmpty){
-                                    return 'missing fields';
-                                  }
-                                  return null;
-                                },
-                                decoration: const InputDecoration(
-                                    labelText: "other information"
-                                )
-                            ),
-                            ElevatedButton(
-                                onPressed: (){
-                                  Navigator.of(context, rootNavigator: true).pop();
-                                  if(_formKey.currentState!.validate()){
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(content: Text("Submited")),
-                                    );
-                                  }
-
-                                },
-                                child: const Text("Submit"))
-                          ]
-                        )
-
-                      ),
-                    );
-                  }
-              );
-            }, //pop up form entry window
-            child: Card(
-                shape: BeveledRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0)
-                ),
-                color: Colors.green,
-                elevation: 2,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Expanded(
-                          flex: 1,
-                          child: Container(
-                              height: 55,
-                              width: 30,
-                              child: const Icon(
-                                  Icons.add,
-                                  color: Colors.white)
-                          )
-                      ),
-                      const Expanded(
-                          flex: 3,
-                          child: Padding(
-                              padding: EdgeInsets.only(left: 15),
-                              child: Text("Add Institute", style: TextStyle(fontSize: 25, color: Colors.white))
-                          )
-                      )
-                    ]
-                )
-            ),
-          ),
-
-          const Flexible(
-            child: Card(
-                color: Colors.white60,
-                elevation: 2,
-                child: ListTile(
-                    leading: Icon(Icons.search),
-                    title: Text("Search Institutions"))),
-          ),
-
-          Expanded(
+          addInstitute(),
+          searchInstitution(),
+          Flexible(
+            fit: FlexFit.loose,
             child: ListView(
                 children: <Widget> [
-                  Card(
-                      child: ListTile(
-                          onTap: (){
-                            runApp(Daycare());
-                          },
-                          leading: const Icon(Icons.flight_land_rounded),
-                          title: Text("First School")
-                      )
-                  ),
-                  Card(
-                      child: ListTile(
-                          leading: const Icon(Icons.flight_land_rounded),
-                          title: Text("Second School")
-                      )
-                  ),
-                  Card(
-                      child: ListTile(
-                          leading: const Icon(Icons.flight_land_rounded),
-                          title: Text("Third School")
-                      )
-                  ),
-
+                  listedInst("First School"),
+                  listedInst("Second School"),
+                  listedInst("Third School"),
+                  listedInst("Fourth School"),
+                  listedInst("Fifth School"),
+                  listedInst("Sixth School"),
+                  listedInst("Seventh School"),
+                  listedInst("Eighth School"),
+                  listedInst("Ninth School"),
+                  listedInst("Tenth School"),
                 ]
             ),
-          ),
-
+          )
         ],
-      ),
+      )
     );
   }
 }
