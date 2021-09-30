@@ -1,5 +1,5 @@
 
-//import 'dart:html';
+
 
 import 'main.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +33,7 @@ class _DaycareMenuState extends State<DaycareMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("nameOfSchool"), leading: BackButton()),
+      appBar: AppBar(title: const Text("nameOfSchool"), leading: BackButton()),
         body: _DaycareMenu()
     );
   }
@@ -45,65 +45,46 @@ class _DaycareMenuState extends State<DaycareMenu> {
     );
   }
 
+  Widget MenuButton(String btnName){
+    return Flexible(
+        child: SizedBox(
+            height: 100,
+            width: 100,
+            child: ElevatedButton(
+              child: Text(btnName),
+              onPressed: () {},
+
+            )
+        )
+    );
+  }
+
   Widget _DaycareMenu(){
       return Scaffold(
           body: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children:  <Widget>[
               const Flexible(
-                child: Text("School location and information")
+                child: Text("School location and information", style: TextStyle(fontSize: 25))
               ),
               Flexible(
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Flexible(
-                        child: ElevatedButton(
-                          child: Text("QR Code"),
-                          onPressed: () {},
-
-                        )
-                    ),
-                    Flexible(
-                        child: ElevatedButton(
-                          child: Text("Camera"),
-                          onPressed: () {},
-
-                        )
-                    ),
-                    Flexible(
-                        child: ElevatedButton(
-                          child: Text("Roster"),
-                          onPressed: () {},
-
-                        )
-                    ),
+                    MenuButton("QR Code"),
+                    MenuButton("Camera"),
+                    MenuButton("Roster"),
                   ],
 
                 )
               ),
               Flexible(
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Flexible(
-                          child: TextButton(
-                            child: Text("Record Data"),
-                            onPressed: () {},
-
-                          )
-                      ),
-                      Flexible(
-                          child: TextButton(
-                            child: Text("View Data"),
-                            onPressed: () {},
-
-                          )
-                      ),
-                      Flexible(
-                          child: TextButton(
-                            child: Text("Food"),
-                            onPressed: () {},
-
-                          )
-                      ),
+                      MenuButton("Record Data"),
+                      MenuButton("View Data"),
+                      MenuButton("Food"),
                     ],
 
                   )
