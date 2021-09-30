@@ -1,4 +1,6 @@
 
+//import 'dart:html';
+
 import 'main.dart';
 import 'package:flutter/material.dart';
 
@@ -44,8 +46,72 @@ class _DaycareMenuState extends State<DaycareMenu> {
   }
 
   Widget _DaycareMenu(){
-      return const Scaffold(
-          body: Text("School location and information"),
+      return Scaffold(
+          body: Column(
+            children:  <Widget>[
+              const Flexible(
+                child: Text("School location and information")
+              ),
+              Flexible(
+                child: Row(
+                  children: [
+                    Flexible(
+                        child: ElevatedButton(
+                          child: Text("QR Code"),
+                          onPressed: () {},
+
+                        )
+                    ),
+                    Flexible(
+                        child: ElevatedButton(
+                          child: Text("Camera"),
+                          onPressed: () {},
+
+                        )
+                    ),
+                    Flexible(
+                        child: ElevatedButton(
+                          child: Text("Roster"),
+                          onPressed: () {},
+
+                        )
+                    ),
+                  ],
+
+                )
+              ),
+              Flexible(
+                  child: Row(
+                    children: [
+                      Flexible(
+                          child: TextButton(
+                            child: Text("Record Data"),
+                            onPressed: () {},
+
+                          )
+                      ),
+                      Flexible(
+                          child: TextButton(
+                            child: Text("View Data"),
+                            onPressed: () {},
+
+                          )
+                      ),
+                      Flexible(
+                          child: TextButton(
+                            child: Text("Food"),
+                            onPressed: () {},
+
+                          )
+                      ),
+                    ],
+
+                  )
+              ),
+            ],
+
+          ),
+
       );
       }
 }
