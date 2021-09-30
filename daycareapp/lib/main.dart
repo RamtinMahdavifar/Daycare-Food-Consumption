@@ -28,7 +28,6 @@ class ChooseInstitute extends StatefulWidget {
 
 class _ChooseInstituteState extends State<ChooseInstitute> {
 
-  final _textController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -37,11 +36,6 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
       body: _mainMenu(),
     );
   }
-
-  void _handleSubmitted(String text){
-    _textController.clear();
-  }
-
 
   Widget _mainMenu(){
     return Container(
