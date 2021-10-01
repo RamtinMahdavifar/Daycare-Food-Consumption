@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:plate_waste_recorder/Model/database.dart';
 import 'daycare.dart';
+import 'package:plate_waste_recorder/Model/research_group_info.dart';
+import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
 
 void main() {
   runApp(
@@ -70,7 +73,7 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
           Navigator.of(context, rootNavigator: true).pop();
           if(_formKey.currentState!.validate()){
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Submited")),
+              const SnackBar(content: Text("Submitted")),
             );
           }
 
@@ -171,23 +174,60 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
           searchInstitution(),
           Flexible(
             fit: FlexFit.loose,
-            child: ListView(
-                children: <Widget> [
-                  listedInst("First School"),
-                  listedInst("Second School"),
-                  listedInst("Third School"),
-                  listedInst("Fourth School"),
-                  listedInst("Fifth School"),
-                  listedInst("Sixth School"),
-                  listedInst("Seventh School"),
-                  listedInst("Eighth School"),
-                  listedInst("Ninth School"),
-                  listedInst("Tenth School"),
-                ]
-            ),
+            child: StreamBuilder<Event>(
+              stream: Database().getResearchGroupStream(ResearchGroupInfo("test research group")),
+              builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {
+                List<Widget> children;
+                if (snapshot.hasError){
+                  children = <Widget> [Text("errors in database read occured")];
+                }
+                else{
+                  switch(snapshot.connectionState){
+                    case ConnectionState.none:
+                      children = <Widget>[Text("connection state none")];
+                      break;
+                    case ConnectionState.waiting:
+                      children = <Widget>[Text("connection state waiting")];
+                      break;
+                    case ConnectionState.active:
+                      children = <Widget>[
+                        Text("connection state active"),
+                        Text(snapshot.data.toString()),
+                        Text(snapshot.data!.snapshot.value.toString())
+                      ];
+                      break;
+                    case ConnectionState.done:
+                      children = <Widget>[Text("connection state done")];
+                      break;
+                  }
+                }
+                return ListView(
+                  children: children
+                );
+              }
+
+
+
+            )
           )
         ],
       )
     );
   }
 }
+
+
+////ListView(
+//                children: <Widget> [
+//                  listedInst("First School"),
+//                  listedInst("Second School"),
+//                  listedInst("Third School"),
+//                  listedInst("Fourth School"),
+//                  listedInst("Fifth School"),
+//                  listedInst("Sixth School"),
+//                  listedInst("Seventh School"),
+//                  listedInst("Eighth School"),
+//                  listedInst("Ninth School"),
+//                  listedInst("Tenth School"),
+//                ]
+//            ),
