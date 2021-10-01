@@ -4,23 +4,18 @@
 import 'main.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-    runApp(
-      const Daycare()
-  );
-}
-
 class Daycare extends StatelessWidget {
-  const Daycare({
-    Key? key,
-  }) : super(key: key);
+  String institutionName;
+  String institutionAddress;
+
+  Daycare(this.institutionName,this.institutionAddress, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Daycare Menu",
-      home: DaycareMenu()
-        );
+    // TODO remove this class, could go right into DaycareMenu
+    return Scaffold(
+      body: DaycareMenu(),
+    );
   }
 }
 
@@ -40,7 +35,12 @@ class _DaycareMenuState extends State<DaycareMenu> {
 
   Widget BackButton(){
     return InkWell(
-      onTap: () => runApp(SelectInstitute()),
+      onTap: (){
+        Navigator.pop(context);
+      },/*Navigator.push(context, MaterialPageRoute(
+          builder: (context){
+            return SelectInstitute();
+          })),*/
       child: Icon(Icons.arrow_back)
     );
   }
