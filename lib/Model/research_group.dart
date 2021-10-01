@@ -1,6 +1,7 @@
 import 'package:plate_waste_recorder/Model/institution.dart';
 import 'package:plate_waste_recorder/Model/researcher.dart';
 import 'package:plate_waste_recorder/Model/researcher_info.dart';
+import 'package:plate_waste_recorder/Model/research_group_info.dart';
 
 /// class representing a research group, institutions, research data etc is
 /// stored within a particular research group, research groups can be created
@@ -15,6 +16,10 @@ class ResearchGroup{
 
 
   ResearchGroup(this._groupName, this._groupOwner);
+
+  ResearchGroupInfo getResearchGroupInfo(){
+    return ResearchGroupInfo(this._groupName);
+  }
 
   ResearchGroup.fromJSON(Map<String, dynamic> json)
       : _groupName = json["_groupName"].toString(), _groupOwner = json["_groupOwner"],
