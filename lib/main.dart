@@ -9,6 +9,7 @@ import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'dart:convert'; // required for jsonDecode()
 
 void main() {
+  // TODO: remove database initialization
   ResearchGroup testGroup = ResearchGroup("testResearchGroupName", ResearcherInfo("test professor"));
   testGroup.addNewMember(ResearcherInfo("test assistant"));
   testGroup.addNewMember(ResearcherInfo("note taker"));
@@ -207,6 +208,8 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
                       // TODO: include a loading or progress bar
                       break;
                     case ConnectionState.active:
+                      // TODO: see about using async database function to return a ResearchGroup to do all this
+                      // TODO: instead of having to have the below code to create a ResearchGroup here
                       DataSnapshot researchGroupSnapshot = snapshot.data!.snapshot;
                       print(researchGroupSnapshot.value.runtimeType);
                       Map<dynamic, dynamic> testMap = researchGroupSnapshot.value;
@@ -239,19 +242,3 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
     );
   }
 }
-
-
-////ListView(
-//                children: <Widget> [
-//                  listedInst("First School"),
-//                  listedInst("Second School"),
-//                  listedInst("Third School"),
-//                  listedInst("Fourth School"),
-//                  listedInst("Fifth School"),
-//                  listedInst("Sixth School"),
-//                  listedInst("Seventh School"),
-//                  listedInst("Eighth School"),
-//                  listedInst("Ninth School"),
-//                  listedInst("Tenth School"),
-//                ]
-//            ),
