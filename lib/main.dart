@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Model/database.dart';
-import 'daycare.dart';
+import 'institution_page.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
 import 'package:plate_waste_recorder/Model/research_group.dart';
@@ -215,7 +215,6 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
                       // TODO: see about using async database function to return a ResearchGroup to do all this
                       // TODO: instead of having to have the below code to create a ResearchGroup here
                       DataSnapshot researchGroupSnapshot = snapshot.data!.snapshot;
-                      print(researchGroupSnapshot.value.runtimeType);
                       Map<dynamic, dynamic> testMap = researchGroupSnapshot.value;
                       String encodedMap = jsonEncode(testMap);
 
