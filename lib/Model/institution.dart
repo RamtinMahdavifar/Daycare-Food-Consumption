@@ -29,6 +29,11 @@ class Institution {
     return InstitutionInfo(this.name, this.address);
   }
 
+  Map<String, dynamic> toJson() => {
+    '_name': this._name,
+    '_address': this._address,
+  };
+
   Institution.fromJSON(Map<String, dynamic> json)
   : _name = json["_name"].toString(), _address = json["_address"].toString();
 

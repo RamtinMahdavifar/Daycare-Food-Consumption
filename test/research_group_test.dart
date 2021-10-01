@@ -1,7 +1,6 @@
 import 'package:test/test.dart';
 import 'package:plate_waste_recorder/Model/research_group.dart';
 import 'package:plate_waste_recorder/Model/researcher_info.dart';
-
 // run tests from the terminal using: flutter test test/institution_test.dart
 void main(){
   group("research_group getters and setters",() {
@@ -97,8 +96,4 @@ void main(){
 
     });
   });
-
-
-
-
 }
