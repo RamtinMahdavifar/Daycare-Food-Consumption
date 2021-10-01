@@ -31,7 +31,7 @@ class SelectInstitute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Daycare',
+      title: 'Plate Waste Tracker',
       home: ChooseInstitute()
     );
   }
@@ -48,7 +48,7 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Daycare Food Project')),
+      appBar: AppBar(title: Text('Plate Waste Tracker')),
       body: _mainMenu(),
     );
   }
@@ -60,7 +60,7 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
               // pass the name of the clicked on institution to the daycare screen
               Navigator.push(context, MaterialPageRoute(
                   builder: (context){
-                    return Daycare(name, name);
+                    return Institution(name, name);
                   }));
               },
             leading: const Icon(Icons.flight_land_rounded),
@@ -161,7 +161,7 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
                     flex: 3,
                     child: Padding(
                         padding: EdgeInsets.only(left: 15),
-                        child: Text("Add Institute", style: TextStyle(fontSize: 25, color: Colors.white))
+                        child: Text("Add Institution", style: TextStyle(fontSize: 25, color: Colors.white))
                     )
                 )
               ]
