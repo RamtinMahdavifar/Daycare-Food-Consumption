@@ -12,14 +12,7 @@ import 'dart:convert'; // required for jsonDecode()
 void main() {
   // TODO: remove database initialization
   // TODO: define dispose() methods for each widget
-  ResearchGroup testGroup = ResearchGroup("testResearchGroupName", ResearcherInfo("test professor"));
-  testGroup.addNewMember(ResearcherInfo("test assistant"));
-  testGroup.addNewMember(ResearcherInfo("note taker"));
-  testGroup.addNewInstitution(InstitutionInfo("test institution name", "450 main st N"));
-  testGroup.addNewInstitution(InstitutionInfo("some daycare", "8th street"));
-
   WidgetsFlutterBinding.ensureInitialized();
-  Database().writeResearchGroup(testGroup);
   runApp(
     const SelectInstitute(),
   );
@@ -112,7 +105,7 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
           const SnackBar(content: Text("Submitted"));
           String newName = _newInstitutionNameController.value.text;
           String newAddress = _newInstitutionAddressController.value.text;
-          Database().writeInstitution(Institution(newName, newAddress), ResearchGroupInfo("testResearchGroupName"));
+          Database().addInstitutionToResearchGroup(Institution(newName, newAddress), ResearchGroupInfo("testResearchGroupName"));
 
           // clear our text fields before exiting the add Institution popup
           _newInstitutionNameController.clear();
@@ -239,7 +232,6 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
                       DataSnapshot researchGroupSnapshot = snapshot.data!.snapshot;
                       Map<dynamic, dynamic> testMap = researchGroupSnapshot.value;
                       String encodedMap = jsonEncode(testMap);
-                      print(encodedMap);
 
                       Map<String, dynamic> researchGroupJSON = json.decode(
                           encodedMap

@@ -19,6 +19,8 @@ class Database {
   // initialize the location research groups are to be stored on the database
   final String _researchGroupRootLocation = "Research Groups";
 
+  final String _researchGroupInstitutionsLocation = "_institutionsMap";
+
   // define a private constructor for this class which will allocate memory etc
   // to class, this is only call-able from within this class.
   Database._privateConstructor();
@@ -32,19 +34,22 @@ class Database {
     return _instance;
   }
 
-  void writeInstitution(Institution institution, ResearchGroupInfo currentResearchGroupInfo){
+  void addInstitutionToResearchGroup(Institution institution, ResearchGroupInfo currentResearchGroupInfo){
     InstitutionInfo currentInstitutionInfo = institution.getInstitutionInfo();
     DatabaseReference institutionReference = _databaseInstance.reference()
         .child(this._researchGroupRootLocation)
         .child(currentResearchGroupInfo.databaseKey)
+        .child(this._researchGroupInstitutionsLocation)
         .child(currentInstitutionInfo.databaseKey);
-    // convert the input institution and all data structures and fields of this object
-    // to JSON
-    String institutionJSON = jsonEncode(institution);
+
+    // since we are storing this institution for a research group, only write
+    // an InstitutionInfo to the database, convert this InstitutionInfo to JSON
+
+    String institutionInfoJSON = jsonEncode(currentInstitutionInfo);
 
     // convert the produced JSON to a map which can be stored on our database
-    Map<String, dynamic> institutionMap = json.decode(institutionJSON);
-    institutionReference.set(institutionMap);
+    Map<String, dynamic> institutionInfoMap = json.decode(institutionInfoJSON);
+    institutionReference.set(institutionInfoMap);
   }
 
   void readInstitution(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
