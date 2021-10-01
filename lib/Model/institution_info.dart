@@ -10,6 +10,10 @@ class InstitutionInfo extends Info{
     this.databaseKey = this._institutionAddress;
   }
 
+  String get institutionAddress{
+    return this.institutionAddress;
+  }
+
   @override
   Map<String, dynamic> toJson() => {
     'name': this.name,
