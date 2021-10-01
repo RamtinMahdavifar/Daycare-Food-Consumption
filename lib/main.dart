@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Model/database.dart';
+import 'Model/institution.dart';
 import 'institution_page.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
@@ -10,6 +11,7 @@ import 'dart:convert'; // required for jsonDecode()
 
 void main() {
   // TODO: remove database initialization
+  // TODO: define dispose() methods for each widget
   ResearchGroup testGroup = ResearchGroup("testResearchGroupName", ResearcherInfo("test professor"));
   testGroup.addNewMember(ResearcherInfo("test assistant"));
   testGroup.addNewMember(ResearcherInfo("note taker"));
@@ -54,7 +56,7 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
-          children: [
+          children: [ // TODO: move these child widgets to their own files
             addInstitution(),
             searchInstitution(),
             institutionDisplay(),
@@ -70,7 +72,7 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
               // pass the name of the clicked on institution to the daycare screen
               Navigator.push(context, MaterialPageRoute(
                   builder: (context){
-                    return Institution(name, address);
+                    return InstitutionPage(name, address);
                   }));
               },
             leading: const Icon(Icons.flight_land_rounded),
@@ -79,7 +81,7 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
     );
   }
 
-  Widget formEntry(String labelName, Icon icon){
+  Widget formEntry(String labelName, Icon icon, TextEditingController controller){
     return TextFormField(
         validator: (value) {
           if (value == null || value.isEmpty){
@@ -90,20 +92,34 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
         decoration: InputDecoration(
             icon: icon,
             labelText: labelName
-        )
+        ),
+        controller: controller,
     );
   }
 
   Widget formSubmit(){
     return ElevatedButton(
         onPressed: (){
-          Navigator.of(context, rootNavigator: true).pop();
+          /*
+          this code causes a crash, formkey.currentState is null
           if(_formKey.currentState!.validate()){
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("Submitted")),
             );
           }
+           */
+          // TODO: display this snackbar
+          const SnackBar(content: Text("Submitted"));
+          String newName = _newInstitutionNameController.value.text;
+          String newAddress = _newInstitutionAddressController.value.text;
+          print(newName);
+          print(newAddress);
+          Database().writeInstitution(Institution(newName, newAddress), ResearchGroupInfo("testResearchGroupName"));
 
+          // clear our text fields before exiting the add Institution popup
+          _newInstitutionNameController.clear();
+          _newInstitutionAddressController.clear();
+          Navigator.of(context, rootNavigator: true).pop();
         },
         child: const Text("Submit")
     );
@@ -111,7 +127,12 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
 
   Widget formCancel(){
     return ElevatedButton(
-        onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+        onPressed: (){
+          // clear the text fields before exiting the add Institution popup
+          _newInstitutionNameController.clear();
+          _newInstitutionAddressController.clear();
+          Navigator.of(context, rootNavigator: true).pop();
+        },
         child: const Text("Cancel")
     );
   }
@@ -124,9 +145,9 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                formEntry("name", Icon(Icons.home)),
-                formEntry("location", Icon(Icons.location_on_outlined)),
-                formEntry("other information", Icon(Icons.info_outline)),
+                formEntry("name", Icon(Icons.home), _newInstitutionNameController),
+                formEntry("address", Icon(Icons.location_on_outlined), _newInstitutionAddressController),
+                //formEntry("other information", Icon(Icons.info_outline)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [formCancel(), formSubmit()],
