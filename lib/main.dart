@@ -57,8 +57,12 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
     return Card(
         child: ListTile(
             onTap: (){
-              runApp(Daycare());
-            },
+              // pass the name of the clicked on institution to the daycare screen
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context){
+                    return Daycare(name, name);
+                  }));
+              },
             leading: const Icon(Icons.flight_land_rounded),
             title: Text(name)
         )
