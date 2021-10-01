@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class Institution extends StatefulWidget {
+class InstitutionPage extends StatefulWidget {
   String institutionName;
   String institutionAddress;
 
-  Institution(this.institutionName,this.institutionAddress, {Key? key}) : super(key: key);
+  InstitutionPage(this.institutionName,this.institutionAddress, {Key? key}) : super(key: key);
 
   @override
-  State<Institution> createState() => _InstitutionState();
+  State<InstitutionPage> createState() => _InstitutionPageState();
 }
 
-class _InstitutionState extends State<Institution> {
+class _InstitutionPageState extends State<InstitutionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
