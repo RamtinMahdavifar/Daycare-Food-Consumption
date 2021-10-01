@@ -11,7 +11,7 @@ class InstitutionInfo extends Info{
   }
 
   String get institutionAddress{
-    return this.institutionAddress;
+    return this._institutionAddress;
   }
 
   @override

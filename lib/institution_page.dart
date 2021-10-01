@@ -14,7 +14,7 @@ class _InstitutionState extends State<Institution> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("nameOfSchool"), leading: BackButton(), actions: [modifyButton()]),
+      appBar: AppBar(title: Text(widget.institutionName.toString()), leading: BackButton(), actions: [modifyButton()]),
         body: _InstitutionOptions()
     );
   }
@@ -53,8 +53,8 @@ class _InstitutionState extends State<Institution> {
           body: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children:  <Widget>[
-              const Flexible(
-                child: Text("School location and information", style: TextStyle(fontSize: 25))
+              Flexible(
+                child: Text("Address: " + widget.institutionAddress, style: TextStyle(fontSize: 25))
               ),
               Flexible(
                 child: Row(
