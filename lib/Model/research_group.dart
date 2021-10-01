@@ -1,3 +1,4 @@
+import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/Model/researcher_info.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 
@@ -11,6 +12,8 @@ class ResearchGroup{
   // groupMembers will only include members of the group outside of the owner
   // ie the owner of the group isn't included in this list
   List<ResearcherInfo> _groupMembers = [];
+
+  List<InstitutionInfo> _institutions = [];
 
   // ResearchGroup constructor
   ResearchGroup(this._groupName, this._groupOwner);
@@ -45,10 +48,21 @@ class ResearchGroup{
 
     if(this._groupMembers.contains(member)){
       this._groupMembers.remove(member);
+      // TODO: remove integer return codes and use exception instead if member isn't in list
 
       return 0;
     }else return -1;
 
+  }
+
+  void addNewInstitution(InstitutionInfo institutionInfo){
+    this._institutions.add(institutionInfo);
+    // TODO: synchronize this with the database so when an institution is added
+    // TODO: to a research group it is put on the database as well
+  }
+
+  List<InstitutionInfo> get institutions{
+    return this._institutions;
   }
   
   ResearchGroupInfo getResearchGroupInfo(){
