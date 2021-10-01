@@ -211,14 +211,11 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
                       print(researchGroupSnapshot.value.runtimeType);
                       Map<dynamic, dynamic> testMap = researchGroupSnapshot.value;
                       String encodedMap = jsonEncode(testMap);
-                      print(encodedMap);
 
                       Map<String, dynamic> researchGroupJSON = json.decode(
                           encodedMap
                       );
-                      print(researchGroupJSON);
                       ResearchGroup retrievedResearchGroup = ResearchGroup.fromJSON(researchGroupJSON);
-                      print("got here");
                       children = retrievedResearchGroup.institutions.map(
                           (institution)=>listedInst(institution.name)
                       ).toList();
