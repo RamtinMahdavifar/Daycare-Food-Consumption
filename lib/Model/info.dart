@@ -14,4 +14,9 @@ abstract class Info{
   String toString(){
     return this.name;
   }
+
+  Map<String, dynamic> toJson() => {
+    'name': this.name,
+    'databaseKey': this.databaseKey,
+  };
 }
