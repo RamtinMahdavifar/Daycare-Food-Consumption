@@ -1,4 +1,5 @@
 import 'package:plate_waste_recorder/Model/researcher_info.dart';
+import 'package:plate_waste_recorder/Model/research_group_info.dart';
 
 /// class representing a research group, institutions, research data etc is
 /// stored within a particular research group, research groups can be created
@@ -13,7 +14,6 @@ class ResearchGroup{
 
   // ResearchGroup constructor
   ResearchGroup(this._groupName, this._groupOwner);
-
 
   String get name{
     return this._groupName;
@@ -50,8 +50,11 @@ class ResearchGroup{
     }else return -1;
 
   }
-
-
+  
+  ResearchGroupInfo getResearchGroupInfo(){
+    return ResearchGroupInfo(this._groupName);
+  }
+  
   ResearchGroup.fromJSON(Map<String, dynamic> json)
       : _groupName = json["_groupName"].toString(), _groupOwner = json["_groupOwner"],
         _groupMembers = json["_groupMembers"]; // TODO: need null checks here, ie what if there aren't any group members so that field isn't even stored on the db
