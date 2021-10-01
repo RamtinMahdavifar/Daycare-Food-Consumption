@@ -3,8 +3,20 @@ import 'package:plate_waste_recorder/Model/database.dart';
 import 'daycare.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
+import 'package:plate_waste_recorder/Model/research_group.dart';
+import 'package:plate_waste_recorder/Model/researcher_info.dart';
+import 'package:plate_waste_recorder/Model/institution_info.dart';
+import 'dart:convert'; // required for jsonDecode()
 
 void main() {
+  ResearchGroup testGroup = ResearchGroup("testResearchGroupName", ResearcherInfo("test professor"));
+  testGroup.addNewMember(ResearcherInfo("test assistant"));
+  testGroup.addNewMember(ResearcherInfo("note taker"));
+  testGroup.addNewInstitution(InstitutionInfo("test institution name", "450 main st N"));
+  testGroup.addNewInstitution(InstitutionInfo("some daycare", "8th street"));
+
+  WidgetsFlutterBinding.ensureInitialized();
+  Database().writeResearchGroup(testGroup);
   runApp(
     const SelectInstitute(),
   );
@@ -175,7 +187,10 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
           Flexible(
             fit: FlexFit.loose,
             child: StreamBuilder<Event>(
-              stream: Database().getResearchGroupStream(ResearchGroupInfo("test research group")),
+              // use the ResearchGroup with name testResearchGroupName as a sort of stub
+              // as we don't yet have adding/joining research groups implemented
+              // TODO: get current ResearchGroup user is in and display it's info here
+              stream: Database().getResearchGroupStream(ResearchGroupInfo("testResearchGroupName")),
               builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {
                 List<Widget> children;
                 if (snapshot.hasError){
@@ -185,16 +200,28 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
                   switch(snapshot.connectionState){
                     case ConnectionState.none:
                       children = <Widget>[Text("connection state none")];
+                      // TODO: include a network error message or read local data
                       break;
                     case ConnectionState.waiting:
                       children = <Widget>[Text("connection state waiting")];
+                      // TODO: include a loading or progress bar
                       break;
                     case ConnectionState.active:
-                      children = <Widget>[
-                        Text("connection state active"),
-                        Text(snapshot.data.toString()),
-                        Text(snapshot.data!.snapshot.value.toString())
-                      ];
+                      DataSnapshot researchGroupSnapshot = snapshot.data!.snapshot;
+                      print(researchGroupSnapshot.value.runtimeType);
+                      Map<dynamic, dynamic> testMap = researchGroupSnapshot.value;
+                      String encodedMap = jsonEncode(testMap);
+                      print(encodedMap);
+
+                      Map<String, dynamic> researchGroupJSON = json.decode(
+                          encodedMap
+                      );
+                      print(researchGroupJSON);
+                      ResearchGroup retrievedResearchGroup = ResearchGroup.fromJSON(researchGroupJSON);
+                      print("got here");
+                      children = retrievedResearchGroup.institutions.map(
+                          (institution)=>listedInst(institution.name)
+                      ).toList();
                       break;
                     case ConnectionState.done:
                       children = <Widget>[Text("connection state done")];
