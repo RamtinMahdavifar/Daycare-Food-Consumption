@@ -1,115 +1,255 @@
 import 'package:flutter/material.dart';
+import 'package:plate_waste_recorder/Model/database.dart';
+import 'Model/institution.dart';
+import 'institution_page.dart';
+import 'package:plate_waste_recorder/Model/research_group_info.dart';
+import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
+import 'package:plate_waste_recorder/Model/research_group.dart';
+import 'package:plate_waste_recorder/Model/researcher_info.dart';
+import 'package:plate_waste_recorder/Model/institution_info.dart';
+import 'dart:convert'; // required for jsonDecode()
 
 void main() {
-  runApp(const MyApp());
+  // TODO: remove database initialization
+  // TODO: define dispose() methods for each widget
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(
+    const SelectInstitute(),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class SelectInstitute extends StatelessWidget {
+  const SelectInstitute({
+    Key? key,
+  }) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      title: 'Plate Waste Tracker',
+      home: ChooseInstitute()
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
+class ChooseInstitute extends StatefulWidget {
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<ChooseInstitute> createState() => _ChooseInstituteState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
+class _ChooseInstituteState extends State<ChooseInstitute> {
+  // define controllers for the form fields we'll have when adding new institutions
+  final _newInstitutionNameController = TextEditingController();
+  final _newInstitutionAddressController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      appBar: AppBar(title: Text('Plate Waste Tracker')),
+      body: Container(
+        margin: EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+          children: [ // TODO: move these child widgets to their own files
+            addInstitution(),
+            searchInstitution(),
+            institutionDisplay(),
+          ])
+      )
+    );
+  }
+
+  Widget listedInst(String name, String address){
+    return Card(
+        child: ListTile(
+            onTap: (){
+              // pass the name of the clicked on institution to the daycare screen
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context){
+                    return InstitutionPage(name, address);
+                  }));
+              },
+            leading: const Icon(Icons.flight_land_rounded),
+            title: Text(name)
+        )
+    );
+  }
+
+  Widget formEntry(String labelName, Icon icon, TextEditingController controller){
+    return TextFormField(
+        validator: (value) {
+          if (value == null || value.isEmpty){
+            return 'missing fields';
+          }
+          return null;
+        },
+        decoration: InputDecoration(
+            icon: icon,
+            labelText: labelName
         ),
+        controller: controller,
+    );
+  }
+
+  Widget formSubmit(){
+    return ElevatedButton(
+        onPressed: (){
+          /*
+          this code causes a crash, formkey.currentState is null
+          if(_formKey.currentState!.validate()){
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Submitted")),
+            );
+          }
+           */
+          // TODO: display this snackbar, add input validation etc
+          const SnackBar(content: Text("Submitted"));
+          String newName = _newInstitutionNameController.value.text;
+          String newAddress = _newInstitutionAddressController.value.text;
+          Database().addInstitutionToResearchGroup(Institution(newName, newAddress), ResearchGroupInfo("testResearchGroupName"));
+
+          // clear our text fields before exiting the add Institution popup
+          _newInstitutionNameController.clear();
+          _newInstitutionAddressController.clear();
+          Navigator.of(context, rootNavigator: true).pop();
+        },
+        child: const Text("Submit")
+    );
+  }
+
+  Widget formCancel(){
+    return ElevatedButton(
+        onPressed: (){
+          // clear the text fields before exiting the add Institution popup
+          _newInstitutionNameController.clear();
+          _newInstitutionAddressController.clear();
+          Navigator.of(context, rootNavigator: true).pop();
+        },
+        child: const Text("Cancel")
+    );
+  }
+
+  Widget enterSchoolForm(){
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+      elevation: 3,
+      child: Form(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                formEntry("name", Icon(Icons.home), _newInstitutionNameController),
+                formEntry("address", Icon(Icons.location_on_outlined), _newInstitutionAddressController),
+                //formEntry("other information", Icon(Icons.info_outline)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [formCancel(), formSubmit()],
+                )
+              ]
+          )
+
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  Widget addInstitution(){
+    return InkWell(
+      onTap: (){
+        showDialog(
+            context: context,
+            builder: (context) {
+              return enterSchoolForm();
+            }
+        );
+      }, //pop up form entry window
+      child: Card(
+          shape: BeveledRectangleBorder(
+              borderRadius: BorderRadius.circular(5.0)
+          ),
+          color: Colors.green,
+          elevation: 2,
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Expanded(
+                    flex: 1,
+                    child: Container(
+                        height: 55,
+                        width: 30,
+                        child: const Icon(
+                            Icons.add,
+                            color: Colors.white)
+                    )
+                ),
+                const Expanded(
+                    flex: 3,
+                    child: Padding(
+                        padding: EdgeInsets.only(left: 15),
+                        child: Text("Add Institution", style: TextStyle(fontSize: 25, color: Colors.white))
+                    )
+                )
+              ]
+          )
+      ),
+    );
+  }
+
+  Widget searchInstitution(){
+    return const Flexible(
+      child: Card(
+          color: Colors.white60,
+          elevation: 2,
+          child: ListTile(
+              leading: Icon(Icons.search),
+              title: Text("Search Institutions"))),
+    );
+  }
+
+  Widget institutionDisplay(){
+    return Flexible(
+        fit: FlexFit.loose,
+        child: StreamBuilder<Event>(
+          // use the ResearchGroup with name testResearchGroupName as a sort of stub
+          // as we don't yet have adding/joining research groups implemented
+          // TODO: get current ResearchGroup user is in and display it's info here
+            stream: Database().getResearchGroupStream(ResearchGroupInfo("testResearchGroupName")),
+            builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {
+              List<Widget> children;
+              if (snapshot.hasError){
+                children = <Widget> [Text("errors in database read occured")];
+              }
+              else{
+                switch(snapshot.connectionState){
+                  case ConnectionState.none:
+                    children = <Widget>[Text("connection state none")];
+                    // TODO: include a network error message or read local data
+                    break;
+                    case ConnectionState.waiting:
+                      children = <Widget>[Text("connection state waiting")];
+                      // TODO: include a loading or progress bar
+                      break;
+                    case ConnectionState.active:
+                      // TODO: see about using async database function to return a ResearchGroup to do all this
+                      // TODO: instead of having to have the below code to create a ResearchGroup here
+                      DataSnapshot researchGroupSnapshot = snapshot.data!.snapshot;
+                      Map<dynamic, dynamic> testMap = researchGroupSnapshot.value;
+                      String encodedMap = jsonEncode(testMap);
+
+                      Map<String, dynamic> researchGroupJSON = json.decode(
+                          encodedMap
+                      );
+                      ResearchGroup retrievedResearchGroup = ResearchGroup.fromJSON(researchGroupJSON);
+                      children = retrievedResearchGroup.institutionsMap.values.map(
+                          (institution)=>listedInst(institution.name, institution.institutionAddress)
+                      ).toList();
+                      break;
+                    case ConnectionState.done:
+                      children = <Widget>[Text("connection state done")];
+                      break;
+                  }
+                }
+                return ListView(
+                  children: children
+                );
+              })
     );
   }
 }
