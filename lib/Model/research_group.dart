@@ -1,5 +1,4 @@
-import 'package:plate_waste_recorder/Model/institution.dart';
-import 'package:plate_waste_recorder/Model/researcher.dart';
+import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/Model/researcher_info.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 
@@ -14,13 +13,62 @@ class ResearchGroup{
   // ie the owner of the group isn't included in this list
   List<ResearcherInfo> _groupMembers = [];
 
+  List<InstitutionInfo> _institutions = [];
 
+  // ResearchGroup constructor
   ResearchGroup(this._groupName, this._groupOwner);
 
+  String get name{
+    return this._groupName;
+  }
+
+  ResearcherInfo get owner{
+    return this._groupOwner;
+  }
+
+  List<ResearcherInfo> get members{
+    return this._groupMembers;
+  }
+
+
+  set name(String newName){
+    this._groupName = newName;
+  }
+
+  set owner(ResearcherInfo newOwner){
+    this._groupOwner = newOwner;
+  }
+
+  void addNewMember(ResearcherInfo newMember){
+
+    this._groupMembers.add(newMember);
+  }
+
+  int removeMember(ResearcherInfo member){
+
+    if(this._groupMembers.contains(member)){
+      this._groupMembers.remove(member);
+      // TODO: remove integer return codes and use exception instead if member isn't in list
+
+      return 0;
+    }else return -1;
+
+  }
+
+  void addNewInstitution(InstitutionInfo institutionInfo){
+    this._institutions.add(institutionInfo);
+    // TODO: synchronize this with the database so when an institution is added
+    // TODO: to a research group it is put on the database as well
+  }
+
+  List<InstitutionInfo> get institutions{
+    return this._institutions;
+  }
+  
   ResearchGroupInfo getResearchGroupInfo(){
     return ResearchGroupInfo(this._groupName);
   }
-
+  
   ResearchGroup.fromJSON(Map<String, dynamic> json)
       : _groupName = json["_groupName"].toString(), _groupOwner = json["_groupOwner"],
         _groupMembers = json["_groupMembers"]; // TODO: need null checks here, ie what if there aren't any group members so that field isn't even stored on the db
