@@ -13,9 +13,10 @@ class ResearchGroup{
 
   // groupMembers will only include members of the group outside of the owner
   // ie the owner of the group isn't included in this list
-  List<ResearcherInfo> _groupMembers = [];
+  List<ResearcherInfo> _groupMembers = []; // TODO: change datatype to Map<String dbkeys, ResearcherInfo>
 
-  List<InstitutionInfo> _institutions = [];
+  // keys consist of String database keys for each InstitutionInfo value
+  Map<String,InstitutionInfo> _institutionsMap = Map();
 
   // ResearchGroup constructor
   ResearchGroup(this._groupName, this._groupOwner);
@@ -58,13 +59,13 @@ class ResearchGroup{
   }
 
   void addNewInstitution(InstitutionInfo institutionInfo){
-    this._institutions.add(institutionInfo);
+    this._institutionsMap[institutionInfo.databaseKey] = institutionInfo;
     // TODO: synchronize this with the database so when an institution is added
     // TODO: to a research group it is put on the database as well
   }
 
-  List<InstitutionInfo> get institutions{
-    return this._institutions;
+  Map<String,InstitutionInfo> get institutionsMap{
+    return this._institutionsMap;
   }
   
   ResearchGroupInfo getResearchGroupInfo(){
@@ -75,17 +76,19 @@ class ResearchGroup{
     '_groupName': this._groupName,
     '_groupOwner': this._groupOwner,
     '_groupMembers': this._groupMembers,
-    '_institutions': this._institutions
+    '_institutionsMap': this._institutionsMap
   };
 
   ResearchGroup.fromJSON(Map<String, dynamic> json)
       : _groupName = json["_groupName"].toString(), _groupOwner = ResearcherInfo.fromJSON(json["_groupOwner"]),
         _groupMembers = (json["_groupMembers"] as List).cast<ResearcherInfo>(),
-        // look inside of the list _institutions field, this is originally a Map<dynamic,dynamic> and
-        // must be converted to a list, each item in this list is again Map<dynamic,dynamic>
-        // these items are just JSON that is used to recreate each present InstitutionInfo
-        _institutions = (json["_institutions"] as List).map(
-                (institutionJSON)=>InstitutionInfo.fromJSON(institutionJSON)
-        ).toList();
+        // look inside of the _institutionsMap field, this is originally a Map<String,dynamic> and
+        // must be converted to a map of <String,InstitutionInfo>, casting will not work
+        // here, we need to recreate each InstitutionInfo from the json itself, these
+        // are the values of the map, we can reuse the keys already in the json.
+        _institutionsMap = Map<String,InstitutionInfo>.fromIterables((json["_institutionsMap"] as Map<String,dynamic>).keys,
+            (json["_institutionsMap"] as Map<String,dynamic>).values.map(
+                (institutionJSON)=>InstitutionInfo.fromJSON(institutionJSON)).toList());
+
   // TODO: need null checks here, ie what if there aren't any group members so that field isn't even stored on the db
 }
