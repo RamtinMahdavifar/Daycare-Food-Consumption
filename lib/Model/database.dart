@@ -29,9 +29,12 @@ class Database {
     return _instance;
   }
 
-  void writeInstitution(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo){
-    _databaseInstance.reference().child(currentResearchGroupInfo.databaseKey)
-        .child(institutionInfo.databaseKey);
+  void writeInstitution(Institution institution, ResearchGroupInfo currentResearchGroupInfo){
+    InstitutionInfo currentInstitutionInfo = institution.getInstitutionInfo();
+    DatabaseReference institutionReference = _databaseInstance.reference()
+        .child(currentResearchGroupInfo.databaseKey)
+        .child(currentInstitutionInfo.databaseKey);
+    institutionReference.set(institution);
   }
 
   void readInstitution(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
@@ -58,6 +61,18 @@ class Database {
       ResearchGroup retrievedResearchGroup = ResearchGroup.fromJSON(researchGroupJSON);
       callback(retrievedResearchGroup);
     });
+  }
 
+  Stream<Event> getResearchGroupStream(ResearchGroupInfo researchGroupInfo){
+    DatabaseReference desiredResearchGroupReference = _databaseInstance.reference()
+        .child(researchGroupInfo.databaseKey);
+    return desiredResearchGroupReference.onValue;
+  }
+
+  void writeResearchGroup(ResearchGroup researchGroup){
+    ResearchGroupInfo researchGroupInfo = researchGroup.getResearchGroupInfo();
+    DatabaseReference researchGroupDatabaseReference = _databaseInstance.reference()
+      .child(researchGroupInfo.databaseKey);
+    researchGroupDatabaseReference.set(researchGroup);
   }
 }
