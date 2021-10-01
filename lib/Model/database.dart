@@ -50,6 +50,7 @@ class Database {
   void readInstitution(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
         Function(Institution) callback){
     DatabaseReference desiredInstitutionReference = _databaseInstance.reference()
+        .child(this._researchGroupRootLocation)
         .child(currentResearchGroupInfo.databaseKey)
         .child(institutionInfo.databaseKey);
     desiredInstitutionReference.once().then((DataSnapshot dataSnapshot)=>(
@@ -62,6 +63,7 @@ class Database {
   void readResearchGroup(ResearchGroupInfo researchGroupInfo,
       Function(ResearchGroup) callback){
     DatabaseReference desiredResearchGroupReference = _databaseInstance.reference()
+        .child(this._researchGroupRootLocation)
         .child(researchGroupInfo.databaseKey);
     // use onValue instead of once() to read data here as we want to read data and
     // then also update data if any changes have occurred to the database
@@ -75,6 +77,7 @@ class Database {
 
   Stream<Event> getResearchGroupStream(ResearchGroupInfo researchGroupInfo){
     DatabaseReference desiredResearchGroupReference = _databaseInstance.reference()
+        .child(this._researchGroupRootLocation)
         .child(researchGroupInfo.databaseKey);
     return desiredResearchGroupReference.onValue;
   }
