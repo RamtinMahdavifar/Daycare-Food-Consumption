@@ -1,35 +1,21 @@
-
-
-
-import 'main.dart';
 import 'package:flutter/material.dart';
 
-class Daycare extends StatelessWidget {
+class Institution extends StatefulWidget {
   String institutionName;
   String institutionAddress;
 
-  Daycare(this.institutionName,this.institutionAddress, {Key? key}) : super(key: key);
+  Institution(this.institutionName,this.institutionAddress, {Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    // TODO remove this class, could go right into DaycareMenu
-    return Scaffold(
-      body: DaycareMenu(),
-    );
-  }
+  State<Institution> createState() => _InstitutionState();
 }
 
-class DaycareMenu extends StatefulWidget {
-  @override
-  State<DaycareMenu> createState() => _DaycareMenuState();
-}
-
-class _DaycareMenuState extends State<DaycareMenu> {
+class _InstitutionState extends State<Institution> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("nameOfSchool"), leading: BackButton(), actions: [modifyButton()]),
-        body: _DaycareMenu()
+        body: _InstitutionOptions()
     );
   }
 
@@ -37,10 +23,7 @@ class _DaycareMenuState extends State<DaycareMenu> {
     return InkWell(
       onTap: (){
         Navigator.pop(context);
-      },/*Navigator.push(context, MaterialPageRoute(
-          builder: (context){
-            return SelectInstitute();
-          })),*/
+      },
       child: Icon(Icons.arrow_back)
     );
   }
@@ -65,7 +48,7 @@ class _DaycareMenuState extends State<DaycareMenu> {
     );
   }
 
-  Widget _DaycareMenu(){
+  Widget _InstitutionOptions(){
       return Scaffold(
           body: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
