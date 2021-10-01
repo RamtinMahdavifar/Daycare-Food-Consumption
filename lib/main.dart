@@ -108,12 +108,10 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
             );
           }
            */
-          // TODO: display this snackbar
+          // TODO: display this snackbar, add input validation etc
           const SnackBar(content: Text("Submitted"));
           String newName = _newInstitutionNameController.value.text;
           String newAddress = _newInstitutionAddressController.value.text;
-          print(newName);
-          print(newAddress);
           Database().writeInstitution(Institution(newName, newAddress), ResearchGroupInfo("testResearchGroupName"));
 
           // clear our text fields before exiting the add Institution popup
@@ -241,12 +239,13 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
                       DataSnapshot researchGroupSnapshot = snapshot.data!.snapshot;
                       Map<dynamic, dynamic> testMap = researchGroupSnapshot.value;
                       String encodedMap = jsonEncode(testMap);
+                      print(encodedMap);
 
                       Map<String, dynamic> researchGroupJSON = json.decode(
                           encodedMap
                       );
                       ResearchGroup retrievedResearchGroup = ResearchGroup.fromJSON(researchGroupJSON);
-                      children = retrievedResearchGroup.institutions.map(
+                      children = retrievedResearchGroup.institutionsMap.values.map(
                           (institution)=>listedInst(institution.name, institution.institutionAddress)
                       ).toList();
                       break;
