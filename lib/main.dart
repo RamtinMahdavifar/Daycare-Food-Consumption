@@ -43,24 +43,34 @@ class ChooseInstitute extends StatefulWidget {
 }
 
 class _ChooseInstituteState extends State<ChooseInstitute> {
-
+  // define controllers for the form fields we'll have when adding new institutions
+  final _newInstitutionNameController = TextEditingController();
+  final _newInstitutionAddressController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Plate Waste Tracker')),
-      body: _mainMenu(),
+      body: Container(
+        margin: EdgeInsets.symmetric(horizontal: 8.0),
+        child: Column(
+          children: [
+            addInstitution(),
+            searchInstitution(),
+            institutionDisplay(),
+          ])
+      )
     );
   }
 
-  Widget listedInst(String name){
+  Widget listedInst(String name, String address){
     return Card(
         child: ListTile(
             onTap: (){
               // pass the name of the clicked on institution to the daycare screen
               Navigator.push(context, MaterialPageRoute(
                   builder: (context){
-                    return Institution(name, name);
+                    return Institution(name, address);
                   }));
               },
             leading: const Icon(Icons.flight_land_rounded),
@@ -128,7 +138,7 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
     );
   }
 
-  Widget addInstitute(){
+  Widget addInstitution(){
     return InkWell(
       onTap: (){
         showDialog(
@@ -181,32 +191,25 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
     );
   }
 
-  Widget _mainMenu(){
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8.0),
-      child: Column(
-
-        children: [
-          addInstitute(),
-          searchInstitution(),
-          Flexible(
-            fit: FlexFit.loose,
-            child: StreamBuilder<Event>(
-              // use the ResearchGroup with name testResearchGroupName as a sort of stub
-              // as we don't yet have adding/joining research groups implemented
-              // TODO: get current ResearchGroup user is in and display it's info here
-              stream: Database().getResearchGroupStream(ResearchGroupInfo("testResearchGroupName")),
-              builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {
-                List<Widget> children;
-                if (snapshot.hasError){
-                  children = <Widget> [Text("errors in database read occured")];
-                }
-                else{
-                  switch(snapshot.connectionState){
-                    case ConnectionState.none:
-                      children = <Widget>[Text("connection state none")];
-                      // TODO: include a network error message or read local data
-                      break;
+  Widget institutionDisplay(){
+    return Flexible(
+        fit: FlexFit.loose,
+        child: StreamBuilder<Event>(
+          // use the ResearchGroup with name testResearchGroupName as a sort of stub
+          // as we don't yet have adding/joining research groups implemented
+          // TODO: get current ResearchGroup user is in and display it's info here
+            stream: Database().getResearchGroupStream(ResearchGroupInfo("testResearchGroupName")),
+            builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {
+              List<Widget> children;
+              if (snapshot.hasError){
+                children = <Widget> [Text("errors in database read occured")];
+              }
+              else{
+                switch(snapshot.connectionState){
+                  case ConnectionState.none:
+                    children = <Widget>[Text("connection state none")];
+                    // TODO: include a network error message or read local data
+                    break;
                     case ConnectionState.waiting:
                       children = <Widget>[Text("connection state waiting")];
                       // TODO: include a loading or progress bar
@@ -223,7 +226,7 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
                       );
                       ResearchGroup retrievedResearchGroup = ResearchGroup.fromJSON(researchGroupJSON);
                       children = retrievedResearchGroup.institutions.map(
-                          (institution)=>listedInst(institution.name)
+                          (institution)=>listedInst(institution.name, institution.institutionAddress)
                       ).toList();
                       break;
                     case ConnectionState.done:
@@ -234,14 +237,7 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
                 return ListView(
                   children: children
                 );
-              }
-
-
-
-            )
-          )
-        ],
-      )
+              })
     );
   }
 }
