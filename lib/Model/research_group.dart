@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/Model/researcher_info.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
@@ -77,6 +79,13 @@ class ResearchGroup{
   };
 
   ResearchGroup.fromJSON(Map<String, dynamic> json)
-      : _groupName = json["_groupName"].toString(), _groupOwner = json["_groupOwner"],
-        _groupMembers = json["_groupMembers"]; // TODO: need null checks here, ie what if there aren't any group members so that field isn't even stored on the db
+      : _groupName = json["_groupName"].toString(), _groupOwner = ResearcherInfo.fromJSON(json["_groupOwner"]),
+        _groupMembers = (json["_groupMembers"] as List).cast<ResearcherInfo>(),
+        // look inside of the list _institutions field, this is originally a Map<dynamic,dynamic> and
+        // must be converted to a list, each item in this list is again Map<dynamic,dynamic>
+        // these items are just JSON that is used to recreate each present InstitutionInfo
+        _institutions = (json["_institutions"] as List).map(
+                (institutionJSON)=>InstitutionInfo.fromJSON(institutionJSON)
+        ).toList();
+  // TODO: need null checks here, ie what if there aren't any group members so that field isn't even stored on the db
 }
