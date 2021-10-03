@@ -14,6 +14,7 @@ void main() {
   // TODO: define dispose() methods for each widget
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
+    // TODO: split pages/screens and widgets into separate files.
     const SelectInstitute(),
   );
 }
