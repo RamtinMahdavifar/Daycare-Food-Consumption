@@ -1,0 +1,4 @@
+io/flutter/plugins/GeneratedPluginRegistrant.java
+ io.flutter.plugins.GeneratedPluginRegistrant
+com/example/plate_waste_recorder/BuildConfig.java
+ com.example.plate_waste_recorder.BuildConfig

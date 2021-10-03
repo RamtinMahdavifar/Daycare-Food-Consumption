@@ -29,33 +29,12 @@ class ResearchGroup{
     return this._groupOwner;
   }
 
-  List<ResearcherInfo> get members{
-    return this._groupMembers;
-  }
-
-
   set name(String newName){
     this._groupName = newName;
   }
 
   set owner(ResearcherInfo newOwner){
     this._groupOwner = newOwner;
-  }
-
-  void addNewMember(ResearcherInfo newMember){
-
-    this._groupMembers.add(newMember);
-  }
-
-  int removeMember(ResearcherInfo member){
-
-    if(this._groupMembers.contains(member)){
-      this._groupMembers.remove(member);
-      // TODO: remove integer return codes and use exception instead if member isn't in list
-
-      return 0;
-    }else return -1;
-
   }
 
   void addNewInstitution(InstitutionInfo institutionInfo){
@@ -74,9 +53,9 @@ class ResearchGroup{
 
   Map<String, dynamic> toJson() => {
     '_groupName': this._groupName,
-    '_groupOwner': this._groupOwner,
-    '_groupMembers': this._groupMembers,
-    '_institutionsMap': this._institutionsMap
+    '_groupOwner': jsonEncode(this._groupOwner),
+    '_groupMembers': jsonEncode(this._groupMembers),
+    '_institutionsMap': jsonEncode(this._institutionsMap)
   };
 
   ResearchGroup.fromJSON(Map<String, dynamic> json)
@@ -89,6 +68,4 @@ class ResearchGroup{
         _institutionsMap = Map<String,InstitutionInfo>.fromIterables((json["_institutionsMap"] as Map<String,dynamic>).keys,
             (json["_institutionsMap"] as Map<String,dynamic>).values.map(
                 (institutionJSON)=>InstitutionInfo.fromJSON(institutionJSON)).toList());
-
-  // TODO: need null checks here, ie what if there aren't any group members so that field isn't even stored on the db
 }
