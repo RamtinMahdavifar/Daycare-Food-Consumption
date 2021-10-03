@@ -52,6 +52,7 @@ class Database {
     institutionReference.set(institutionInfoMap);
   }
 
+  // TODO: update to make async
   void readInstitution(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
         Function(Institution) callback){
     DatabaseReference desiredInstitutionReference = _databaseInstance.reference()
@@ -65,6 +66,7 @@ class Database {
     ));
   }
 
+  // TODO: update to make async
   void readResearchGroup(ResearchGroupInfo researchGroupInfo,
       Function(ResearchGroup) callback){
     DatabaseReference desiredResearchGroupReference = _databaseInstance.reference()
