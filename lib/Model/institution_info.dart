@@ -17,6 +17,18 @@ class InstitutionInfo extends Info{
     return this._institutionAddress;
   }
 
+  // TODO: overwrite hashcode(), two equal objects should have the same hashcode
+  @override
+  bool operator ==(Object other){
+    if (other.runtimeType == this.runtimeType){
+      InstitutionInfo otherInfo = other as InstitutionInfo;
+      return this.name == otherInfo.name &&
+          this.databaseKey == otherInfo.databaseKey &&
+          this._institutionAddress == otherInfo._institutionAddress;
+    }
+    return false;
+  }
+
   @override
   Map<String, dynamic> toJson() => {
     'name': this.name,

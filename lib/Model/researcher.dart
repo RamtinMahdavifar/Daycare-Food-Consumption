@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:plate_waste_recorder/Model/researcher_info.dart';
 
@@ -17,8 +19,7 @@ class Researcher{
 
   Map<String, dynamic> toJson() => {
     '_researcherName': this._researcherName,
-    // TODO: somehow convert list to JSON
-    '_researchGroupInfos': this._researchGroupInfos,
+    '_researchGroupInfos': jsonEncode(this._researchGroupInfos),
   };
 
 
