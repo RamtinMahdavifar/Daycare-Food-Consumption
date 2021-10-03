@@ -1,6 +1,9 @@
 
 import 'package:plate_waste_recorder/Model/info.dart';
 
+/// Class with information related to a ResearchGroup, can be used to display some
+/// high level information about a ResearchGroup or read a ResearchGroup in from
+/// our database
 class ResearchGroupInfo extends Info{
   // must override these fields here or else fields cannot be used in the JSON constructor
   String name = "";
