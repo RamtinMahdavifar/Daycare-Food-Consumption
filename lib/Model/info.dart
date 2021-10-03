@@ -21,4 +21,15 @@ abstract class Info{
     'name': this.name,
     'databaseKey': this.databaseKey,
   };
+
+  // TODO: overwrite hashcode(), two equal objects should have the same hashcode
+  @override
+  bool operator ==(Object other){
+    if (other.runtimeType == this.runtimeType){
+      Info otherInfo = other as Info;
+      return this.name == otherInfo.name &&
+          this.databaseKey == otherInfo.databaseKey;
+    }
+    return false;
+  }
 }
