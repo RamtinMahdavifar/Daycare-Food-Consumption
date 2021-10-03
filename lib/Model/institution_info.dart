@@ -1,5 +1,8 @@
 import 'package:plate_waste_recorder/Model/info.dart';
 
+/// Class with basic information to represent an Institution, allows for easy display
+/// of some high level Institution information and can be used to easily read
+/// Institution objects in from our Database
 class InstitutionInfo extends Info{
   String _institutionAddress;
   String name = "";
