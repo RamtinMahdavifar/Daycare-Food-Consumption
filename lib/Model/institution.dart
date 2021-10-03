@@ -1,7 +1,8 @@
 
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 
-/// Class representing an institution
+/// Class representing an institution, institutions are considered to be anywhere where
+/// data collection in a plate waste study might be undertaken
 class Institution {
   String _name;
   String _address;

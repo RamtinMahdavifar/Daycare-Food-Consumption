@@ -1,6 +1,8 @@
 
 import 'package:plate_waste_recorder/Model/info.dart';
 
+/// Class storing high level information regarding researchers, can be used to display
+/// such high level information or read in a Researcher object from our database
 class ResearcherInfo extends Info{
   // we must override these fields here or else they are inaccessible in JSON constructor
   String name = "";
