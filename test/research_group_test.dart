@@ -1,29 +1,36 @@
+import 'dart:convert';
+
+import 'package:plate_waste_recorder/Model/institution_info.dart';
+import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:test/test.dart';
 import 'package:plate_waste_recorder/Model/research_group.dart';
 import 'package:plate_waste_recorder/Model/researcher_info.dart';
-// run tests from the terminal using: flutter test test/institution_test.dart
+// run tests from the terminal using: flutter test test/research_group_test.dart
+// if flutter.bat is not part of you PATH environment variable provide the absolute path
+// to flutter.bat, for example use installationdirectory\flutter\bin\flutter test test/research_group_test.dart
 void main(){
   group("research_group getters and setters",() {
     test("research group getters", () {
 
       final groupOwner = ResearcherInfo("Prof");
-      final groupMember1 = ResearcherInfo("Student1");
-      final groupMember2 = ResearcherInfo("Student2");
-      List<ResearcherInfo> groupMembers = [];
-      groupMembers.add(groupMember1);
-      groupMembers.add(groupMember2);
 
+      final testResearchGroup = ResearchGroup("Test rGroup", groupOwner);
 
-      final testresearch_group = ResearchGroup("Test rGroup", groupOwner);
+      expect(testResearchGroup.name,"Test rGroup");
+      expect(testResearchGroup.owner, groupOwner);
 
-      testresearch_group.addNewMember(groupMember1);
-      testresearch_group.addNewMember(groupMember2);
+      expect(testResearchGroup.getResearchGroupInfo(), ResearchGroupInfo("Test rGroup"));
 
+      testResearchGroup.addNewInstitution(InstitutionInfo("test institution", "institution address"));
 
+      expect(testResearchGroup.institutionsMap, <String,InstitutionInfo>{
+        "institution address":InstitutionInfo("test institution","institution address")});
 
-      expect(testresearch_group.name,"Test rGroup");
-      expect(testresearch_group.owner, groupOwner);
-      expect(testresearch_group.members,groupMembers );
+      testResearchGroup.addNewInstitution(InstitutionInfo("other institution", "other address"));
+      expect(testResearchGroup.institutionsMap, <String,InstitutionInfo>{
+      "institution address":InstitutionInfo("test institution","institution address"),
+      "other address":InstitutionInfo("other institution","other address")});
+
     });
 
     test("research group setters", () {
@@ -31,69 +38,34 @@ void main(){
       final groupOwner = ResearcherInfo("Prof");
       final groupOwner1 = ResearcherInfo("Student1");
 
-      final testresearch_group = ResearchGroup("Test rGroup", groupOwner);
+      final testResearchGroup = ResearchGroup("Test rGroup", groupOwner);
 
-      testresearch_group.name = "new test name";
-      testresearch_group.owner = groupOwner1;
-      expect(testresearch_group.name, "new test name");
-      expect(testresearch_group.owner, groupOwner1);
+      testResearchGroup.name = "new test name";
+      testResearchGroup.owner = groupOwner1;
+      expect(testResearchGroup.name, "new test name");
+      expect(testResearchGroup.owner, groupOwner1);
     });
   });
 
-  group("research_group members list",() {
-    test("add member", () {
-
+  group("JSON operations",(){
+    test("to json",(){
       final groupOwner = ResearcherInfo("Prof");
+      final testResearchGroup = ResearchGroup("Test rGroup", groupOwner);
 
-
-
-      final testresearch_group = ResearchGroup("Test rGroup", groupOwner);
-      expect(testresearch_group.members,[]);
-
-      final groupMember1 = ResearcherInfo("Student1");
-      final groupMember2 = ResearcherInfo("Student2");
-
-      List<ResearcherInfo> groupMembers = [];
-      groupMembers.add(groupMember1);
-      groupMembers.add(groupMember2);
-      testresearch_group.addNewMember(groupMember1);
-      testresearch_group.addNewMember(groupMember2);
-      expect(testresearch_group.members, groupMembers);
-
+      expect(testResearchGroup.toJson(),<String,dynamic>{"_groupName":"Test rGroup","_groupOwner":jsonEncode(groupOwner),
+      "_groupMembers":"[]","_institutionsMap":"{}"});
     });
 
-    test("remove a member", () {
-      final groupOwner = ResearcherInfo("Prof");
-      final testresearch_group = ResearchGroup("Test rGroup", groupOwner);
-      final groupMember1 = ResearcherInfo("Student1");
-      final groupMember2 = ResearcherInfo("Student2");
+    test("from json",(){
+      ResearcherInfo groupOwner = ResearcherInfo("Prof");
 
-      List<ResearcherInfo> groupMembers = [];
-      groupMembers.add(groupMember1);
-      groupMembers.add(groupMember2);
-      testresearch_group.addNewMember(groupMember1);
-      testresearch_group.addNewMember(groupMember2);
-      expect(testresearch_group.members, groupMembers);
+      Map<String,dynamic> testJson = <String,dynamic>{"_groupName":"Test rGroup","_groupOwner":
+      groupOwner.toJson(), "_groupMembers":[],"_institutionsMap":<String,InstitutionInfo>{}};
 
-      expect(testresearch_group.removeMember(groupMember1), 0);
-      expect(testresearch_group.removeMember(groupMember2), 0);
-
-      expect(testresearch_group.members,[]);
-
-
-
-
-    });
-
-    test("remove non existing members", () {
-
-      final groupOwner = ResearcherInfo("Prof");
-      final testresearch_group = ResearchGroup("Test rGroup", groupOwner);
-      final groupMember1 = ResearcherInfo("Student1");
-
-      expect(testresearch_group.removeMember(groupMember1), -1);
-
-
+      ResearchGroup testResearchGroup = ResearchGroup.fromJSON(testJson);
+      expect(testResearchGroup.name,"Test rGroup");
+      expect(testResearchGroup.owner,groupOwner);
+      expect(testResearchGroup.institutionsMap,<String,InstitutionInfo>{});
     });
   });
 }
