@@ -38,5 +38,16 @@ class Institution {
   Institution.fromJSON(Map<String, dynamic> json)
   : _name = json["_name"].toString(), _address = json["_address"].toString();
 
+  // define the equality operator
+  // TODO: overwrite hashcode(), two equal objects should have the same hashcode
+  @override
+  bool operator ==(Object other){
+    if (other.runtimeType == this.runtimeType){
+      Institution otherInstitution = other as Institution;
+      return this._name == otherInstitution._name &&
+          this._address == otherInstitution._address;
+    }
+    return false;
+  }
 
 }
