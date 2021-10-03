@@ -19,7 +19,7 @@ samples, guidance on mobile development, and a full API reference.
 ## How to run the app
 1. Download [Nox](https://www.bignox.com/en/download/fullPackage) using any browser
 2. Install Nox using the downloaded exe file
-3. Download latest app APK from Build Folder 
+3. Download latest app APK from [Build Folder](https://github.com/UniversityOfSaskatchewanCMPT371/term-project-fall-2021-team-2-1/blob/Development/build/app/outputs/flutter-apk/app.apk) 
 4. Open Nox application
 5. Drag the Downloaded APK over Nox emulator screen (It will automatically install the APK)
 6. You will get a "Plate_waste_recorder" application logo on the Nox main and applications screen, Click on that to run the app
