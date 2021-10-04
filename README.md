@@ -3,7 +3,7 @@
 Cross platform application to record plate waste and access nutrition intake in a variety of contexts and settings. Assists in the gathering, maintenance and export of plate waste and nutrition intake data.
 
 ## Incremental Deliverable 1:
-Documentation and other artifacts related to incremental deliverable 1 can be found [here](https://drive.google.com/drive/folders/1_8bK7QNmn4JO_-fjPdOtxSfsiIA0zo2r)
+Documentation and other artifacts related to incremental deliverable 1 can be found [here](https://drive.google.com/drive/folders/1_8bK7QNmn4JO_-fjPdOtxSfsiIA0zo2r?usp=sharing)
 
 ## How to Run the App
 1. Download [Nox](https://www.bignox.com/en/download/fullPackage) using any browser
