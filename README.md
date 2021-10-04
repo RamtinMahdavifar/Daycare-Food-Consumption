@@ -39,8 +39,10 @@ As of incremental deliverable 1, the app has the following preliminary functiona
 
 ## Known Issues
 As of incremental deliverable 1, the following issues are present in the app: 
--creating an institution with an empty name or address (or both) will cause the app to crash, this will also overwrite any other institutions currently on the database with an empty string which in turn causes the app to continuously crash upon repeated startup. This is a serious issue that will be address when we add input validation in incremental deliverable 2.
--the database has not been stress tested or built for use offline or in conditions of poor network connectivity as of incremental deliverable 1, using the app in these conditions may cause issues. These issues will be dealt with in future.
+
+- Creating an institution with an empty name or address (or both) will cause the app to crash, this will also overwrite any other institutions currently on the database with an empty string which in turn causes the app to continuously crash upon repeated startup. This is a serious issue that will be address when we add input validation in incremental deliverable 2.
+
+- The database has not been stress tested or built for use offline or in conditions of poor network connectivity as of incremental deliverable 1, using the app in these conditions may cause issues. These issues will be dealt with in future.
 
 ## Spike Prototypes
 Currently we have created [this](https://github.com/UniversityOfSaskatchewanCMPT371/term-project-fall-2021-team-2-1/releases/tag/Firebase-Flutter_integration) spike prototype for exploring the integration between flutter and the firebase realtime database. In future we plan to develop additional spike prototypes to explore the use of the device camera and associated apis and determine whether google sheets can be used to export data. Depending on stakeholder requirements we may also create a prototype exploring the usage of bluetooth scales as well.
