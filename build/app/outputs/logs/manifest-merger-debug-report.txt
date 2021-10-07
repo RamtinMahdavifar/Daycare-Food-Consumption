@@ -5,12 +5,15 @@ INJECTED from /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team
 INJECTED from /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:1:1-32:12
 INJECTED from /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:1:1-32:12
 MERGED from /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:1:1-32:12
+MERGED from [:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-19:12
+MERGED from [:flutter_plugin_android_lifecycle] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/flutter_plugin_android_lifecycle/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:firebase_database] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_database/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-15:12
 MERGED from [:firebase_core] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-15:12
 MERGED from [com.google.firebase:firebase-database:20.0.2] /home/keplar/.gradle/caches/transforms-2/files-2.1/025205453b3529bc2319109ed17c0a94/jetified-firebase-database-20.0.2/AndroidManifest.xml:15:1-38:12
 MERGED from [com.google.firebase:firebase-appcheck-interop:16.0.0-beta02] /home/keplar/.gradle/caches/transforms-2/files-2.1/ff5e8f7b0a77959153f924b5295ae982/jetified-firebase-appcheck-interop-16.0.0-beta02/AndroidManifest.xml:15:1-26:12
 MERGED from [com.google.firebase:firebase-auth-interop:19.0.2] /home/keplar/.gradle/caches/transforms-2/files-2.1/49f58621a6a23994e2c06e2fd4ce23e4/jetified-firebase-auth-interop-19.0.2/AndroidManifest.xml:2:1-10:12
 MERGED from [com.google.firebase:firebase-common:20.0.0] /home/keplar/.gradle/caches/transforms-2/files-2.1/e8c12af64c0d197211b7d090cb61cdf8/jetified-firebase-common-20.0.0/AndroidManifest.xml:15:1-40:12
+MERGED from [androidx.exifinterface:exifinterface:1.3.0] /home/keplar/.gradle/caches/transforms-2/files-2.1/5aab23ebf0755884548d9d3bd3ecce40/exifinterface-1.3.0/AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.firebase:firebase-database-collection:18.0.0] /home/keplar/.gradle/caches/transforms-2/files-2.1/369c59889e801cc817dee2786a28ea2c/jetified-firebase-database-collection-18.0.0/AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.android.gms:play-services-base:17.1.0] /home/keplar/.gradle/caches/transforms-2/files-2.1/0813e45a0b3806629b40dbeb70c75a60/jetified-play-services-base-17.1.0/AndroidManifest.xml:17:1-29:12
 MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /home/keplar/.gradle/caches/transforms-2/files-2.1/da614d13d040eef48ad74ecd5566831c/jetified-play-services-tasks-17.0.0/AndroidManifest.xml:2:1-9:12
@@ -48,6 +51,8 @@ INJECTED from /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team
 		ADDED from /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:1:11-69
 application
 ADDED from /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:3:4-31:19
+MERGED from [:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-17:19
+MERGED from [:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-17:19
 MERGED from [:firebase_database] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_database/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-13:19
 MERGED from [:firebase_database] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_database/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-13:19
 MERGED from [:firebase_core] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-13:19
@@ -116,6 +121,10 @@ uses-sdk
 INJECTED from /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml
 INJECTED from /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml
+MERGED from [:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_plugin_android_lifecycle] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/flutter_plugin_android_lifecycle/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_plugin_android_lifecycle] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/flutter_plugin_android_lifecycle/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:firebase_database] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_database/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:firebase_database] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_database/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:firebase_core] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
@@ -128,6 +137,8 @@ MERGED from [com.google.firebase:firebase-auth-interop:19.0.2] /home/keplar/.gra
 MERGED from [com.google.firebase:firebase-auth-interop:19.0.2] /home/keplar/.gradle/caches/transforms-2/files-2.1/49f58621a6a23994e2c06e2fd4ce23e4/jetified-firebase-auth-interop-19.0.2/AndroidManifest.xml:5:5-44
 MERGED from [com.google.firebase:firebase-common:20.0.0] /home/keplar/.gradle/caches/transforms-2/files-2.1/e8c12af64c0d197211b7d090cb61cdf8/jetified-firebase-common-20.0.0/AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.firebase:firebase-common:20.0.0] /home/keplar/.gradle/caches/transforms-2/files-2.1/e8c12af64c0d197211b7d090cb61cdf8/jetified-firebase-common-20.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.0] /home/keplar/.gradle/caches/transforms-2/files-2.1/5aab23ebf0755884548d9d3bd3ecce40/exifinterface-1.3.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.0] /home/keplar/.gradle/caches/transforms-2/files-2.1/5aab23ebf0755884548d9d3bd3ecce40/exifinterface-1.3.0/AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.firebase:firebase-database-collection:18.0.0] /home/keplar/.gradle/caches/transforms-2/files-2.1/369c59889e801cc817dee2786a28ea2c/jetified-firebase-database-collection-18.0.0/AndroidManifest.xml:5:5-7:41
 MERGED from [com.google.firebase:firebase-database-collection:18.0.0] /home/keplar/.gradle/caches/transforms-2/files-2.1/369c59889e801cc817dee2786a28ea2c/jetified-firebase-database-collection-18.0.0/AndroidManifest.xml:5:5-7:41
 MERGED from [com.google.android.gms:play-services-base:17.1.0] /home/keplar/.gradle/caches/transforms-2/files-2.1/0813e45a0b3806629b40dbeb70c75a60/jetified-play-services-base-17.1.0/AndroidManifest.xml:20:5-44
@@ -178,6 +189,22 @@ MERGED from [com.google.firebase:firebase-database:20.0.2] /home/keplar/.gradle/
 MERGED from [com.google.firebase:firebase-database:20.0.2] /home/keplar/.gradle/caches/transforms-2/files-2.1/025205453b3529bc2319109ed17c0a94/jetified-firebase-database-20.0.2/AndroidManifest.xml:26:5-67
 	android:name
 		ADDED from /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/debug/AndroidManifest.xml:6:22-64
+provider#io.flutter.plugins.imagepicker.ImagePickerFileProvider
+ADDED from [:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-16:20
+	android:grantUriPermissions
+		ADDED from [:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:12:13-47
+	android:authorities
+		ADDED from [:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:10:13-74
+	android:exported
+		ADDED from [:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-37
+	android:name
+		ADDED from [:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-82
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from [:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-15:75
+	android:resource
+		ADDED from [:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:15:17-72
+	android:name
+		ADDED from [:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:14:17-67
 service#com.google.firebase.components.ComponentDiscoveryService
 ADDED from [:firebase_database] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_database/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
 MERGED from [:firebase_core] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
