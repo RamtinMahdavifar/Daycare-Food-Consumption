@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Model/database.dart';
+import 'package:plate_waste_recorder/View/upload_data.dart';
 import '../Model/institution.dart';
 import '../Model/institution_info.dart';
-import '../institution_page.dart';
+import 'institution_page.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
 import 'package:plate_waste_recorder/Model/research_group.dart';
@@ -216,5 +217,85 @@ Widget institutionDisplay(BuildContext context) {
                 children: children
             );
           })
+  );
+}
+
+Widget BackButton(BuildContext context){
+  return InkWell(
+      onTap: (){
+        Navigator.pop(context);
+      },
+      child: Icon(Icons.arrow_back)
+  );
+}
+
+Widget modifyButton(){
+  return InkWell(
+      onTap: () {},
+      child: Icon(Icons.edit)
+  );
+}
+Widget MenuButton(String btnName){
+  return Flexible(
+      child: SizedBox(
+          height: 100,
+          width: 100,
+          child: ElevatedButton(
+            child: Text(btnName),
+            onPressed: () {},
+
+          )
+      )
+  );
+}
+
+Widget uploadImage(BuildContext context){
+  return InkWell(
+    onTap: (){
+      return null;
+    }, //pop up form entry window
+    child: Card(
+        shape: BeveledRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0)
+        ),
+        color: Colors.green,
+        elevation: 2,
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Expanded(
+                  flex: 1,
+                  child: Container(
+                      height: 55,
+                      width: 30,
+                      child: const Icon(
+                          Icons.image,
+                          color: Colors.white)
+                  )
+              ),
+              const Expanded(
+                  flex: 3,
+                  child: Padding(
+                      padding: EdgeInsets.only(left: 15),
+                      child: Text("Upload Image", style: TextStyle(fontSize: 25, color: Colors.white))
+                  )
+              )
+            ]
+        )
+    ),
+  );
+}
+
+
+Widget quickfixButton(BuildContext context){
+  return InkWell(
+      onTap: (){
+        // pass the name of the clicked on institution to the daycare screen
+        Navigator.push(context, MaterialPageRoute(
+            builder: (context){
+              return UploadData();
+            }));
+      },
+      child: Icon(Icons.edit)
   );
 }

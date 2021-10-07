@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'widgets.dart' as btn;
 
 class InstitutionPage extends StatefulWidget {
   String institutionName;
@@ -14,37 +15,8 @@ class _InstitutionPageState extends State<InstitutionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.institutionName.toString()), leading: BackButton(), actions: [modifyButton()]),
+      appBar: AppBar(title: Text(widget.institutionName.toString()), leading: btn.BackButton(context), actions: [btn.modifyButton()]),
         body: _InstitutionOptions()
-    );
-  }
-
-  Widget BackButton(){
-    return InkWell(
-      onTap: (){
-        Navigator.pop(context);
-      },
-      child: Icon(Icons.arrow_back)
-    );
-  }
-
-  Widget modifyButton(){
-    return InkWell(
-        onTap: () {},
-        child: Icon(Icons.edit)
-    );
-  }
-  Widget MenuButton(String btnName){
-    return Flexible(
-        child: SizedBox(
-            height: 100,
-            width: 100,
-            child: ElevatedButton(
-              child: Text(btnName),
-              onPressed: () {},
-
-            )
-        )
     );
   }
 
@@ -60,9 +32,9 @@ class _InstitutionPageState extends State<InstitutionPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    MenuButton("QR Code"),
-                    MenuButton("Camera"),
-                    MenuButton("Roster"),
+                    btn.MenuButton("QR Code"),
+                    btn.MenuButton("Camera"),
+                    btn.MenuButton("Roster"),
                   ],
 
                 )
@@ -71,9 +43,9 @@ class _InstitutionPageState extends State<InstitutionPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      MenuButton("Record Data"),
-                      MenuButton("View Data"),
-                      MenuButton("Food"),
+                      btn.MenuButton("Record Data"),
+                      btn.MenuButton("View Data"),
+                      btn.MenuButton("Food"),
                     ],
 
                   )
