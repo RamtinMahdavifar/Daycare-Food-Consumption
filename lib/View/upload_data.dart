@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'widgets.dart' as btn;
 import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'dart:async';
 import 'package:image_picker/image_picker.dart';
+//import 'upload_data_widgets.dart';
 
 class UploadData extends StatefulWidget {
-  //String institutionName;
-  //String institutionAddress;
 
   const UploadData({Key? key}) : super(key: key);
 
@@ -23,31 +21,17 @@ class _UploadDataState extends State<UploadData>{
   set _imageFile(XFile? value) {
     _imageFileList = value == null ? null : [value];
   }
-
   dynamic _pickImageError;
-  //bool isVideo = false;
-
-
   String? _retrieveDataError;
   bool _showButton = true;
   final ImagePicker _picker = ImagePicker();
-  final TextEditingController maxWidthController = TextEditingController();
-  final TextEditingController maxHeightController = TextEditingController();
-  final TextEditingController qualityController = TextEditingController();
-
 
   void _onImageButtonPressed(ImageSource source,
       {BuildContext? context, bool isMultiImage = false}) async {
 
-    await _displayPickImageDialog(context!,
-            (double? maxWidth, double? maxHeight, int? quality) async {
+    await _displayPickImageDialog(context!, () async {
           try {
-            final pickedFile = await _picker.pickImage(
-              source: source,
-              maxWidth: maxWidth,
-              maxHeight: maxHeight,
-              imageQuality: quality,
-            );
+            final pickedFile = await _picker.pickImage(source: source);
             setState(() {
               _imageFile = pickedFile;
               hideButton();
@@ -57,8 +41,8 @@ class _UploadDataState extends State<UploadData>{
               _pickImageError = e;
             });
           }
-        });
-    }
+    });
+  }
 
     //TODO: make this thing looks prettier and add a button for submitting the data or selecting a different image, then imporove the look for when the keyboard comes up
   Widget addComments() {
@@ -91,7 +75,6 @@ class _UploadDataState extends State<UploadData>{
     );
 
   }
-
   Widget _previewImages() {
     final Text? retrieveError = _getRetrieveErrorWidget();
     if (retrieveError != null) {
@@ -102,8 +85,6 @@ class _UploadDataState extends State<UploadData>{
           child: ListView.builder(
             key: UniqueKey(),
             itemBuilder: (context, index) {
-              // Why network for web?
-              // See https://pub.dev/packages/image_picker#getting-ready-for-the-web-platform
               return Semantics(
                 label: 'image_picker_example_picked_image',
                 child: kIsWeb
@@ -200,14 +181,11 @@ class _UploadDataState extends State<UploadData>{
             alignment: Alignment.center,
           ),
           Row(
-            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Flexible(
                 fit: FlexFit.tight,
                 child: Container(
-                  //alignment: Alignment.center,
                   child: Visibility(
-                    //label: 'image_picker_example_from_gallery',
                     visible: _showButton,
                     child: ElevatedButton(
                       onPressed: () {
@@ -222,7 +200,6 @@ class _UploadDataState extends State<UploadData>{
               Flexible(
                 fit: FlexFit.tight ,
                 child: Container(
-                  //alignment: Alignment.center,
                   child:Visibility(
                     visible: _showButton,
                     child: ElevatedButton(
@@ -238,14 +215,11 @@ class _UploadDataState extends State<UploadData>{
             ]
           ),
           Row(
-            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Flexible(
                     fit: FlexFit.tight,
                     child: Container(
-                      //alignment: Alignment.center,
                       child: Visibility(
-                        //label: 'image_picker_example_from_gallery',
                         visible: !_showButton,
                         child: clearImage()
                       ),
@@ -255,7 +229,6 @@ class _UploadDataState extends State<UploadData>{
                 Flexible(
                     fit: FlexFit.tight ,
                     child: Container(
-                      //alignment: Alignment.center,
                       child:Visibility(
                         visible: !_showButton,
                         child: submitImage()
@@ -281,13 +254,9 @@ class _UploadDataState extends State<UploadData>{
   }
 
   Future<void> _displayPickImageDialog(
-      BuildContext context, OnPickImageCallback onPick) async {
-    onPick(null, null, null);//(width, height, quality);
-
-  }
+      BuildContext context, OnPickImageCallback onPick) async {onPick();}
 }
 
 
-typedef void OnPickImageCallback(
-    double? maxWidth, double? maxHeight, int? quality);
+typedef void OnPickImageCallback();
 

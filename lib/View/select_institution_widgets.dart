@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Model/database.dart';
 import 'package:plate_waste_recorder/View/upload_data.dart';
 import '../Model/institution.dart';
-import '../Model/institution_info.dart';
 import 'institution_page.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
 import 'package:plate_waste_recorder/Model/research_group.dart';
-import 'package:plate_waste_recorder/Model/researcher_info.dart';
-import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'dart:convert'; // required for jsonDecode()
 
 final _newInstitutionNameController = TextEditingController();
@@ -220,35 +217,7 @@ Widget institutionDisplay(BuildContext context) {
   );
 }
 
-Widget BackButton(BuildContext context){
-  return InkWell(
-      onTap: (){
-        Navigator.pop(context);
-      },
-      child: Icon(Icons.arrow_back)
-  );
-}
-
-Widget modifyButton(){
-  return InkWell(
-      onTap: () {},
-      child: Icon(Icons.edit)
-  );
-}
-Widget MenuButton(String btnName){
-  return Flexible(
-      child: SizedBox(
-          height: 100,
-          width: 100,
-          child: ElevatedButton(
-            child: Text(btnName),
-            onPressed: () {},
-
-          )
-      )
-  );
-}
-
+//used if the database breaks, a bandaid solution to allow me to go to any screen nessessary
 Widget quickfixButton(BuildContext context){
   return InkWell(
       onTap: (){

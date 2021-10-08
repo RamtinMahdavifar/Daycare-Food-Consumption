@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:plate_waste_recorder/Model/database.dart';
-
-import 'widgets.dart';
+//import 'package:plate_waste_recorder/Model/database.dart';
+import 'select_institution_widgets.dart';
 
 
 

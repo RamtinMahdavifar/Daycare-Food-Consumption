@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'widgets.dart' as btn;
+import 'institution_page_widgets.dart';
+import 'upload_data.dart';
 
 class InstitutionPage extends StatefulWidget {
   String institutionName;
@@ -15,7 +16,7 @@ class _InstitutionPageState extends State<InstitutionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.institutionName.toString()), leading: btn.BackButton(context), actions: [btn.modifyButton()]),
+      appBar: AppBar(title: Text(widget.institutionName.toString()), leading: backButton(context), actions: [modifyButton()]),
         body: _InstitutionOptions()
     );
   }
@@ -32,9 +33,10 @@ class _InstitutionPageState extends State<InstitutionPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    btn.MenuButton("QR Code"),
-                    btn.MenuButton("Camera"),
-                    btn.MenuButton("Roster"),
+                    //most of the buttons do not navigate anywhere and have null as their navigation parameter
+                    menuButton(context, "QR Code", () => UploadData()),
+                    menuButton(context, "Camera", () => UploadData()),
+                    menuButton(context, "Roster", () => UploadData()),
                   ],
 
                 )
@@ -43,9 +45,9 @@ class _InstitutionPageState extends State<InstitutionPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      btn.MenuButton("Record Data"),
-                      btn.MenuButton("View Data"),
-                      btn.MenuButton("Food"),
+                      menuButton(context, "Record Data", () => UploadData()),
+                      menuButton(context, "View Data", () => UploadData()),
+                      menuButton(context, "Food", () => UploadData()),
                     ],
 
                   )
