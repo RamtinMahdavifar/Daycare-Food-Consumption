@@ -60,13 +60,36 @@ class _UploadDataState extends State<UploadData>{
         });
     }
 
+    //TODO: make this thing looks prettier and add a button for submitting the data or selecting a different image, then imporove the look for when the keyboard comes up
   Widget addComments() {
-    return TextField(
-      decoration: const InputDecoration(
+    return const TextField(
+      decoration: InputDecoration(
           border: OutlineInputBorder(),
           hintText: 'Comments'
       ),
     );
+  }
+
+  Widget submitImage(){
+    return ElevatedButton(
+      child: const Text("Sumbit Data"),
+      onPressed: (){//TODO upload image and comments to db
+         }
+        // ,
+    );
+  }
+
+  Widget clearImage(){
+    return ElevatedButton(
+      child: const Text("Clear Image"),
+      onPressed: (){
+        setState(() {
+          _imageFile = null;
+          hideButton();
+        });
+      },
+    );
+
   }
 
   Widget _previewImages() {
@@ -171,36 +194,78 @@ class _UploadDataState extends State<UploadData>{
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          Visibility(
-            //label: 'image_picker_example_from_gallery',
-            visible: _showButton,
-            child: FloatingActionButton(
-              onPressed: () {
-                _onImageButtonPressed(ImageSource.gallery, context: context);
-              },
-              heroTag: 'image0',
-              tooltip: 'Pick Image from gallery',
-              child: const Icon(Icons.photo),
-            ),
+          Container(
+            child:addComments(),
+            padding: EdgeInsets.all(8),
+            alignment: Alignment.center,
           ),
-          Visibility(
-            visible: _showButton,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: FloatingActionButton(
-                onPressed: () {
-                  _onImageButtonPressed(ImageSource.camera, context: context);
-                },
-                heroTag: 'image2',
-                tooltip: 'Take a Photo',
-                child: const Icon(Icons.camera_alt),
+          Row(
+            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Flexible(
+                fit: FlexFit.tight,
+                child: Container(
+                  //alignment: Alignment.center,
+                  child: Visibility(
+                    //label: 'image_picker_example_from_gallery',
+                    visible: _showButton,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _onImageButtonPressed(ImageSource.gallery, context: context);
+                      },
+                      child: const Icon(Icons.photo),
+                    ),
+                  ),
+                )
+
               ),
-            ),
+              Flexible(
+                fit: FlexFit.tight ,
+                child: Container(
+                  //alignment: Alignment.center,
+                  child:Visibility(
+                    visible: _showButton,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _onImageButtonPressed(ImageSource.camera, context: context);
+                      },
+                      child: const Icon(Icons.camera_alt),
+                    ),
+                  ),
+                )
+
+              )
+            ]
           ),
-          Visibility(
-            visible: !_showButton,
-            child: addComments()
+          Row(
+            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Flexible(
+                    fit: FlexFit.tight,
+                    child: Container(
+                      //alignment: Alignment.center,
+                      child: Visibility(
+                        //label: 'image_picker_example_from_gallery',
+                        visible: !_showButton,
+                        child: clearImage()
+                      ),
+                    )
+
+                ),
+                Flexible(
+                    fit: FlexFit.tight ,
+                    child: Container(
+                      //alignment: Alignment.center,
+                      child:Visibility(
+                        visible: !_showButton,
+                        child: submitImage()
+                      ),
+                    )
+
+                )
+              ]
           )
+
         ],
       ),
     );
