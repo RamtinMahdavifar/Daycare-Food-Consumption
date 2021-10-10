@@ -1,9 +1,9 @@
 import 'package:plate_waste_recorder/Model/info.dart';
 
 
-/// Class with basic information to represent an Meal, allows for easy display
-/// of some high level Meal information and can be used to easily read
-/// Meal objects in from our Database
+/// Class with basic information to represent an Subject, allows for easy display
+/// of some high level Subject information and can be used to easily read
+/// Subject objects in from our Database
 class SubjectInfo extends Info{
   int _subjectID = 0;
   String databaseKey = "";
