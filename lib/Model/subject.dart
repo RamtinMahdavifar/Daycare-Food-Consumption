@@ -48,4 +48,25 @@ class Subject{
     }
   }
 
+  // TODO: overwrite hashcode(), two equal objects should have the same hashcode
+  @override
+  bool operator ==(Object other){
+    if (other.runtimeType == this.runtimeType){
+
+      Subject otherInfo = other as Subject;
+      return this._subjectID == otherInfo._subjectID;
+
+    }
+    return false;
+  }
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'subjectId': this._subjectID,
+  };
+
+  
+  Subject.fromJSON(Map<String, dynamic> json)
+      : _subjectID = json['subjectId'].toString() as int;
+
 }
