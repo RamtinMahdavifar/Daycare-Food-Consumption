@@ -38,4 +38,8 @@ class Meal{
     this._comment = newComment;
   }
 
+  void removeComment(){
+    this._comment ="";
+  }
+
 }
