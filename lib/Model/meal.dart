@@ -10,7 +10,7 @@ class Meal{
   //**** Meal Properties ********
 
   //Meal Id, unique ID for each meal
-  int _mealID;
+  int _mealId;
 
   //Meal image path, currently image is stored as string later this may change
   //depending upon how we decide to store images
@@ -24,14 +24,14 @@ class Meal{
 
 
   //***** Meal constructor ********
-  Meal(this._mealID,this._imagePath,this._mealType);
+  Meal(this._mealId,this._imagePath,this._mealType);
 
 
   //****** Meal getters **********
 
   //Meal Id
   int get id{
-    return this._mealID;
+    return this._mealId;
   }
 
   //Meal photo
@@ -68,4 +68,34 @@ class Meal{
 
   }
 
+
+  // TODO: overwrite hashcode(), two equal objects should have the same hashcode
+  @override
+  bool operator ==(Object other){
+    if (other.runtimeType == this.runtimeType){
+
+      Meal otherInfo = other as Meal;
+      return this._mealId == otherInfo._mealId &&
+          this._imagePath == otherInfo._imagePath &&
+          this._mealType == otherInfo._mealType &&
+          this._comment == otherInfo._comment;
+
+    }
+    return false;
+  }
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'mealId': this._mealId,
+    'comments': this._comment,
+    'image': this._imagePath,
+    'mealType':this._mealType,
+  };
+
+
+  Meal.fromJSON(Map<String, dynamic> json)
+      : _mealId = json['mealId'].toString() as int,
+        _comment = json['comments'].toString(),
+        _imagePath = json['image'].toString(),
+        _mealType = json['mealType'] as MealType;
 }
