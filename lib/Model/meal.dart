@@ -63,7 +63,7 @@ class Meal{
     if (this._comment.length > 0){
       this._comment ="";
     }else {
-      //TODO: Add a log msg for no comment exist to remove 
+      //TODO: Add a log msg for no comment exist to remove
     }
 
   }
