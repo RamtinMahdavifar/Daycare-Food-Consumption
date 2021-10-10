@@ -9,7 +9,7 @@ enum MealType{
 /// Meal objects in from our Database
 class MealInfo extends Info{
   int _mealId = 0;
-  String _photoPath ="";
+  String _imagePath ="";
   MealType _mealType = MealType.before;
   String _comment = "";
   String databaseKey = "";
@@ -17,7 +17,7 @@ class MealInfo extends Info{
   MealInfo(int mealId,String photoPath, MealType mealType,String comment){
 
     this._mealId = mealId;
-    this._photoPath = photoPath;
+    this._imagePath = photoPath;
     this._mealType = mealType;
     this._comment = comment;
     this.databaseKey = this._mealId as String;
@@ -38,7 +38,7 @@ class MealInfo extends Info{
 
       MealInfo otherInfo = other as MealInfo;
       return this._mealId == otherInfo._mealId &&
-      this._photoPath == otherInfo._photoPath &&
+      this._imagePath == otherInfo._imagePath &&
       this._mealType == otherInfo._mealType &&
       this._comment == otherInfo._comment &&
       this.databaseKey == otherInfo.databaseKey;
@@ -52,7 +52,7 @@ class MealInfo extends Info{
     'mealId': this._mealId,
     'databaseKey': this.databaseKey,
     'comments': this._comment,
-    'photo': this._photoPath,
+    'image': this._imagePath,
     'mealType':this._mealType,
   };
 
@@ -61,6 +61,6 @@ class MealInfo extends Info{
       : _mealId = json['mealId'].toString() as int,
         databaseKey = json['databaseKey'].toString(),
         _comment = json['comments'].toString(),
-        _photoPath = json['photo'].toString(),
+        _imagePath = json['image'].toString(),
         _mealType = json['mealType'] as MealType;
 }
