@@ -6,7 +6,7 @@ class Subject{
   //*****subject properties******
 
   //subject ID
-  int _subjectID;
+  String _subjectID;
 
   //map of subject meals
   Map<int,Meal> _mealMap = Map();
@@ -20,7 +20,7 @@ class Subject{
   //Subject getters
 
   //get subject ID
-  int get id{
+  String get id{
     return this._subjectID;
   }
 
@@ -67,6 +67,6 @@ class Subject{
 
   
   Subject.fromJSON(Map<String, dynamic> json)
-      : _subjectID = json['subjectId'].toString() as int;
+      : _subjectID = json['subjectId'].toString();
 
 }
