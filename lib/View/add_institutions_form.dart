@@ -24,8 +24,8 @@ class _AddInstitutionFormState extends State<AddInstitutionForm> {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                formEntry("name", const Icon(Icons.home), _newInstitutionNameController),
-                formEntry("address", const Icon(Icons.location_on_outlined), _newInstitutionAddressController),
+                formEntry("name", const Icon(Icons.home), _newInstitutionNameController, this._nameFieldValid),
+                formEntry("address", const Icon(Icons.location_on_outlined), _newInstitutionAddressController, this._addressFieldValid),
                 //formEntry("other information", Icon(Icons.info_outline)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -81,7 +81,7 @@ class _AddInstitutionFormState extends State<AddInstitutionForm> {
     );
   }
 
-  Widget formEntry(String labelName, Icon icon, TextEditingController controller){
+  Widget formEntry(String labelName, Icon icon, TextEditingController controller, bool fieldIsValid){
     return TextFormField(
       validator: (value) {
         if (value == null || value.isEmpty){
@@ -94,7 +94,7 @@ class _AddInstitutionFormState extends State<AddInstitutionForm> {
           labelText: labelName,
           // if the field isn't valid errorText has the value "Value Can't Be Empty"
           // otherwise errorText is null
-          errorText: !this._nameFieldValid ? "Value Can't Be Empty" : null
+          errorText: !fieldIsValid ? "Value Can't Be Empty" : null
       ),
       controller: controller,
     );
