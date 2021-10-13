@@ -1,4 +1,5 @@
 
+import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 
 /// Class representing an institution, institutions are considered to be anywhere where
@@ -7,10 +8,13 @@ class Institution {
   String _name;
   String _address;
 
+
   // Institution constructor
   Institution(this._name, this._address);
 
   String get name{
+
+    Config.log.i('Getting institution name: $_name');
     return this._name;
   }
 
