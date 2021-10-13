@@ -17,3 +17,27 @@ String convertImageToString(String imageFilePath){
   String imageString = base64Encode(imageFileBytes);
   return imageString;
 }
+
+void convertStringToImage(String imageString, String resultingImageFilePath){
+  // ensure our image string is not empty
+  assert(imageString.isNotEmpty);
+  // ensure the resulting file path is greater than 4 characters as this file path
+  // must contain a file extension for example .png, .jpg, .jpeg, etc all of which
+  // are at least 4 characters, so a valid filename requires these 4 characters and
+  // one more character ahead of the file extension
+  assert(resultingImageFilePath.length>4);
+
+  // TODO: could check and see if file already exists to prevent overwriting
+  // TODO: check and see what happens if file doesn't exist and already exists
+  // create a new file to store the string image at
+  File destinationFile = File(resultingImageFilePath);
+
+  // ensure that the file path provided refers to an image file
+  assert(lookupMimeType(resultingImageFilePath)!.startsWith('image/'));
+
+  // convert our base 64 image string into raw bytes of data
+  Uint8List imageBytes = base64Decode(imageString);
+
+  // write the bytes we've decoded into an image file
+  destinationFile.writeAsBytesSync(imageBytes);
+}
