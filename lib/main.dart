@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Model/database.dart';
+import 'Helper/logger_printer.dart';
 import 'Model/institution.dart';
 import 'institution_page.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
 import 'package:plate_waste_recorder/Model/research_group.dart';
-import 'package:plate_waste_recorder/Model/researcher_info.dart';
-import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'dart:convert'; // required for jsonDecode()
+import 'package:logger/logger.dart';
 
 void main() {
   // TODO: remove database initialization
@@ -42,7 +42,9 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
   // define controllers for the form fields we'll have when adding new institutions
   final _newInstitutionNameController = TextEditingController();
   final _newInstitutionAddressController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+
+  final log = Logger( level:Level.verbose, printer: SimpleLogPrinter('ChooseInstituteState'));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,6 +122,8 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
   Widget formCancel(){
     return ElevatedButton(
         onPressed: (){
+
+          log.i('Clicked cancel button');
           // clear the text fields before exiting the add Institution popup
           _newInstitutionNameController.clear();
           _newInstitutionAddressController.clear();
