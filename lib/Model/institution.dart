@@ -1,4 +1,6 @@
 
+import 'package:logger/logger.dart';
+import 'package:plate_waste_recorder/Helper/logger_printer.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 
 /// Class representing an institution, institutions are considered to be anywhere where
@@ -6,11 +8,13 @@ import 'package:plate_waste_recorder/Model/institution_info.dart';
 class Institution {
   String _name;
   String _address;
+  final log = Logger( level:Level.verbose, printer: SimpleLogPrinter('Institution'));
 
   // Institution constructor
   Institution(this._name, this._address);
 
   String get name{
+    log.i('Getting institution name: $_name');
     return this._name;
   }
 
