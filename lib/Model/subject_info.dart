@@ -1,19 +1,19 @@
 import 'package:plate_waste_recorder/Model/info.dart';
 
 
-/// Class with basic information to represent an Subject, allows for easy display
-/// of some high level Subject information and can be used to easily read
+/// Class with basic information to represent a Subject, allows for easy display
+/// of some high level Subject information, can be used to easily read
 /// Subject objects in from our Database
 class SubjectInfo extends Info{
-  int _subjectID = 0;
+  String _subjectID = "";
   String databaseKey = "";
 
-  SubjectInfo(int subjectId){
+  SubjectInfo(String subjectId){
     this._subjectID = subjectId;
     this.databaseKey = this._subjectID as String;
   }
 
-  int get subjectId{
+  String get subjectId{
     return this._subjectID;
   }
 
@@ -22,11 +22,9 @@ class SubjectInfo extends Info{
   @override
   bool operator ==(Object other){
     if (other.runtimeType == this.runtimeType){
-
       SubjectInfo otherInfo = other as SubjectInfo;
       return this._subjectID == otherInfo._subjectID &&
           this.databaseKey == otherInfo.databaseKey;
-
     }
     return false;
   }
@@ -39,6 +37,6 @@ class SubjectInfo extends Info{
 
   // this is considered a constructor and so cannot be inherited from our super Info
   SubjectInfo.fromJSON(Map<String, dynamic> json)
-      : _subjectID = json['subjectId'].toString() as int,
+      : _subjectID = json['subjectId'].toString(),
         databaseKey = json['databaseKey'].toString();
 }
