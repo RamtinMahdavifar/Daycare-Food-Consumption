@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:plate_waste_recorder/Model/institution.dart';
+import 'package:plate_waste_recorder/Model/meal.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'dart:convert';
 import 'package:plate_waste_recorder/Model/research_group.dart';
+import 'dart:typed_data';
+import 'dart:io';
+// package necessary to check MIME types of files
+import 'package:mime/mime.dart';
+import 'package:plate_waste_recorder/Model/subject_info.dart';
+
+import 'meal_info.dart';
 
 /// Class to a access the firebase database, this class is implemented using the
 /// singleton pattern and provides methods to read and write data to and from
@@ -101,5 +109,34 @@ class Database {
     // preserves the structure of our object when written to the database
     Map<String, dynamic> researchGroupAsMap = json.decode(researchGroupJSON);
     researchGroupDatabaseReference.set(researchGroupAsMap);
+  }
+
+  String convertImageToString(String imageFilePath){
+    // input file path must refer to some file that actually exists
+    assert(File(imageFilePath).existsSync());
+    // input file must be an image, check MIME type of file
+    assert(lookupMimeType(imageFilePath)!.startsWith('image/'));
+
+    // read the input image file in as a sequence of bytes
+    Uint8List imageFileBytes = File(imageFilePath).readAsBytesSync();
+
+    // convert these bytes to a string using a base64 encoding
+    String imageString = base64Encode(imageFileBytes);
+    return imageString;
+  }
+
+  void writeSubjectMeal(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
+      SubjectInfo currentSubject, Meal currentMeal){
+    // ensure that the input Info objects do not have empty database keys
+    // each input Info is created with null safety so properties can never be null
+    assert(institutionInfo.databaseKey.isNotEmpty);
+    assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
+    assert(currentSubject.databaseKey.isNotEmpty);
+
+    MealInfo currentMealInfo = currentMeal.;
+    assert(currentMealInfo.databaseKey.isNotEmpty);
+
+
+
   }
 }

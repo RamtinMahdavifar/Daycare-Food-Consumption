@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:async';
 import 'package:image_picker/image_picker.dart';
 //import 'upload_data_widgets.dart';
+import 'dart:convert';
 
 class UploadData extends StatefulWidget {
 
@@ -56,9 +57,10 @@ class _UploadDataState extends State<UploadData>{
 
   Widget submitImage(){
     return ElevatedButton(
-      child: const Text("Sumbit Data"),
+      child: const Text("Submit Data"),
       onPressed: (){//TODO upload image and comments to db
-         }
+
+      }
         // ,
     );
   }
