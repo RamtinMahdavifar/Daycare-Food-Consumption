@@ -1,25 +1,38 @@
+import 'package:plate_waste_recorder/Model/meal_info.dart';
+
 
 enum MealType{
   before,
   after
 }
 
-/// Class representing a Meal, which the food east by a subject
-/// a subject can have multiple meals in a day
+/// Class representing a Meal served to a particular subject
+/// a subject can have multiple meals in a day and multiple meals throughout time
 class Meal{
   //**** Meal Properties ********
 
   //Meal Id, unique ID for each meal
   int _mealId;
 
-  //Meal image path, currently image is stored as string later this may change
-  //depending upon how we decide to store images
-  String _imagePath;
+  // Images are converted to strings when stored, this is the string representing
+  // the image of the meal before being eaten by a subject
+  String _beforeImageAsString;
+
+  // String representing the image of the meal after being eaten by the subject
+  String _afterImageAsString;
+
 
   //Meal type its and enum from Meal class which has value before and after
   MealType _mealType;
 
-  //Meal comment each meal can have a comment
+  // double precision value recording the weight of the meal before being eaten
+  double _beforeMealWeight;
+
+  // double precision value recording the weight of the meal after being eaten
+  double _afterMealWeight;
+
+  // Comment associated with this particular meal, can be added to give additional
+  // context or information about a meal
   late String _comment;
 
 
@@ -65,7 +78,10 @@ class Meal{
     }else {
       //TODO: Add a log msg for no comment exist to remove
     }
+  }
 
+  MealInfo getMealInfo(){
+    return MealInfo()
   }
 
 
