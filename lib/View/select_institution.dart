@@ -24,10 +24,6 @@ class ChooseInstitute extends StatefulWidget {
 }
 
 class _ChooseInstituteState extends State<ChooseInstitute> {
-  // define controllers for the form fields we'll have when adding new institutions
-  //final _newInstitutionNameController = TextEditingController();
-  //final _newInstitutionAddressController = TextEditingController();
-  //final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
