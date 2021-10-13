@@ -6,10 +6,6 @@ import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'dart:convert';
 import 'package:plate_waste_recorder/Model/research_group.dart';
-import 'dart:typed_data';
-import 'dart:io';
-// package necessary to check MIME types of files
-import 'package:mime/mime.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 
 import 'meal_info.dart';
@@ -109,20 +105,6 @@ class Database {
     // preserves the structure of our object when written to the database
     Map<String, dynamic> researchGroupAsMap = json.decode(researchGroupJSON);
     researchGroupDatabaseReference.set(researchGroupAsMap);
-  }
-
-  String convertImageToString(String imageFilePath){
-    // input file path must refer to some file that actually exists
-    assert(File(imageFilePath).existsSync());
-    // input file must be an image, check MIME type of file
-    assert(lookupMimeType(imageFilePath)!.startsWith('image/'));
-
-    // read the input image file in as a sequence of bytes
-    Uint8List imageFileBytes = File(imageFilePath).readAsBytesSync();
-
-    // convert these bytes to a string using a base64 encoding
-    String imageString = base64Encode(imageFileBytes);
-    return imageString;
   }
 
   void writeSubjectMeal(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
