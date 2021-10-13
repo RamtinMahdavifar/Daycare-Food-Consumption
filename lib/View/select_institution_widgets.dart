@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Model/database.dart';
 import 'package:plate_waste_recorder/View/upload_data.dart';
 import '../Model/institution.dart';
+import 'add_institutions_form.dart';
 import 'institution_page.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
@@ -31,7 +32,7 @@ Widget listedInst(BuildContext context, String name, String address){
 }
 
 
-//
+
 Widget formEntry(String labelName, Icon icon, TextEditingController controller){
   return TextFormField(
     validator: (value) {
@@ -116,7 +117,8 @@ Widget addInstitution(BuildContext context){
       showDialog(
           context: context,
           builder: (context) {
-            return enterSchoolForm(context);
+            //return enterSchoolForm(context);
+            return AddInstitutionForm();
           }
       );
     }, //pop up form entry window
