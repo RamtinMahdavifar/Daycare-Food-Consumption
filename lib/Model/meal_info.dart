@@ -1,6 +1,6 @@
 import 'package:plate_waste_recorder/Model/info.dart';
 
-enum MealType{
+enum MealType{ // TODO: consider whether we want meal types to be stored as part of the info
   before,
   after
 }
@@ -8,41 +8,28 @@ enum MealType{
 /// of some high level Meal information and can be used to easily read
 /// Meal objects in from our Database
 class MealInfo extends Info{
-  int _mealId = 0;
-  String _imagePath ="";
-  MealType _mealType = MealType.before;
-  String _comment = "";
+  String _mealId = "";
   String databaseKey = "";
+  String name = "";
 
-  MealInfo(int mealId,String photoPath, MealType mealType,String comment){
-
+  MealInfo(String mealId, String mealName){
     this._mealId = mealId;
-    this._imagePath = photoPath;
-    this._mealType = mealType;
-    this._comment = comment;
-    this.databaseKey = this._mealId as String;
+    this.databaseKey = this._mealId;
+    this.name = mealName;
   }
 
-  int get mealId{
+  String get mealId{
     return this._mealId;
-  }
-
-  String get comment{
-    return this._comment;
   }
 
   // TODO: overwrite hashcode(), two equal objects should have the same hashcode
   @override
   bool operator ==(Object other){
     if (other.runtimeType == this.runtimeType){
-
       MealInfo otherInfo = other as MealInfo;
       return this._mealId == otherInfo._mealId &&
-      this._imagePath == otherInfo._imagePath &&
-      this._mealType == otherInfo._mealType &&
-      this._comment == otherInfo._comment &&
-      this.databaseKey == otherInfo.databaseKey;
-
+      this.databaseKey == otherInfo.databaseKey &&
+      this.name == otherInfo.name;
     }
     return false;
   }
@@ -51,16 +38,12 @@ class MealInfo extends Info{
   Map<String, dynamic> toJson() => {
     'mealId': this._mealId,
     'databaseKey': this.databaseKey,
-    'comments': this._comment,
-    'image': this._imagePath,
-    'mealType':this._mealType,
+    'name': this.name
   };
 
   // this is considered a constructor and so cannot be inherited from our super Info
   MealInfo.fromJSON(Map<String, dynamic> json)
-      : _mealId = json['mealId'].toString() as int,
-        databaseKey = json['databaseKey'].toString(),
-        _comment = json['comments'].toString(),
-        _imagePath = json['image'].toString(),
-        _mealType = json['mealType'] as MealType;
+      : this._mealId = json['mealId'].toString(),
+        this.databaseKey = json['databaseKey'].toString(),
+        this.name = json['name'].toString();
 }
