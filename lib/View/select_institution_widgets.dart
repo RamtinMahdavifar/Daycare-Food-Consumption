@@ -9,10 +9,6 @@ import 'package:firebase_database/firebase_database.dart'; // need to include fo
 import 'package:plate_waste_recorder/Model/research_group.dart';
 import 'dart:convert'; // required for jsonDecode()
 
-final _newInstitutionNameController = TextEditingController();
-final _newInstitutionAddressController = TextEditingController();
-final _formKey = GlobalKey<FormState>();
-
 
 //select_institution page button which navigates to that desired institution_page
 Widget listedInst(BuildContext context, String name, String address){
@@ -28,85 +24,6 @@ Widget listedInst(BuildContext context, String name, String address){
           leading: const Icon(Icons.flight_land_rounded),
           title: Text(name)
       )
-  );
-}
-
-
-
-Widget formEntry(String labelName, Icon icon, TextEditingController controller){
-  return TextFormField(
-    validator: (value) {
-      if (value == null || value.isEmpty){
-        return 'missing fields';
-      }
-      return null;
-    },
-    decoration: InputDecoration(
-        icon: icon,
-        labelText: labelName
-    ),
-    controller: controller,
-  );
-}
-
-Widget formSubmit(BuildContext context){
-  return ElevatedButton(
-      onPressed: (){
-        /*
-          this code causes a crash, formkey.currentState is null
-          if(_formKey.currentState!.validate()){
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Submitted")),
-            );
-          }
-           */
-        // TODO: display this snackbar, add input validation etc
-        const SnackBar(content: Text("Submitted"));
-        String newName = _newInstitutionNameController.value.text;
-        String newAddress = _newInstitutionAddressController.value.text;
-        Database().addInstitutionToResearchGroup(Institution(newName, newAddress), ResearchGroupInfo("testResearchGroupName"));
-
-        // clear our text fields before exiting the add Institution popup
-        _newInstitutionNameController.clear();
-        _newInstitutionAddressController.clear();
-        Navigator.of(context, rootNavigator: true).pop();
-      },
-      child: const Text("Submit")
-  );
-}
-
-Widget formCancel(BuildContext context){
-  return ElevatedButton(
-      onPressed: (){
-        // clear the text fields before exiting the add Institution popup
-        _newInstitutionNameController.clear();
-        _newInstitutionAddressController.clear();
-        Navigator.of(context, rootNavigator: true).pop();
-      },
-      child: const Text("Cancel")
-  );
-}
-
-//dialog popup to enter a new school into database
-Widget enterSchoolForm(BuildContext context){
-  return Dialog(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-    elevation: 3,
-    child: Form(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              formEntry("name", const Icon(Icons.home), _newInstitutionNameController),
-              formEntry("address", const Icon(Icons.location_on_outlined), _newInstitutionAddressController),
-              //formEntry("other information", Icon(Icons.info_outline)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [formCancel(context), formSubmit(context)],
-              )
-            ]
-        )
-
-    ),
   );
 }
 
