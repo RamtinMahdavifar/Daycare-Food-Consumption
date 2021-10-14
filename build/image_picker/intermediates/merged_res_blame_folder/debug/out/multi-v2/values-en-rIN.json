@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/res/merged/debug/values-en-rIN/values-en-rIN.xml",
+            "outputFile": "C:\\Users\\Lee\\Android_Projects\\plate_waste_recorder\\build\\image_picker\\intermediates\\res\\merged\\debug\\values-en-rIN\\values-en-rIN.xml",
             "map": [
                 {
-                    "source": "/home/keplar/.gradle/caches/transforms-2/files-2.1/3c8fd1bfddb99a7a7e21faa1397acdb4/core-1.1.0/res/values-en-rIN/values-en-rIN.xml",
+                    "source": "C:\\Users\\Lee\\.gradle\\caches\\transforms-2\\files-2.1\\3c8fd1bfddb99a7a7e21faa1397acdb4\\core-1.1.0\\res\\values-en-rIN\\values-en-rIN.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -16,10 +16,10 @@
             ]
         },
         {
-            "outputFile": "/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/incremental/mergeDebugResources/merged.dir/values-en-rIN/values-en-rIN.xml",
+            "outputFile": "C:\\Users\\Lee\\Android_Projects\\plate_waste_recorder\\build\\image_picker\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-en-rIN\\values-en-rIN.xml",
             "map": [
                 {
-                    "source": "/home/keplar/.gradle/caches/transforms-2/files-2.1/3c8fd1bfddb99a7a7e21faa1397acdb4/core-1.1.0/res/values-en-rIN/values-en-rIN.xml",
+                    "source": "C:\\Users\\Lee\\.gradle\\caches\\transforms-2\\files-2.1\\3c8fd1bfddb99a7a7e21faa1397acdb4\\core-1.1.0\\res\\values-en-rIN\\values-en-rIN.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
