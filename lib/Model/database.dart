@@ -115,10 +115,10 @@ class Database {
     assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
     assert(currentSubject.databaseKey.isNotEmpty);
 
-    MealInfo currentMealInfo = currentMeal.;
+    // TODO: finish implementation
+    MealInfo currentMealInfo = currentMeal.getMealInfo();
+    // ensure the MealInfo we write to the database for this subject
     assert(currentMealInfo.databaseKey.isNotEmpty);
-
-
-
+    assert(currentMealInfo.name.isNotEmpty);
   }
 }
