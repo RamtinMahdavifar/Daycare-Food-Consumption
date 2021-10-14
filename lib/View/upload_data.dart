@@ -53,6 +53,15 @@ class _UploadDataState extends State<UploadData>{
     );
   }
 
+  Widget addWeight() {
+    return const TextField(
+      decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: 'Weight'
+      ),
+    );
+  }
+
   Widget submitImage(){
     return ElevatedButton(
       child: const Text("Submit Data"),
@@ -115,10 +124,17 @@ class _UploadDataState extends State<UploadData>{
       body: _previewImages(), //Center(
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
+            child:addWeight(),
+            width: 150,
+            padding: EdgeInsets.all(1),
+            alignment: Alignment.bottomLeft,
+          ),
+          Container(
             child:addComments(),
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(1),
             alignment: Alignment.center,
           ),
           Row(
