@@ -1,6 +1,11 @@
 name: Main actions file
 
 on:
+  pull_request:
+    branches:
+      - main
+      - Development
+      
   push:
     branches:
       - '*'
