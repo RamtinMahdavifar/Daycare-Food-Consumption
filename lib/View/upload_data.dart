@@ -23,7 +23,7 @@ class _UploadDataState extends State<UploadData>{
     _imageFileList = value == null ? null : [value];
   }
   dynamic _pickImageError;
-  String? _retrieveDataError;
+  //String? _retrieveDataError;
   bool _showButton = true;
   final ImagePicker _picker = ImagePicker();
 
@@ -35,7 +35,7 @@ class _UploadDataState extends State<UploadData>{
             final pickedFile = await _picker.pickImage(source: source);
             setState(() {
               _imageFile = pickedFile;
-              hideButton();
+              //hideButton();
             });
           } catch (e) {
             setState(() {
@@ -78,30 +78,26 @@ class _UploadDataState extends State<UploadData>{
 
   }
   Widget _previewImages() {
-    final Text? retrieveError = _getRetrieveErrorWidget();
-    if (retrieveError != null) {
+    //final Text? retrieveError = _getRetrieveErrorWidget();
+/*    if (retrieveError != null) {
       return retrieveError;
-    }
+    }*/
     if (_imageFileList != null) {
-      return Semantics(
+      hideButton();
+      return Container( //semantics
           child: ListView.builder(
             key: UniqueKey(),
             itemBuilder: (context, index) {
               return Semantics(
                 label: 'image_picker_example_picked_image',
-                child: kIsWeb
-                    ? Image.network(_imageFileList![index].path)
-                    : Image.file(File(_imageFileList![index].path)),
+                child: //kIsWeb
+                    //? Image.network(_imageFileList![index].path)
+                    Image.file(File(_imageFileList![index].path)), // : removed at start of line
               );
             },
-            itemCount: _imageFileList!.length,
-          ),
-          label: 'image_picker_example_picked_images');
-    } else if (_pickImageError != null) {
-      return Text(
-        'Pick image error: $_pickImageError',
-        textAlign: TextAlign.center,
-      );
+            itemCount: _imageFileList!.length, //this line prevents an error when loading the image, just keep it
+          ));
+          //label: 'image_picker_example_picked_images');
     } else {
       return const Text(
         'You have not yet picked an image.',
@@ -110,17 +106,17 @@ class _UploadDataState extends State<UploadData>{
     }
   }
 
-  Widget _handlePreview() {
+ /* Widget _handlePreview() {
     return _previewImages();
   }
-
+*/
   void hideButton(){
     setState((){
       _showButton = !_showButton;
     });
   }
 
-  Future<void> retrieveLostData() async {
+/*  Future<void> retrieveLostData() async {
     final LostDataResponse response = await _picker.retrieveLostData();
     if (response.isEmpty) {
       return;
@@ -134,7 +130,7 @@ class _UploadDataState extends State<UploadData>{
     } else {
       _retrieveDataError = response.exception!.code;
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -142,9 +138,9 @@ class _UploadDataState extends State<UploadData>{
       appBar: AppBar(
         title: Text("Upload Data"),
       ),
-      body: Center(
-        child: !kIsWeb && defaultTargetPlatform == TargetPlatform.android
-            ? FutureBuilder<void>(
+      body: _previewImages(), //Center(
+        //child: !kIsWeb && defaultTargetPlatform == TargetPlatform.android
+           /* ? FutureBuilder<void>(
           future: retrieveLostData(),
           builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
             switch (snapshot.connectionState) {
@@ -170,9 +166,9 @@ class _UploadDataState extends State<UploadData>{
                 }
             }
           },
-        )
-            : _handlePreview(),
-      ),
+        )*/
+            //: _handlePreview(),
+      //),
 
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -246,14 +242,14 @@ class _UploadDataState extends State<UploadData>{
     );
   }
 
-  Text? _getRetrieveErrorWidget() {
+/*  Text? _getRetrieveErrorWidget() {
     if (_retrieveDataError != null) {
       final Text result = Text(_retrieveDataError!);
       _retrieveDataError = null;
       return result;
     }
     return null;
-  }
+  }*/
 
   Future<void> _displayPickImageDialog(
       BuildContext context, OnPickImageCallback onPick) async {onPick();}
