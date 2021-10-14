@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:plate_waste_recorder/Model/meal.dart';
 import 'package:plate_waste_recorder/Model/meal_info.dart';
 import 'package:plate_waste_recorder/Helper/date_converter.dart';
@@ -112,7 +114,8 @@ class Subject{
   // TODO: update JSON operations
   @override
   Map<String, dynamic> toJson() => {
-    'subjectId': this._subjectID,
+    '_subjectId': this._subjectID,
+    '_mealMap': jsonEncode(this._mealMap)
   };
 
   
