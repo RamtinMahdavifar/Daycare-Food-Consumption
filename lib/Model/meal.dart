@@ -1,4 +1,5 @@
 import 'package:plate_waste_recorder/Model/meal_info.dart';
+import 'package:plate_waste_recorder/Model/string_image_converter.dart';
 
 
 enum MealType{
@@ -12,48 +13,108 @@ class Meal{
   //**** Meal Properties ********
 
   //Meal Id, unique ID for each meal
-  int _mealId;
+  String _mealId;
+
+  // String representing the name of this particular meal
+  String _mealName;
+
+  // give each non-mandatory field a default value as we meals may not be provided
+  // images, weights, comments etc
 
   // Images are converted to strings when stored, this is the string representing
   // the image of the meal before being eaten by a subject
-  String _beforeImageAsString;
+  String _beforeImageAsString = "";
 
   // String representing the image of the meal after being eaten by the subject
-  String _afterImageAsString;
+  String _afterImageAsString = "";
 
 
   //Meal type its and enum from Meal class which has value before and after
-  MealType _mealType;
+  MealType _mealType = MealType.before;
+
+  // define a constant initial placeholder weight that the weight fields are given
+  // before having been initialized
+  final double _INITIALPLACEHOLDERWEIGHT = -1.0;
+
 
   // double precision value recording the weight of the meal before being eaten
-  double _beforeMealWeight;
+  double _beforeMealWeight = -1.0;
 
   // double precision value recording the weight of the meal after being eaten
-  double _afterMealWeight;
+  double _afterMealWeight = -1.0;
 
   // Comment associated with this particular meal, can be added to give additional
   // context or information about a meal
-  late String _comment;
+  String _comment = "";
 
 
   //***** Meal constructor ********
-  Meal(this._mealId,this._imagePath,this._mealType);
+  Meal(this._mealName, this._mealId);
+
+
 
 
   //****** Meal getters **********
 
-  //Meal Id
-  int get id{
-    return this._mealId;
+  bool mealHasBeforeImage(){
+    return this._beforeImageAsString.isNotEmpty;
   }
 
-  //Meal photo
-  String get image{
-    return this._imagePath;
+  bool mealHasAfterImage(){
+    return this._afterImageAsString.isNotEmpty;
+  }
+
+  bool mealHasBeforeWeight(){
+    // if the meal has some before weight other than the initial placeholder weight
+    // we know a weight has been input for the meal
+    return this._beforeMealWeight != this._INITIALPLACEHOLDERWEIGHT;
+  }
+
+  bool mealHasAfterWeight(){
+    // if the meal has some weight other than the initial placeholder weight we
+    // know a weight has been input for the meal
+    return this._afterMealWeight != this._INITIALPLACEHOLDERWEIGHT;
+  }
+
+  bool mealHasComment(){
+    return this._comment.isNotEmpty;
+  }
+
+  String getBeforeImageFilePath(){
+    // ensure we have a before image
+    assert(this.mealHasBeforeImage());
+
+    // create a filename to export our string before image to, note that this is a before
+    // image
+    // TODO: see how meal ids work as image file names, may need something more readable
+    // TODO: may need to change image formats depending on what format phones use
+    String newBeforeImageFileName = this._mealId + "before.png";
+    // convert our string before image to an image file
+    convertStringToImage(this._beforeImageAsString, newBeforeImageFileName);
+    return newBeforeImageFileName;
+  }
+
+  String getAfterImageFilePath(){
+    // ensure this meal has an after image
+    assert(this.mealHasAfterImage());
+
+    // create a file name to export our string after image to, include that this
+    // is an after image of this meal
+    String newAfterImageFileName = this._mealId + "after.png";
+    // convert our string after image to an image file
+    convertStringToImage(this._beforeImageAsString, newAfterImageFileName);
+    return newAfterImageFileName;
+  }
+
+  //Meal Id
+  String get id{
+    return this._mealId;
   }
 
   //meal comment
   String get comment{
+    // ensure our meal actually has a comment
+    assert(this.mealHasComment());
     return this._comment;
   }
 
@@ -73,45 +134,58 @@ class Meal{
 
   //remove a comment
   void removeComment(){
-    if (this._comment.length > 0){
-      this._comment ="";
-    }else {
-      //TODO: Add a log msg for no comment exist to remove
-    }
+    // regardless of whether we have a comment or not, simply set the comment
+    // to an empty string to remove it
+    this.comment = "";
   }
 
+
   MealInfo getMealInfo(){
-    return MealInfo()
+    return MealInfo(this._mealId, this._mealName);
   }
+
+
 
 
   // TODO: overwrite hashcode(), two equal objects should have the same hashcode
   @override
   bool operator ==(Object other){
     if (other.runtimeType == this.runtimeType){
-
-      Meal otherInfo = other as Meal;
-      return this._mealId == otherInfo._mealId &&
-          this._imagePath == otherInfo._imagePath &&
-          this._mealType == otherInfo._mealType &&
-          this._comment == otherInfo._comment;
-
+      // if other is of type meal, compare fields of both meals
+      Meal otherMeal = other as Meal;
+      return this._mealId == otherMeal._mealId &&
+          this._beforeImageAsString == otherMeal._beforeImageAsString &&
+          this._afterImageAsString == otherMeal._afterImageAsString &&
+          this._mealName == otherMeal._mealName &&
+          this._beforeMealWeight == otherMeal._beforeMealWeight &&
+          this._afterMealWeight == otherMeal._afterMealWeight &&
+          this._mealType == otherMeal._mealType &&
+          this._comment == otherMeal._comment;
     }
+    // other object isn't of type Meal, cannot be equal
     return false;
   }
 
   @override
   Map<String, dynamic> toJson() => {
-    'mealId': this._mealId,
-    'comments': this._comment,
-    'image': this._imagePath,
-    'mealType':this._mealType,
+    '_mealName': this._mealName,
+    '_mealID': this._mealId,
+    '_comments': this._comment,
+    '_beforeImageAsString': this._beforeImageAsString,
+    '_afterImageAsString': this._afterImageAsString,
+    '_beforeMealWeight': this._beforeMealWeight,
+    '_afterMealWeight': this._afterMealWeight,
+    '_mealType':this._mealType
   };
 
 
-  Meal.fromJSON(Map<String, dynamic> json)
-      : _mealId = json['mealId'].toString() as int,
-        _comment = json['comments'].toString(),
-        _imagePath = json['image'].toString(),
+  Meal.fromJSON(Map<String, dynamic> json) // TODO: watch out for empty strings or JSON fields, may cause problems
+      : _mealName = json['_mealName'].toString(),
+        _mealId = json['_mealId'].toString(),
+        _comment = json['_comments'].toString(),
+        _beforeImageAsString = json['_beforeImageAsString'].toString(),
+        _afterImageAsString = json['_afterImageAsString'].toString(),
+        _beforeMealWeight = json['_beforeMealWeight'] as double,
+        _afterMealWeight = json['_afterMealWeight'] as double,
         _mealType = json['mealType'] as MealType;
 }
