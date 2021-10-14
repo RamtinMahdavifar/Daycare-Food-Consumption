@@ -1,14 +1,20 @@
-name: main actions file
+name: Main actions file
 
-on: push
+on: [push]
 
 jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: subosito/flutter-action@v1.3.0
-      - name: install dependencies
+      - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
+      
+      - name: install flutter dependencies
         run: flutter packages get
-      - name: run tests
-        run: flutter test --exclude-tags='no-ci'
+        
+      - name: install dart dependencies
+        run: dart pub get
+        
+      - name: run dart tests
+        run: dart test
+        
