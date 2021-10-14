@@ -1,6 +1,6 @@
-name: calculator_app_test
+name: main actions file
 
-on: pull_request
+on: push
 
 jobs:
   tests:
