@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:plate_waste_recorder/Model/meal.dart';
 import 'package:plate_waste_recorder/Model/meal_info.dart';
 import 'package:plate_waste_recorder/Helper/date_converter.dart';
+import 'package:plate_waste_recorder/Model/subject_info.dart';
 
 /// Class representing a subject, a subject is considered a student or research
 /// participant over which research is being done.
@@ -86,6 +87,9 @@ class Subject{
     return this._mealMap.keys as List<String>;
   }
 
+  SubjectInfo getSubjectInfo(){
+    return SubjectInfo(this._subjectID);
+  }
 
 
   //********Subject custom functions to update meals*******
