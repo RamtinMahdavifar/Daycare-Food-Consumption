@@ -1,4 +1,4 @@
-
+import 'dart:convert';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
@@ -71,6 +71,7 @@ class Institution {
   Map<String, dynamic> toJson() => {
     '_name': this._name,
     '_address': this._address,
+    '_subjectsMap': jsonEncode(this._subjectsMap)
   };
 
   Institution.fromJSON(Map<String, dynamic> json)
