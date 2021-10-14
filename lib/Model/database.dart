@@ -6,6 +6,7 @@ import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'dart:convert';
 import 'package:plate_waste_recorder/Model/research_group.dart';
+import 'package:plate_waste_recorder/Model/subject.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 
 import 'meal_info.dart';
@@ -73,6 +74,49 @@ class Database {
     // convert the produced JSON to a map which can be stored on our database
     Map<String, dynamic> institutionInfoMap = json.decode(institutionInfoJSON);
     institutionReference.set(institutionInfoMap);
+
+    // upon adding an institution to a research group, we want to also store this entire
+    // institution to the database in a separate location
+    _writeInstitutionToDatabase(institution,currentResearchGroupInfo);
+  }
+
+  void _writeInstitutionToDatabase(Institution institution, ResearchGroupInfo currentResearchGroupInfo){
+    // make sure research group input has a valid database key
+    assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
+    // get the database key of this particular input institution from an institution info
+    InstitutionInfo currentInstitutionInfo = institution.getInstitutionInfo();
+    // ensure the institution provided has a valid database key
+    assert(currentInstitutionInfo.databaseKey.isNotEmpty);
+
+    DatabaseReference institutionReference = _databaseInstance.reference()
+        .child(this._RESEARCHGROUPDATALOCATION)
+        .child(currentResearchGroupInfo.databaseKey)
+        .child(this._INSTITUTIONSDATALOCATION)
+        .child(currentInstitutionInfo.databaseKey);
+
+    // convert our Institution Object to json to be written to location institutionReference
+    String institutionJSON = jsonEncode(institution);
+
+    // convert the produced JSON to a map which can be stored on our database, storing
+    // JSON directly will simply store the JSON as a single string instead of storing
+    // each field of our object with it's value as we want
+    Map<String, dynamic> institutionMap = json.decode(institutionJSON);
+    // write this to the location specified above
+    institutionReference.set(institutionMap);
+  }
+
+  // we must return a future as this is an async function
+  Future<List<InstitutionInfo>> getInstitutionInfoListForResearchGroup(ResearchGroupInfo currentResearchGroupInfo)async{
+    // ensure the current research group has a database key
+    assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
+    DatabaseReference institutionReference = _databaseInstance.reference()
+        .child(this._RESEARCHGROUPROOTLOCATION)
+        .child(currentResearchGroupInfo.databaseKey)
+        .child(this._RESEARCHGROUPINSTITUTIONSLOCATION);
+
+    // read the map of institutions from the specified reference location
+    institutionReference.
+
   }
 
   // TODO: update to make async
@@ -124,6 +168,39 @@ class Database {
     // preserves the structure of our object when written to the database
     Map<String, dynamic> researchGroupAsMap = json.decode(researchGroupJSON);
     researchGroupDatabaseReference.set(researchGroupAsMap);
+  }
+
+  void addSubjectToInstitution(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
+      Subject currentSubject){
+    // ensure our institution and research group have database keys
+    assert(institutionInfo.databaseKey.isNotEmpty);
+    assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
+    // create a SubjectInfo object to get the database key of the current subject
+    SubjectInfo currentSubjectInfo = currentSubject.getSubjectInfo();
+    // make sure the database key of our subject is not empty
+    assert(currentSubjectInfo.databaseKey.isNotEmpty);
+    DatabaseReference institutionSubjectReference = _databaseInstance.reference()
+        .child(this._RESEARCHGROUPDATALOCATION)
+        .child(currentResearchGroupInfo.databaseKey)
+        .child(this._SUBJECTSDATALOCATION)
+        .child(institutionInfo.databaseKey)
+        .child(currentSubjectInfo.databaseKey);
+
+    // convert our SubjectInfo to be added to this institution to JSON
+    String subjectInfoJSON = jsonEncode(currentSubjectInfo);
+
+    // convert the resulting JSON to a map that can be properly written to our database
+    Map<String, dynamic> subjectInfoMap = json.decode(subjectInfoJSON);
+    // write this map to the database
+
+    institutionSubjectReference.set(subjectInfoMap);
+
+    // write this subject object itself to the database additionally
+  }
+
+  void _writeSubjectToDatabase(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
+      Subject currentSubject){
+
   }
 
   void writeSubjectMeal(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
