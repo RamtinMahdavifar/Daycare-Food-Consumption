@@ -17,5 +17,5 @@ jobs:
         run: dart pub get
         
       - name: run dart tests
-        run: dart test
+        run: flutter test
         
