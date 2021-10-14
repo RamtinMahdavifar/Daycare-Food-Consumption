@@ -49,6 +49,8 @@ class Meal{
 
 
   //***** Meal constructor ********
+  // only accept the mandatory fields for a meal here, all other fields are optional and
+  // can be filled in later
   Meal(this._mealName, this._mealId);
 
 
@@ -127,7 +129,44 @@ class Meal{
 
   //Set Meal comments
   set comment(String newComment){
+    // ensure the provided comment is not empty
+    assert(newComment.isNotEmpty);
     this._comment = newComment;
+  }
+
+  // sets the before image of the meal to the image at the path provided, this
+  // will overwrite any other before images if they exist
+  void set beforeImageAsString(String newBeforeImagePath){
+    // ensure the provided image path is not an empty string
+    assert(newBeforeImagePath.isNotEmpty);
+    // convert the image at the specified path to a string, make this the new beforeImageString
+    this._beforeImageAsString = convertImageToString(newBeforeImagePath);
+  }
+
+  // sets the after image of the meal to the image at the path provided, this
+  // will overwrite any other after images if they exist
+  void set afterImageAsString(String newAfterImagePath){
+    // ensure the provided image path is not an empty string
+    assert(newAfterImagePath.isNotEmpty);
+    // convert the image at the specified path to a string, make this the new afterImageString
+    this._afterImageAsString = convertImageToString(newAfterImagePath);
+  }
+
+  // sets the before weight of the meal to the double weight provided, the previous before
+  // weight is simply overwritten if such a weight is present
+  void set beforeMealWeight(double newBeforeWeight){
+    // ensure the weight provided is greater than 0.0, meals must have some weight
+    assert(newBeforeWeight>0.0);
+    this._beforeMealWeight = newBeforeWeight;
+  }
+
+  // sets the weight of the meal after it has been eaten or consumed, if the meal
+  // already has an after weight, it is overwritten by the new weight provided
+  void set afterMealWeight(double newAfterWeight){
+    // ensure the weight provided is greater than 0.0, meals must have weight even
+    // after being eaten as plates are still factored into weight
+    assert(newAfterWeight>0.0);
+    this._afterMealWeight = newAfterWeight;
   }
 
   //****** Meal Custom methods *****
