@@ -35,6 +35,7 @@ class _UploadDataState extends State<UploadData>{
             setState(() {
               _imageFile = pickedFile;
             });
+
           } catch (e) {
             setState(() {
               _pickImageError = e;
@@ -76,10 +77,13 @@ class _UploadDataState extends State<UploadData>{
     return ElevatedButton(
       child: const Text("Clear Image"),
       onPressed: (){
-        setState(() {
+/*        setState(() {
           _imageFile = null;
           hideButton();
-        });
+        });*/
+        _imageFile = null;
+        hideButton();
+
       },
     );
 
@@ -92,7 +96,7 @@ class _UploadDataState extends State<UploadData>{
             itemBuilder: (context, index) {
               return Semantics(
                 label: 'image_picker_example_picked_image',
-                child: Image.file(File(_imageFileList![index].path)), // : removed at start of line
+                child: Image.file(File(_imageFileList![index].path)),
               );
             },
             itemCount: _imageFileList!.length, //this line prevents an error when loading the image, just keep it
@@ -108,10 +112,13 @@ class _UploadDataState extends State<UploadData>{
   }
 
 
+
+
   void hideButton(){
     setState((){
       _showButton = !_showButton;
     });
+
   }
 
 
