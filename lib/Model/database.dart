@@ -21,9 +21,28 @@ class Database {
   static final Database _instance = Database._privateConstructor();
 
   // initialize the location research groups are to be stored on the database
-  final String _researchGroupRootLocation = "Research Groups";
+  final String _RESEARCHGROUPROOTLOCATION = "Research Groups";
 
-  final String _researchGroupInstitutionsLocation = "_institutionsMap";
+  // initialize the constant location where we store institution infos for a particular
+  // research group
+  final String _RESEARCHGROUPINSTITUTIONSLOCATION = "_institutionsMap";
+
+  // initialize the location we store more specific data for particular research groups
+  final String _RESEARCHGROUPDATALOCATION = "Research Group Data";
+
+  // initialize the location we store institution objects at, an institution may be
+  // stored at: _RESEARCHGROUPDATALOCATION/particular research group/_INSTITUTIONSDATALOCATION
+  final String _INSTITUTIONSDATALOCATION = "Institutions";
+
+  // initialize the location we store Subject objects at, a subject may be stored at
+  // _RESEARCHGROUPDATALOCATION/particular research group/_SUBJECTSDATALOCATION/particular institution
+  final String _SUBJECTSDATALOCATION = "Institution Subjects";
+
+  // initialize the location we store Meal objects at, a meal may be stored at
+  // _RESEARCHGROUPDATALOCATION/particular research group/_MEALSDATALOCATION/ each
+  // meal has a unique id assigned to it when written to the database, as such we don't
+  // need to store meals relative to some subject
+  final String _MEALSDATALOCATION = "Subject Meals";
 
   // define a private constructor for this class which will allocate memory etc
   // to class, this is only call-able from within this class.
@@ -41,9 +60,9 @@ class Database {
   void addInstitutionToResearchGroup(Institution institution, ResearchGroupInfo currentResearchGroupInfo){
     InstitutionInfo currentInstitutionInfo = institution.getInstitutionInfo();
     DatabaseReference institutionReference = _databaseInstance.reference()
-        .child(this._researchGroupRootLocation)
+        .child(this._RESEARCHGROUPROOTLOCATION)
         .child(currentResearchGroupInfo.databaseKey)
-        .child(this._researchGroupInstitutionsLocation)
+        .child(this._RESEARCHGROUPINSTITUTIONSLOCATION)
         .child(currentInstitutionInfo.databaseKey);
 
     // since we are storing this institution for a research group, only write
@@ -60,7 +79,7 @@ class Database {
   void readInstitution(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
         Function(Institution) callback){
     DatabaseReference desiredInstitutionReference = _databaseInstance.reference()
-        .child(this._researchGroupRootLocation)
+        .child(this._RESEARCHGROUPROOTLOCATION)
         .child(currentResearchGroupInfo.databaseKey)
         .child(institutionInfo.databaseKey);
     desiredInstitutionReference.once().then((DataSnapshot dataSnapshot)=>(
@@ -74,7 +93,7 @@ class Database {
   void readResearchGroup(ResearchGroupInfo researchGroupInfo,
       Function(ResearchGroup) callback){
     DatabaseReference desiredResearchGroupReference = _databaseInstance.reference()
-        .child(this._researchGroupRootLocation)
+        .child(this._RESEARCHGROUPROOTLOCATION)
         .child(researchGroupInfo.databaseKey);
     // use onValue instead of once() to read data here as we want to read data and
     // then also update data if any changes have occurred to the database
@@ -88,7 +107,7 @@ class Database {
 
   Stream<Event> getResearchGroupStream(ResearchGroupInfo researchGroupInfo){
     DatabaseReference desiredResearchGroupReference = _databaseInstance.reference()
-        .child(this._researchGroupRootLocation)
+        .child(this._RESEARCHGROUPROOTLOCATION)
         .child(researchGroupInfo.databaseKey);
     return desiredResearchGroupReference.onValue;
   }
@@ -96,7 +115,7 @@ class Database {
   void writeResearchGroup(ResearchGroup researchGroup){
     ResearchGroupInfo researchGroupInfo = researchGroup.getResearchGroupInfo();
     DatabaseReference researchGroupDatabaseReference = _databaseInstance.reference()
-        .child(this._researchGroupRootLocation)
+        .child(this._RESEARCHGROUPROOTLOCATION)
         .child(researchGroupInfo.databaseKey);
     // convert the ResearchGroup object to JSON before writing to the db, this also
     // converts fields and data structures within this object to JSON
