@@ -72,12 +72,16 @@ Widget addInstitution(BuildContext context){
 }
 
 Widget searchInstitution(){
-  return const Flexible(
+  Icon icon = Icon(Icons.search);
+  return Flexible(
     child: Card(
         color: Colors.white60,
         elevation: 2,
         child: ListTile(
-            leading: Icon(Icons.search),
+            leading: icon,
+            onTap: (){
+
+            },
             title: Text("Search Institutions"))),
   );
 }
