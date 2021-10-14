@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'dart:io';
 import 'dart:async';
 import 'package:image_picker/image_picker.dart';
@@ -55,11 +56,22 @@ class _UploadDataState extends State<UploadData>{
   }
 
   Widget addWeight() {
-    return const TextField(
-      decoration: InputDecoration(
+    return TextField(
+      decoration: const InputDecoration(
           border: OutlineInputBorder(),
-          hintText: 'Weight'
+          hintText: 'Weight',
       ),
+        // specify that a digit keyboard should be used, signed values should not be
+        // allowed and decimals should be enabled
+        keyboardType: TextInputType.numberWithOptions(signed: false, decimal:true),
+        // specify an input formatter to ensure our values are in the specified format
+        // here we require at least 1 digit before any decimals, and allow any number
+        // of digits (including 0) following a decimal if one exists, we must allow
+        // 0 digits after the decimal or else the user will be unable to type a decimal
+        // as the field will always require a digit after the '.' and the user can only
+        // type one character at a time
+        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+(\.\d*)?'))
+        ]
     );
   }
 
