@@ -113,6 +113,10 @@ class Meal{
     return this._mealId;
   }
 
+  String get mealName{
+    return this._mealName;
+  }
+
   //meal comment
   String get comment{
     // ensure our meal actually has a comment
