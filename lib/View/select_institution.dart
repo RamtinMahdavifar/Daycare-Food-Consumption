@@ -29,15 +29,17 @@ class ChooseInstitute extends StatefulWidget {
 class _ChooseInstituteState extends State<ChooseInstitute> {
   @override
 
-  final TextEditingController _filter = new TextEditingController();
+/*  final TextEditingController _filter = new TextEditingController();
   final dio = new Dio(); // for http requests
 
   String _searchText = "";
   List<String>? names; // names we get from API
   List<String>? filteredNames; // names filtered by search text
+  Icon _searchIcon = new Icon(Icons.search);
+  Widget _appBarTitle = new Text( 'Search Example' );*/
 
-
-  _ChooseInstitute() {
+/*
+  ChooseInstitute() {
     _filter.addListener(() {
       if (_filter.text.isEmpty) {
         setState(() {
@@ -59,22 +61,23 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
   }
 
 
-  void _getNames() async {
-    /*final response = await require("@pipedreamhq/platform").axios(this, {
+
+  void _getNames() {
+    */
+/*final response = await require("@pipedreamhq/platform").axios(this, {
       url: 'https://swapi.dev/api/films/1/',
-    });//await dio.get('https://swapi.co/api/people');*/
+    });//await dio.get('https://swapi.co/api/people');*//*
 
-    List<String>? response;
-    response?.add("place");
-    response?.add("pl4ce");
-    response?.add("jim");
-    response?.add("tim");
 
-    List<String>? tempList;
+    List<String>? response = ["place", "pl4ce", "jim", 'tim'];
+
+    List<String>? tempList = response;
+    response == null ? print("broken") : print("working");
     print(response);
-    for (int i = 0; i < response!.length; i++) {
-      //tempList?.add(response[i]);
-    }
+   // for (int i = 0; i < response.length; i++) {
+   //   tempList?.add(response[i]);
+   // }
+    print(tempList);
 
     setState(() {
       names = tempList;
@@ -84,22 +87,22 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
 
   void _searchPressed() {
     setState(() {
-  //    if (searchInstitution().icon .icon == Icons.search) {
-        //this._searchIcon = new Icon(Icons.close);
-        //this._appBarTitle = new TextField(
+      if (_searchIcon.icon == Icons.search) {
+        _searchIcon = new Icon(Icons.close);
+        _appBarTitle = new TextField(
         //put the visual icon change stuff in the widget page
-        controller: _filter;
-        decoration: new InputDecoration(
-            prefixIcon: new Icon(Icons.search),
-            hintText: 'Search...'
+          controller: _filter,
+          decoration: new InputDecoration(
+              prefixIcon: new Icon(Icons.search),
+              hintText: 'Search...'
+          )
         );
- //       );
-/*      } else {
-        this._searchIcon = new Icon(Icons.search);
-        this._appBarTitle = new Text('Search Example');
+      } else {
+        _searchIcon = new Icon(Icons.search);
+        _appBarTitle = new Text('Search Example');
         filteredNames = names;
         _filter.clear();
-      }*/
+      }
     });
   }
 
@@ -116,33 +119,48 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
       }
       filteredNames = tempList;
     }
-    return ListView.builder(
-      itemCount: names == null ? 0 : filteredNames!.length,
-      itemBuilder: (BuildContext context, int index) {
-        return new ListTile(
-          title: Text(filteredNames![index]),
-          onTap: () => print(filteredNames![index]),
-        );
-      },
+    print(filteredNames);
+    return Flexible(
+        child: ListView.builder(
+          itemCount: names == null ? 0 : filteredNames!.length,
+          itemBuilder: (BuildContext context, int index) {
+            return new ListTile(
+              title: Text(filteredNames![index]),
+              onTap: () => print(filteredNames![index]),
+            );
+          },
+        )
     );
   }
 
 
   Widget searchInstitution(){
-    Icon icon = Icon(Icons.search);
     return Flexible(
       child: Card(
           color: Colors.white60,
           elevation: 2,
-          child: ListTile(  
-              leading: icon,
+          child: ListTile(
+              leading: _searchIcon,
               onTap: (){
                   _searchPressed();
               },
-              title: Text("Search Institutions"))),
+              title: const Text("Search Institute")//_appBarTitle
+          )
+      ),
     );
   }
 
+
+  Widget quickfixButton(BuildContext context){
+    return InkWell(
+        onTap: (){
+          // pass the name of the clicked on institution to the daycare screen
+          _getNames();
+        },
+        child: Icon(Icons.edit)
+    );
+  }
+*/
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,9 +174,10 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
                   searchInstitution(),
                   //_buildList(),
                   institutionDisplay(context),
-                  quickfixButton(context)
+                  //quickfixButton(context)
                 ])
-        )
+        ),
+
     );
   }
 
