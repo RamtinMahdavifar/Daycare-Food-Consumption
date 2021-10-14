@@ -8,6 +8,7 @@ String convertDateToString(DateTime date){
 }
 
 DateTime convertStringToDate(String dateString){
+  // TODO: add format validation, could use something like try parse or catch any thrown format exceptions.
   // this throws a format exception if dateString isn't in the format yyyy-MM-dd
   return dateFormat.parse(dateString);
 }
