@@ -26,3 +26,5 @@ jobs:
 
       - name: run dart tests
         run: flutter test
+        
+      - run: flutter build
