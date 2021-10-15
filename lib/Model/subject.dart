@@ -11,7 +11,7 @@ class Subject{
   //*****subject properties******
 
   // subject ID
-  String _subjectID;
+  late String _subjectID;
 
   // map of subject meals, this map will have date string keys, values will be maps
   // with string meal IDs as keys and corresponding MealInfos as values. The idea here is
@@ -22,7 +22,10 @@ class Subject{
 
 
   //**********subject  constructor*************
-  Subject(this._subjectID);
+  Subject(String subjectID){
+    assert(subjectID.isNotEmpty);
+    this._subjectID = subjectID;
+  }
 
 
   //Subject getters
@@ -88,6 +91,8 @@ class Subject{
   }
 
   SubjectInfo getSubjectInfo(){
+    // ensure this object has a legitimate subjectID before creating this info
+    assert(this._subjectID.isNotEmpty);
     return SubjectInfo(this._subjectID);
   }
 

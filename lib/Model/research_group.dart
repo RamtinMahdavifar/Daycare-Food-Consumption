@@ -8,8 +8,8 @@ import 'package:plate_waste_recorder/Model/research_group_info.dart';
 /// stored within a particular research group, research groups can be created
 /// by one owner who can then invite others to the research group via invite code
 class ResearchGroup{
-  String _groupName;
-  ResearcherInfo _groupOwner;
+  late String _groupName;
+  late ResearcherInfo _groupOwner;
 
   // groupMembers will only include members of the group outside of the owner
   // ie the owner of the group isn't included in this list
@@ -19,7 +19,14 @@ class ResearchGroup{
   Map<String,InstitutionInfo> _institutionsMap = Map();
 
   // ResearchGroup constructor
-  ResearchGroup(this._groupName, this._groupOwner);
+  ResearchGroup(String groupName, ResearcherInfo groupOwner){
+    assert(groupName.isNotEmpty);
+    // ensure the owner of this group has legitimate data
+    assert(groupOwner.name.isNotEmpty);
+    assert(groupOwner.databaseKey.isNotEmpty);
+    this._groupOwner = groupOwner;
+    this._groupName = groupName;
+  }
 
   String get name{
     return this._groupName;
@@ -30,14 +37,21 @@ class ResearchGroup{
   }
 
   set name(String newName){
+    assert(newName.isNotEmpty);
     this._groupName = newName;
   }
 
   set owner(ResearcherInfo newOwner){
+    // ensure the new owner has legitimate data
+    assert(newOwner.name.isNotEmpty);
+    assert(newOwner.databaseKey.isNotEmpty);
     this._groupOwner = newOwner;
   }
 
   void addNewInstitution(InstitutionInfo institutionInfo){
+    // ensure the institution added has legitimate data
+    assert(institutionInfo.name.isNotEmpty);
+    assert(institutionInfo.databaseKey.isNotEmpty);
     this._institutionsMap[institutionInfo.databaseKey] = institutionInfo;
     // TODO: synchronize this with the database so when an institution is added
     // TODO: to a research group it is put on the database as well
@@ -48,6 +62,8 @@ class ResearchGroup{
   }
   
   ResearchGroupInfo getResearchGroupInfo(){
+    // make sure this object has a valid name before creating this info
+    assert(this._groupName.isNotEmpty);
     return ResearchGroupInfo(this._groupName);
   }
 

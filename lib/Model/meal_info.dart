@@ -13,6 +13,8 @@ class MealInfo extends Info{
   String name = "";
 
   MealInfo(String mealId, String mealName){
+    assert(mealId.isNotEmpty);
+    assert(mealName.isNotEmpty);
     this._mealId = mealId;
     this.databaseKey = this._mealId;
     this.name = mealName;

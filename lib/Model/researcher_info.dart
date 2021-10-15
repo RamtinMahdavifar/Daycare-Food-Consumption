@@ -9,6 +9,7 @@ class ResearcherInfo extends Info{
   String databaseKey = "";
 
   ResearcherInfo(String name){
+    assert(name.isNotEmpty);
     this.name = name;
     this.databaseKey = name;
   }

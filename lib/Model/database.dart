@@ -59,7 +59,11 @@ class Database {
   }
 
   void addInstitutionToResearchGroup(Institution institution, ResearchGroupInfo currentResearchGroupInfo){
+    // ensure the input researchgroup has a database key
+    assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
     InstitutionInfo currentInstitutionInfo = institution.getInstitutionInfo();
+    // ensure the input institution has a database key
+    assert(currentInstitutionInfo.databaseKey.isNotEmpty);
     DatabaseReference institutionReference = _databaseInstance.reference()
         .child(this._RESEARCHGROUPROOTLOCATION)
         .child(currentResearchGroupInfo.databaseKey)
@@ -81,7 +85,7 @@ class Database {
   }
 
   void _writeInstitutionToDatabase(Institution institution, ResearchGroupInfo currentResearchGroupInfo){
-    // make sure research group input has a valid database key
+    // make sure research group input has a database key
     assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
     // get the database key of this particular input institution from an institution info
     InstitutionInfo currentInstitutionInfo = institution.getInstitutionInfo();
@@ -105,23 +109,29 @@ class Database {
     institutionReference.set(institutionMap);
   }
 
-  // TODO: update to make async
+
   void readInstitution(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
         Function(Institution) callback){
+    // ensure the input info objects contain database keys
+    assert(institutionInfo.databaseKey.isNotEmpty);
+    assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
     DatabaseReference desiredInstitutionReference = _databaseInstance.reference()
         .child(this._RESEARCHGROUPROOTLOCATION)
         .child(currentResearchGroupInfo.databaseKey)
         .child(institutionInfo.databaseKey);
     desiredInstitutionReference.once().then((DataSnapshot dataSnapshot)=>(
+    // call the input function on the data read from the database
         callback(
             Institution.fromJSON(jsonDecode(dataSnapshot.value.toString()))
         )
     ));
   }
 
-  // TODO: update to make async
+
   void readResearchGroup(ResearchGroupInfo researchGroupInfo,
       Function(ResearchGroup) callback){
+    // ensure the researchgroup passed in has a database key
+    assert(researchGroupInfo.databaseKey.isNotEmpty);
     DatabaseReference desiredResearchGroupReference = _databaseInstance.reference()
         .child(this._RESEARCHGROUPROOTLOCATION)
         .child(researchGroupInfo.databaseKey);
@@ -136,6 +146,8 @@ class Database {
   }
 
   Stream<Event> getResearchGroupStream(ResearchGroupInfo researchGroupInfo){
+    // ensure the input researchgroup has a database key
+    assert(researchGroupInfo.databaseKey.isNotEmpty);
     DatabaseReference desiredResearchGroupReference = _databaseInstance.reference()
         .child(this._RESEARCHGROUPROOTLOCATION)
         .child(researchGroupInfo.databaseKey);
@@ -144,6 +156,8 @@ class Database {
 
   void writeResearchGroup(ResearchGroup researchGroup){
     ResearchGroupInfo researchGroupInfo = researchGroup.getResearchGroupInfo();
+    // ensure the research group input has a database key
+    assert(researchGroupInfo.databaseKey.isNotEmpty);
     DatabaseReference researchGroupDatabaseReference = _databaseInstance.reference()
         .child(this._RESEARCHGROUPROOTLOCATION)
         .child(researchGroupInfo.databaseKey);
@@ -185,6 +199,7 @@ class Database {
   }
 
   void writeMealToDatabase(ResearchGroupInfo currentResearchGroupInfo, Meal currentMeal){
+    // ensure the input research group and meal have database keys
     assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
     MealInfo currentMealInfo = currentMeal.getMealInfo();
     assert(currentMealInfo.databaseKey.isNotEmpty);

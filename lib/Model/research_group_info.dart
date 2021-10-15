@@ -10,6 +10,7 @@ class ResearchGroupInfo extends Info{
   String databaseKey = "";
 
   ResearchGroupInfo(String name){
+    assert(name.isNotEmpty);
     this.name = name;
     this.databaseKey = name;
   }

@@ -6,8 +6,11 @@ import 'package:plate_waste_recorder/Model/subject_info.dart';
 /// Class representing an institution, institutions are considered to be anywhere where
 /// data collection in a plate waste study might be undertaken
 class Institution {
-  String _name;
-  String _address;
+  // these fields are late as such as this class's constructor doesn't take these fields
+  // as input directly, this late keyword indicates that the fields will be initialized
+  // before use as they are in our constructor
+  late String _name;
+  late String _address;
   // map with string keys denoting the IDs of the subjects in the institution,
   // values in this map are SubjectInfo objects with additional information about
   // each subject in the institution
@@ -15,7 +18,12 @@ class Institution {
 
 
   // Institution constructor
-  Institution(this._name, this._address);
+  Institution(String name, String address){
+    assert(name.isNotEmpty);
+    assert(address.isNotEmpty);
+    this._name = name;
+    this._address = address;
+  }
 
   String get name{
     Config.log.i('Getting institution name: $_name');
@@ -27,14 +35,20 @@ class Institution {
   }
 
   set name(String newName){
+    assert(newName.isNotEmpty);
     this._name = newName;
   }
 
   set address(String newAddress){
+    assert(newAddress.isNotEmpty);
     this._address = newAddress;
   }
   
   InstitutionInfo getInstitutionInfo(){
+    // ensure this object has a legitimate name and address before creating this
+    // info
+    assert(this._name.isNotEmpty);
+    assert(this._address.isNotEmpty);
     return InstitutionInfo(this.name, this.address);
   }
 
