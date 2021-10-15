@@ -57,6 +57,7 @@ class Institution {
     assert(newSubjectInfo.subjectId.isNotEmpty);
     // ensure there is no subject within our institution with the same id as this new subject
     assert(this._subjectsMap.containsKey(newSubjectInfo.subjectId));
+    Config.log.i("adding subject with id: " + newSubjectInfo.subjectId + " to institution: " + this._name);
     // add the new subject
     this._subjectsMap[newSubjectInfo.subjectId] = newSubjectInfo;
   }
@@ -73,6 +74,7 @@ class Institution {
     // institution
     assert(subjectID.isNotEmpty);
     assert(this._subjectsMap.containsKey(subjectID));
+    Config.log.i("retrieving subject with id: " + subjectID + " from institution: " + this._name);
 
     // this is a type SubjectInfo? as this can be null if the subject ID isn't present
     // in our institution even though we check this case, this type is required to

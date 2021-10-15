@@ -16,6 +16,7 @@ Widget listedInst(BuildContext context, String name, String address){
   return Card(
       child: ListTile(
           onTap: (){
+            Config.log.i("navigating to institution with name: " + name + " and address: " + address);
             // pass the name of the clicked on institution to the daycare screen
             Navigator.push(context, MaterialPageRoute(
                 builder: (context){
