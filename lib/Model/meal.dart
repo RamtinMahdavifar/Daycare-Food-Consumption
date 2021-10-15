@@ -1,5 +1,6 @@
 import 'package:plate_waste_recorder/Model/meal_info.dart';
 import 'package:plate_waste_recorder/Model/string_image_converter.dart';
+import 'package:plate_waste_recorder/Helper/config.dart';
 
 
 enum MealType{
@@ -185,6 +186,7 @@ class Meal{
     // ensure the newly added meal name is not empty
     assert(newMealName.isNotEmpty);
     this._mealName = newMealName;
+    Config.log.i("setting name of meal: " + this._mealId + " to: " + newMealName);
   }
 
   //****** Meal Custom methods *****
@@ -194,6 +196,7 @@ class Meal{
     // regardless of whether we have a comment or not, simply set the comment
     // to an empty string to remove it
     this.comment = "";
+    Config.log.i("removing comment from meal: " + this._mealId);
   }
 
 

@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/Model/meal.dart';
 import 'package:plate_waste_recorder/Model/meal_info.dart';
 import 'package:plate_waste_recorder/Helper/date_converter.dart';
@@ -68,10 +68,12 @@ class Subject{
     // if the subject already has meals for the input date add this meal to the
     // existing meal map for that date
     if(this._mealMap.containsKey(dateString)){
+      Config.log.i("adding additional meal: " + meal.id + " for subject: " + this.id + " on date: " + dateString);
       Map<String,MealInfo>? existingMapForDate = this._mealMap[dateString];
       existingMapForDate![newMealInfo.databaseKey] = newMealInfo;
     }
     else{
+      Config.log.i("adding new meal: " + meal.id + " for subject: " + this.id + " on date: " + dateString);
       Map<String,MealInfo> newMapForDate = {newMealInfo.databaseKey: newMealInfo};
       // add the newly created map to the subject's mealMap
       this._mealMap[dateString] = newMapForDate;

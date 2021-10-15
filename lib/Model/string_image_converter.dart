@@ -3,12 +3,15 @@ import 'dart:io';
 // package necessary to check MIME types of files
 import 'package:mime/mime.dart';
 import 'dart:convert';
+import 'package:plate_waste_recorder/Helper/config.dart';
 
 String convertImageToString(String imageFilePath){
   // input file path must refer to some file that actually exists
   assert(File(imageFilePath).existsSync());
   // input file must be an image, check MIME type of file
   assert(lookupMimeType(imageFilePath)!.startsWith('image/'));
+
+  Config.log.i("converting image at path: " + imageFilePath + " to a base 64 encoded string");
 
   // read the input image file in as a sequence of bytes
   Uint8List imageFileBytes = File(imageFilePath).readAsBytesSync();
@@ -34,6 +37,9 @@ void convertStringToImage(String imageString, String resultingImageFilePath){
 
   // ensure that the file path provided refers to an image file
   assert(lookupMimeType(resultingImageFilePath)!.startsWith('image/'));
+
+  // do not log the value of the input imageString, as these image strings are gigantic in size
+  Config.log.i("converting image string to image at destination path: " + resultingImageFilePath);
 
   // convert our base 64 image string into raw bytes of data
   Uint8List imageBytes = base64Decode(imageString);

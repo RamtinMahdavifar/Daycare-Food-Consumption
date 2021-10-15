@@ -8,7 +8,7 @@ import 'dart:convert';
 import 'package:plate_waste_recorder/Model/research_group.dart';
 import 'package:plate_waste_recorder/Model/subject.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
-
+import 'package:plate_waste_recorder/Helper/config.dart';
 import 'meal_info.dart';
 
 /// Class to a access the firebase database, this class is implemented using the
@@ -70,6 +70,9 @@ class Database {
         .child(this._RESEARCHGROUPINSTITUTIONSLOCATION)
         .child(currentInstitutionInfo.databaseKey);
 
+    Config.log.i("writing institution: " + institution.name + " to research group: "
+        + currentResearchGroupInfo.name + " on the database");
+
     // since we are storing this institution for a research group, only write
     // an InstitutionInfo to the database, convert this InstitutionInfo to JSON
 
@@ -89,7 +92,7 @@ class Database {
     assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
     // get the database key of this particular input institution from an institution info
     InstitutionInfo currentInstitutionInfo = institution.getInstitutionInfo();
-    // ensure the institution provided has a valid database key
+    // ensure the institution provided has a database key
     assert(currentInstitutionInfo.databaseKey.isNotEmpty);
 
     DatabaseReference institutionReference = _databaseInstance.reference()
@@ -97,6 +100,8 @@ class Database {
         .child(currentResearchGroupInfo.databaseKey)
         .child(this._INSTITUTIONSDATALOCATION)
         .child(currentInstitutionInfo.databaseKey);
+
+    Config.log.i("Writing institution: " + institution.name + " to the database");
 
     // convert our Institution Object to json to be written to location institutionReference
     String institutionJSON = jsonEncode(institution);
@@ -115,6 +120,8 @@ class Database {
     // ensure the input info objects contain database keys
     assert(institutionInfo.databaseKey.isNotEmpty);
     assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
+    Config.log.i("reading institution: " + institutionInfo.name + " from the database using database key " +
+    institutionInfo.databaseKey + " for research group: " + currentResearchGroupInfo.name);
     DatabaseReference desiredInstitutionReference = _databaseInstance.reference()
         .child(this._RESEARCHGROUPROOTLOCATION)
         .child(currentResearchGroupInfo.databaseKey)
@@ -132,6 +139,8 @@ class Database {
       Function(ResearchGroup) callback){
     // ensure the researchgroup passed in has a database key
     assert(researchGroupInfo.databaseKey.isNotEmpty);
+    Config.log.i("reading research group: " + researchGroupInfo.name + " from the database using database key: " +
+    researchGroupInfo.databaseKey);
     DatabaseReference desiredResearchGroupReference = _databaseInstance.reference()
         .child(this._RESEARCHGROUPROOTLOCATION)
         .child(researchGroupInfo.databaseKey);
@@ -148,6 +157,8 @@ class Database {
   Stream<Event> getResearchGroupStream(ResearchGroupInfo researchGroupInfo){
     // ensure the input researchgroup has a database key
     assert(researchGroupInfo.databaseKey.isNotEmpty);
+    Config.log.i("reading research group: " + researchGroupInfo.name + " as a stream using key: " +
+    researchGroupInfo.databaseKey);
     DatabaseReference desiredResearchGroupReference = _databaseInstance.reference()
         .child(this._RESEARCHGROUPROOTLOCATION)
         .child(researchGroupInfo.databaseKey);
@@ -158,6 +169,8 @@ class Database {
     ResearchGroupInfo researchGroupInfo = researchGroup.getResearchGroupInfo();
     // ensure the research group input has a database key
     assert(researchGroupInfo.databaseKey.isNotEmpty);
+    Config.log.i("writing research group: " + researchGroup.name + " to the database using key: " +
+    researchGroupInfo.databaseKey);
     DatabaseReference researchGroupDatabaseReference = _databaseInstance.reference()
         .child(this._RESEARCHGROUPROOTLOCATION)
         .child(researchGroupInfo.databaseKey);
@@ -179,6 +192,8 @@ class Database {
     SubjectInfo currentSubjectInfo = currentSubject.getSubjectInfo();
     // make sure the database key of our subject is not empty
     assert(currentSubjectInfo.databaseKey.isNotEmpty);
+    Config.log.i("adding subject: " + currentSubject.id + " to institution: " + institutionInfo.name +
+    " under research group: " + currentResearchGroupInfo.name);
     DatabaseReference institutionSubjectReference = _databaseInstance.reference()
         .child(this._RESEARCHGROUPDATALOCATION)
         .child(currentResearchGroupInfo.databaseKey)
@@ -203,6 +218,8 @@ class Database {
     assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
     MealInfo currentMealInfo = currentMeal.getMealInfo();
     assert(currentMealInfo.databaseKey.isNotEmpty);
+    Config.log.i("writing meal: " + currentMeal.id + " to the database under research group: " +
+    currentResearchGroupInfo.name);
     DatabaseReference mealReference = _databaseInstance.reference()
         .child(this._RESEARCHGROUPDATALOCATION)
         .child(currentResearchGroupInfo.databaseKey)

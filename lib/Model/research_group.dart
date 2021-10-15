@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/Model/researcher_info.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
@@ -45,6 +45,7 @@ class ResearchGroup{
     // ensure the new owner has legitimate data
     assert(newOwner.name.isNotEmpty);
     assert(newOwner.databaseKey.isNotEmpty);
+    Config.log.i("setting research group: " + this.name + "'s owner to: " + newOwner.name);
     this._groupOwner = newOwner;
   }
 
@@ -52,6 +53,7 @@ class ResearchGroup{
     // ensure the institution added has legitimate data
     assert(institutionInfo.name.isNotEmpty);
     assert(institutionInfo.databaseKey.isNotEmpty);
+    Config.log.i("adding institution: " + institutionInfo.name + " to researchGroup" + this._groupName);
     this._institutionsMap[institutionInfo.databaseKey] = institutionInfo;
     // TODO: synchronize this with the database so when an institution is added
     // TODO: to a research group it is put on the database as well
