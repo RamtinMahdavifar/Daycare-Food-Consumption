@@ -27,26 +27,7 @@ void main(){
       // write this image to the file system so we have a path we can provide as
 
     });
-    test("Add Meal comments",(){
-      Meal testMeal = Meal(1,"test image 1",MealType.before);
 
-      testMeal.comment = "Test comment 2";
-      expect(testMeal.comment,"Test comment 2");
-
-
-    });
-
-    test("Remove Meal comments",(){
-      Meal testMeal = Meal(1,"test image 1",MealType.before);
-
-      testMeal.comment = "Test comment 3";
-      expect(testMeal.comment,"Test comment 3");
-
-      testMeal.removeComment();
-
-      expect(testMeal.comment,"");
-
-    });
   });
 
 
