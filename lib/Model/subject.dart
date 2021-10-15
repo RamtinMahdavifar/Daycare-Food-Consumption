@@ -46,7 +46,7 @@ class Subject{
     // since we check this as a precondition, mealMapForSpecifiedDay can never be null
     // return the values of this map which are the Info objects of the meals
     // given to this subject on the input date
-    return mealMapForSpecifiedDay!.values as List<MealInfo>;
+    return mealMapForSpecifiedDay!.values.toList();
   }
 
   bool subjectHasMealsForDate(String dateString){
@@ -57,7 +57,7 @@ class Subject{
 
   void addSubjectMealForDate(DateTime date, Meal meal){
     // ensure the mandatory fields of our meal are not empty
-    assert(meal.id.isNotEmpty && meal.mealName.isNotEmpty);
+    assert(meal.id.isNotEmpty);
     // TODO: consider date validation
     // convert the input date into a string
     String dateString = convertDateToString(date);
@@ -89,7 +89,7 @@ class Subject{
     assert(this.subjectHasMeals());
     // if the subject has meals, the keys of this subject's mealMap will be the
     // dates the subject had such meals, simply return this
-    return this._mealMap.keys as List<String>;
+    return this._mealMap.keys.toList();
   }
 
   SubjectInfo getSubjectInfo(){
@@ -116,8 +116,9 @@ class Subject{
   bool operator ==(Object other){
     if (other.runtimeType == this.runtimeType){
       Subject otherInfo = other as Subject;
-      return this._subjectID == otherInfo._subjectID &&
-             this._mealMap == otherInfo._mealMap;
+      return this._subjectID == otherInfo._subjectID;
+             // TODO: factor meal map into equality, default map equality is object
+             // TODO: equality, need to check each key-value mapping manually for equality
     }
     return false;
   }
