@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'institution_page_widgets.dart';
 import 'upload_data.dart';
+import 'package:plate_waste_recorder/Helper/config.dart';
 
 class InstitutionPage extends StatefulWidget {
   String institutionName;
@@ -15,6 +16,7 @@ class InstitutionPage extends StatefulWidget {
 class _InstitutionPageState extends State<InstitutionPage> {
   @override
   Widget build(BuildContext context) {
+    Config.log.i("building institution page");
     return Scaffold(
       appBar: AppBar(title: Text(widget.institutionName.toString()), leading: backButton(context), actions: [modifyButton()]),
         body: _InstitutionOptions()

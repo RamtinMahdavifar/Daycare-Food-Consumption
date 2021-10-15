@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
 import 'package:plate_waste_recorder/Model/research_group.dart';
 import 'dart:convert'; // required for jsonDecode()
+import 'package:plate_waste_recorder/Helper/config.dart';
 
 
 
@@ -14,6 +15,7 @@ class SelectInstitute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Config.log.i("building institution select page");
     return MaterialApp(
         title: 'Plate Waste Tracker',
         home: ChooseInstitute()

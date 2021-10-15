@@ -56,10 +56,10 @@ Widget previewImages(_imageFileList, btn) {
           itemBuilder: (context, index) {
             return Semantics(
               label: 'image_picker_example_picked_image',
-              child: Image.file(File(_imageFileList![index].path)),
+              child: Image.file(File(_imageFileList![index].path as String)),
             );
           },
-          itemCount: _imageFileList!.length, //this line prevents an error when loading the image, just keep it
+          itemCount: _imageFileList!.length as int, //this line prevents an error when loading the image, just keep it
         )
     );
 

@@ -42,6 +42,6 @@ class InstitutionInfo extends Info{
   // this is considered a constructor and so cannot be inherited from our super Info
   InstitutionInfo.fromJSON(Map<String, dynamic> json)
       : name = json["name"].toString(),
-        databaseKey = json["databaseKey"],
-        _institutionAddress = json["_institutionAddress"];
+        databaseKey = json["databaseKey"] as String,
+        _institutionAddress = json["_institutionAddress"] as String;
 }
