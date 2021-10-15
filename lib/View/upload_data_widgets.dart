@@ -41,7 +41,7 @@ Widget clearImage(_imageFile, btn){
           hideButton();
         });*/
       _imageFile = null;
-      hideButton(btn);
+      //hideButton(btn);
 
     },
   );
@@ -50,7 +50,7 @@ Widget clearImage(_imageFile, btn){
 
 Widget previewImages(_imageFileList, btn) {
   if (_imageFileList != null) {
-    hideButton(btn);
+    //hideButton(btn);
     return Container( //semantics
         child: ListView.builder(
           itemBuilder: (context, index) {
