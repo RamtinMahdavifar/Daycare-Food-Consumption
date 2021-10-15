@@ -6,6 +6,9 @@ import 'dart:async';
 import 'package:image_picker/image_picker.dart';
 //import 'upload_data_widgets.dart';
 import 'dart:convert';
+import 'package:plate_waste_recorder/Model/meal.dart';
+import 'package:plate_waste_recorder/Model/database.dart';
+import 'package:plate_waste_recorder/Model/research_group_info.dart';
 
 class UploadData extends StatefulWidget {
 
@@ -27,6 +30,10 @@ class _UploadDataState extends State<UploadData>{
   bool _showButton = true;
   final ImagePicker _picker = ImagePicker();
 
+  TextEditingController _weightFieldController = TextEditingController();
+  TextEditingController _commentFieldController = TextEditingController();
+  TextEditingController _mealNameFieldController = TextEditingController();
+
   void _onImageButtonPressed(ImageSource source,
       {BuildContext? context, bool isMultiImage = false}) async {
 
@@ -47,11 +54,12 @@ class _UploadDataState extends State<UploadData>{
 
     //TODO: make this thing looks prettier and add a button for submitting the data or selecting a different image, then imporove the look for when the keyboard comes up
   Widget addComments() {
-    return const TextField(
-      decoration: InputDecoration(
+    return TextField(
+      decoration: const InputDecoration(
           border: OutlineInputBorder(),
           hintText: 'Comments'
       ),
+      controller: this._commentFieldController,
     );
   }
 
@@ -61,6 +69,7 @@ class _UploadDataState extends State<UploadData>{
           border: OutlineInputBorder(),
           hintText: 'Weight',
       ),
+        controller: this._weightFieldController,
         // specify that a digit keyboard should be used, signed values should not be
         // allowed and decimals should be enabled
         keyboardType: TextInputType.numberWithOptions(signed: false, decimal:true),
@@ -79,7 +88,36 @@ class _UploadDataState extends State<UploadData>{
     return ElevatedButton(
       child: const Text("Submit Data"),
       onPressed: (){//TODO upload image and comments to db
-
+        // we require the user to have chosen an image before allowing them to submit
+        // their data
+        // TODO: use firebase push() functionality to generate a unique ID for meals, consider using this in meal constructor
+        Meal newMeal = Meal("test meal ID");
+        // add the submitted image to this meal
+        // assume this is a new meal
+        // TODO: add UI and functionality to choose and add data to prexisting meals
+        newMeal.beforeImageAsString = this._imageFileList![0].path;
+        // add weight, meal name, and comments to this Meal object if such fields are
+        // filled in, here these fields are optional to aid in fast data entry
+        String inputWeight = this._weightFieldController.value.text;
+        if(inputWeight.isNotEmpty){
+          // weight has been input, add to meal, the input string weight must be in
+          // valid double format due to input restrictions on our weight field
+          newMeal.beforeMealWeight = double.parse(inputWeight);
+        }
+        String inputComment = this._commentFieldController.value.text;
+        if(inputComment.isNotEmpty){
+          // comment has been input, add to meal
+          newMeal.comment = inputComment;
+        }
+        String inputMealName = this._mealNameFieldController.value.text;
+        if(inputMealName.isNotEmpty){
+          // meal name has been input, add to meal
+          newMeal.mealName = inputMealName;
+        }
+        // all input data has been added to newMeal, write this to the database
+        // write this meal to the database under a test research group as adding and joining
+        // research groups is not yet implemented
+        Database().writeMealToDatabase(ResearchGroupInfo("testResearchGroupName"), newMeal);
       }
         // ,
     );
@@ -95,7 +133,6 @@ class _UploadDataState extends State<UploadData>{
         });*/
         _imageFile = null;
         hideButton();
-
       },
     );
 
@@ -218,6 +255,14 @@ class _UploadDataState extends State<UploadData>{
         ],
       ),
     );
+  }
+
+  @override
+  void dispose(){
+    this._weightFieldController.dispose();
+    this._commentFieldController.dispose();
+    this._mealNameFieldController.dispose();
+    super.dispose();
   }
 
 
