@@ -8,43 +8,8 @@ import 'package:plate_waste_recorder/Model/meal.dart';
 void main(){
   group("subject getters and setters",(){
     test("subject getters",(){
-      Subject student = Subject(1);
-      expect(student.id,1);
-
-      Meal testMeal = Meal(student.meals.length+1 ,"test image",MealType.before);
-      student.addNewMeal(testMeal);
-      // TODO: Added expect case which could test if meal was added properly
-      expect(student.meals, <int,Meal>{
-        1:Meal(1,"test image",MealType.before)
-        });
-
-
-    });
-    test("subject add meal",(){
-      Subject student = Subject(1);
-
-      Meal testMeal = Meal(student.meals.length+1 ,"test image",MealType.before);
-      student.addNewMeal(testMeal);
-      // TODO: Added expect case which could test if meal was added properly
-      expect(student.meals, <int,Meal>{
-        1:Meal(1,"test image",MealType.before)
-      });
-
-
-    });
-
-    test("subject remove meal",(){
-      Subject student = Subject(1);
-
-      Meal testMeal = Meal(student.meals.length+1 ,"test image",MealType.before);
-      student.addNewMeal(testMeal);
-      //expect(student.meals, );
-      // TODO: Added expect case which could test if meal was added properly
-      student.removeMeal(testMeal);
-    //  expect(student.meals,null);
-      // TODO: Added expect case which could test if meal was removed
-
-
+      Subject student = Subject("1");
+      expect(student.id,"1");
     });
   });
 
