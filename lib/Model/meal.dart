@@ -15,11 +15,9 @@ class Meal{
   //Meal Id, unique ID for each meal
   String _mealId;
 
-  // String representing the name of this particular meal
-  String _mealName;
-
   // give each non-mandatory field a default value as we meals may not be provided
-  // images, weights, comments etc
+  // String representing the name of this particular meal
+  String _mealName = "";
 
   // Images are converted to strings when stored, this is the string representing
   // the image of the meal before being eaten by a subject
@@ -51,7 +49,7 @@ class Meal{
   //***** Meal constructor ********
   // only accept the mandatory fields for a meal here, all other fields are optional and
   // can be filled in later
-  Meal(this._mealName, this._mealId);
+  Meal(this._mealId);
 
 
 
@@ -80,6 +78,10 @@ class Meal{
 
   bool mealHasComment(){
     return this._comment.isNotEmpty;
+  }
+
+  bool mealHasName(){
+    return this._mealName.isNotEmpty;
   }
 
   String getBeforeImageFilePath(){
@@ -114,6 +116,7 @@ class Meal{
   }
 
   String get mealName{
+    assert(this.mealHasName());
     return this._mealName;
   }
 
@@ -173,6 +176,14 @@ class Meal{
     this._afterMealWeight = newAfterWeight;
   }
 
+  // sets the name of this meal to the string name provided, if the meal already has
+  // a name, this name is overwritten.
+  void set mealName(String newMealName){
+    // ensure the newly added meal name is not empty
+    assert(newMealName.isNotEmpty);
+    this._mealName = newMealName;
+  }
+
   //****** Meal Custom methods *****
 
   //remove a comment
@@ -184,7 +195,7 @@ class Meal{
 
 
   MealInfo getMealInfo(){
-    return MealInfo(this._mealId, this._mealName);
+    return MealInfo(this._mealId, this._mealId);
   }
 
 
