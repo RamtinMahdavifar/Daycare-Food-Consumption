@@ -52,22 +52,12 @@ void main(){
     test("to json",(){
       final Institution testInstitution = Institution("test institution", "test address");
       expect(testInstitution.toJson(), <String, dynamic>{"_name":"test institution", "_address":"test address"});
-
-      testInstitution.name = "";
-      testInstitution.address = "";
-
-      expect(testInstitution.toJson(), <String, dynamic>{"_name":"", "_address":""});
     });
 
     test("from json",(){
-      final Map<String,dynamic> testJSON = {"_name":"test institution", "_address":"test address"};
+      final Map<String,dynamic> testJSON = {"_name":"test institution", "_address":"test address", "_subjectsMap":"{}"};
 
       expect(Institution.fromJSON(testJSON), Institution("test institution", "test address"));
-
-      testJSON["_name"] = "";
-      testJSON["_address"] = "";
-
-      expect(Institution.fromJSON(testJSON), Institution("", ""));
     });
   });
 

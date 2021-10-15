@@ -46,11 +46,6 @@ void main(){
       final InstitutionInfo testInstitutionInfo = InstitutionInfo("test institution", "test address");
       expect(testInstitutionInfo.toJson(), <String, dynamic>{"name":"test institution", "databaseKey":"test address",
         "_institutionAddress":"test address"});
-
-      testInstitutionInfo.name = "";
-
-      expect(testInstitutionInfo.toJson(), <String, dynamic>{"name":"", "databaseKey":"test address",
-        "_institutionAddress":"test address"});
     });
 
     test("from json",(){
@@ -58,12 +53,6 @@ void main(){
         "_institutionAddress":"test address"};
 
       expect(InstitutionInfo.fromJSON(testJSON), InstitutionInfo("test institution", "test address"));
-
-      testJSON["name"] = "";
-      testJSON["databaseKey"] = "";
-      testJSON["_institutionAddress"] = "";
-
-      expect(InstitutionInfo.fromJSON(testJSON), InstitutionInfo("", ""));
     });
   });
 
