@@ -229,7 +229,7 @@ class Meal{
     '_afterImageAsString': this._afterImageAsString,
     '_beforeMealWeight': this._beforeMealWeight,
     '_afterMealWeight': this._afterMealWeight,
-    '_mealType':this._mealType
+    '_mealType':this._mealType.toString()
   };
 
 
