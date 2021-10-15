@@ -58,6 +58,15 @@ class Database {
     return _instance;
   }
 
+  /// writes the input institution as an InstitutionInfo under the research group specified by the
+  /// input ResearchGroupInfo, the input institution is also written in it's entirety to the database in
+  /// it's own distinct location, this location is still relative to the input research group
+  /// Preconditions: currentResearchGroupInfo.databaseKey.isNotEmpty, institution.getInstitutionInfo().databaseKey.isNotEmpty
+  /// Postconditions: writes the input institution as an InstitutionInfo under the research group specified by the
+  /// input ResearchGroupInfo, the input institution is also written in it's entirety to the database in
+  /// it's own distinct location, this location is still relative to the input research group
+  /// if the location specified by the input research group info doesn't
+  /// yet exist on the database, it is created.
   void addInstitutionToResearchGroup(Institution institution, ResearchGroupInfo currentResearchGroupInfo){
     // ensure the input researchgroup has a database key
     assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
@@ -87,6 +96,13 @@ class Database {
     _writeInstitutionToDatabase(institution,currentResearchGroupInfo);
   }
 
+  /// writes the input institution in it's entirety to a location on the database relative to
+  /// the research group specified by the input ResearchGroupInfo
+  /// Preconditions: currentResearchGroupInfo.databaseKey.isNotEmpty && institution.getInstitutionInfo.databaseKey.isNotEmpty
+  /// Postcondition: input institution is written in it's entirety to a location relative to the research
+  /// group specified by currentResearchGroupInfo on the database
+  /// if the location specified by the input research group info doesn't
+  /// yet exist on the database, it is created.
   void _writeInstitutionToDatabase(Institution institution, ResearchGroupInfo currentResearchGroupInfo){
     // make sure research group input has a database key
     assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
@@ -115,6 +131,12 @@ class Database {
   }
 
 
+  /// reads in the institution specified by institutionInfo for the research group specified
+  /// by currentResearchGroupInfo, executes function callback on the read in institution
+  /// Preconditions: institutionInfo.databaseKey.isNotEmpty && currentResearchGroupInfo.databaseKey.isNotEmpty
+  /// Postconditions: function callback is executed on the Institution specified by the input
+  /// institutionInfo for the research group specified by currentResearchGroupInfo after being read in
+  /// from the database
   void readInstitution(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
         Function(Institution) callback){
     // ensure the input info objects contain database keys
@@ -135,6 +157,11 @@ class Database {
   }
 
 
+  /// reads the ResearchGroup object specified by the input researchGroupInfo from the database, function
+  /// callback is then called using this ResearchGroup as input
+  /// Preconditions: researchGroupInfo.databaseKey.isNotEmpty
+  /// Postconditions: function callback is executed with input ResearchGroup read in from the database,
+  /// this ResearchGroup corresponds to the researchGroupInfo input
   void readResearchGroup(ResearchGroupInfo researchGroupInfo,
       Function(ResearchGroup) callback){
     // ensure the researchgroup passed in has a database key
@@ -154,6 +181,12 @@ class Database {
     });
   }
 
+  /// returns a Stream of Event objects, representing data for the ResearchGroup specified
+  /// by the input researchGroupInfo, this stream is refreshed whenever any changes to the
+  /// target ResearchGroup occur, ie data is reloaded whenever the ResearchGroup with
+  /// database key researchGroupInfo.databaseKey is changed
+  /// Preconditions: researchGroupInfo.databaseKey.isNotEmpty
+  /// Postconditions: returns a Stream of Event objects described above
   Stream<Event> getResearchGroupStream(ResearchGroupInfo researchGroupInfo){
     // ensure the input researchgroup has a database key
     assert(researchGroupInfo.databaseKey.isNotEmpty);
@@ -165,6 +198,11 @@ class Database {
     return desiredResearchGroupReference.onValue;
   }
 
+  /// writes the input researchGroup to the database in it's entirety
+  /// Preconditions: researchGroupInfo.databaseKey.isNotEmpty
+  /// Postconditions: writes the input researchGroup to the database in it's entirety, if any
+  /// other data exists at the location this researchGroup would be stored, ie
+  /// researchGroup.researchGroupInfo.databaseKey, this data is overwritten by this researchGroup
   void writeResearchGroup(ResearchGroup researchGroup){
     ResearchGroupInfo researchGroupInfo = researchGroup.getResearchGroupInfo();
     // ensure the research group input has a database key
@@ -183,6 +221,13 @@ class Database {
     researchGroupDatabaseReference.set(researchGroupAsMap);
   }
 
+  /// writes the input Subject as a SubjectInfo to the database relative to the institution
+  /// specified by the input institutionInfo and research group specified by the input currentResearchGroupInfo
+  /// Preconditions: institutionInfo.databaseKey.isNotEmpty && currentResearchGroupInfo.databaseKey.isNotEmpty
+  /// Postconditions: writes the input Subject as a SubjectInfo to the database relative to the institution
+  /// specified by the input institutionInfo and research group specified by the input currentResearchGroupInfo
+  /// if the locations specified by the input research group info or institution info don't
+  /// yet exist on the database, these locations are created.
   void addSubjectToInstitution(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
       Subject currentSubject){
     // ensure our institution and research group have database keys
@@ -213,6 +258,12 @@ class Database {
     // TODO: write this subject object itself to the database additionally
   }
 
+  /// writes the input Meal in it's entirety to the database in a location relative to the research group
+  /// specified by the input ResearchGroupInfo
+  /// Preconditions: currentResearchGroupInfo.databaseKey.isNotEmpty && currentMeal.getMealInfo().databaseKey.isNotEmpty
+  /// Postconditions: writes the input Meal in it's entirety to the database in a location relative to the research group
+  /// specified by the input ResearchGroupInfo, if the location specified by the input research group info doesn't
+  /// yet exist on the database, it is created.
   void writeMealToDatabase(ResearchGroupInfo currentResearchGroupInfo, Meal currentMeal){
     // ensure the input research group and meal have database keys
     assert(currentResearchGroupInfo.databaseKey.isNotEmpty);

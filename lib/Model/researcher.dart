@@ -13,6 +13,9 @@ class Researcher{
 
   Researcher(this._researcherName);
 
+  /// returns a ResearcherInfo object whose name and databaseKey fields are this._researcherName
+  /// Preconditions: this._researcherName.isNotEmpty
+  /// Postconditions: returns a ResearcherInfo object described above
   ResearcherInfo getResearcherInfo(){
     // ensure this object has a legitimate name before creating this info
     assert(this._researcherName.isNotEmpty);

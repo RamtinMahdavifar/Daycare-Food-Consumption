@@ -35,6 +35,14 @@ class Subject{
     return this._subjectID;
   }
 
+  /// returns a List<MealInfo> of MealInfo objects the subject has been served on the
+  /// day represented by the input string
+  /// Preconditions: dateString.isNotEmpty && subjectHasMealsForDate(dateString)
+  /// Postconditions: returns a list of MealInfo objects the subject has been served
+  /// on the date represented by dateString. dateString must have the format yyyy-MM-dd, where
+  /// yyyy are numbers representing the year of the desired date, MM are numbers representing the month (1-12)
+  /// of the desired date, and dd are numbers representing the day of the month of the desired date
+  /// ie 1-31 for October, 1-30 for November etc
   List<MealInfo> getSubjectMealsForDate(String dateString){
     // ensure the input dateString is not empty
     assert(dateString.isNotEmpty);
@@ -49,12 +57,25 @@ class Subject{
     return mealMapForSpecifiedDay!.values.toList();
   }
 
+  /// returns true if the subject has been served a meal on the date represented by
+  /// dateString
+  /// Preconditions: dateString.isNotEmpty, dateString must have the format yyyy-MM-dd, where
+  /// yyyy are numbers representing the year of the desired date, MM are numbers representing the month (1-12)
+  /// of the desired date, and dd are numbers representing the day of the month of the desired date
+  /// ie 1-31 for October, 1-30 for November etc
+  /// Postconditions: returns true if the subject has any meals stored for the date
+  /// specified by dateString, false otherwise
   bool subjectHasMealsForDate(String dateString){
     // ensure the input dateString is not empty
     assert(dateString.isNotEmpty);
     return this._mealMap.containsKey(dateString);
   }
 
+  /// adds a the input meal to the subject for the specified DateTime
+  /// Preconditions: meal.id.isNotEmpty
+  /// Postconditions: stores the input meal for this subject under the specified date
+  /// such that getSubjectMealsForDate(dateString) returns a list containing the input meal,
+  /// here dateString is the string representation of date
   void addSubjectMealForDate(DateTime date, Meal meal){
     // ensure the mandatory fields of our meal are not empty
     assert(meal.id.isNotEmpty);
@@ -80,10 +101,22 @@ class Subject{
     }
   }
 
+  /// returns true if the subject has any meals at all regardless of date,
+  /// Preconditions: None
+  /// Postconditions: returns true if the subject has any meal stored, regardless of
+  /// the dates these meals may be stored under
   bool subjectHasMeals(){
     return this._mealMap.isNotEmpty;
   }
 
+  /// returns a list of Strings where each string is a date the subject has been
+  /// served a meal.
+  /// Preconditions: this.subjectHasMeals()
+  /// Postconditions: returns a list of Strings where each String represents a date
+  /// the subject has a meal stored for, each string has the format yyyy-MM-dd, where
+  /// yyyy are numbers representing the year of the desired date, MM are numbers representing the month (1-12)
+  /// of the desired date, and dd are numbers representing the day of the month of the desired date
+  /// ie 1-31 for October, 1-30 for November etc
   List<String> getSubjectMealDates(){
     // ensure our subject actually has meals to retrieve dates for
     assert(this.subjectHasMeals());
@@ -92,6 +125,10 @@ class Subject{
     return this._mealMap.keys.toList();
   }
 
+  /// returns a SubjectInfo object such that the subjectID field of this SubjectInfo is
+  /// this._subjectID
+  /// Preconditions: this._subjectID.isNotEmpty
+  /// Postconditions: returns a SubjectInfo specified above
   SubjectInfo getSubjectInfo(){
     // ensure this object has a legitimate subjectID before creating this info
     assert(this._subjectID.isNotEmpty);
