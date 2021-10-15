@@ -49,6 +49,9 @@ class ResearchGroup{
     this._groupOwner = newOwner;
   }
 
+  /// adds the input InstitutionInfo object to this research group,
+  /// Preconditions: institutionInfo.name.isNotEmpty && institutionInfo.databaseKey.isNotEmpty
+  /// Postconditions: institutionInfo is stored locally under this research group
   void addNewInstitution(InstitutionInfo institutionInfo){
     // ensure the institution added has legitimate data
     assert(institutionInfo.name.isNotEmpty);
@@ -59,10 +62,19 @@ class ResearchGroup{
     // TODO: to a research group it is put on the database as well
   }
 
+  /// returns a Map<String,InstitutionInfo> such that the keys of this map are the
+  /// database keys of each InstitutionInfo value, ie if x is an InstitutionInfo value,
+  /// it must be that institutionsMap[x.databaseKey] = x
+  /// Preconditions: None
+  /// Postconditions: returns a map whose format is described above, if the research group
+  /// doesn't have any InstitutionInfos stored, an empty map is returned
   Map<String,InstitutionInfo> get institutionsMap{
     return this._institutionsMap;
   }
-  
+
+  /// returns a ResearchGroupInfo object whose name and databaseKey fields are this._groupName
+  /// Preconditions: this._groupName.isNotEmpty
+  /// Postconditions: returns a ResearchGroupInfo object described above
   ResearchGroupInfo getResearchGroupInfo(){
     // make sure this object has a valid name before creating this info
     assert(this._groupName.isNotEmpty);

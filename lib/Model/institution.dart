@@ -42,7 +42,11 @@ class Institution {
     assert(newAddress.isNotEmpty);
     this._address = newAddress;
   }
-  
+
+  /// returns an InstitutionInfo object who has the same name and address of this
+  /// Preconditions: this._name.isNotEmpty && this._address.isNotEmpty
+  /// Postconditions: returns an InstitutionInfo object, such that the returned InstitutionInfo
+  /// has this._name for it's name field and this._address for it's address field
   InstitutionInfo getInstitutionInfo(){
     // ensure this object has a legitimate name and address before creating this
     // info
@@ -51,12 +55,16 @@ class Institution {
     return InstitutionInfo(this.name, this.address);
   }
 
+  /// Adds the input SubjectInfo object to this Institution,
+  /// Preconditions: newSubjectInfo.subjectId.isNotEmpty, newSubjectInfo is not already
+  /// contained within this institution, ie this.institutionContainsSubject(newSubjectInfo.subjectId) is false
+  /// Postconditions: newSubjectInfo is added to this institution.
   void addSubjectToInstitution(SubjectInfo newSubjectInfo){
     // make sure the id of the subject being added is not an empty string
     // this object is created with null safety and cannot be null
     assert(newSubjectInfo.subjectId.isNotEmpty);
     // ensure there is no subject within our institution with the same id as this new subject
-    assert(this._subjectsMap.containsKey(newSubjectInfo.subjectId));
+    assert(!this._subjectsMap.containsKey(newSubjectInfo.subjectId));
     Config.log.i("adding subject with id: " + newSubjectInfo.subjectId + " to institution: " + this._name);
     // add the new subject
     this._subjectsMap[newSubjectInfo.subjectId] = newSubjectInfo;
@@ -64,11 +72,21 @@ class Institution {
 
   // TODO: implement subject removal
 
+  /// returns true if the input subjectID corresponds to a SubjectInfo object who has
+  /// been added to this institution
+  /// Preconditions: subjectID.isNotEmpty
+  /// Postconditions: returns true if there exists in this institution, some SubjectInfo
+  /// object whose subjectID field is equal to the subjectID input.
   bool institutionContainsSubject(String subjectID){
     assert(subjectID.isNotEmpty);
     return this._subjectsMap.containsKey(subjectID);
   }
 
+  /// returns the SubjectInfo object corresponding to the input subjectID, this returns a
+  /// SubjectInfo? to comply with null safety, however the return value of this function can
+  /// never be null
+  /// Preconditions: subjectID.isNotEmpty, and institutionContainsSubject(subjectID) is true
+  /// Postconditions: returns the SubjectInfo object who has the input subjectID from this institution
   SubjectInfo? getInstitutionSubject(String subjectID){
     // ensure our input subject id is not empty and corresponds to a subject in this
     // institution

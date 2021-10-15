@@ -5,6 +5,7 @@ import 'package:mime/mime.dart';
 import 'dart:convert';
 import 'package:plate_waste_recorder/Helper/config.dart';
 
+
 String convertImageToString(String imageFilePath){
   // input file path must refer to some file that actually exists
   assert(File(imageFilePath).existsSync());

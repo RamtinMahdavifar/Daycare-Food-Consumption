@@ -60,34 +60,66 @@ class Meal{
 
   //****** Meal getters **********
 
+  /// returns true if this meal has a before image associated with it, ie if this._beforeImageAsString
+  /// is not ""
+  /// Preconditions: None
+  /// Postconditions: returns true if this meal has a before image associated with it, ie if this._beforeImageAsString
+  /// is not "", false otherwise
   bool mealHasBeforeImage(){
     return this._beforeImageAsString.isNotEmpty;
   }
 
+  /// returns true if this meal has an after image associated with it, ie if this._afterImageAsString
+  /// is not ""
+  /// Preconditions: None
+  /// Postconditions: returns true if this meal has an after image associated with it, ie if this._afterImageAsString
+  /// is not "", false otherwise
   bool mealHasAfterImage(){
     return this._afterImageAsString.isNotEmpty;
   }
 
+  /// returns true if this meal has a before weight associated with it, ie if this._beforeMealWeight
+  /// has been previously set and is not a default place holder value
+  /// Preconditions: None
+  /// Postconditions: returns true if this meal has a before weight associated with it, ie if this._beforeMealWeight
+  /// has been previously set and is not a default place holder value, returns false otherwise
   bool mealHasBeforeWeight(){
     // if the meal has some before weight other than the initial placeholder weight
     // we know a weight has been input for the meal
     return this._beforeMealWeight != this._INITIALPLACEHOLDERWEIGHT;
   }
 
+  /// returns true if this meal has an after weight associated with it, ie if this._afterMealWeight
+  /// has been previously set and is not a default place holder value
+  /// Preconditions: None
+  /// Postconditions: returns true if this meal has an after weight associated with it, ie if this._afterMealWeight
+  /// has been previously set and is not a default place holder value, returns false otherwise
   bool mealHasAfterWeight(){
     // if the meal has some weight other than the initial placeholder weight we
     // know a weight has been input for the meal
     return this._afterMealWeight != this._INITIALPLACEHOLDERWEIGHT;
   }
 
+  /// returns true if this meal has a comment associated with it, false otherwise
+  /// Preconditions: None
+  /// Postconditions: returns true if this meal has a comment associated with it, false otherwise
   bool mealHasComment(){
     return this._comment.isNotEmpty;
   }
 
+  /// returns true if this meal has a comment associated with it, false otherwise
+  /// Preconditions: None
+  /// Postconditions: returns true if this meal has a comment associated with it, false otherwise
   bool mealHasName(){
     return this._mealName.isNotEmpty;
   }
 
+  /// returns the filepath relative to the current directory that contains the meal's before
+  /// image, the name of the image file specified by this filepath is composed as follows:
+  /// this._mealId + "before.png"
+  /// Preconditions: this.mealHasBeforeImage is true
+  /// Postconditions: returns the relative filepath to an image file containing the
+  /// meal's before image as described above
   String getBeforeImageFilePath(){
     // ensure we have a before image
     assert(this.mealHasBeforeImage());
@@ -102,6 +134,12 @@ class Meal{
     return newBeforeImageFileName;
   }
 
+  /// returns the filepath relative to the current directory that contains the meal's after
+  /// image, the name of the image file specified by this filepath is composed as follows:
+  /// this._mealId + "after.png"
+  /// Preconditions: this.mealHasAfterImage is true
+  /// Postconditions: returns the relative filepath to an image file containing the
+  /// meal's after image as described above
   String getAfterImageFilePath(){
     // ensure this meal has an after image
     assert(this.mealHasAfterImage());
@@ -145,8 +183,12 @@ class Meal{
     this._comment = newComment;
   }
 
-  // sets the before image of the meal to the image at the path provided, this
-  // will overwrite any other before images if they exist
+  /// sets the before image of the meal to the image at the path provided, this
+  /// will overwrite any other before images if they exist for this meal
+  /// Preconditions: newBeforeImagePath.isNotEmpty, newBeforeImagePath must be a valid
+  /// image file type e.g. .png
+  /// Postconditions: sets the before image of the meal to the image at the path provided, this
+  /// will overwrite any other before images if they exist for this meal
   void set beforeImageAsString(String newBeforeImagePath){
     // ensure the provided image path is not an empty string
     assert(newBeforeImagePath.isNotEmpty);
@@ -154,8 +196,12 @@ class Meal{
     this._beforeImageAsString = convertImageToString(newBeforeImagePath);
   }
 
-  // sets the after image of the meal to the image at the path provided, this
-  // will overwrite any other after images if they exist
+  /// sets the after image of the meal to the image at the path provided, this
+  /// will overwrite any other after images if they exist for this meal
+  /// Preconditions: newAfterImagePath.isNotEmpty, newAfterImagePath must be a valid
+  /// image file type e.g. .png
+  /// Postconditions: sets the after image of the meal to the image at the path provided, this
+  /// will overwrite any other after images if they exist for this meal
   void set afterImageAsString(String newAfterImagePath){
     // ensure the provided image path is not an empty string
     assert(newAfterImagePath.isNotEmpty);
@@ -163,16 +209,22 @@ class Meal{
     this._afterImageAsString = convertImageToString(newAfterImagePath);
   }
 
-  // sets the before weight of the meal to the double weight provided, the previous before
-  // weight is simply overwritten if such a weight is present
+  /// sets the before weight of the meal to the double weight provided, the previous before
+  /// weight is simply overwritten if such a weight is present
+  /// Preconditions: newBeforeWeight>0.0
+  /// Postconditions: sets the before weight of the meal to the double weight provided, the previous before
+  /// weight is simply overwritten if such a weight is present
   void set beforeMealWeight(double newBeforeWeight){
     // ensure the weight provided is greater than 0.0, meals must have some weight
     assert(newBeforeWeight>0.0);
     this._beforeMealWeight = newBeforeWeight;
   }
 
-  // sets the weight of the meal after it has been eaten or consumed, if the meal
-  // already has an after weight, it is overwritten by the new weight provided
+  /// sets the after weight of the meal to the double weight provided, the previous after
+  /// weight is simply overwritten if such a weight is present
+  /// Preconditions: newAfterWeight>0.0
+  /// Postconditions: the after weight of the meal is set to the double weight provided, the previous after
+  /// weight is simply overwritten if such a weight is present
   void set afterMealWeight(double newAfterWeight){
     // ensure the weight provided is greater than 0.0, meals must have weight even
     // after being eaten as plates are still factored into weight
@@ -180,8 +232,11 @@ class Meal{
     this._afterMealWeight = newAfterWeight;
   }
 
-  // sets the name of this meal to the string name provided, if the meal already has
-  // a name, this name is overwritten.
+  /// sets the name of this meal to the string name provided, if the meal already has
+  /// a name, this name is overwritten.
+  /// Preconditions: newMealName.isNotEmpty
+  /// Postconditions: the name of this meal is set to the input meal name, if the meal already has
+  /// a name, this name is overwritten to the new value provided.
   void set mealName(String newMealName){
     // ensure the newly added meal name is not empty
     assert(newMealName.isNotEmpty);
