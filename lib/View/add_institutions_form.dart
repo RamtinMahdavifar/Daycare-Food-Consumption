@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/View/select_institution_widgets.dart';
 import 'package:plate_waste_recorder/Model/database.dart';
 import 'package:plate_waste_recorder/Model/institution.dart';
@@ -18,6 +19,7 @@ class _AddInstitutionFormState extends State<AddInstitutionForm> {
 
   @override
   Widget build(BuildContext context) {
+    Config.log.i("building add institution form widget");
     return Scaffold(
       body: Form(
           key: _newInstitutionFormKey,
@@ -44,6 +46,8 @@ class _AddInstitutionFormState extends State<AddInstitutionForm> {
           String newName = _newInstitutionNameController.value.text;
           String newAddress = _newInstitutionAddressController.value.text;
 
+          Config.log.i("pressed button to submit add institution form with name: " + newName + " and address: " + newAddress);
+
           setState((){
             // update our class variables from within setState so ui which may
             // depend upon these variables is also updated
@@ -52,6 +56,7 @@ class _AddInstitutionFormState extends State<AddInstitutionForm> {
           });
 
           if(this._nameFieldValid && this._addressFieldValid){
+            Config.log.i("new institution fields valid");
             // both input fields are valid, we can successfully create an institution
             // here we are using a dummy research group to add database values to until
             // authentication and research group creation is added
@@ -64,6 +69,9 @@ class _AddInstitutionFormState extends State<AddInstitutionForm> {
             this._newInstitutionAddressController.clear();
             Navigator.of(context, rootNavigator: true).pop();
           }
+          else{
+            Config.log.w("new institution fields are not valid");
+          }
         },
         child: const Text("Submit")
     );
@@ -72,6 +80,7 @@ class _AddInstitutionFormState extends State<AddInstitutionForm> {
   Widget formCancel(BuildContext context){
     return ElevatedButton(
         onPressed: (){
+          Config.log.i("cancelling form submission");
           // clear the text fields before exiting the add Institution popup
           this._newInstitutionNameController.clear();
           this._newInstitutionAddressController.clear();

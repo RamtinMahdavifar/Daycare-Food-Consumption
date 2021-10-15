@@ -76,7 +76,7 @@ class Database {
     String institutionInfoJSON = jsonEncode(currentInstitutionInfo);
 
     // convert the produced JSON to a map which can be stored on our database
-    Map<String, dynamic> institutionInfoMap = json.decode(institutionInfoJSON);
+    Map<String, dynamic> institutionInfoMap = json.decode(institutionInfoJSON) as Map<String,dynamic>;
     institutionReference.set(institutionInfoMap);
 
     // upon adding an institution to a research group, we want to also store this entire
@@ -104,7 +104,7 @@ class Database {
     // convert the produced JSON to a map which can be stored on our database, storing
     // JSON directly will simply store the JSON as a single string instead of storing
     // each field of our object with it's value as we want
-    Map<String, dynamic> institutionMap = json.decode(institutionJSON);
+    Map<String, dynamic> institutionMap = json.decode(institutionJSON) as Map<String,dynamic>;
     // write this to the location specified above
     institutionReference.set(institutionMap);
   }
@@ -122,7 +122,7 @@ class Database {
     desiredInstitutionReference.once().then((DataSnapshot dataSnapshot)=>(
     // call the input function on the data read from the database
         callback(
-            Institution.fromJSON(jsonDecode(dataSnapshot.value.toString()))
+            Institution.fromJSON(jsonDecode(dataSnapshot.value.toString()) as Map<String, dynamic>)
         )
     ));
   }
@@ -139,7 +139,7 @@ class Database {
     // then also update data if any changes have occurred to the database
     desiredResearchGroupReference.onValue.listen((event) {
       DataSnapshot dataSnapshot = event.snapshot;
-      Map<String, dynamic> researchGroupJSON = jsonDecode(dataSnapshot.value.toString());
+      Map<String, dynamic> researchGroupJSON = jsonDecode(dataSnapshot.value.toString()) as Map<String,dynamic>;
       ResearchGroup retrievedResearchGroup = ResearchGroup.fromJSON(researchGroupJSON);
       callback(retrievedResearchGroup);
     });
@@ -166,7 +166,7 @@ class Database {
     String researchGroupJSON = jsonEncode(researchGroup);
     // we cannot write raw JSON to the database, decode this JSON to get a map which
     // preserves the structure of our object when written to the database
-    Map<String, dynamic> researchGroupAsMap = json.decode(researchGroupJSON);
+    Map<String, dynamic> researchGroupAsMap = json.decode(researchGroupJSON) as Map<String,dynamic>;
     researchGroupDatabaseReference.set(researchGroupAsMap);
   }
 
@@ -190,7 +190,7 @@ class Database {
     String subjectInfoJSON = jsonEncode(currentSubjectInfo);
 
     // convert the resulting JSON to a map that can be properly written to our database
-    Map<String, dynamic> subjectInfoMap = json.decode(subjectInfoJSON);
+    Map<String, dynamic> subjectInfoMap = json.decode(subjectInfoJSON) as Map<String,dynamic>;
     // write this map to the database
 
     institutionSubjectReference.set(subjectInfoMap);
@@ -213,7 +213,7 @@ class Database {
     String mealJSON = jsonEncode(currentMeal);
 
     // convert the resulting JSON to a map that can be written to our database
-    Map<String,dynamic> mealMap = json.decode(mealJSON);
+    Map<String,dynamic> mealMap = json.decode(mealJSON) as Map<String,dynamic>;
 
     mealReference.set(mealMap);
   }

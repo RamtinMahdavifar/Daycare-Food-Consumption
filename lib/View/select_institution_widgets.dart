@@ -8,6 +8,7 @@ import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
 import 'package:plate_waste_recorder/Model/research_group.dart';
 import 'dart:convert'; // required for jsonDecode()
+import 'package:plate_waste_recorder/Helper/config.dart';
 
 
 //select_institution page button which navigates to that desired institution_page
@@ -31,6 +32,7 @@ Widget listedInst(BuildContext context, String name, String address){
 Widget addInstitution(BuildContext context){
   return InkWell(
     onTap: (){
+      Config.log.i("Add institution button clicked");
       showDialog(
           context: context,
           builder: (context) {
@@ -99,27 +101,31 @@ Widget institutionDisplay(BuildContext context) {
             List<Widget> children;
             if (snapshot.hasError) {
               children = <Widget>[Text("errors in database read occured")];
+              Config.log.e("errors occured while reading institutions from the database on institution page, error: " + snapshot.error.toString());
             }
             else {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
                   children = <Widget>[Text("connection state none")];
+                  Config.log.w("connection state none when reading institutions from the database");
                   // TODO: include a network error message or read local data
                   break;
                 case ConnectionState.waiting:
+                  Config.log.i("connection state waiting when reading institutions from the database");
                   children = <Widget>[Text("connection state waiting")];
                   // TODO: include a loading or progress bar
                   break;
                 case ConnectionState.active:
+                  Config.log.i("active connection state when reading institutions from the database");
                 // TODO: see about using async database function to return a ResearchGroup to do all this
                 // TODO: instead of having to have the below code to create a ResearchGroup here
                   DataSnapshot researchGroupSnapshot = snapshot.data!.snapshot;
-                  Map<dynamic, dynamic> testMap = researchGroupSnapshot.value;
+                  Map<dynamic, dynamic> testMap = researchGroupSnapshot.value as Map<dynamic,dynamic>;
                   String encodedMap = jsonEncode(testMap);
 
                   Map<String, dynamic> researchGroupJSON = json.decode(
                       encodedMap
-                  );
+                  ) as Map<String,dynamic>;
                   ResearchGroup retrievedResearchGroup = ResearchGroup.fromJSON(
                       researchGroupJSON);
                   children = retrievedResearchGroup.institutionsMap.values.map(
@@ -129,6 +135,7 @@ Widget institutionDisplay(BuildContext context) {
                   ).toList();
                   break;
                 case ConnectionState.done:
+                  Config.log.i("connection state done when reading institutions from the database");
                   children = <Widget>[Text("connection state done")];
                   break;
               }

@@ -75,7 +75,7 @@ class ResearchGroup{
   };
 
   ResearchGroup.fromJSON(Map<String, dynamic> json)
-      : _groupName = json["_groupName"].toString(), _groupOwner = ResearcherInfo.fromJSON(json["_groupOwner"]),
+      : _groupName = json["_groupName"].toString(), _groupOwner = ResearcherInfo.fromJSON(json["_groupOwner"]as Map<String,dynamic>),
         _groupMembers = (json["_groupMembers"] as List).cast<ResearcherInfo>(),
         // look inside of the _institutionsMap field, this is originally a Map<String,dynamic> and
         // must be converted to a map of <String,InstitutionInfo>, casting will not work
@@ -83,5 +83,5 @@ class ResearchGroup{
         // are the values of the map, we can reuse the keys already in the json.
         _institutionsMap = Map<String,InstitutionInfo>.fromIterables((json["_institutionsMap"] as Map<String,dynamic>).keys,
             (json["_institutionsMap"] as Map<String,dynamic>).values.map(
-                (institutionJSON)=>InstitutionInfo.fromJSON(institutionJSON)).toList());
+                (institutionJSON)=>InstitutionInfo.fromJSON(institutionJSON as Map<String, dynamic>)).toList());
 }
