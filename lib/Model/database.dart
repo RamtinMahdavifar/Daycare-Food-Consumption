@@ -105,20 +105,6 @@ class Database {
     institutionReference.set(institutionMap);
   }
 
-  // we must return a future as this is an async function
-  Future<List<InstitutionInfo>> getInstitutionInfoListForResearchGroup(ResearchGroupInfo currentResearchGroupInfo)async{
-    // ensure the current research group has a database key
-    assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
-    DatabaseReference institutionReference = _databaseInstance.reference()
-        .child(this._RESEARCHGROUPROOTLOCATION)
-        .child(currentResearchGroupInfo.databaseKey)
-        .child(this._RESEARCHGROUPINSTITUTIONSLOCATION);
-
-    // read the map of institutions from the specified reference location
-    institutionReference.
-
-  }
-
   // TODO: update to make async
   void readInstitution(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
         Function(Institution) callback){
@@ -195,26 +181,25 @@ class Database {
 
     institutionSubjectReference.set(subjectInfoMap);
 
-    // write this subject object itself to the database additionally
+    // TODO: write this subject object itself to the database additionally
   }
 
-  void _writeSubjectToDatabase(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
-      Subject currentSubject){
-
-  }
-
-  void writeSubjectMeal(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
-      SubjectInfo currentSubject, Meal currentMeal){
-    // ensure that the input Info objects do not have empty database keys
-    // each input Info is created with null safety so properties can never be null
-    assert(institutionInfo.databaseKey.isNotEmpty);
+  void writeMealToDatabase(ResearchGroupInfo currentResearchGroupInfo, Meal currentMeal){
     assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
-    assert(currentSubject.databaseKey.isNotEmpty);
-
-    // TODO: finish implementation
     MealInfo currentMealInfo = currentMeal.getMealInfo();
-    // ensure the MealInfo we write to the database for this subject
     assert(currentMealInfo.databaseKey.isNotEmpty);
-    assert(currentMealInfo.name.isNotEmpty);
+    DatabaseReference mealReference = _databaseInstance.reference()
+        .child(this._RESEARCHGROUPDATALOCATION)
+        .child(currentResearchGroupInfo.databaseKey)
+        .child(this._MEALSDATALOCATION)
+        .child(currentMealInfo.databaseKey);
+
+    // convert our Meal to be added to the database to JSON
+    String mealJSON = jsonEncode(currentMeal);
+
+    // convert the resulting JSON to a map that can be written to our database
+    Map<String,dynamic> mealMap = json.decode(mealJSON);
+
+    mealReference.set(mealMap);
   }
 }
