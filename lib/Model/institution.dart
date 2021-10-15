@@ -27,6 +27,7 @@ class Institution {
 
   String get name{
     Config.log.i('Getting institution name: $_name');
+    
     return this._name;
   }
 
