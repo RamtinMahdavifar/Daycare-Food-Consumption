@@ -52,6 +52,8 @@ class _UploadDataState extends State<UploadData>{
     });
   }
 
+    // TODO: possibly consider having camera button in the middle of the screen if an image hasn't been selected
+    // TODO: and then have a submit button always at the bottom to allow users to submit meals without a picture to save time
     //TODO: make this thing looks prettier and add a button for submitting the data or selecting a different image, then imporove the look for when the keyboard comes up
   Widget addComments() {
     return TextField(
@@ -81,6 +83,16 @@ class _UploadDataState extends State<UploadData>{
         // type one character at a time
         inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+(\.\d*)?'))
         ]
+    );
+  }
+
+  Widget addMealName(){
+    return TextField(
+      decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: 'Name'
+      ),
+      controller: this._mealNameFieldController,
     );
   }
 
@@ -118,6 +130,22 @@ class _UploadDataState extends State<UploadData>{
         // write this meal to the database under a test research group as adding and joining
         // research groups is not yet implemented
         Database().writeMealToDatabase(ResearchGroupInfo("testResearchGroupName"), newMeal);
+
+        // after the new meal has been submitted, clear the data in the fields so
+        // the user can submit other meals
+        setState((){
+          this._mealNameFieldController.clear();
+          this._weightFieldController.clear();
+          this._commentFieldController.clear();
+          _imageFile = null;
+          hideButton();
+        });
+
+        // finally display a snackbar informing the user their data has been submitted
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Data Submitted Successfully"))
+        );
+
       }
         // ,
     );
@@ -183,10 +211,14 @@ class _UploadDataState extends State<UploadData>{
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            child:addWeight(),
-            width: 150,
+            child:addMealName(),
             padding: EdgeInsets.all(1),
-            alignment: Alignment.bottomLeft,
+            alignment: Alignment.center,
+          ),
+          Container(
+            child:addWeight(),
+            padding: EdgeInsets.all(1),
+            alignment: Alignment.center,
           ),
           Container(
             child:addComments(),
