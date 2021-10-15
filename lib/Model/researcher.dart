@@ -14,6 +14,8 @@ class Researcher{
   Researcher(this._researcherName);
 
   ResearcherInfo getResearcherInfo(){
+    // ensure this object has a legitimate name before creating this info
+    assert(this._researcherName.isNotEmpty);
     return ResearcherInfo(this._researcherName);
   }
 

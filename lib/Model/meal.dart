@@ -13,7 +13,7 @@ class Meal{
   //**** Meal Properties ********
 
   //Meal Id, unique ID for each meal
-  String _mealId;
+  late String _mealId;
 
   // give each non-mandatory field a default value as we meals may not be provided
   // String representing the name of this particular meal
@@ -49,7 +49,10 @@ class Meal{
   //***** Meal constructor ********
   // only accept the mandatory fields for a meal here, all other fields are optional and
   // can be filled in later
-  Meal(this._mealId);
+  Meal(String mealID){
+    assert(mealID.isNotEmpty);
+    this._mealId = mealID;
+  }
 
 
 
@@ -195,6 +198,8 @@ class Meal{
 
 
   MealInfo getMealInfo(){
+    // ensure this object has a valid ID before creating this info
+    assert(this._mealId.isNotEmpty);
     return MealInfo(this._mealId, this._mealId);
   }
 

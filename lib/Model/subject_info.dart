@@ -9,8 +9,9 @@ class SubjectInfo extends Info{
   String databaseKey = "";
 
   SubjectInfo(String subjectId){
+    assert(subjectId.isNotEmpty);
     this._subjectID = subjectId;
-    this.databaseKey = this._subjectID as String;
+    this.databaseKey = this._subjectID;
   }
 
   String get subjectId{

@@ -4,12 +4,15 @@ import 'package:plate_waste_recorder/Model/info.dart';
 /// of some high level Institution information and can be used to easily read
 /// Institution objects in from our Database
 class InstitutionInfo extends Info{
-  String _institutionAddress;
+  String _institutionAddress = "";
   String name = "";
   String databaseKey = "";
 
-  InstitutionInfo(String institutionName, this._institutionAddress){
+  InstitutionInfo(String institutionName, String institutionAddress){
+    assert(institutionName.isNotEmpty);
+    assert(institutionAddress.isNotEmpty);
     this.name = institutionName;
+    this._institutionAddress = institutionAddress;
     this.databaseKey = this._institutionAddress;
   }
 
