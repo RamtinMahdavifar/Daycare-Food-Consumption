@@ -51,7 +51,7 @@ void main(){
   group("institution json", (){
     test("to json",(){
       final Institution testInstitution = Institution("test institution", "test address");
-      expect(testInstitution.toJson(), <String, dynamic>{"_name":"test institution", "_address":"test address"});
+      expect(testInstitution.toJson(), <String, dynamic>{"_name":"test institution", "_address":"test address", "_subjectsMap":"{}"});
     });
 
     test("from json",(){
