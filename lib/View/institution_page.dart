@@ -17,13 +17,10 @@ class _InstitutionPageState extends State<InstitutionPage> {
   @override
   Widget build(BuildContext context) {
     Config.log.i("building institution page");
-    return MaterialApp(
-        title: 'institution page',
-        home: Scaffold(
+    return Scaffold(
         appBar: AppBar(title: Text(widget.institutionName.toString()), leading: backButton(context), actions: [modifyButton()]),
-        body: _InstitutionOptions()
-      )
-    );
+        body: _InstitutionOptions(),
+      );
   }
 
 

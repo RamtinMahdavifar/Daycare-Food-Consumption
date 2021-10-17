@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:plate_waste_recorder/View/add_institutions_form.dart';
 import 'package:plate_waste_recorder/View/institution_page.dart';
 import 'package:plate_waste_recorder/View/select_institution.dart';
 
@@ -22,7 +21,7 @@ void main() {
       await tester.pump();
 
       // Verify the AddInstitutionForm widget is presented
-      expect(find.widgetWithIcon(AddInstitutionForm, Icons.location_on_outlined), findsWidgets);
+      expect(find.byIcon(Icons.location_on_outlined), findsWidgets);
 
       // verify that the Text widgets appear exactly once in the widget tree.
       expect(find.widgetWithText(TextFormField, "name"), findsOneWidget);
@@ -34,7 +33,7 @@ void main() {
       await tester.pump();
 
       // Verify the AddInstitutionForm widget is closed
-      expect(find.widgetWithIcon(AddInstitutionForm, Icons.location_on_outlined), findsNothing);
+      expect(find.byIcon(Icons.location_on_outlined), findsNothing);
 
       // verify that the Text widgets appear exactly once in the widget tree.
       expect(find.text("Add Institution"), findsOneWidget);
@@ -46,10 +45,12 @@ void main() {
 
     testWidgets('Institution Page', (WidgetTester tester) async {
       // Build our app and trigger a frame.
-      await tester.pumpWidget(InstitutionPage("University", "123 Street"));
+      await tester.pumpWidget(MaterialApp(
+          home:  InstitutionPage("University", "123 Street")));
 
       // Verify InstitutionPage is presented with correct Institution Name
       expect(find.widgetWithText(InstitutionPage, "University"), findsOneWidget);
+      expect(find.widgetWithText(InstitutionPage, "Address: 123 Street"), findsOneWidget);
 
       // Verify that the back button is presented
       expect(find.byIcon(Icons.arrow_back), findsOneWidget);

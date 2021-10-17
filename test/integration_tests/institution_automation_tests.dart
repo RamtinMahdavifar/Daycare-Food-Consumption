@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:plate_waste_recorder/View/add_institutions_form.dart';
-import 'package:plate_waste_recorder/View/institution_page.dart';
-import 'package:plate_waste_recorder/View/select_institution.dart';
-import 'package:plate_waste_recorder/View/upload_data.dart';
 import 'package:plate_waste_recorder/main.dart' as app;
 
 void main() {
@@ -16,14 +12,14 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the SelectInstitution widget is presented
-      expect(find.widgetWithText(SelectInstitute, "Plate Waste Tracker"), findsOneWidget);
+      expect(find.text("Plate Waste Tracker"), findsOneWidget);
 
       final addInstitutionButton = find.text("Add Institution");
       await tester.tap(addInstitutionButton);
       await tester.pumpAndSettle();
 
       // Verify the AddInstitutionForm widget is presented
-      expect(find.widgetWithIcon(AddInstitutionForm, Icons.location_on_outlined), findsOneWidget);
+      expect(find.byIcon(Icons.location_on_outlined), findsOneWidget);
 
       final institutionName = find.widgetWithText(TextFormField, "name");
       final institutionAddress = find.widgetWithText(TextFormField, "address");
@@ -37,7 +33,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the AddInstitutionForm widget is closed
-      expect(find.widgetWithIcon(AddInstitutionForm, Icons.location_on_outlined), findsNothing);
+      expect(find.byIcon(Icons.location_on_outlined), findsNothing);
 
       //The University of Saskatchewan should not appear in the list view
       expect(find.bySemanticsLabel("University of Saskatchewan"), findsNothing);
@@ -54,7 +50,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the AddInstitutionForm widget is closed
-      expect(find.widgetWithIcon(AddInstitutionForm, Icons.location_on_outlined), findsNothing);
+      expect(find.byIcon(Icons.location_on_outlined), findsNothing);
 
       //The University of Regina should appear in the list view.
       expect(find.text("University"), findsOneWidget);
@@ -64,17 +60,18 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the SelectInstitution widget is closed
-      expect(find.widgetWithText(SelectInstitute, "Plate Waste Tracker"), findsNothing);
+      expect(find.text("Plate Waste Tracker"), findsNothing);
 
       // Verify InstitutionPage is presented with correct Institution Name
-      expect(find.widgetWithText(InstitutionPage, "University"), findsOneWidget);
+      expect(find.text("University"), findsOneWidget);
 
+      //Click back icon
       final backButton = find.byIcon(Icons.arrow_back);
       await tester.tap(backButton);
       await tester.pumpAndSettle();
 
       // Verify the SelectInstitution widget is presented
-      expect(find.widgetWithText(SelectInstitute, "Plate Waste Tracker"), findsOneWidget);
+      expect(find.text("Plate Waste Tracker"), findsOneWidget);
 
       await tester.tap(firstInstitution);
       await tester.pumpAndSettle();
@@ -101,7 +98,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the UploadData widget is presented
-      expect(find.widgetWithText(UploadData, "Upload Data"), findsOneWidget);
+      expect(find.text("Upload Data"), findsOneWidget);
     });
 
 
@@ -110,14 +107,14 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the institution widget is presented
-      expect(find.widgetWithText(SelectInstitute, "Plate Waste Tracker"), findsOneWidget);
+      expect(find.text("Plate Waste Tracker"), findsOneWidget);
 
       final addInstitutionButton = find.text("Add Institution");
       await tester.tap(addInstitutionButton);
       await tester.pumpAndSettle();
 
       // Verify the AddInstitutionForm widget is presented
-      expect(find.widgetWithIcon(AddInstitutionForm, Icons.home), findsOneWidget);
+      expect(find.byIcon(Icons.home), findsOneWidget);
 
       final institutionName = find.widgetWithText(TextFormField, "name");
       final institutionAddress = find.widgetWithText(TextFormField, "address");
@@ -131,17 +128,17 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the error messages occurs in both text input fields
-      expect(find.widgetWithText(TextFormField, "Value Can't Be Empty"), findsNWidgets(2));
+      expect(find.text("Value Can't Be Empty"), findsNWidgets(2));
 
       // Verify the AddInstitutionForm widget was not closed
-      expect(find.widgetWithIcon(AddInstitutionForm, Icons.location_on_outlined), findsOneWidget);
+      expect(find.byIcon(Icons.home), findsOneWidget);
 
       final cancelButton = find.widgetWithText(ElevatedButton, "Cancel");
       await tester.tap(cancelButton);
       await tester.pumpAndSettle();
 
       // Verify the SelectInstitution widget is presented
-      expect(find.widgetWithText(SelectInstitute, "Plate Waste Tracker"), findsOneWidget);
+      expect(find.text("Plate Waste Tracker"), findsOneWidget);
     });
   });
 }
