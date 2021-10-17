@@ -2,8 +2,8 @@
 
 Cross platform application to record plate waste and access nutrition intake in a variety of contexts and settings. Assists in the gathering, maintenance and export of plate waste and nutrition intake data.
 
-## Incremental Deliverable 1:
-Documentation and other artifacts related to incremental deliverable 1 can be found [here](https://drive.google.com/drive/folders/1_8bK7QNmn4JO_-fjPdOtxSfsiIA0zo2r)
+## Incremental Deliverable 2:
+Documentation and other artifacts related to incremental deliverable 2 can be found [here, update link](https://drive.google.com/drive/folders/1_8bK7QNmn4JO_-fjPdOtxSfsiIA0zo2r)
 
 ## How to Run the App
 1. Download [Nox](https://www.bignox.com/en/download/fullPackage) using any browser
@@ -26,20 +26,29 @@ Documentation and other artifacts related to incremental deliverable 1 can be fo
 ![platewasteinstall4](https://user-images.githubusercontent.com/90283384/135784003-86284a9d-4d5c-45e0-a1a2-7d07b5f21417.png)
 
 ## App Functionality
-As of incremental deliverable 1, the app has the following preliminary functionality:
-- The ability to create new institutions/study locations with some basic information (name and address of the institution)
+As of incremental deliverable 2, the app has the following preliminary functionality:
+- The ability to create new institutions/study locations with some basic information (name and address of the institution), the ability to record data including dish name, weight, comments for a dish and an image for a meal. Users can choose to take a picture directly or choose a photo from their device's gallery when adding data for a new dish:
+
+Adding institutions:
 
 ![platewastegif1](https://user-images.githubusercontent.com/90283384/135784030-c592fcda-67db-4165-a23f-8577215ed634.gif)
 
-- Each institution created can be selected at which point information for that institution is displayed along with several other buttons
+Each institution created can be selected at which point information for that institution is displayed along with several other buttons:
 
 ![platewastegif2](https://user-images.githubusercontent.com/90283384/135784035-0a975e32-4797-4101-916a-014cb6242795.gif)
 
-- Currently each button on an individual institution's page is not implemented and do not open up any other pages or popups. The ability to search through institutions using the search bar in the UI also hasn't be implemented
+- Currently each button on an individual institution's page takes you to the meal creation page, these essentially act as stubs so new pages can easily be added corresponding to these buttons when such pages are created. 
+
+- Meals can be created and added to the database on the meal creation page, not implemented and do not open up any other pages or popups. The ability to search through institutions using the search bar in the UI also hasn't be implemented
+
+## Fixed Issues
+As of the incremental deliverable 2, the following previously identified issues have been resolved: 
+- Creating institutions with a blank or empty name or address no longer causes an app crash, instead a new institution is not created and feedback is provided to the user indicating that they must enter a name and address when creating an institution. ie no institutions are created until both a name and address has been entered by the user.
 
 ## Known Issues
-As of incremental deliverable 1, the following issues are present in the app: 
--creating an institution with an empty name or address (or both) will cause the app to crash, this will also overwrite any other institutions currently on the database with an empty string which in turn causes the app to continuously crash upon repeated startup. This is a serious issue that will be address when we add input validation in incremental deliverable 2.
+As of incremental deliverable 2, the following issues are present in the app: 
+- UI for adding meals needs to be refined, meal pictures currently occupy the entire background of the meal addition page, before adding a meal, there is a small label indicating that no meal has been selected. General UI sizing can also be improved to better make use of the entire screen of a device and generally be more appealing, for example text indicating that no picture has been selected can be replaced with an icon to take a new picture.
+- 
 -the database has not been stress tested or built for use offline or in conditions of poor network connectivity as of incremental deliverable 1, using the app in these conditions may cause issues. These issues will be dealt with in future.
 
 ## Spike Prototypes
