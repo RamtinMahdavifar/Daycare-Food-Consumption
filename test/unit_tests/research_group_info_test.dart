@@ -10,8 +10,6 @@ void main(){
     test("toString",(){
       ResearchGroupInfo testResearchGroupInfo = ResearchGroupInfo("test research group");
       expect(testResearchGroupInfo.toString(),"test research group");
-      testResearchGroupInfo = ResearchGroupInfo("");
-      expect(testResearchGroupInfo.toString(),"");
     });
     test("== operator",(){
       ResearchGroupInfo testResearchGroupInfo = ResearchGroupInfo("test research group");
@@ -26,7 +24,6 @@ void main(){
       expect(testResearchGroupInfo == ResearchGroupInfo("something"), false);
       expect(testResearchGroupInfo == ResearchGroupInfo("test name"), false);
       expect(testResearchGroupInfo == ResearchGroupInfo("researcher"), false);
-      expect(testResearchGroupInfo == ResearchGroupInfo(""), false);
       expect(testResearchGroupInfo == ResearchGroupInfo("test research group"), true);
       ResearchGroupInfo otherResearchGroup = testResearchGroupInfo;
       expect(testResearchGroupInfo == otherResearchGroup, true);
@@ -44,11 +41,6 @@ void main(){
       final Map<String,dynamic> testJSON = {"name":"test research group", "databaseKey":"test research group"};
 
       expect(ResearchGroupInfo.fromJSON(testJSON), ResearchGroupInfo("test research group"));
-
-      testJSON["name"] = "";
-      testJSON["databaseKey"] = "";
-
-      expect(ResearchGroupInfo.fromJSON(testJSON), ResearchGroupInfo(""));
     });
   });
 
