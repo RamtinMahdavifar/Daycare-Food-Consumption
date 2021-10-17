@@ -215,91 +215,94 @@ class _UploadDataState extends State<UploadData>{
   @override
   Widget build(BuildContext context) {
     Config.log.i("building upload data page");
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Upload Data"),
-      ),
-      body: _previewImages(), //Center(
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            child:addMealName(),
-            padding: EdgeInsets.all(1),
-            alignment: Alignment.center,
+    return MaterialApp(
+        title: 'Upload Date',
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text("Upload Data"),
           ),
-          Container(
-            child:addWeight(),
-            padding: EdgeInsets.all(1),
-            alignment: Alignment.center,
-          ),
-          Container(
-            child:addComments(),
-            padding: EdgeInsets.all(1),
-            alignment: Alignment.center,
-          ),
-          Row(
+          body: _previewImages(), //Center(
+          floatingActionButton: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Flexible(
-                fit: FlexFit.tight,
-                child: Container(
-                  child: Visibility(
-                    visible: _showButton,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        _onImageButtonPressed(ImageSource.gallery, context: context);
-                      },
-                      child: const Icon(Icons.photo),
-                    ),
-                  ),
-                )
-
+              Container(
+                child:addMealName(),
+                padding: EdgeInsets.all(1),
+                alignment: Alignment.center,
               ),
-              Flexible(
-                fit: FlexFit.tight ,
-                child: Container(
-                  child:Visibility(
-                    visible: _showButton,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        _onImageButtonPressed(ImageSource.camera, context: context);
-                      },
-                      child: const Icon(Icons.camera_alt),
+              Container(
+                child:addWeight(),
+                padding: EdgeInsets.all(1),
+                alignment: Alignment.center,
+              ),
+              Container(
+                child:addComments(),
+                padding: EdgeInsets.all(1),
+                alignment: Alignment.center,
+              ),
+              Row(
+                  children: <Widget>[
+                    Flexible(
+                        fit: FlexFit.tight,
+                        child: Container(
+                          child: Visibility(
+                            visible: _showButton,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                _onImageButtonPressed(ImageSource.gallery, context: context);
+                              },
+                              child: const Icon(Icons.photo),
+                            ),
+                          ),
+                        )
+
                     ),
-                  ),
-                )
+                    Flexible(
+                        fit: FlexFit.tight ,
+                        child: Container(
+                          child:Visibility(
+                            visible: _showButton,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                _onImageButtonPressed(ImageSource.camera, context: context);
+                              },
+                              child: const Icon(Icons.camera_alt),
+                            ),
+                          ),
+                        )
 
+                    )
+                  ]
+              ),
+              Row(
+                  children: <Widget>[
+                    Flexible(
+                        fit: FlexFit.tight,
+                        child: Container(
+                          child: Visibility(
+                              visible: !_showButton,
+                              child: clearImage()
+                          ),
+                        )
+
+                    ),
+                    Flexible(
+                        fit: FlexFit.tight ,
+                        child: Container(
+                          child:Visibility(
+                              visible: !_showButton,
+                              child: submitImage()
+                          ),
+                        )
+
+                    )
+                  ]
               )
-            ]
+
+            ],
           ),
-          Row(
-              children: <Widget>[
-                Flexible(
-                    fit: FlexFit.tight,
-                    child: Container(
-                      child: Visibility(
-                        visible: !_showButton,
-                        child: clearImage()
-                      ),
-                    )
-
-                ),
-                Flexible(
-                    fit: FlexFit.tight ,
-                    child: Container(
-                      child:Visibility(
-                        visible: !_showButton,
-                        child: submitImage()
-                      ),
-                    )
-
-                )
-              ]
-          )
-
-        ],
-      ),
+        ),
     );
   }
 
