@@ -215,9 +215,7 @@ class _UploadDataState extends State<UploadData>{
   @override
   Widget build(BuildContext context) {
     Config.log.i("building upload data page");
-    return MaterialApp(
-        title: 'Upload Date',
-        home: Scaffold(
+    return Scaffold(
           appBar: AppBar(
             title: Text("Upload Data"),
           ),
@@ -302,8 +300,7 @@ class _UploadDataState extends State<UploadData>{
 
             ],
           ),
-        ),
-    );
+        );
   }
 
   @override
