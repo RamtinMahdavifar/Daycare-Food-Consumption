@@ -20,7 +20,9 @@ class _AddInstitutionFormState extends State<AddInstitutionForm> {
   @override
   Widget build(BuildContext context) {
     Config.log.i("building add institution form widget");
-    return Scaffold(
+    return MaterialApp(
+      title: 'add institution form',
+      home: Scaffold(
       body: Form(
           key: _newInstitutionFormKey,
           child: Column(
@@ -36,8 +38,8 @@ class _AddInstitutionFormState extends State<AddInstitutionForm> {
               ]
           )
       ),
+     ),
     );
-
   }
   Widget formSubmit(BuildContext context){
     return ElevatedButton(
