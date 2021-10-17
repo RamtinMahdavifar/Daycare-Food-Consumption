@@ -47,8 +47,6 @@ As of incremental deliverable 1, the following issues are present in the app:
 
 2. ID 2- [Spike_Firebase_DataExport](https://github.com/UniversityOfSaskatchewanCMPT371/term-project-fall-2021-team-2-1/releases/tag/Spike_Firebase_DataExport) this prototype is for exploring the integration between firebase realtime database, google sheets and python. 
 
-Currently we have created [this](https://github.com/UniversityOfSaskatchewanCMPT371/term-project-fall-2021-team-2-1/releases/tag/Firebase-Flutter_integration) In future we plan to develop additional spike prototypes to explore the use of the device camera and associated apis and determine whether google sheets can be used to export data. Depending on stakeholder requirements we may also create a prototype exploring the usage of bluetooth scales as well.
-
 
 
 ## Flutter Development Starting Resources
