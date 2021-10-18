@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'institution_page_widgets.dart';
+import 'upload_data.dart';
+import 'package:plate_waste_recorder/Helper/config.dart';
 
 class InstitutionPage extends StatefulWidget {
   String institutionName;
@@ -13,40 +16,13 @@ class InstitutionPage extends StatefulWidget {
 class _InstitutionPageState extends State<InstitutionPage> {
   @override
   Widget build(BuildContext context) {
+    Config.log.i("building institution page");
     return Scaffold(
-      appBar: AppBar(title: Text(widget.institutionName.toString()), leading: BackButton(), actions: [modifyButton()]),
-        body: _InstitutionOptions()
-    );
+        appBar: AppBar(title: Text(widget.institutionName.toString()), leading: backButton(context), actions: [modifyButton()]),
+        body: _InstitutionOptions(),
+      );
   }
 
-  Widget BackButton(){
-    return InkWell(
-      onTap: (){
-        Navigator.pop(context);
-      },
-      child: Icon(Icons.arrow_back)
-    );
-  }
-
-  Widget modifyButton(){
-    return InkWell(
-        onTap: () {},
-        child: Icon(Icons.edit)
-    );
-  }
-  Widget MenuButton(String btnName){
-    return Flexible(
-        child: SizedBox(
-            height: 100,
-            width: 100,
-            child: ElevatedButton(
-              child: Text(btnName),
-              onPressed: () {},
-
-            )
-        )
-    );
-  }
 
   Widget _InstitutionOptions(){
       return Scaffold(
@@ -60,9 +36,10 @@ class _InstitutionPageState extends State<InstitutionPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    MenuButton("QR Code"),
-                    MenuButton("Camera"),
-                    MenuButton("Roster"),
+                    //most of the buttons do not navigate anywhere and have null as their navigation parameter
+                    menuButton(context, "QR Code", () => UploadData()),
+                    menuButton(context, "Camera", () => UploadData()),
+                    menuButton(context, "Roster", () => UploadData()),
                   ],
 
                 )
@@ -71,17 +48,15 @@ class _InstitutionPageState extends State<InstitutionPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      MenuButton("Record Data"),
-                      MenuButton("View Data"),
-                      MenuButton("Food"),
+                      menuButton(context, "Record Data", () => UploadData()),
+                      menuButton(context, "View Data", () => UploadData()),
+                      menuButton(context, "Food", () => UploadData()),
                     ],
 
                   )
               ),
             ],
-
           )
-
       );
       }
 }

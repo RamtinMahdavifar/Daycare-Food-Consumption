@@ -67,7 +67,6 @@ Currently we have created the following spike prototypes to explore various pote
 2. ID 2- [Spike_Firebase_DataExport](https://github.com/UniversityOfSaskatchewanCMPT371/term-project-fall-2021-team-2-1/releases/tag/Spike_Firebase_DataExport) this prototype explores the integration between our firebase realtime database, google sheets and python, in particular in determining how database data can be exported into google sheets.
 
 
-
 ## Flutter Development Starting Resources
 Below a beginners guide to flutter is presented as well as several common flutter "recipes" or code snippets:
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
