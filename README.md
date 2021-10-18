@@ -19,7 +19,7 @@ Documentation and other artifacts related to incremental deliverable 2 can be fo
 
 ![platewasteinstall3](https://user-images.githubusercontent.com/90283384/135784000-b8e158ae-5d54-4f4c-90d4-ea4fb219a9fe.png)
 
-5. Download the latest app APK from the [Build Folder](https://github.com/UniversityOfSaskatchewanCMPT371/term-project-fall-2021-team-2-1/blob/Development/build/app/outputs/flutter-apk/app.apk) 
+5. Download the latest app APK from the [Build Folder](https://github.com/UniversityOfSaskatchewanCMPT371/term-project-fall-2021-team-2-1/blob/Development/build/app/outputs/flutter-apk/app.apk)  
 
 6. Drag the Downloaded APK over Nox emulator screen (It will automatically install the APK), after the APK is installed, you should see a plate_waste_recorder application logo in the Nox app, click on this to run the app.
 
