@@ -14,6 +14,8 @@ abstract class Info{
 
   @override
   String toString(){
+    // ensure this object has a legitimate name
+    assert(this.name.isNotEmpty);
     return this.name;
   }
 

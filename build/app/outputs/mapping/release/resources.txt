@@ -4,17 +4,24 @@ Referenced Strings:
   $key
   $priority
   $value
+  %02d:%02d:%02d
+  %02x
   %20
   %s.%sParcelizer
+  .flutter.image_provider
   .info
+  .jpg
   .key
+  .mp4
   .priority
   .sv
   .value
   /.info
+  /1
   /Android
   /cmdline
   /proc/
+  /scaled_
   0
   0123456789abcdef
   0x%08x
@@ -33,6 +40,8 @@ Referenced Strings:
   ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE
   ADD
   ALERT
+  ANIM
+  ANMF
   API_NOT_CONNECTED
   API_UNAVAILABLE
   API_VERSION_UPDATE_REQUIRED
@@ -41,10 +50,13 @@ Referenced Strings:
   AccessibilityChannel
   AccountAccessor
   AckUserWrite
+  ApertureValue
   AppLifecycleState.detached
   AppLifecycleState.inactive
   AppLifecycleState.paused
   AppLifecycleState.resumed
+  Artist
+  AspectFrame
   Authenticating
   B:
   BITMAP
@@ -52,13 +64,19 @@ Referenced Strings:
   BLACK
   BOTH
   BOTTOM_OVERLAYS
+  BYTE
   BanParcelableUsage
   BasePendingResult
+  BitsPerSample
+  BodySerialNumber
   Boolean
   Brightness.dark
   Brightness.light
+  BrightnessValue
   C:
   CANCELED
+  CANCELLED
+  CFAPattern
   CHARACTERS
   CHILD_ADDED
   CHILD_CHANGED
@@ -75,18 +93,27 @@ Referenced Strings:
   CREATED
   CUSTOM_ACTION
   CUT
+  CameraOwnerName
+  CameraSettingsIFDPointer
   ChildEventRegistration
   Class
   ClickableViewAccessibility
   Clipboard.getData
   Clipboard.hasStrings
   Clipboard.setData
+  ColorSpace
   ComponentDiscovery
+  ComponentsConfiguration
+  CompressedBitsPerPixel
+  Compression
   Connected
   Connecting
   Connection
   ConnectionRetryHelper
   ConnectionTracker
+  Contrast
+  Copyright
+  CustomRendered
   D:
   DARK
   DATA
@@ -103,10 +130,16 @@ Referenced Strings:
   DISCONNECTED
   DISCONNECTING
   DISMISS
+  DNGVersion
+  DOUBLE
   DRIVE_EXTERNAL_STORAGE_REQUIRED
   DartExecutor
   DartMessenger
   DataOperation
+  DateTime
+  DateTimeDigitized
+  DateTimeOriginal
+  DefaultCropSize
   DeferredComponentChannel
   DeferredValue
   Destroying.
@@ -114,10 +147,11 @@ Referenced Strings:
   DeviceOrientation.landscapeRight
   DeviceOrientation.portraitDown
   DeviceOrientation.portraitUp
+  DeviceSettingDescription
   DialogRedirect
+  DigitalZoomRatio
   Disconnected
   DoTransaction
-  DynamiteLoaderClassLoader.class
   EDGE_TO_EDGE
   EMAIL_ADDRESS
   ERROR
@@ -129,7 +163,20 @@ Referenced Strings:
   EventType.childMoved
   EventType.childRemoved
   EventType.value
+  Exif
+  ExifDataCopier
+  ExifIFDPointer
+  ExifInterface
+  ExifVersion
+  ExposureBiasValue
+  ExposureIndex
+  ExposureMode
+  ExposureProgram
+  ExposureTime
+  FNumber
   FRAMEWORK_CLIENT
+  FRONT
+  FileSource
   Firebase/
   FirebaseApp
   FirebaseAppHeartBeat
@@ -137,11 +184,13 @@ Referenced Strings:
   FirebaseDatabase
   FirebaseDatabaseWorker
   FirebaseInitProvider
+  Flash
+  FlashEnergy
+  FlashpixVersion
   FlutterActivity
   FlutterActivityAndFragmentDelegate
   FlutterEngine
   FlutterEngineCxnRegstry
-  FlutterImageView
   FlutterJNI
   FlutterLoader
   FlutterRenderer
@@ -149,8 +198,48 @@ Referenced Strings:
   FlutterSurfaceView
   FlutterTextureView
   FlutterView
+  FocalLength
+  FocalLengthIn35mmFilm
+  FocalPlaneResolutionUnit
+  FocalPlaneXResolution
+  FocalPlaneYResolution
   FragmentActivity
   FragmentManager
+  GPSAltitude
+  GPSAltitudeRef
+  GPSAreaInformation
+  GPSDOP
+  GPSDateStamp
+  GPSDestBearing
+  GPSDestBearingRef
+  GPSDestDistance
+  GPSDestDistanceRef
+  GPSDestLatitude
+  GPSDestLatitudeRef
+  GPSDestLongitude
+  GPSDestLongitudeRef
+  GPSDifferential
+  GPSHPositioningError
+  GPSImgDirection
+  GPSImgDirectionRef
+  GPSInfoIFDPointer
+  GPSLatitude
+  GPSLatitudeRef
+  GPSLongitude
+  GPSLongitudeRef
+  GPSMapDatum
+  GPSMeasureMode
+  GPSProcessingMethod
+  GPSSatellites
+  GPSSpeed
+  GPSSpeedRef
+  GPSStatus
+  GPSTimeStamp
+  GPSTrack
+  GPSTrackRef
+  GPSVersionID
+  GainControl
+  Gamma
   GeneratedPluginRegistrant
   GeneratedPluginsRegister
   GettingToken
@@ -179,6 +268,7 @@ Referenced Strings:
   HapticFeedbackType.selectionClick
   Host
   I
+  IFD
   II
   IMMERSIVE
   IMMERSIVE_STICKY
@@ -190,6 +280,11 @@ Referenced Strings:
   INTERRUPTED
   INVALID_ACCOUNT
   INVERT_COLORS
+  ISO
+  ISOSpeed
+  ISOSpeedLatitudeyyy
+  ISOSpeedLatitudezzz
+  ISOSpeedRatings
   IS_BUTTON
   IS_CHECKED
   IS_ENABLED
@@ -209,9 +304,20 @@ Referenced Strings:
   IS_TEXT_FIELD
   IS_TOGGLED
   IconCompat
+  ImageDescription
+  ImageLength
+  ImageProcessingIFDPointer
+  ImageResizer
+  ImageUniqueID
+  ImageWidth
   InlinedApi
   InputConnectionAdaptor
+  InteroperabilityIFDPointer
+  InteroperabilityIndex
   J
+  JPEGInterchangeFormat
+  JPEGInterchangeFormatLength
+  JpgFromRaw
   KeyEventChannel
   KeyIndex
   KeyboardManager
@@ -223,11 +329,14 @@ Referenced Strings:
   LIGHT
   LIGHT_IMPACT
   LOCALE
-  LOCK
   LONG_PRESS
   LTR
   LayoutInflaterCompatHC
+  LensMake
+  LensModel
+  LensSpecification
   LifecycleChannel
+  LightSource
   ListenComplete
   ListenableEditingState
   LoaderManager
@@ -240,9 +349,14 @@ Referenced Strings:
   MOVE_CURSOR_FORWARD_BY_CHARACTER
   MOVE_CURSOR_FORWARD_BY_WORD
   MULTILINE
+  Make
+  MakerNote
+  MaxApertureValue
   Merge
   MetadataValueReader
+  MeteringMode
   MethodCallHandlerImpl
+  Model
   MouseCursorChannel
   NAME
   NAMES_ROUTE
@@ -254,11 +368,13 @@ Referenced Strings:
   NUMBER
   NavigationChannel
   NewApi
+  NewSubfileType
   Node
   NoopPersistenceManager
   NotificationCompat
   Number
   O:
+  OECF
   ON_ANY
   ON_CREATE
   ON_DESTROY
@@ -269,10 +385,16 @@ Referenced Strings:
   OPACITY
   OP_SET_MAX_LIFECYCLE
   OTHER
+  OffsetTime
+  OffsetTimeDigitized
+  OffsetTimeOriginal
   Operations:
+  Orientation
   Override
   Overwrite
   PASTE
+  PENDING
+  PENTAX
   PHONE
   PLAIN_TEXT
   PORTRAIT_DOWN
@@ -280,16 +402,25 @@ Referenced Strings:
   POSTAL_ADDRESS
   Persistence
   PersistentConnection
+  PhotographicSensitivity
+  PhotometricInterpretation
+  PixelXDimension
+  PixelYDimension
+  PlanarConfiguration
   PlatformChannel
   PlatformPlugin
   PlatformViewsChannel
   PlatformViewsController
+  PreviewImageLength
+  PreviewImageStart
+  PrimaryChromaticities
   PriorityIndex
   PrivateApi
   R:
   REALTIME_CONNECTED
   REALTIME_CONNECTING
   REALTIME_DISCONNECTED
+  REAR
   RED
   REMOVE
   REPLACE
@@ -300,10 +431,16 @@ Referenced Strings:
   RIGHT
   RTL
   RUN
+  RecommendedExposureIndex
+  ReferenceBlackWhite
+  RelatedSoundFile
   RepoOperation
+  ResolutionUnit
   RestorationChannel
   RestrictedApi
+  RowsPerStrip
   RunLoop
+  SBYTE
   SCOPES_ROUTE
   SCROLL_DOWN
   SCROLL_LEFT
@@ -327,18 +464,50 @@ Referenced Strings:
   SHOW_ON_SCREEN
   SIGN_IN_FAILED
   SIGN_IN_REQUIRED
+  SINGLE
+  SLONG
   SPELLOUT
+  SRATIONAL
+  SSHORT
   STANDARD
   STARTED
+  STRING
   SUCCESS
   SUCCESS_CACHE
+  SamplesPerPixel
+  Saturation
+  SceneCaptureType
+  SceneType
+  SensingMethod
+  SensitivityType
+  SensorBottomBorder
+  SensorLeftBorder
+  SensorRightBorder
+  SensorTopBorder
   Server
   SettingsChannel
+  Sharpness
+  ShutterSpeedValue
   SignIn.API
   SignIn.INTERNAL_API
   SignInClientImpl
   SignInCoordinator
+  Software
+  SpatialFrequencyResponse
+  SpectralSensitivity
+  StandardOutputSensitivity
   String
+  StripByteCounts
+  StripOffsets
+  SubIFDPointer
+  SubSecTime
+  SubSecTimeDigitized
+  SubSecTimeOriginal
+  SubfileType
+  SubjectArea
+  SubjectDistance
+  SubjectDistanceRange
+  SubjectLocation
   SyncTree
   SystemChannel
   SystemChrome.restoreSystemUIOverlays
@@ -408,35 +577,57 @@ Referenced Strings:
   TextInputType.url
   TextInputType.visiblePassword
   Theme.Dialog.Alert
+  ThumbnailImage
+  ThumbnailImageLength
+  ThumbnailImageWidth
+  ThumbnailOrientation
   Transaction
+  TransferFunction
   TubeSock
   U:
+  ULONG
+  UNDEFINED
   UNFINISHED
   UNKNOWN
   UNSET_PRIMARY_NAV
+  URATIONAL
   URI
   URL
+  USHORT
+  UTC
   UTF8
   UnknownNullness
   UntrackedBindService
   Upgrade
   User
+  UserComment
   V1
   V2
   V:
   VALUE
   VD_PLATFORM_VIEW
   VISIBLE_PASSWORD
+  VP8L
+  VP8X
   ValueEventRegistration
   ValueIndex
   ViewCompat
   WARN
   WORDS
   WebSocket
-  WrongConstant
+  WhiteBalance
+  WhitePoint
+  XResolution
+  Xmp
+  YCbCrCoefficients
+  YCbCrPositioning
+  YCbCrSubSampling
+  YResolution
   Z
   _
   _LifecycleAdapter
+  _display_name
+  _size
   a
   ac
   accessibility
@@ -454,8 +645,10 @@ Referenced Strings:
   addressState
   alias
   allScroll
+  allTestsFinished
   allowFreeFormInput
   allowedDataTypes
+  already_active
   alwaysUse24HourFormat
   android
   android.car.EXTENSIONS
@@ -464,11 +657,20 @@ Referenced Strings:
   android.hardware.type.iot
   android.hardware.type.television
   android.hardware.type.watch
+  android.intent.action.GET_CONTENT
   android.intent.action.RUN
   android.intent.action.USER_UNLOCKED
   android.intent.action.VIEW
+  android.intent.extra.ALLOW_MULTIPLE
+  android.intent.extra.USE_FRONT_CAMERA
+  android.intent.extra.durationLimit
+  android.intent.extras.CAMERA_FACING
+  android.media.action.IMAGE_CAPTURE
+  android.media.action.VIDEO_CAPTURE
   android.people
+  android.permission.CAMERA
   android.settings.APPLICATION_DETAILS_...
+  android.support.FILE_PROVIDER_PATHS
   android.support.action.semanticAction
   android.support.action.showsUserInter...
   android.support.actionExtras
@@ -547,6 +749,9 @@ Referenced Strings:
   c
   cacheSize
   cached_engine_id
+  cameraDevice
+  camera_access_denied
+  captureScreenshot
   cell
   ch
   character
@@ -618,7 +823,9 @@ Referenced Strings:
   connected
   connection
   connection_idle
+  content
   contextMenu
+  convertFlutterSurfaceToImage
   copy
   countryName
   create
@@ -666,6 +873,8 @@ Referenced Strings:
   equalTo
   equalToKey
   error
+  errorCode
+  errorMessage
   error_code
   eventType
   expirationTime
@@ -680,6 +889,7 @@ Referenced Strings:
   familyName
   feature
   fields
+  file:
   find
   firebase_core
   firebase_data_collection_default_enabled
@@ -702,6 +912,15 @@ Referenced Strings:
   flutter/textinput
   flutter_assets
   flutter_deeplinking_enabled
+  flutter_image_picker_error_code
+  flutter_image_picker_error_message
+  flutter_image_picker_image_path
+  flutter_image_picker_image_quality
+  flutter_image_picker_max_height
+  flutter_image_picker_max_width
+  flutter_image_picker_pending_image_uri
+  flutter_image_picker_shared_preference
+  flutter_image_picker_type
   forbidden
   fragment
   framework
@@ -716,10 +935,13 @@ Referenced Strings:
   get
   getChildId
   getDeferredComponentInstallState
+  getJavaLangAccess
   getParentNodeId
   getResId
   getResPackage
   getSourceNodeId
+  getStackTraceDepth
+  getStackTraceElement
   givenName
   googleSignInAccount
   google_api_key
@@ -728,15 +950,16 @@ Referenced Strings:
   grab
   grabbing
   grantedScopes
+  guava.concurrent.generate_cancellatio...
   h
   handle
   handled
   height
   help
-  hintText
   hints
   hs
   http
+  http://ns.adobe.com/xap/1.0/
   https
   https://
   https://plus.google.com/
@@ -745,6 +968,8 @@ Referenced Strings:
   icon
   id
   image
+  imageQuality
+  image_picker
   includeSubdomains
   increment
   inputAction
@@ -763,6 +988,7 @@ Referenced Strings:
   is
   isAutomaticDataCollectionEnabled
   java.
+  jpg
   key
   keyCode
   keydown
@@ -781,21 +1007,19 @@ Referenced Strings:
   limitToLast
   loadingUnitId
   locale
-  lock
   longPress
   m
   mChildNodeIds
-  mConnectionStatus
   mFactory2
   mH
-  mLk
-  mLock
   mNextServedView
   mOnKeyListener
   mServedView
-  mServiceBrokerLock
   main
   market://details
+  maxDuration
+  maxHeight
+  maxWidth
   maxretries
   memoryPressure
   message
@@ -814,6 +1038,8 @@ Referenced Strings:
   newPassword
   newUsername
   noDrop
+  no_activity
+  no_available_camera
   no_index
   node
   nodeId
@@ -854,6 +1080,7 @@ Referenced Strings:
   orderBy
   orderByChildKey
   other
+  output
   overlay
   overriddenBySet
   overriddenbyset
@@ -864,6 +1091,7 @@ Referenced Strings:
   part
   password
   path
+  pathList
   pc_
   pcampaignid
   pendingIntent
@@ -882,6 +1110,9 @@ Referenced Strings:
   phoneNumber
   phoneNumberDevice
   photoUrl
+  pickImage
+  pickMultiImage
+  pickVideo
   plainCodePoint
   platformBrightness
   platformViewId
@@ -889,6 +1120,8 @@ Referenced Strings:
   plugins
   plugins.flutter.io/firebase_core
   plugins.flutter.io/firebase_database
+  plugins.flutter.io/image_picker
+  plugins.flutter.io/integration_test
   popRoute
   postalAddress
   postalAddressExtended
@@ -937,15 +1170,18 @@ Referenced Strings:
   resolution
   restricted_profile
   resultKey
+  results
+  retrieve
+  revertFlutterImage
   rm
   route
   rowid
+  rw
+  rwt
   s
-  sCache
-  sInstance
-  sLk
-  sLock
   scanCode
+  scheduleFrame
+  screenshot
   sd
   sdk.android.
   selectionBase
@@ -981,6 +1217,8 @@ Referenced Strings:
   streetAddress
   string
   string:
+  sun.misc.JavaLangAccess
+  sun.misc.SharedSecrets
   surface
   synchronizeToNativeViewHierarchy
   systemNavigationBarColor
@@ -994,6 +1232,7 @@ Referenced Strings:
   telephoneNumberCountryCode
   telephoneNumberDevice
   telephoneNumberNational
+  temp
   text
   text/plain
   textCapitalization
@@ -1001,6 +1240,7 @@ Referenced Strings:
   texture
   timestamp
   title
+  tmp
   token
   tokenId
   tooltip
@@ -1034,9 +1274,11 @@ Referenced Strings:
   version
   verticalText
   vf
+  video
   viewFocused
   viewType
   w
+  wa
   wait
   watch
   websocket
@@ -1048,7 +1290,9 @@ Referenced Strings:
   ws
   ws_
   wss
+  wt
   x
+  yes
   zoomIn
   zoomOut
 Marking string:google_storage_bucket:2131296280 used because its prefix matches string pool constant google_storage_bucket
@@ -1086,6 +1330,7 @@ Marking id:accessibility_custom_action_7:2131034142 used because its prefix matc
 Marking id:accessibility_custom_action_8:2131034143 used because its prefix matches string pool constant accessibility
 Marking id:accessibility_custom_action_9:2131034144 used because its prefix matches string pool constant accessibility
 Marking string:default_web_client_id:2131296274 used because its prefix matches string pool constant default
+Marking xml:flutter_image_picker_file_paths:2131492864 used because its prefix matches string pool constant flutter
 Marking attr:android_colorBackground:-1 used because its prefix matches string pool constant android
 Marking attr:android_color:-1 used because its prefix matches string pool constant android
 Marking attr:android_alpha:-1 used because its prefix matches string pool constant android
@@ -1324,6 +1569,7 @@ attr:imageAspectRatio:2130771982,
    string:project_id:2131296281,
    style:LaunchTheme:2131361792,
    style:NormalTheme:2131361793,
+   xml:flutter_image_picker_file_paths:2131492864,
    attr:android_colorBackground:-1,
    attr:android_color:-1,
    attr:android_alpha:-1,
