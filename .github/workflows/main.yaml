@@ -26,3 +26,7 @@ jobs:
 
       - name: run dart tests
         run: flutter test
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 9be8a039ddebf82f3a2f46eff9409b5b2eb0079e
