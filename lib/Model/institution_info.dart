@@ -4,7 +4,6 @@ import 'package:plate_waste_recorder/Model/info.dart';
 /// of some high level Institution information and can be used to easily read
 /// Institution objects in from our Database
 class InstitutionInfo extends Info{
-
   String _institutionAddress = "";
   String name = "";
   String databaseKey = "";
@@ -43,7 +42,6 @@ class InstitutionInfo extends Info{
   // this is considered a constructor and so cannot be inherited from our super Info
   InstitutionInfo.fromJSON(Map<String, dynamic> json)
       : name = json["name"].toString(),
-
         databaseKey = json["databaseKey"] as String,
         _institutionAddress = json["_institutionAddress"] as String;
 }

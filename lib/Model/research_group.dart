@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/Model/researcher_info.dart';
@@ -9,7 +8,6 @@ import 'package:plate_waste_recorder/Model/research_group_info.dart';
 /// stored within a particular research group, research groups can be created
 /// by one owner who can then invite others to the research group via invite code
 class ResearchGroup{
-
   late String _groupName;
   late ResearcherInfo _groupOwner;
 
@@ -21,7 +19,6 @@ class ResearchGroup{
   Map<String,InstitutionInfo> _institutionsMap = Map();
 
   // ResearchGroup constructor
-
   ResearchGroup(String groupName, ResearcherInfo groupOwner){
     assert(groupName.isNotEmpty);
     // ensure the owner of this group has legitimate data
@@ -40,13 +37,11 @@ class ResearchGroup{
   }
 
   set name(String newName){
-
     assert(newName.isNotEmpty);
     this._groupName = newName;
   }
 
   set owner(ResearcherInfo newOwner){
-
     // ensure the new owner has legitimate data
     assert(newOwner.name.isNotEmpty);
     assert(newOwner.databaseKey.isNotEmpty);
@@ -66,7 +61,6 @@ class ResearchGroup{
     // TODO: synchronize this with the database so when an institution is added
     // TODO: to a research group it is put on the database as well
   }
-
 
   /// returns a Map<String,InstitutionInfo> such that the keys of this map are the
   /// database keys of each InstitutionInfo value, ie if x is an InstitutionInfo value,
@@ -95,7 +89,6 @@ class ResearchGroup{
   };
 
   ResearchGroup.fromJSON(Map<String, dynamic> json)
-
       : _groupName = json["_groupName"].toString(), _groupOwner = ResearcherInfo.fromJSON(json["_groupOwner"]as Map<String,dynamic>),
         _groupMembers = (json["_groupMembers"] as List).cast<ResearcherInfo>(),
         // look inside of the _institutionsMap field, this is originally a Map<String,dynamic> and
@@ -104,6 +97,5 @@ class ResearchGroup{
         // are the values of the map, we can reuse the keys already in the json.
         _institutionsMap = Map<String,InstitutionInfo>.fromIterables((json["_institutionsMap"] as Map<String,dynamic>).keys,
             (json["_institutionsMap"] as Map<String,dynamic>).values.map(
-
                 (institutionJSON)=>InstitutionInfo.fromJSON(institutionJSON as Map<String, dynamic>)).toList());
 }

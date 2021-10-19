@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:plate_waste_recorder/Model/institution.dart';
-
 import 'package:plate_waste_recorder/Model/meal.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'dart:convert';
 import 'package:plate_waste_recorder/Model/research_group.dart';
-
 import 'package:plate_waste_recorder/Model/subject.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
@@ -24,7 +22,6 @@ class Database {
   static final Database _instance = Database._privateConstructor();
 
   // initialize the location research groups are to be stored on the database
-
   final String _RESEARCHGROUPROOTLOCATION = "Research Groups";
 
   // initialize the constant location where we store institution infos for a particular
@@ -61,7 +58,6 @@ class Database {
     return _instance;
   }
 
-
   /// writes the input institution as an InstitutionInfo under the research group specified by the
   /// input ResearchGroupInfo, the input institution is also written in it's entirety to the database in
   /// it's own distinct location, this location is still relative to the input research group
@@ -92,7 +88,6 @@ class Database {
     String institutionInfoJSON = jsonEncode(currentInstitutionInfo);
 
     // convert the produced JSON to a map which can be stored on our database
-
     Map<String, dynamic> institutionInfoMap = json.decode(institutionInfoJSON) as Map<String,dynamic>;
     institutionReference.set(institutionInfoMap);
 
@@ -180,13 +175,11 @@ class Database {
     // then also update data if any changes have occurred to the database
     desiredResearchGroupReference.onValue.listen((event) {
       DataSnapshot dataSnapshot = event.snapshot;
-
       Map<String, dynamic> researchGroupJSON = jsonDecode(dataSnapshot.value.toString()) as Map<String,dynamic>;
       ResearchGroup retrievedResearchGroup = ResearchGroup.fromJSON(researchGroupJSON);
       callback(retrievedResearchGroup);
     });
   }
-
 
   /// returns a Stream of Event objects, representing data for the ResearchGroup specified
   /// by the input researchGroupInfo, this stream is refreshed whenever any changes to the
@@ -204,7 +197,6 @@ class Database {
         .child(researchGroupInfo.databaseKey);
     return desiredResearchGroupReference.onValue;
   }
-
 
   /// writes the input researchGroup to the database in it's entirety
   /// Preconditions: researchGroupInfo.databaseKey.isNotEmpty
@@ -225,7 +217,6 @@ class Database {
     String researchGroupJSON = jsonEncode(researchGroup);
     // we cannot write raw JSON to the database, decode this JSON to get a map which
     // preserves the structure of our object when written to the database
-
     Map<String, dynamic> researchGroupAsMap = json.decode(researchGroupJSON) as Map<String,dynamic>;
     researchGroupDatabaseReference.set(researchGroupAsMap);
   }

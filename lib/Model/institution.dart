@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
@@ -7,7 +6,6 @@ import 'package:plate_waste_recorder/Model/subject_info.dart';
 /// Class representing an institution, institutions are considered to be anywhere where
 /// data collection in a plate waste study might be undertaken
 class Institution {
-
   // these fields are late as such as this class's constructor doesn't take these fields
   // as input directly, this late keyword indicates that the fields will be initialized
   // before use as they are in our constructor
@@ -36,13 +34,11 @@ class Institution {
   }
 
   set name(String newName){
-
     assert(newName.isNotEmpty);
     this._name = newName;
   }
 
   set address(String newAddress){
-
     assert(newAddress.isNotEmpty);
     this._address = newAddress;
   }

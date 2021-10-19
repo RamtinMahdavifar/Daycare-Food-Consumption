@@ -9,7 +9,6 @@ class ResearcherInfo extends Info{
   String databaseKey = "";
 
   ResearcherInfo(String name){
-
     assert(name.isNotEmpty);
     this.name = name;
     this.databaseKey = name;
@@ -18,7 +17,6 @@ class ResearcherInfo extends Info{
   // this is considered a constructor and so cannot be inherited from our super Info
   ResearcherInfo.fromJSON(Map<String, dynamic> json)
       : name = json["name"].toString(),
-
         databaseKey = json["databaseKey"] as String;
 
 
