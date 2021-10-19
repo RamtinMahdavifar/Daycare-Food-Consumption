@@ -23,17 +23,7 @@ jobs:
       
       - name: install dart dependencies
         run: dart pub get
-<<<<<<< HEAD
-      
-      - run: flutter analyze .
-        
-      - name: run dart tests
-        run: flutter test
-        
-=======
 
       - name: run dart tests
         run: flutter test
         
-      - run: flutter build apk
->>>>>>> Development
