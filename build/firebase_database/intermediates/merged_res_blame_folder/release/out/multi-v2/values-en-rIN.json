@@ -1,10 +1,17 @@
 {
     "logs": [
         {
+<<<<<<< HEAD
             "outputFile": "D:\\downloads\\glass-enterprise-samples-master\\glass-enterprise-samples-master\\term-project-fall-2021-team-2-1\\build\\firebase_database\\intermediates\\res\\merged\\release\\values-en-rIN\\values-en-rIN.xml",
             "map": [
                 {
                     "source": "C:\\Users\\shant\\.gradle\\caches\\transforms-2\\files-2.1\\3c8fd1bfddb99a7a7e21faa1397acdb4\\core-1.1.0\\res\\values-en-rIN\\values-en-rIN.xml",
+=======
+            "outputFile": "C:\\Users\\Abdul\\Desktop\\U of S\\Y5 S1\\CMPT 371\\Deliverable 1\\371\\build\\firebase_database\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-en-rIN\\values-en-rIN.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Abdul\\.gradle\\caches\\transforms-2\\files-2.1\\3c8fd1bfddb99a7a7e21faa1397acdb4\\core-1.1.0\\res\\values-en-rIN\\values-en-rIN.xml",
+>>>>>>> Development
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -16,10 +23,17 @@
             ]
         },
         {
+<<<<<<< HEAD
             "outputFile": "D:\\downloads\\glass-enterprise-samples-master\\glass-enterprise-samples-master\\term-project-fall-2021-team-2-1\\build\\firebase_database\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-en-rIN\\values-en-rIN.xml",
             "map": [
                 {
                     "source": "C:\\Users\\shant\\.gradle\\caches\\transforms-2\\files-2.1\\3c8fd1bfddb99a7a7e21faa1397acdb4\\core-1.1.0\\res\\values-en-rIN\\values-en-rIN.xml",
+=======
+            "outputFile": "C:\\Users\\Abdul\\Desktop\\U of S\\Y5 S1\\CMPT 371\\Deliverable 1\\371\\build\\firebase_database\\intermediates\\res\\merged\\release\\values-en-rIN\\values-en-rIN.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Abdul\\.gradle\\caches\\transforms-2\\files-2.1\\3c8fd1bfddb99a7a7e21faa1397acdb4\\core-1.1.0\\res\\values-en-rIN\\values-en-rIN.xml",
+>>>>>>> Development
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
