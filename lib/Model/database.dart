@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:plate_waste_recorder/Model/institution.dart';
-<<<<<<< HEAD
-=======
+
 import 'package:plate_waste_recorder/Model/meal.dart';
->>>>>>> Development
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'dart:convert';
 import 'package:plate_waste_recorder/Model/research_group.dart';
-<<<<<<< HEAD
-=======
+
 import 'package:plate_waste_recorder/Model/subject.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'meal_info.dart';
->>>>>>> Development
 
 /// Class to a access the firebase database, this class is implemented using the
 /// singleton pattern and provides methods to read and write data to and from
@@ -28,11 +24,7 @@ class Database {
   static final Database _instance = Database._privateConstructor();
 
   // initialize the location research groups are to be stored on the database
-<<<<<<< HEAD
-  final String _researchGroupRootLocation = "Research Groups";
 
-  final String _researchGroupInstitutionsLocation = "_institutionsMap";
-=======
   final String _RESEARCHGROUPROOTLOCATION = "Research Groups";
 
   // initialize the constant location where we store institution infos for a particular
@@ -55,7 +47,6 @@ class Database {
   // meal has a unique id assigned to it when written to the database, as such we don't
   // need to store meals relative to some subject
   final String _MEALSDATALOCATION = "Subject Meals";
->>>>>>> Development
 
   // define a private constructor for this class which will allocate memory etc
   // to class, this is only call-able from within this class.
@@ -70,16 +61,7 @@ class Database {
     return _instance;
   }
 
-<<<<<<< HEAD
-  void addInstitutionToResearchGroup(Institution institution, ResearchGroupInfo currentResearchGroupInfo){
-    InstitutionInfo currentInstitutionInfo = institution.getInstitutionInfo();
-    DatabaseReference institutionReference = _databaseInstance.reference()
-        .child(this._researchGroupRootLocation)
-        .child(currentResearchGroupInfo.databaseKey)
-        .child(this._researchGroupInstitutionsLocation)
-        .child(currentInstitutionInfo.databaseKey);
 
-=======
   /// writes the input institution as an InstitutionInfo under the research group specified by the
   /// input ResearchGroupInfo, the input institution is also written in it's entirety to the database in
   /// it's own distinct location, this location is still relative to the input research group
@@ -104,29 +86,13 @@ class Database {
     Config.log.i("writing institution: " + institution.name + " to research group: "
         + currentResearchGroupInfo.name + " on the database");
 
->>>>>>> Development
     // since we are storing this institution for a research group, only write
     // an InstitutionInfo to the database, convert this InstitutionInfo to JSON
 
     String institutionInfoJSON = jsonEncode(currentInstitutionInfo);
 
     // convert the produced JSON to a map which can be stored on our database
-<<<<<<< HEAD
-    Map<String, dynamic> institutionInfoMap = json.decode(institutionInfoJSON);
-    institutionReference.set(institutionInfoMap);
-  }
 
-  // TODO: update to make async
-  void readInstitution(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
-        Function(Institution) callback){
-    DatabaseReference desiredInstitutionReference = _databaseInstance.reference()
-        .child(this._researchGroupRootLocation)
-        .child(currentResearchGroupInfo.databaseKey)
-        .child(institutionInfo.databaseKey);
-    desiredInstitutionReference.once().then((DataSnapshot dataSnapshot)=>(
-        callback(
-            Institution.fromJSON(jsonDecode(dataSnapshot.value.toString()))
-=======
     Map<String, dynamic> institutionInfoMap = json.decode(institutionInfoJSON) as Map<String,dynamic>;
     institutionReference.set(institutionInfoMap);
 
@@ -191,18 +157,10 @@ class Database {
     // call the input function on the data read from the database
         callback(
             Institution.fromJSON(jsonDecode(dataSnapshot.value.toString()) as Map<String, dynamic>)
->>>>>>> Development
         )
     ));
   }
 
-<<<<<<< HEAD
-  // TODO: update to make async
-  void readResearchGroup(ResearchGroupInfo researchGroupInfo,
-      Function(ResearchGroup) callback){
-    DatabaseReference desiredResearchGroupReference = _databaseInstance.reference()
-        .child(this._researchGroupRootLocation)
-=======
 
   /// reads the ResearchGroup object specified by the input researchGroupInfo from the database, function
   /// callback is then called using this ResearchGroup as input
@@ -217,27 +175,19 @@ class Database {
     researchGroupInfo.databaseKey);
     DatabaseReference desiredResearchGroupReference = _databaseInstance.reference()
         .child(this._RESEARCHGROUPROOTLOCATION)
->>>>>>> Development
         .child(researchGroupInfo.databaseKey);
     // use onValue instead of once() to read data here as we want to read data and
     // then also update data if any changes have occurred to the database
     desiredResearchGroupReference.onValue.listen((event) {
       DataSnapshot dataSnapshot = event.snapshot;
-<<<<<<< HEAD
-      Map<String, dynamic> researchGroupJSON = jsonDecode(dataSnapshot.value.toString());
-=======
+
       Map<String, dynamic> researchGroupJSON = jsonDecode(dataSnapshot.value.toString()) as Map<String,dynamic>;
->>>>>>> Development
       ResearchGroup retrievedResearchGroup = ResearchGroup.fromJSON(researchGroupJSON);
       callback(retrievedResearchGroup);
     });
   }
 
-<<<<<<< HEAD
-  Stream<Event> getResearchGroupStream(ResearchGroupInfo researchGroupInfo){
-    DatabaseReference desiredResearchGroupReference = _databaseInstance.reference()
-        .child(this._researchGroupRootLocation)
-=======
+
   /// returns a Stream of Event objects, representing data for the ResearchGroup specified
   /// by the input researchGroupInfo, this stream is refreshed whenever any changes to the
   /// target ResearchGroup occur, ie data is reloaded whenever the ResearchGroup with
@@ -251,17 +201,11 @@ class Database {
     researchGroupInfo.databaseKey);
     DatabaseReference desiredResearchGroupReference = _databaseInstance.reference()
         .child(this._RESEARCHGROUPROOTLOCATION)
->>>>>>> Development
         .child(researchGroupInfo.databaseKey);
     return desiredResearchGroupReference.onValue;
   }
 
-<<<<<<< HEAD
-  void writeResearchGroup(ResearchGroup researchGroup){
-    ResearchGroupInfo researchGroupInfo = researchGroup.getResearchGroupInfo();
-    DatabaseReference researchGroupDatabaseReference = _databaseInstance.reference()
-        .child(this._researchGroupRootLocation)
-=======
+
   /// writes the input researchGroup to the database in it's entirety
   /// Preconditions: researchGroupInfo.databaseKey.isNotEmpty
   /// Postconditions: writes the input researchGroup to the database in it's entirety, if any
@@ -275,18 +219,13 @@ class Database {
     researchGroupInfo.databaseKey);
     DatabaseReference researchGroupDatabaseReference = _databaseInstance.reference()
         .child(this._RESEARCHGROUPROOTLOCATION)
->>>>>>> Development
         .child(researchGroupInfo.databaseKey);
     // convert the ResearchGroup object to JSON before writing to the db, this also
     // converts fields and data structures within this object to JSON
     String researchGroupJSON = jsonEncode(researchGroup);
     // we cannot write raw JSON to the database, decode this JSON to get a map which
     // preserves the structure of our object when written to the database
-<<<<<<< HEAD
-    Map<String, dynamic> researchGroupAsMap = json.decode(researchGroupJSON);
-    researchGroupDatabaseReference.set(researchGroupAsMap);
-  }
-=======
+
     Map<String, dynamic> researchGroupAsMap = json.decode(researchGroupJSON) as Map<String,dynamic>;
     researchGroupDatabaseReference.set(researchGroupAsMap);
   }
@@ -355,5 +294,4 @@ class Database {
 
     mealReference.set(mealMap);
   }
->>>>>>> Development
 }

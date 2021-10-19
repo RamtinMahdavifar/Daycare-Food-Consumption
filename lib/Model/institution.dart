@@ -1,23 +1,13 @@
-<<<<<<< HEAD
 
-import 'package:plate_waste_recorder/Model/institution_info.dart';
-=======
 import 'dart:convert';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
->>>>>>> Development
 
 /// Class representing an institution, institutions are considered to be anywhere where
 /// data collection in a plate waste study might be undertaken
 class Institution {
-<<<<<<< HEAD
-  String _name;
-  String _address;
 
-  // Institution constructor
-  Institution(this._name, this._address);
-=======
   // these fields are late as such as this class's constructor doesn't take these fields
   // as input directly, this late keyword indicates that the fields will be initialized
   // before use as they are in our constructor
@@ -36,7 +26,6 @@ class Institution {
     this._name = name;
     this._address = address;
   }
->>>>>>> Development
 
   String get name{
     return this._name;
@@ -47,26 +36,13 @@ class Institution {
   }
 
   set name(String newName){
-<<<<<<< HEAD
-=======
+
     assert(newName.isNotEmpty);
->>>>>>> Development
     this._name = newName;
   }
 
   set address(String newAddress){
-<<<<<<< HEAD
-    this._address = newAddress;
-  }
-  
-  InstitutionInfo getInstitutionInfo(){
-    return InstitutionInfo(this.name, this.address);
-  }
 
-  Map<String, dynamic> toJson() => {
-    '_name': this._name,
-    '_address': this._address,
-=======
     assert(newAddress.isNotEmpty);
     this._address = newAddress;
   }
@@ -133,7 +109,6 @@ class Institution {
     '_name': this._name,
     '_address': this._address,
     '_subjectsMap': jsonEncode(this._subjectsMap)
->>>>>>> Development
   };
 
   Institution.fromJSON(Map<String, dynamic> json)
