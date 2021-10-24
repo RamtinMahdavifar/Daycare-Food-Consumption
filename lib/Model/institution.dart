@@ -11,6 +11,7 @@ class Institution {
   // before use as they are in our constructor
   late String _name;
   late String _address;
+  late int _numberOfSubjects;
   // map with string keys denoting the IDs of the subjects in the institution,
   // values in this map are SubjectInfo objects with additional information about
   // each subject in the institution
@@ -18,11 +19,19 @@ class Institution {
 
 
   // Institution constructor
-  Institution(String name, String address){
+  Institution(String name, String address, int numberOfSubjects){
     assert(name.isNotEmpty);
     assert(address.isNotEmpty);
+    // ensure we've entered a non-negative number of subjects
+    assert(numberOfSubjects>0);
     this._name = name;
     this._address = address;
+    this._numberOfSubjects = numberOfSubjects;
+  }
+
+
+  void _generateSubjects(){
+
   }
 
   String get name{
@@ -31,6 +40,10 @@ class Institution {
 
   String get address{
     return this._address;
+  }
+
+  int get numberOfSubjects{
+    return this._numberOfSubjects;
   }
 
   set name(String newName){
@@ -104,11 +117,12 @@ class Institution {
   Map<String, dynamic> toJson() => {
     '_name': this._name,
     '_address': this._address,
+    '_numberOfSubjects': this._numberOfSubjects,
     '_subjectsMap': jsonEncode(this._subjectsMap)
   };
 
   Institution.fromJSON(Map<String, dynamic> json)
-  : _name = json["_name"].toString(), _address = json["_address"].toString();
+  : _name = json["_name"].toString(), _address = json["_address"].toString(), _numberOfSubjects = int.parse(json['_numberOfSubjects'].toString());
 
   // define the equality operator
   // TODO: overwrite hashcode(), two equal objects should have the same hashcode
@@ -117,7 +131,8 @@ class Institution {
     if (other.runtimeType == this.runtimeType){
       Institution otherInstitution = other as Institution;
       return this._name == otherInstitution._name &&
-          this._address == otherInstitution._address;
+          this._address == otherInstitution._address &&
+          this._numberOfSubjects == otherInstitution._numberOfSubjects;
     }
     return false;
   }
