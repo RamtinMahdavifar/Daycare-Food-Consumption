@@ -48,25 +48,30 @@ class _AddInstitutionFormState extends State<AddInstitutionForm> {
           // validate form inputs manually as validate() function of form isn't working
           String newName = _newInstitutionNameController.value.text;
           String newAddress = _newInstitutionAddressController.value.text;
-          String newNumberOfSubjects = _newInstitutionSubjectController.value.text;
+          String newNumberOfSubjectsInput = _newInstitutionSubjectController.value.text;
 
           Config.log.i("pressed button to submit add institution form with name: " + newName + " address: " + newAddress +
-              " and number of subjects: " + newNumberOfSubjects);
+              " and number of subjects: " + newNumberOfSubjectsInput);
 
           setState((){
             // update our class variables from within setState so ui which may
             // depend upon these variables is also updated
             this._nameFieldValid = newName != null && newName.isNotEmpty;
             this._addressFieldValid = newAddress != null && newAddress.isNotEmpty;
-            this._subjectNumberFieldValid = newNumberOfSubjects != null && newNumberOfSubjects.isNotEmpty;
+            this._subjectNumberFieldValid = newNumberOfSubjectsInput != null && newNumberOfSubjectsInput.isNotEmpty;
           });
 
           if(this._nameFieldValid && this._addressFieldValid && this._subjectNumberFieldValid){
             Config.log.i("new institution fields valid");
+            // convert our number of subjects field to an integer, we will always be able
+            // to validly parse newNumberOfSubjectsInput as an integer as we ensure the user
+            // can only input digits and no other symbols when giving us this value
+            int newNumberOfSubjects = int.parse(newNumberOfSubjectsInput);
             // both input fields are valid, we can successfully create an institution
             // here we are using a dummy research group to add database values to until
             // authentication and research group creation is added
-            Database().addInstitutionToResearchGroup(Institution(newName, newAddress), ResearchGroupInfo("testResearchGroupName"));
+            Database().addInstitutionToResearchGroup(Institution(newName, newAddress, newNumberOfSubjects),
+                ResearchGroupInfo("testResearchGroupName"));
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("Institution Created Successfully")),
             );
