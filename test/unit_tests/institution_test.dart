@@ -8,7 +8,7 @@ import 'package:plate_waste_recorder/Model/institution_info.dart';
 void main(){
   group("institution getters and setters",() {
     test("institution getters", () {
-      final Institution testInstitution = Institution("test institution", "test address");
+      final Institution testInstitution = Institution("test institution", "test address", 0);
       expect(testInstitution.name, "test institution");
       expect(testInstitution.address, "test address");
 
@@ -17,7 +17,7 @@ void main(){
     });
 
     test("institution setters", () {
-      final Institution testInstitution = Institution("test institution", "test address");
+      final Institution testInstitution = Institution("test institution", "test address", 0);
       testInstitution.name = "new test name";
       testInstitution.address = "new test address";
       expect(testInstitution.name, "new test name");
@@ -27,7 +27,7 @@ void main(){
 
   group("institution operators", (){
     test("== operator", (){
-      final Institution testInstitution = Institution("test institution", "test address");
+      final Institution testInstitution = Institution("test institution", "test address", 0);
 
       // test equality vs other objects
       expect(testInstitution == "test", false);
@@ -36,11 +36,11 @@ void main(){
       expect(testInstitution == InstitutionInfo("test institution", "test address"), false);
 
       // test equality vs Institution objects
-      expect(testInstitution == Institution("something", "else"), false);
-      expect(testInstitution == Institution("test address", "test institution"), false);
-      expect(testInstitution == Institution("test address", "test address"), false);
-      expect(testInstitution == Institution("test institution", "test institution"), false);
-      expect(testInstitution == Institution("test institution", "test address"), true);
+      expect(testInstitution == Institution("something", "else", 0), false);
+      expect(testInstitution == Institution("test address", "test institution", 0), false);
+      expect(testInstitution == Institution("test address", "test address", 0), false);
+      expect(testInstitution == Institution("test institution", "test institution", 0), false);
+      expect(testInstitution == Institution("test institution", "test address", 0), true);
       Institution otherInstitution = testInstitution;
       expect(testInstitution == otherInstitution, true);
       expect(testInstitution == testInstitution, true);
@@ -50,14 +50,14 @@ void main(){
 
   group("institution json", (){
     test("to json",(){
-      final Institution testInstitution = Institution("test institution", "test address");
+      final Institution testInstitution = Institution("test institution", "test address", 0);
       expect(testInstitution.toJson(), <String, dynamic>{"_name":"test institution", "_address":"test address", "_subjectsMap":"{}"});
     });
 
     test("from json",(){
       final Map<String,dynamic> testJSON = {"_name":"test institution", "_address":"test address", "_subjectsMap":"{}"};
 
-      expect(Institution.fromJSON(testJSON), Institution("test institution", "test address"));
+      expect(Institution.fromJSON(testJSON), Institution("test institution", "test address", 0));
     });
   });
 
