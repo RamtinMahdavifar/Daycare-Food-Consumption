@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+
 
 //void main() => runApp(MaterialApp(home: MyHome()));
 
@@ -14,16 +16,27 @@ class MyHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Flutter Demo Home Page')),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => QRViewExample(),
-            ));
-          },
-          child: Text('qrView'),
-        ),
-      ),
+      body: Column(
+        children: [
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => QRViewExample(),
+                ));
+              },
+              child: Text('qrView'),
+            ),
+          ),
+          QrImage(
+            data: 'This is a simple QR code',
+            version: QrVersions.auto,
+            size: 320,
+          )
+        ]
+      )
+
+
     );
   }
 }
