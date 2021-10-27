@@ -30,75 +30,14 @@ class ChooseFood extends StatefulWidget {
 
 class _ChooseFoodState extends State<ChooseFood> {
   @override
-  @override
-  void initState() {
-    FoodBank.getFoodNames();
-    print("food bank names added!");
-    employeeData  = List<List<dynamic>>.empty(growable: true);
-    super.initState();
-  }
+
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _typeAheadController = TextEditingController();
-  String? _selectedCity;
-
-  late List<List<dynamic>> employeeData;
-  final String root =  getApplicationDocumentsDirectory().toString();
+  String? _selectedFood;
 
 
-
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  List<PlatformFile>? _paths;
-  String? _extension="csv";
-  FileType _pickingType = FileType.custom;
-
-   openFile(String filepath) async
-  {
-    File f = new File(filepath);
-    print("CSV to List");
-    print(root);
-    final input = f.openRead();
-    final fields = await input.transform(utf8.decoder).transform(new CsvToListConverter()).toList();
-    print(fields);
-    setState(() {
-      employeeData=fields;
-    });
-  }
-
-  void _openFileExplorer() async {
-
-    try {
-
-      _paths = (await FilePicker.platform.pickFiles(
-        type: _pickingType,
-        allowMultiple: false,
-        allowedExtensions: (_extension?.isNotEmpty ?? false)
-            ? _extension?.replaceAll(' ', '').split(',')
-            : null,
-      ))
-          ?.files;
-    } on PlatformException catch (e) {
-      print("Unsupported operation" + e.toString());
-    } catch (ex) {
-      print(ex);
-    }
-    if (!mounted) return;
-    setState(() {
-      openFile(_paths![0].path.toString());
-      print(_paths);
-      print("File path ${_paths![0]}");
-      print(_paths!.first.extension);
-
-    });
-  }
-
-  void _uploadFood() async{
-     setState(() {
-       openFile("food_names.csv");
-       print(employeeData);
-     });
-  }
-
+  //final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 
   Widget build(BuildContext context) {
@@ -107,7 +46,6 @@ class _ChooseFoodState extends State<ChooseFood> {
       body: Container(margin: EdgeInsets.symmetric(horizontal: 8.0),
           child: Column(
               children: [
-                // TODO: move these child widgets to their own files
             Form(
             key: _formKey,
             child: Padding(
@@ -140,10 +78,10 @@ class _ChooseFoodState extends State<ChooseFood> {
                     },
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please select a city';
+                        return 'Please enter a food';
                       }
                     },
-                    onSaved: (value) => _selectedCity = value,
+                    onSaved: (value) => _selectedFood = value,
                   ),
                   SizedBox(height: 10.0,),
                   RaisedButton(
@@ -152,21 +90,11 @@ class _ChooseFoodState extends State<ChooseFood> {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
                         Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text('Your Favorite City is ${_selectedCity}')
+                            content: Text('You selected ${_selectedFood}')
                         ));
                       }
                     },
                   ),
-                  Container(
-                    child: Container(
-                      color: Colors.green,
-                      height: 30,
-                      child: TextButton(
-                        child: Text("CSV To List",style: TextStyle(color: Colors.white),),
-                        onPressed: _uploadFood,//_openFileExplorer,
-                      ),
-                    ),
-                  )
                 ],
               ),
             ),
