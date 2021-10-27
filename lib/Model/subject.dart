@@ -161,7 +161,7 @@ class Subject{
   }
 
   // TODO: update JSON operations
-  @override
+  // @override
   Map<String, dynamic> toJson() => {
     '_subjectId': this._subjectID,
     '_mealMap': jsonEncode(this._mealMap)
