@@ -16,7 +16,10 @@ class _LoginPageState extends State<LoginPage> {
         child: ListView(
           children: <Widget>[
             emailField(new TextEditingController()),
-            passwordField(new TextEditingController())
+            passwordField(new TextEditingController()),
+            loginButton(),
+            signUpButton(),
+            forgotPasswordButton()
           ]
         )
       )
