@@ -7,7 +7,6 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 
-//void main() => runApp(MaterialApp(home: MyHome()));
 
 class MyHome extends StatelessWidget {
   const MyHome({Key? key}) : super(key: key);
@@ -25,13 +24,13 @@ class MyHome extends StatelessWidget {
                   builder: (context) => QRViewExample(),
                 ));
               },
-              child: Text('qrView'),
+              child: Text('Open QR Scanner'),
             ),
           ),
           QrImage(
-            data: 'This is a simple QR code',
+            data: 'ID 00-420-69',
             version: QrVersions.auto,
-            size: 320,
+            size: 430,
           )
         ]
       )
@@ -77,7 +76,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                 children: <Widget>[
                   if (result != null)
                     Text(
-                        'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
+                        '${result!.code}', style: TextStyle(fontSize: 40))
                   else
                     Text('Scan a code'),
                   Row(
@@ -157,7 +156,7 @@ class _QRViewExampleState extends State<QRViewExample> {
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
         MediaQuery.of(context).size.height < 400)
         ? 150.0
-        : 300.0;
+        : 350.0;
     // To ensure the Scanner view is properly sizes after rotation
     // we need to listen for Flutter SizeChanged notification and update controller
     return QRView(

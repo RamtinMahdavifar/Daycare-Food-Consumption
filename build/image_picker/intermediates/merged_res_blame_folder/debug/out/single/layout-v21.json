@@ -1,18 +1,18 @@
 [
     {
-        "merged": "/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/res/merged/debug/layout-v21/notification_action.xml",
-        "source": "/home/keplar/.gradle/caches/transforms-3/2bbd1f24a6e4e1e672d91ba855e57b3b/transformed/core-1.1.0/res/layout-v21/notification_action.xml"
+        "merged": "C:\\Users\\Josh Stanzeleit\\StudioProjects\\term-project-fall-2021-team-2-1\\build\\image_picker\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action.xml",
+        "source": "C:\\Users\\Josh Stanzeleit\\.gradle\\caches\\transforms-3\\2bbd1f24a6e4e1e672d91ba855e57b3b\\transformed\\core-1.1.0\\res\\layout-v21\\notification_action.xml"
     },
     {
-        "merged": "/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/res/merged/debug/layout-v21/notification_action_tombstone.xml",
-        "source": "/home/keplar/.gradle/caches/transforms-3/2bbd1f24a6e4e1e672d91ba855e57b3b/transformed/core-1.1.0/res/layout-v21/notification_action_tombstone.xml"
+        "merged": "C:\\Users\\Josh Stanzeleit\\StudioProjects\\term-project-fall-2021-team-2-1\\build\\image_picker\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_icon_group.xml",
+        "source": "C:\\Users\\Josh Stanzeleit\\.gradle\\caches\\transforms-3\\2bbd1f24a6e4e1e672d91ba855e57b3b\\transformed\\core-1.1.0\\res\\layout-v21\\notification_template_icon_group.xml"
     },
     {
-        "merged": "/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/res/merged/debug/layout-v21/notification_template_icon_group.xml",
-        "source": "/home/keplar/.gradle/caches/transforms-3/2bbd1f24a6e4e1e672d91ba855e57b3b/transformed/core-1.1.0/res/layout-v21/notification_template_icon_group.xml"
+        "merged": "C:\\Users\\Josh Stanzeleit\\StudioProjects\\term-project-fall-2021-team-2-1\\build\\image_picker\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action_tombstone.xml",
+        "source": "C:\\Users\\Josh Stanzeleit\\.gradle\\caches\\transforms-3\\2bbd1f24a6e4e1e672d91ba855e57b3b\\transformed\\core-1.1.0\\res\\layout-v21\\notification_action_tombstone.xml"
     },
     {
-        "merged": "/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/res/merged/debug/layout-v21/notification_template_custom_big.xml",
-        "source": "/home/keplar/.gradle/caches/transforms-3/2bbd1f24a6e4e1e672d91ba855e57b3b/transformed/core-1.1.0/res/layout-v21/notification_template_custom_big.xml"
+        "merged": "C:\\Users\\Josh Stanzeleit\\StudioProjects\\term-project-fall-2021-team-2-1\\build\\image_picker\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_custom_big.xml",
+        "source": "C:\\Users\\Josh Stanzeleit\\.gradle\\caches\\transforms-3\\2bbd1f24a6e4e1e672d91ba855e57b3b\\transformed\\core-1.1.0\\res\\layout-v21\\notification_template_custom_big.xml"
     }
 ]

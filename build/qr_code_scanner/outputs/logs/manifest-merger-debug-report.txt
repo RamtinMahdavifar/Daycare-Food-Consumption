@@ -1,23 +1,23 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/keplar/.pub-cache/hosted/pub.dartlang.org/qr_code_scanner-0.5.2/android/src/main/AndroidManifest.xml:1:1-4:12
-INJECTED from /home/keplar/.pub-cache/hosted/pub.dartlang.org/qr_code_scanner-0.5.2/android/src/main/AndroidManifest.xml:1:1-4:12
-INJECTED from /home/keplar/.pub-cache/hosted/pub.dartlang.org/qr_code_scanner-0.5.2/android/src/main/AndroidManifest.xml:1:1-4:12
+ADDED from V:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.5.2\android\src\main\AndroidManifest.xml:1:1-4:12
+INJECTED from V:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.5.2\android\src\main\AndroidManifest.xml:1:1-4:12
+INJECTED from V:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.5.2\android\src\main\AndroidManifest.xml:1:1-4:12
 	package
-		ADDED from /home/keplar/.pub-cache/hosted/pub.dartlang.org/qr_code_scanner-0.5.2/android/src/main/AndroidManifest.xml:1:70-109
-		INJECTED from /home/keplar/.pub-cache/hosted/pub.dartlang.org/qr_code_scanner-0.5.2/android/src/main/AndroidManifest.xml
-		INJECTED from /home/keplar/.pub-cache/hosted/pub.dartlang.org/qr_code_scanner-0.5.2/android/src/main/AndroidManifest.xml
+		ADDED from V:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.5.2\android\src\main\AndroidManifest.xml:1:70-109
+		INJECTED from V:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.5.2\android\src\main\AndroidManifest.xml
+		INJECTED from V:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.5.2\android\src\main\AndroidManifest.xml
 	xmlns:tools
-		ADDED from /home/keplar/.pub-cache/hosted/pub.dartlang.org/qr_code_scanner-0.5.2/android/src/main/AndroidManifest.xml:2:3-49
+		ADDED from V:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.5.2\android\src\main\AndroidManifest.xml:2:3-49
 	xmlns:android
-		ADDED from /home/keplar/.pub-cache/hosted/pub.dartlang.org/qr_code_scanner-0.5.2/android/src/main/AndroidManifest.xml:1:11-69
+		ADDED from V:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.5.2\android\src\main\AndroidManifest.xml:1:11-69
 uses-sdk
-ADDED from /home/keplar/.pub-cache/hosted/pub.dartlang.org/qr_code_scanner-0.5.2/android/src/main/AndroidManifest.xml:3:3-71
-INJECTED from /home/keplar/.pub-cache/hosted/pub.dartlang.org/qr_code_scanner-0.5.2/android/src/main/AndroidManifest.xml:3:3-71
-INJECTED from /home/keplar/.pub-cache/hosted/pub.dartlang.org/qr_code_scanner-0.5.2/android/src/main/AndroidManifest.xml:3:3-71
+ADDED from V:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.5.2\android\src\main\AndroidManifest.xml:3:3-71
+INJECTED from V:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.5.2\android\src\main\AndroidManifest.xml:3:3-71
+INJECTED from V:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.5.2\android\src\main\AndroidManifest.xml:3:3-71
 	tools:overrideLibrary
-		ADDED from /home/keplar/.pub-cache/hosted/pub.dartlang.org/qr_code_scanner-0.5.2/android/src/main/AndroidManifest.xml:3:13-68
+		ADDED from V:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.5.2\android\src\main\AndroidManifest.xml:3:13-68
 	android:minSdkVersion
-		INJECTED from /home/keplar/.pub-cache/hosted/pub.dartlang.org/qr_code_scanner-0.5.2/android/src/main/AndroidManifest.xml
-		ADDED from /home/keplar/.pub-cache/hosted/pub.dartlang.org/qr_code_scanner-0.5.2/android/src/main/AndroidManifest.xml:3:3-71
-		INJECTED from /home/keplar/.pub-cache/hosted/pub.dartlang.org/qr_code_scanner-0.5.2/android/src/main/AndroidManifest.xml
+		INJECTED from V:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.5.2\android\src\main\AndroidManifest.xml
+		ADDED from V:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.5.2\android\src\main\AndroidManifest.xml:3:3-71
+		INJECTED from V:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.5.2\android\src\main\AndroidManifest.xml

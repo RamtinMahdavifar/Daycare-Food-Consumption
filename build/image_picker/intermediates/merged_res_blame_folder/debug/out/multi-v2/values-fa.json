@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/res/merged/debug/values-fa/values-fa.xml",
+            "outputFile": "C:\\Users\\Josh Stanzeleit\\StudioProjects\\term-project-fall-2021-team-2-1\\build\\image_picker\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-fa\\values-fa.xml",
             "map": [
                 {
-                    "source": "/home/keplar/.gradle/caches/transforms-3/2bbd1f24a6e4e1e672d91ba855e57b3b/transformed/core-1.1.0/res/values-fa/values-fa.xml",
+                    "source": "C:\\Users\\Josh Stanzeleit\\.gradle\\caches\\transforms-3\\2bbd1f24a6e4e1e672d91ba855e57b3b\\transformed\\core-1.1.0\\res\\values-fa\\values-fa.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -16,10 +16,10 @@
             ]
         },
         {
-            "outputFile": "/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/incremental/mergeDebugResources/merged.dir/values-fa/values-fa.xml",
+            "outputFile": "C:\\Users\\Josh Stanzeleit\\StudioProjects\\term-project-fall-2021-team-2-1\\build\\image_picker\\intermediates\\res\\merged\\debug\\values-fa\\values-fa.xml",
             "map": [
                 {
-                    "source": "/home/keplar/.gradle/caches/transforms-3/2bbd1f24a6e4e1e672d91ba855e57b3b/transformed/core-1.1.0/res/values-fa/values-fa.xml",
+                    "source": "C:\\Users\\Josh Stanzeleit\\.gradle\\caches\\transforms-3\\2bbd1f24a6e4e1e672d91ba855e57b3b\\transformed\\core-1.1.0\\res\\values-fa\\values-fa.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
