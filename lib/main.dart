@@ -17,7 +17,9 @@ class PlateWasteApp extends StatelessWidget {
             // subtitle1 is used for text in text fields and text input fields
             subtitle1: TextStyle(fontSize: 24.0),
             // button is used for button style
-            button: TextStyle(fontSize: 22.0)
+            button: TextStyle(fontSize: 22.0),
+            // caption text is used for error text displayed by input fields
+            caption: TextStyle(fontSize: 18.0),
           ),
         ),
         home: LoginPage()
