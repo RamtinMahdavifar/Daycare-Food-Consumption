@@ -11,6 +11,12 @@ class PlateWasteApp extends StatelessWidget {
         theme: ThemeData(
           // explicitly define theme data here ie colours, fonts, style etc
           primarySwatch: Colors.blue,
+          textTheme: const TextTheme(
+            // headline6 is used for text displayed on the top appbar among other things
+            headline6: TextStyle(fontSize: 28.0),
+            // subtitle1 is used for text in text fields and text input fields
+            subtitle1: TextStyle(fontSize: 24.0),
+          ),
         ),
         home: LoginPage()
     );
