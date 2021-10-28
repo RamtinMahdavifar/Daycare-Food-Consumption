@@ -14,6 +14,12 @@ class _LoginPageState extends State<LoginPage> {
   bool _emailFieldValid = true;
   bool _passwordFieldValid = true;
 
+  Widget appIcon(){
+    return
+    // return an image we get from a local directory
+      Image.asset("Icons/apple.png", width: 700, height: 700);
+  }
+
   Widget emailField(){
     return Padding(
         padding: const EdgeInsets.all(10.0),
@@ -125,6 +131,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Center(
         child: ListView(
           children: <Widget>[
+            appIcon(),
             emailField(),
             passwordField(),
             loginButton(),
