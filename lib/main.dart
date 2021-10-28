@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:plate_waste_recorder/View/select_institution.dart';
+import 'package:plate_waste_recorder/View/login_page.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 
 class PlateWasteApp extends StatelessWidget {
@@ -12,7 +12,7 @@ class PlateWasteApp extends StatelessWidget {
           // explicitly define theme data here ie colours, fonts, style etc
           primarySwatch: Colors.blue,
         ),
-        home: ChooseInstitute()
+        home: LoginPage()
     );
   }
 }
