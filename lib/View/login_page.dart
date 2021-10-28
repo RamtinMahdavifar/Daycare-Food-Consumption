@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
+import 'package:plate_waste_recorder/View/select_institution.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -10,18 +11,21 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailFieldController = TextEditingController();
   final TextEditingController _passwordFieldController = TextEditingController();
   // assume our fields are valid by default
-  final bool _emailFieldValid = true;
-  final bool _passwordFieldValid = true;
+  bool _emailFieldValid = true;
+  bool _passwordFieldValid = true;
 
-  Widget emailField(TextEditingController emailFieldController){
-    return const Padding(
-        padding: EdgeInsets.all(10.0),
+  Widget emailField(){
+    return Padding(
+        padding: const EdgeInsets.all(10.0),
         child: TextField(
           // provide the user with a keyboard specifically for email addresses
           keyboardType: TextInputType.emailAddress,
+          controller: this._emailFieldController,
           decoration: InputDecoration(
               hintText: 'Email',
-              border: OutlineInputBorder(
+              // if the input provided to this field is invalid, display our error message
+              errorText: !this._emailFieldValid ? "Please Enter an Email Address" : null,
+              border: const OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.black, width: 5.0)
               )
           ),
@@ -29,17 +33,19 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget passwordField(TextEditingController passwordFieldController){
-    return const Padding(
-      padding: EdgeInsets.all(10.0),
+  Widget passwordField(){
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
       child: TextField(
         // provide the user with a keyboard specifically for inputting passwords
           keyboardType: TextInputType.visiblePassword,
           // hide the characters the user types
           obscureText: true,
+          controller: this._passwordFieldController,
           decoration: InputDecoration(
               hintText: 'Password',
-              border: OutlineInputBorder(
+              errorText: !this._passwordFieldValid ? "Please Enter a Password" : null,
+              border: const OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.black, width: 5.0)
               )
           )
@@ -47,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget loginButton(TextEditingController emailFieldController, TextEditingController passwordFieldController){
+  Widget loginButton(){
     return Padding(
         padding: const EdgeInsets.all(10.0),
         child: SizedBox(
@@ -55,8 +61,32 @@ class _LoginPageState extends State<LoginPage> {
             child:
             ElevatedButton(
               onPressed: (){
-                Config.log.i("pressed login button");
+                Config.log.i("user has pressed login button");
+                // get the values from each of our input fields
+                String inputEmail = this._emailFieldController.value.text;
+                // TODO: do something about password here, should we refer to this in plaintext
+                String inputPassword = this._emailFieldController.value.text;
+                Config.log.i("user attempting to sign in with input email: " + inputEmail);
+                // obviously do not log user's password
+                // check if each of our fields is valid, do so within a setState
+                // call so any changes to these fields is reflected in our other widgets
+                setState((){
+                  this._emailFieldValid = inputEmail!=null && inputEmail.isNotEmpty;
+                  this._passwordFieldValid = inputPassword!=null && inputPassword.isNotEmpty;
+                });
 
+                if(this._emailFieldValid && this._passwordFieldValid){
+                  // both input fields are valid, login using these fields
+                  // TODO: define authentication in separate class, pass these fields to some authentication function
+                  // take the user to the select institutions page after successful login
+                  // clear our text fields before leaving the page
+                  this._emailFieldController.clear();
+                  this._passwordFieldController.clear();
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context){
+                        return ChooseInstitute();
+                      }));
+                }
               },
               child: const Text("Login"),
             )
@@ -88,11 +118,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,8 +125,8 @@ class _LoginPageState extends State<LoginPage> {
       body: Center(
         child: ListView(
           children: <Widget>[
-            emailField(new TextEditingController()),
-            passwordField(new TextEditingController()),
+            emailField(),
+            passwordField(),
             loginButton(),
             signUpButton(),
             forgotPasswordButton()
@@ -109,6 +134,13 @@ class _LoginPageState extends State<LoginPage> {
         )
       )
     );
+  }
+
+  @override
+  void dispose(){
+    this._emailFieldController.clear();
+    this._passwordFieldController.clear();
+    super.dispose();
   }
 }
 
