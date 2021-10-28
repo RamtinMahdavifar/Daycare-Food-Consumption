@@ -11,6 +11,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('Plate Waste Tracker')),
       body: Center(
         child: ListView(
           children: <Widget>[
