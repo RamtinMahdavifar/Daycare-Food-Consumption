@@ -49,6 +49,8 @@ dependencies:
   path_provider: ^2.0.2
   permission_handler: ^7.1.0
   file_picker: ^3.0.4
+  camera: ^0.9.4+3
+
 
 dev_dependencies:
   flutter_test:

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/path_provider/intermediates/res/merged/debug/values-lo/values-lo.xml",
+            "outputFile": "C:\\Users\\Josh Stanzeleit\\StudioProjects\\term-project-fall-2021-team-2-1\\build\\path_provider\\intermediates\\res\\merged\\debug\\values-lo\\values-lo.xml",
             "map": [
                 {
-                    "source": "/home/keplar/.gradle/caches/transforms-3/2bbd1f24a6e4e1e672d91ba855e57b3b/transformed/core-1.1.0/res/values-lo/values-lo.xml",
+                    "source": "C:\\Users\\Josh Stanzeleit\\.gradle\\caches\\transforms-3\\2bbd1f24a6e4e1e672d91ba855e57b3b\\transformed\\core-1.1.0\\res\\values-lo\\values-lo.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -16,10 +16,10 @@
             ]
         },
         {
-            "outputFile": "/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/path_provider/intermediates/incremental/mergeDebugResources/merged.dir/values-lo/values-lo.xml",
+            "outputFile": "C:\\Users\\Josh Stanzeleit\\StudioProjects\\term-project-fall-2021-team-2-1\\build\\path_provider\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-lo\\values-lo.xml",
             "map": [
                 {
-                    "source": "/home/keplar/.gradle/caches/transforms-3/2bbd1f24a6e4e1e672d91ba855e57b3b/transformed/core-1.1.0/res/values-lo/values-lo.xml",
+                    "source": "C:\\Users\\Josh Stanzeleit\\.gradle\\caches\\transforms-3\\2bbd1f24a6e4e1e672d91ba855e57b3b\\transformed\\core-1.1.0\\res\\values-lo\\values-lo.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
