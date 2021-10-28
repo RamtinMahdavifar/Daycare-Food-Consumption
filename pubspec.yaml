@@ -43,6 +43,12 @@ dependencies:
   dio: ^4.0.0
   qr_code_scanner: ^0.5.2
   qr_flutter: ^4.0.0
+  autocomplete_textfield: ^1.7.3
+  flutter_typeahead: ^3.2.1
+  csv: ^5.0.0
+  path_provider: ^2.0.2
+  permission_handler: ^7.1.0
+  file_picker: ^3.0.4
 
 dev_dependencies:
   flutter_test:
@@ -73,9 +79,10 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  #assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
+  #   - assets/data/food_names.csv
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
