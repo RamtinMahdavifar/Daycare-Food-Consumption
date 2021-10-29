@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'food_scanned_uneaten.dart';
 //import 'package:video_player/video_player.dart';
 
 
@@ -46,6 +47,7 @@ class _CameraFoodState extends State<CameraFood> with
   @override
   void initState() {
     super.initState();
+    //this is for the null safety check stuff
     _ambiguate(WidgetsBinding.instance)?.addObserver(this);
 
     /*_flashModeControlRowAnimationController = AnimationController(
@@ -114,7 +116,7 @@ class _CameraFoodState extends State<CameraFood> with
               child: Padding(
                 padding: const EdgeInsets.all(1.0),
                 child: Center(
-                  child: _cameraPreviewWidget()
+                  child: _cameraPreviewWidget() //this is the Viewfinder
                 )
               ),
               decoration: BoxDecoration(
@@ -126,13 +128,13 @@ class _CameraFoodState extends State<CameraFood> with
               ),
             ),
           ),
-          _captureControlRowWidget(),
+          _captureControlRowWidget(), //camera Capture button
           Padding(
             padding: const EdgeInsets.all(5.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  _cameraToggleRowWidget()
+                  _cameraToggleRowWidget() //Camera Select button - plan to remove once setting default camera works
                 ],
             )
           )
@@ -287,10 +289,7 @@ class _CameraFoodState extends State<CameraFood> with
 
           showDialog(
               context: context,
-              builder: (_) => Dialog(
-                child:
-                  Image.file(File(file.path))
-              )
+              builder: (_) => foodScannedFirst(context, file)
           );
         }
       }
