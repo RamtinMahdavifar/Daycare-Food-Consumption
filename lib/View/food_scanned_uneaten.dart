@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
-
+import 'name_suggest.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +11,10 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 List<String> exampleFoodItems = ["Apple", "Sandwich", "Juice"]; //for String foodItem in exampleFoodItems
 final nameTextController = new TextEditingController();
+final weightTextController = new TextEditingController(text: "69g"); //this value of text would be the value returned by our scale
 //XFile? _imageFile;
 bool _nameFoodValid = true;
+bool _weightFoodValid = true;
 //final _newFoodItemKey = GlobalKey<FormState>();
 @override
 //change foodScannedFirst to build when reformatting the code
@@ -36,8 +38,10 @@ Widget foodScannedFirst(BuildContext context, XFile? imageFile) {
             Expanded(
               child: Column(
                 children: [
-                  nameEntrySuggester(context, nameTextController, _nameFoodValid),
-                  itemPresets(),
+                  //nameEntrySuggester(nameTextController, _nameFoodValid),
+                  suggestBox(context, nameTextController, _nameFoodValid),
+                  itemPresets(nameTextController),
+                  weightEntry(weightTextController, _weightFoodValid),
                   ElevatedButton(
                     onPressed: () {},
                     child: const Text("Sumbit"),
@@ -52,12 +56,12 @@ Widget foodScannedFirst(BuildContext context, XFile? imageFile) {
   );
 }
 
-Widget itemPresets() {
+Widget itemPresets(TextEditingController controller) {
   List<Widget> presets = [];
   for (String foodItem in exampleFoodItems){
     presets.add(
         ElevatedButton(
-          onPressed: () {} ,
+          onPressed: () {controller.text = foodItem;} ,
           child: Text(foodItem)
         )
     );
@@ -65,7 +69,29 @@ Widget itemPresets() {
   return Row(children : presets);
 }
 
-Widget nameEntrySuggester(BuildContext context, TextEditingController controller, bool fieldIsValid){
+Widget nameEntrySuggester(TextEditingController controller, bool fieldIsValid) {
+  return TextFormField(
+    controller: controller,
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return 'missing fields';
+      }
+      return null;
+    },
+    decoration: InputDecoration(
+
+        labelText: "Name of Food Item",
+        // if the field isn't valid errorText has the value "Value Can't Be Empty"
+        // otherwise errorText is null
+        errorText: !fieldIsValid ? "Value"
+            "Can't Be Empty" : null
+    ),
+
+  );
+
+}
+
+Widget weightEntry(TextEditingController controller, bool fieldIsValid){
 
   return TextFormField(
     validator: (value) {
@@ -76,7 +102,7 @@ Widget nameEntrySuggester(BuildContext context, TextEditingController controller
     },
     decoration: InputDecoration(
 
-        labelText: "Name of Food Item",
+        labelText: "Weight (g)",
         // if the field isn't valid errorText has the value "Value Can't Be Empty"
         // otherwise errorText is null
         errorText: !fieldIsValid ? "Value"
