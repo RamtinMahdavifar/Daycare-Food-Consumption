@@ -1,0 +1,19 @@
+-- Merging decision tree log ---
+manifest
+ADDED from V:\flutter\packages\integration_test\android\src\main\AndroidManifest.xml:5:1-7:12
+INJECTED from V:\flutter\packages\integration_test\android\src\main\AndroidManifest.xml:5:1-7:12
+INJECTED from V:\flutter\packages\integration_test\android\src\main\AndroidManifest.xml:5:1-7:12
+	package
+		ADDED from V:\flutter\packages\integration_test\android\src\main\AndroidManifest.xml:6:3-41
+		INJECTED from V:\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
+		INJECTED from V:\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from V:\flutter\packages\integration_test\android\src\main\AndroidManifest.xml:5:11-69
+uses-sdk
+INJECTED from V:\flutter\packages\integration_test\android\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from V:\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
+INJECTED from V:\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from V:\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
+		ADDED from V:\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
+		INJECTED from V:\flutter\packages\integration_test\android\src\main\AndroidManifest.xml

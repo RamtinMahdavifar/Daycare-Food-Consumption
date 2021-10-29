@@ -156,6 +156,7 @@ Widget quickfixButton(BuildContext context){
         // pass the name of the clicked on institution to the daycare screen
         Navigator.push(context, MaterialPageRoute(
             builder: (context){
+
               return MyHome();
             }));
       },
