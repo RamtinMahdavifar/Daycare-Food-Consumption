@@ -11,7 +11,8 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 List<String> exampleFoodItems = ["Apple", "Sandwich", "Juice"]; //for String foodItem in exampleFoodItems
 final nameTextController = new TextEditingController();
-final weightTextController = new TextEditingController(text: "69g"); //this value of text would be the value returned by our scale
+final weightTextController = new TextEditingController(text: "69"); //this value of text would be the value returned by our scale
+final commentsTextController = new TextEditingController();
 //XFile? _imageFile;
 bool _nameFoodValid = true;
 bool _weightFoodValid = true;
@@ -28,24 +29,18 @@ Widget foodScannedFirst(BuildContext context, XFile? imageFile) {
             Column(
               children: [
                 Image.file(File(imageFile!.path)),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text("Retake Photo"),
-                  style: ElevatedButton.styleFrom(primary: Colors.redAccent)
-                ),
+                retakePhoto(context),
               ]
             ),
-            Expanded(
+            Flexible(
               child: Column(
                 children: [
                   //nameEntrySuggester(nameTextController, _nameFoodValid),
                   suggestBox(context, nameTextController, _nameFoodValid),
                   itemPresets(nameTextController),
                   weightEntry(weightTextController, _weightFoodValid),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text("Sumbit"),
-                    style: ElevatedButton.styleFrom(primary: Colors.lightGreen))
+                  addComments(context, commentsTextController),
+                  submitData(context)
                 ],
               )
             )
@@ -53,6 +48,35 @@ Widget foodScannedFirst(BuildContext context, XFile? imageFile) {
         )
       )
     )
+  );
+}
+
+Widget retakePhoto(BuildContext context){
+  return ElevatedButton(
+      onPressed: () {Navigator.of(context, rootNavigator: true).pop();},
+      child: const Text("Retake Photo"),
+      style: ElevatedButton.styleFrom(primary: Colors.redAccent)
+  );
+}
+
+Widget submitData(BuildContext context){
+  return ElevatedButton(
+      onPressed: () {
+        //submit name - weight - ID - photo - comments - date - institution
+        Navigator.of(context, rootNavigator: true).pop();
+        },
+      child: const Text("Submit"),
+      style: ElevatedButton.styleFrom(primary: Colors.lightGreen)
+  );
+}
+
+Widget addComments(BuildContext context, TextEditingController controller) {
+  return TextField(
+    decoration: const InputDecoration(
+        border: OutlineInputBorder(),
+        hintText: 'Comments'
+    ),
+    controller: controller,
   );
 }
 

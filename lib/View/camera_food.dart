@@ -49,43 +49,7 @@ class _CameraFoodState extends State<CameraFood> with
     super.initState();
     //this is for the null safety check stuff
     _ambiguate(WidgetsBinding.instance)?.addObserver(this);
-
-    /*_flashModeControlRowAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 300),
-      vsync: this,
-    );*/
-
-
-    /*_flashModeControlRowAnimation = CurvedAnimation(
-      parent: _flashModeControlRowAnimationController,
-      curve: Curves.easeInCubic,
-    );*/
-
-
-    /*_exposureModeControlRowAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 300),
-      vsync: this,
-    );*/
-
-
-    /*_exposureModeControlRowAnimation = CurvedAnimation(
-      parent: _exposureModeControlRowAnimationController,
-      curve: Curves.easeInCubic,
-    );*/
-
-
-   /* _focusModeControlRowAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 300),
-      vsync: this,
-    );*/
-
-
-    /*_focusModeControlRowAnimation = CurvedAnimation(
-      parent: _focusModeControlRowAnimationController,
-      curve: Curves.easeInCubic,
-    );*/
-
-
+    initializeCameras();
   }
 
   @override
@@ -104,6 +68,15 @@ class _CameraFoodState extends State<CameraFood> with
     }
   }
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void initializeCameras() async{
+    try {
+      WidgetsFlutterBinding.ensureInitialized();
+      cameras = await availableCameras();
+    } on CameraException catch (e) {
+      logError(e.code, e.description);
+    }
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
