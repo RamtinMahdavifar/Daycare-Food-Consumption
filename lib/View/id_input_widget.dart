@@ -61,7 +61,7 @@ class _InputIDFormState extends State<InputIDForm> {
             Config.log.i("user entered id: "+ newId);
 
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Open the Camera" )),
+              const SnackBar(content: Text("Opening the Camera" )),
             );
             // clear our text fields before exiting the add Institution popup
             this._newIdInputController.clear();
