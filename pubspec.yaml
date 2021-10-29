@@ -43,6 +43,7 @@ dependencies:
   dio: ^4.0.0
   qr_code_scanner: ^0.5.2
   qr_flutter: ^4.0.0
+
   autocomplete_textfield: ^1.7.3
   flutter_typeahead: ^3.2.1
   csv: ^5.0.0
@@ -56,6 +57,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   test: any
+  flutter_launcher_icons: ^0.9.0
   integration_test:
     sdk: flutter
   mockito:
@@ -72,6 +74,12 @@ dev_dependencies:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
+flutter_icons:
+  image_path: "Icons/apple.png"
+  android: true
+  ios: true
+
+
 # The following section is specific to Flutter.
 flutter:
 
@@ -79,6 +87,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  assets:
+    - Icons/
 
   # To add assets to your application, add an assets section, like this:
   #assets:

@@ -7,7 +7,6 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 
-
 class MyHome extends StatelessWidget {
   const MyHome({Key? key}) : super(key: key);
 
@@ -77,6 +76,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                   if (result != null)
                     Text(
                         '${result!.code}', style: TextStyle(fontSize: 40))
+
                   else
                     Text('Scan a code'),
                   Row(
@@ -156,6 +156,7 @@ class _QRViewExampleState extends State<QRViewExample> {
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
         MediaQuery.of(context).size.height < 400)
         ? 150.0
+
         : 350.0;
     // To ensure the Scanner view is properly sizes after rotation
     // we need to listen for Flutter SizeChanged notification and update controller
