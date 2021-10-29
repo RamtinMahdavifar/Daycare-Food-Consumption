@@ -22,6 +22,8 @@ void logError(String code, String? message) {
 
 class _CameraFoodState extends State<CameraFood> with
     WidgetsBindingObserver, TickerProviderStateMixin {
+  //REMOVE LIKE ALL OF THIS WHEN YOU GET A CHANCE, EXCEPT FOR CAMERA CONTROLLER AND IMAGEFILE
+
   CameraController? controller;
   XFile? imageFile;
   XFile? videoFile;
@@ -124,6 +126,7 @@ class _CameraFoodState extends State<CameraFood> with
 
   Widget _cameraPreviewWidget() {
     final CameraController? cameraController = controller;
+
 
     if (cameraController == null || !cameraController.value.isInitialized) {
       return Text(
