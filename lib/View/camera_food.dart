@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
@@ -272,6 +273,7 @@ class _CameraFoodState extends State<CameraFood> with
   }
 
   void onTakePictureButtonPressed() {
+    //XFile? file = controller.takePicture();
     takePicture().then((XFile? file) {
       if (mounted) {
         setState(() {
@@ -280,14 +282,24 @@ class _CameraFoodState extends State<CameraFood> with
           //videoController?.dispose();
           //videoController = null;
         });
-        if (file != null) showInSnackBar('Picture saved to ${file.path}');
+        if (file != null){
+          showInSnackBar('Picture saved to ${file.path}');
+
+          showDialog(
+              context: context,
+              builder: (_) => Dialog(
+                child:
+                  Image.file(File(file.path))
+              )
+          );
+        }
       }
     });
   }
 
   Future<XFile?> takePicture() async {
     final CameraController? cameraController = controller;
-    if (cameraController == null || cameraController.value.isInitialized){
+    if (cameraController == null || !cameraController.value.isInitialized){
       showInSnackBar('Error: select Camera First');
       return null;
     }
