@@ -41,6 +41,8 @@ dependencies:
   # required for date formatting and conversions
   intl: ^0.17.0
   dio: ^4.0.0
+
+  responsive_flutter: ^0.0.4
   qr_code_scanner: ^0.5.2
   qr_flutter: ^4.0.0
 
