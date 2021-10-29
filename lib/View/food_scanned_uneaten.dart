@@ -9,7 +9,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 //Image.file(File(img!.path))
 
-
+List<String> exampleFoodItems = ["Apple", "Sandwich", "Juice"]; //for String foodItem in exampleFoodItems
 final nameTextController = new TextEditingController();
 //XFile? _imageFile;
 bool _nameFoodValid = true;
@@ -37,6 +37,7 @@ Widget foodScannedFirst(BuildContext context, XFile? imageFile) {
               child: Column(
                 children: [
                   nameEntrySuggester(context, nameTextController, _nameFoodValid),
+                  itemPresets(),
                   ElevatedButton(
                     onPressed: () {},
                     child: const Text("Sumbit"),
@@ -49,6 +50,19 @@ Widget foodScannedFirst(BuildContext context, XFile? imageFile) {
       )
     )
   );
+}
+
+Widget itemPresets() {
+  List<Widget> presets = [];
+  for (String foodItem in exampleFoodItems){
+    presets.add(
+        ElevatedButton(
+          onPressed: () {} ,
+          child: Text(foodItem)
+        )
+    );
+  }
+  return Row(children : presets);
 }
 
 Widget nameEntrySuggester(BuildContext context, TextEditingController controller, bool fieldIsValid){
