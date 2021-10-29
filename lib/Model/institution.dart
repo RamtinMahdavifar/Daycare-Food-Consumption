@@ -18,11 +18,47 @@ class Institution {
 
 
   // Institution constructor
-  Institution(String name, String address){
+  Institution(String name, String address, int numberOfSubjects){
     assert(name.isNotEmpty);
     assert(address.isNotEmpty);
+    // ensure we've entered a non-negative number of subjects
+    assert(numberOfSubjects>=0);
     this._name = name;
     this._address = address;
+    _generateSubjects(numberOfSubjects);
+  }
+
+
+  /// Private helper function used to generate the IDs for each subject in a newly created institution
+  /// a Subject object is created for each generated ID
+  /// Preconditions: numberOfSubjects>0, subjects have not been generated for this Institution yet
+  /// ie this._subjectsMap.isEmpty
+  /// Postconditions: this.numberOfSubjects Subject objects are created and stored as values
+  /// in this._subjectsMap, each subject is associated with it's corresponding generated id in this map,
+  /// ie generated subject IDs are keys to this._subjectsMap, where values of this map are Subject objects
+  /// who have that ID. Each generated ID should be globally unique.
+  void _generateSubjects(int numberOfSubjects){
+    assert(this._subjectsMap.isEmpty);
+    int subjectIndex = 0; // TODO, do we even need number of subjects or just pass this as a parameter to this function
+    // TODO: we can just get the number of subjects from the number of values or keys later
+    while(subjectIndex < numberOfSubjects){
+      String subjectID = _generateSubjectID(subjectIndex.toString());
+      this._subjectsMap[subjectID] = SubjectInfo(subjectID);
+      subjectIndex++;
+    }
+    // TODO: call some database method to add generated subjects to Institution on DB and create and write
+    // TODO: a map of subjects for this institution to the DB under storage
+  }
+
+  /// Creates and returns a new, globally unique subject ID
+  String _generateSubjectID(String id){
+    // currently a stub implementation
+    // TODO: generate globally unique keys somehow, consider db reference.push().key() all operations are client side
+    // TODO: should this be a static method of the Subject class, seems to make more sense
+    // TODO: call subject() with no parameters and have subject simply generate it's own ID
+    // TODO: that way subjects are forced to use this unique ID generation
+    // TODO: do we even care about globally unique IDs
+    return id;
   }
 
   String get name{
@@ -31,6 +67,11 @@ class Institution {
 
   String get address{
     return this._address;
+  }
+
+  int get numberOfSubjects{
+    // the number of subjects will simply be the length of the map holding the subjects
+    return this._subjectsMap.length;
   }
 
   set name(String newName){
