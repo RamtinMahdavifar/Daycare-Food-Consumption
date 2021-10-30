@@ -7,10 +7,11 @@ void main() {
   group("Institution UI Tests",() {
     testWidgets('Add Institution smoke test', (WidgetTester tester) async {
       // Build our app and trigger a frame.
-      await tester.pumpWidget(const SelectInstitute());
+      await tester.pumpWidget(MaterialApp(
+          home:  ChooseInstitute()));
 
       // Verify the institution widget is presented
-      expect(find.widgetWithText(SelectInstitute, "Plate Waste Tracker"), findsOneWidget);
+      expect(find.widgetWithText(ChooseInstitute, "Plate Waste Tracker"), findsOneWidget);
 
       // verify that the Text widgets appear exactly once in the widget tree.
       expect(find.text("Add Institution"), findsOneWidget);
@@ -26,6 +27,7 @@ void main() {
       // verify that the Text widgets appear exactly once in the widget tree.
       expect(find.widgetWithText(TextFormField, "name"), findsOneWidget);
       expect(find.widgetWithText(TextFormField, "address"), findsOneWidget);
+      expect(find.widgetWithText(TextFormField, "# of subjects:"), findsOneWidget);
       expect(find.widgetWithText(ElevatedButton, "Cancel"), findsOneWidget);
       expect(find.widgetWithText(ElevatedButton, "Submit"), findsOneWidget);
 
@@ -40,7 +42,7 @@ void main() {
       expect(find.text("Search Institutions"), findsOneWidget);
 
       // Verify the institution widget is presented
-      expect(find.widgetWithText(SelectInstitute, "Plate Waste Tracker"), findsOneWidget);
+      expect(find.widgetWithText(ChooseInstitute, "Plate Waste Tracker"), findsOneWidget);
     });
 
     testWidgets('Institution Page', (WidgetTester tester) async {
@@ -59,12 +61,10 @@ void main() {
       expect(find.text( "Address: 123 Street"), findsOneWidget);
 
       //Check all button widgets in institution page are presented
-      expect(find.text("QR Code"), findsOneWidget);
-      expect(find.text("Camera"), findsOneWidget);
       expect(find.text("Roster"), findsOneWidget);
-      expect(find.text("Record Data"), findsOneWidget);
+      expect(find.text("Preset"), findsOneWidget);
       expect(find.text("View Data"), findsOneWidget);
-      expect(find.text("Food"), findsOneWidget);
+      expect(find.text("Input Data"), findsOneWidget);
     });
   });
 }
