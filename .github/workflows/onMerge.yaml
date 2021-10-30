@@ -24,9 +24,10 @@ jobs:
         run: flutter test --no-sound-null-safety
         
       - name: run smoke tests
-        run: flutter drive \
-          --driver=test/test_driver/integration_test_driver.dart \
-          --target=test/integration_tests/run_integration_tests.dart
+        run: flutter drive --driver=test/test_driver/integration_test_driver.dart
+        
+      - name: run second set of tests
+        run: flutter drive --target=test/integration_tests/run_integration_tests.dart
   
   build:
     needs: tests
