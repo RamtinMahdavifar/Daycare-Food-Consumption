@@ -23,8 +23,11 @@ jobs:
       - name: run dart tests
         run: flutter test --no-sound-null-safety
         
+      - name: create emulator
+        run: flutter emulators --create
+        
       - name: launch emulator
-        run: flutter emulators --launch Pixel_C_API_30
+        run: flutter emulators --launch flutter_emulator
         
       - name: run smoke tests
         run: flutter drive --driver=test/test_driver/integration_test_driver.dart --target=test/integration_tests/run_integration_tests.dart --no-sound-null-safety
