@@ -1,11 +1,6 @@
-name: Main actions file
+name: onPush
 
-on:
-  pull_request:
-    branches:
-      - main
-      - Development
-      
+on:    
   push:
     branches:
       - '*'
