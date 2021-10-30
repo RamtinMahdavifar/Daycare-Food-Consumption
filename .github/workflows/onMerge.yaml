@@ -21,7 +21,12 @@ jobs:
         run: dart pub get
 
       - name: run dart tests
-        run: flutter test
+        run: flutter test --no-sound-null-safety
+        
+      - name: run smoke tests
+        run: flutter drive \
+          --driver=test/test_driver/integration_test_driver.dart \
+          --target=test/integration_tests/run_integration_tests.dart
   
   build:
     needs: tests
@@ -38,11 +43,11 @@ jobs:
         run: dart pub get
         
       - name: create artifact
-        run: flutter build apk
+        run: flutter build apk --no-sound-null-safety
         
       - name: upload Artifact
         uses: actions/upload-artifact@v2
         with: 
           name: apk
-          path: ./build/app/outputs/flutter-apk/app.apk
+          path: ./build/app/outputs/flutter-apk
     
