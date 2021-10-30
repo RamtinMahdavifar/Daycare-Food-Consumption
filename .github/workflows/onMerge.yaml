@@ -1,14 +1,10 @@
-name: Main actions file
+name: onMerge
 
 on:
   pull_request:
     branches:
       - main
       - Development
-      
-  push:
-    branches:
-      - '*'
 
 jobs:
   tests:
@@ -26,4 +22,27 @@ jobs:
 
       - name: run dart tests
         run: flutter test
+  
+  build:
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+      - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
+      
+      - name: install flutter dependencies
+        run: flutter pub get
+      
+      - name: install dart dependencies
+        run: dart pub get
         
+      - name: create artifact
+        run: flutter build apk
+        
+      - name: upload Artifact
+        uses: actions/upload-artifact@v2
+        with: 
+          name: apk
+          path: ./build/app/outputs/flutter-apk/app.apk
+    
