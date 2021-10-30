@@ -22,15 +22,12 @@ jobs:
 
       - name: run dart tests
         run: flutter test --no-sound-null-safety
-      
-      - name: check emulators
-        run: flutter emulators
-            
+                 
       - name: create emulator
-        run: flutter emulators --create
+        run: flutter emulators --create --name smoke
         
       - name: launch emulator
-        run: flutter emulators --launch flutter_emulator
+        run: flutter emulators --launch smoke
         
       - name: check emulators
         run: flutter emulators
