@@ -7,6 +7,8 @@ analyzer:
     - lib/generated/**
     - lib/view/
     - test/
+    - lib\Model\food.dart
+
   errors:
     missing_required_param: warning
     parameter_assignments: warning
