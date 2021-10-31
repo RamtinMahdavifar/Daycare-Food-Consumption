@@ -22,19 +22,14 @@ jobs:
 
       - name: run dart tests
         run: flutter test --no-sound-null-safety
+        
+      - name: run coverage tests
+        run: flutter test --coverage --no-sound-null-safety
+        
+      - name: genrate coverage results
+        run: genhtml coverage/lcov.info -o coverage/html
                  
-      - name: create emulator
-        run: flutter emulators --create --name smoke
-        
-      - name: launch emulator
-        run: flutter emulators --launch smoke
-        
-      - name: check emulators
-        run: flutter emulators
-      
-      - name: run smoke tests
-        run: flutter drive --driver=test/test_driver/integration_test_driver.dart --target=test/integration_tests/run_integration_tests.dart --no-sound-null-safety
-  
+
   build:
     needs: tests
     runs-on: ubuntu-latest
@@ -57,4 +52,10 @@ jobs:
         with: 
           name: apk
           path: ./build/app/outputs/flutter-apk
+          
+      - name: upload coverage results
+        uses: actions/upload-artifact@v2
+        with: 
+          name: coverage
+          path: ./test/coverage/html/index.html
     
