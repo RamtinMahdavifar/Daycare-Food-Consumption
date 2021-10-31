@@ -51,7 +51,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with: 
           name: coverage_results
-          path: ./coverage/html/index.html
+          path: ./coverage/html/
           
       - name: create artifact
         run: flutter build apk --no-sound-null-safety
