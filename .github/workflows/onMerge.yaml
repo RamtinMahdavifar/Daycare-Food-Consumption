@@ -23,8 +23,12 @@ jobs:
       - name: run dart tests
         run: flutter test --no-sound-null-safety
         
+  
       - name: run coverage tests
-        run: flutter test --coverage --no-sound-null-safety
+        shell: bash
+        run: |
+          sudo apt-get install lcov
+          flutter test --coverage --no-sound-null-safety
         
       - name: genrate coverage results
         run: genhtml coverage/lcov.info -o coverage/html
