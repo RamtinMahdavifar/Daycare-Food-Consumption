@@ -19,11 +19,26 @@ Documentation and other artifacts related to incremental deliverable 3 can be fo
 
 ![platewasteinstall3](https://user-images.githubusercontent.com/90283384/135784000-b8e158ae-5d54-4f4c-90d4-ea4fb219a9fe.png)
 
-5. Download the latest app APK from the [Build Pipeline](https://github.com/UniversityOfSaskatchewanCMPT371/term-project-fall-2021-team-2-1/actions/runs/1404209091) towards the bottom of the linked page
+5. Download the latest app APK from the [Build Pipeline](https://github.com/UniversityOfSaskatchewanCMPT371/term-project-fall-2021-team-2-1/actions/runs/1405684354) towards the bottom of the linked page, unzip the downloaded apk artifact and use the file app.apk as the apk to run the app.
 
-6. Drag the Downloaded APK over Nox emulator screen (It will automatically install the APK), after the APK is installed, you should see a plate_waste_recorder application logo in the Nox app, click on this to run the app.
+6. Drag the Downloaded app.apk file over Nox emulator screen (It will automatically install the APK), after the APK is installed, you should see a plate_waste_recorder application logo in the Nox app, click on this to run the app.
 
 ![platewasteinstall4](https://user-images.githubusercontent.com/90283384/135784003-86284a9d-4d5c-45e0-a1a2-7d07b5f21417.png)
+
+## How to View Test Coverage Results
+1. Download the coverage_results artifact from our build pipeline [here](https://github.com/UniversityOfSaskatchewanCMPT371/term-project-fall-2021-team-2-1/actions/runs/1405684354) found at the bottom of the page linked.
+2. Unzip the coverage_results directory
+3. Open the file index.html in the resulting unzipped directory, this html file will display top level coverage for each code containing directory we have. Clicking on any of the links in the html file will take you to another page showing more specific coverage results. For example from index.html, clicking on the Model link will take you to a new html page showing the coverage of all code in our Model directory where all back-end code is stored:
+![tempsnip1](https://user-images.githubusercontent.com/90283384/139604829-85754a0e-f9c4-48fd-8b89-4baf0666366d.png)
+
+![image](https://user-images.githubusercontent.com/90283384/139604860-c40a06e5-9fb1-4ccf-afcb-54ab7c8b46dd.png)
+From here you can click on individual file names to see which lines of code are covered. If a line of code is highlighted blue, it has been covered by a test, if a line has been highlighted red it has not been covered:
+
+![image](https://user-images.githubusercontent.com/90283384/139604898-ed480480-7117-4c13-97a7-82d19ae98796.png)
+
+You can also use the links at the top left of the page to navigate back to the top level view and so on.
+
+
 
 ## App Functionality
 As of incremental deliverable 3, the app has the following preliminary functionality:
