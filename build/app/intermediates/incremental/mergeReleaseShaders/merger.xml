@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\downloads\glass-enterprise-samples-master\glass-enterprise-samples-master\term-project-fall-2021-team-2-1\android\app\src\main\shaders"/></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\downloads\glass-enterprise-samples-master\glass-enterprise-samples-master\term-project-fall-2021-team-2-1\android\app\src\release\shaders"/></dataSet></merger>
-=======
-<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\Abdul\Desktop\U of S\Y5 S1\CMPT 371\Deliverable 1\371\android\app\src\main\shaders"/></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\Abdul\Desktop\U of S\Y5 S1\CMPT 371\Deliverable 1\371\android\app\src\release\shaders"/></dataSet></merger>
->>>>>>> Development
