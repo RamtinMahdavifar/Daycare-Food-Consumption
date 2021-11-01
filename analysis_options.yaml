@@ -7,7 +7,7 @@ analyzer:
     - lib/generated/**
     - lib/view/
     - test/
-    - lib\Model\food.dart
+    - lib/Model/food.dart
 
   errors:
     missing_required_param: warning
