@@ -27,7 +27,7 @@ void main(){
       expect(testInstitutionInfo == "test", false);
       expect(testInstitutionInfo == "", false);
       expect(testInstitutionInfo == null, false);
-      expect(testInstitutionInfo == Institution("test institution", "test address"), false);
+      expect(testInstitutionInfo == Institution("test institution", "test address", 0), false);
 
       // test equality vs InstitutionInfo objects
       expect(testInstitutionInfo == InstitutionInfo("something", "else"), false);
