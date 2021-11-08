@@ -19,6 +19,11 @@ jobs:
       - name: install dart dependencies
         run: dart pub get
 
+      - name: run Linter
+        run: flutter analyze
+
       - name: run dart tests
         run: flutter test --no-sound-null-safety
+
+
         
