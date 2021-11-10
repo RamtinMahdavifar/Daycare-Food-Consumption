@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'institution_page_widgets.dart';
 import 'upload_data.dart';
+import 'camera_food2.dart';
+import 'qrcode.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'camera_food.dart';
 import 'qrcode.dart';
@@ -40,7 +42,7 @@ class _InstitutionPageState extends State<InstitutionPage> {
                   children: [
                     //most of the buttons do not navigate anywhere and have null as their navigation parameter
                     menuButton(context, "QR Code", () => MyHome()),
-                    menuButton(context, "Camera", () => CameraFood()),
+                    menuButton(context, "Camera", () => CameraFood2()),
                     menuButton(context, "Roster", () => UploadData()),
                   ],
 

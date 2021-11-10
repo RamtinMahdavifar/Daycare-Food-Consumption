@@ -27,7 +27,7 @@ class MyHome extends StatelessWidget {
             ),
           ),
           QrImage(
-            data: 'ID 00-420-69',
+            data: 'This is a working QR Code which will hold a child ID',
             version: QrVersions.auto,
             size: 430,
           )
@@ -65,7 +65,7 @@ class _QRViewExampleState extends State<QRViewExample> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Expanded(flex: 4, child: _buildQrView(context)),
+          Expanded(flex: 4, child: BuildQrView(context)),
           Expanded(
             flex: 1,
             child: FittedBox(
@@ -95,7 +95,8 @@ class _QRViewExampleState extends State<QRViewExample> {
                               builder: (context, snapshot) {
                                 return Text('Flash: ${snapshot.data}');
                               },
-                            )),
+                            )
+                        ),
                       ),
                       Container(
                         margin: EdgeInsets.all(8),
@@ -151,7 +152,7 @@ class _QRViewExampleState extends State<QRViewExample> {
     );
   }
 
-  Widget _buildQrView(BuildContext context) {
+  Widget BuildQrView(BuildContext context) {
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
         MediaQuery.of(context).size.height < 400)
@@ -177,6 +178,8 @@ class _QRViewExampleState extends State<QRViewExample> {
     setState(() {
       this.controller = controller;
     });
+
+
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
