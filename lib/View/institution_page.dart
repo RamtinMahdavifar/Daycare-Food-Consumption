@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'institution_page_widgets.dart';
 import 'upload_data.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
+import 'camera_food.dart';
+import 'qrcode.dart';
 
 class InstitutionPage extends StatefulWidget {
   String institutionName;
@@ -37,8 +39,8 @@ class _InstitutionPageState extends State<InstitutionPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     //most of the buttons do not navigate anywhere and have null as their navigation parameter
-                    menuButton(context, "QR Code", () => UploadData()),
-                    menuButton(context, "Camera", () => UploadData()),
+                    menuButton(context, "QR Code", () => MyHome()),
+                    menuButton(context, "Camera", () => CameraFood()),
                     menuButton(context, "Roster", () => UploadData()),
                   ],
 
