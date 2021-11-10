@@ -20,7 +20,7 @@ class FoodBank {
     'Orange Juice',
     'Apple Juice',
     'Dog Food',
-    'my sanity',
+    'Reeses Pieces',
     'peanut butter sandwich',
   ];
 
