@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 import 'name_suggest.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
@@ -19,7 +20,7 @@ bool _weightFoodValid = true;
 //final _newFoodItemKey = GlobalKey<FormState>();
 @override
 //change foodScannedFirst to build when reformatting the code
-Widget foodScannedFirst(BuildContext context, XFile? imageFile) {
+Widget foodScannedFirst(BuildContext context, Uint8List imageFile) {
   return Dialog(
     child: Form(
       //key: _newFoodItemKey,
@@ -28,7 +29,7 @@ Widget foodScannedFirst(BuildContext context, XFile? imageFile) {
           children: [
             Column(
               children: [
-                Image.file(File(imageFile!.path)),
+                Image.memory(imageFile),//Image.file(File(imageFile!.path)),
                 retakePhoto(context),
               ]
             ),
