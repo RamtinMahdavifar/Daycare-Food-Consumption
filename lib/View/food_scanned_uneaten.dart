@@ -5,6 +5,7 @@ import 'name_suggest.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter/rendering.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -20,53 +21,54 @@ bool _weightFoodValid = true;
 //final _newFoodItemKey = GlobalKey<FormState>();
 @override
 //change foodScannedFirst to build when reformatting the code
-Widget foodScannedFirst(BuildContext context, File imageFile) {
-  print("Image in Dialog");
-  print(imageFile!.path);
-  return Dialog(
-    child: Form(
-      //key: _newFoodItemKey,
-      child: Scaffold(
-        body: Row(
-          children: [
-            Column(
-              children: [
-                //Image.memory(imageFile),//
-                Image.file(imageFile),
-                retakePhoto(context),
-              ]
-            ),
-            Flexible(
-              child: Column(
-                children: [
-                  //nameEntrySuggester(nameTextController, _nameFoodValid),
-                  suggestBox(context, nameTextController, _nameFoodValid),
-                  itemPresets(nameTextController),
-                  weightEntry(weightTextController, _weightFoodValid),
-                  addComments(context, commentsTextController),
-                  submitData(context)
-                ],
-              )
+Widget foodScannedFirst(BuildContext context, QRViewController controller) {
+  print("Image submit dialog opens");
+  //controller.pauseCamera();
+  double w = MediaQuery.of(context).size.width;
+  return Container(
+      padding: EdgeInsets.fromLTRB(w/2, 37, 0, 30), //botton 30, top 37, these are precision measurements for all screens btw
+      child:Dialog(
+        elevation: 0,
+        child: Form(
+          //key: _newFoodItemKey,
+            child: Scaffold(
+              body:
+                Center(
+                    child: Column(
+                      children: [
+                        //nameEntrySuggester(nameTextController, _nameFoodValid),
+                        suggestBox(context, nameTextController, _nameFoodValid),
+                        itemPresets(nameTextController),
+                        weightEntry(weightTextController, _weightFoodValid),
+                        addComments(context, commentsTextController),
+                        submitData(context, controller),
+                        retakePhoto(context, controller),
+                      ],
+                    )
+                )
             )
-          ]
         )
       )
-    )
   );
+
 }
 
-Widget retakePhoto(BuildContext context){
+Widget retakePhoto(BuildContext context, QRViewController controller){
   return ElevatedButton(
-      onPressed: () {Navigator.of(context, rootNavigator: true).pop();},
+      onPressed: () {
+        controller.resumeCamera();
+        Navigator.of(context, rootNavigator: true).pop();
+        },
       child: const Text("Retake Photo"),
       style: ElevatedButton.styleFrom(primary: Colors.redAccent)
   );
 }
 
-Widget submitData(BuildContext context){
+Widget submitData(BuildContext context, QRViewController controller){
   return ElevatedButton(
       onPressed: () {
         //submit name - weight - ID - photo - comments - date - institution
+        controller.resumeCamera();
         Navigator.of(context, rootNavigator: true).pop();
         },
       child: const Text("Submit"),
