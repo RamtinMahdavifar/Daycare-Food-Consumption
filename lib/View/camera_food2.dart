@@ -135,7 +135,8 @@ class _CameraFood2State extends State<CameraFood2> with
       ? IMG = i.copyCrop(IMG, 5, 90, (width!/2).toInt(), (height! - 200).toInt()) //starting at coords 5,90, to cut off the appbar, and only get the left half, and dont grab bottom portion with capute button on it
       : IMG = i.copyCrop(IMG, 400, 100, 500, 500); //resize OG image to be smaller
 
-    savePic(IMG, "firstTry.png");
+    savePic(i.flipHorizontal(IMG), "firstTry.png");
+
 
   }
 
