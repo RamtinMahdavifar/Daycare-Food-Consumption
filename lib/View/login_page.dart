@@ -40,6 +40,12 @@ class _LoginPageState extends State<LoginPage> {
                 // attempt to login to the app via google
                 try{
                   await Authentication().googleSignIn();
+
+                  // we've logged in without errors, go to the ChooseInstitute page
+                  await Navigator.push(context, MaterialPageRoute(
+                      builder: (context){
+                        return ChooseInstitute();
+                      }));
                 }
                 on FirebaseAuthException catch(e){
                   // login error has occurred, the user has specified invalid credentials
@@ -57,10 +63,6 @@ class _LoginPageState extends State<LoginPage> {
                     ));
                   }
                 }
-                await Navigator.push(context, MaterialPageRoute(
-                  builder: (context){
-                    return ChooseInstitute();
-                  }));
               },
               child: Row(
                   mainAxisSize: MainAxisSize.min,
