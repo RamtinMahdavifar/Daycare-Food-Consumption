@@ -28,15 +28,20 @@ class Authentication{
   void googleSignIn() async{
     try{
       // attempt to sign in via google, this will wait until the user has specified
-      // their google account username and password
+      // their google account username and password, ie this creates a popup asking
+      // the user to sign in with their google account
       GoogleSignInAccount? googleSignInAccount = await _googleAuthenticationInstance.signIn();
       // get the authentication details of the user so long as the account being signed
-      // into is not null
+      // into is not null, as long as the user has entered the information for their
+      // google account in the previous popup, get the resulting google authentication token
       GoogleSignInAuthentication googleAuthentication = await googleSignInAccount!.authentication;
-      // generate an authentication token to provide to firebase authentication
+      // generate an authentication token using the information from the google
+      // authentication token to provide to firebase authentication to login using
+      // google
       AuthCredential authenticationToken = GoogleAuthProvider.credential(
           accessToken: googleAuthentication.accessToken, idToken: googleAuthentication.idToken
       );
+      // finally sign in using the produced token to firebase
       await _firebaseAuthenticationInstance.signInWithCredential(authenticationToken);
     }
     on FirebaseAuthException catch(e){
