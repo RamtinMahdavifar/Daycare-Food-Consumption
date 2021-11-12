@@ -1,5 +1,6 @@
 // import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:plate_waste_recorder/Model/authentication.dart';
 import 'package:plate_waste_recorder/Model/institution.dart';
 import 'package:plate_waste_recorder/Model/meal.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
@@ -73,7 +74,7 @@ class Database {
     InstitutionInfo currentInstitutionInfo = institution.getInstitutionInfo();
     // ensure the input institution has a database key
     assert(currentInstitutionInfo.databaseKey.isNotEmpty);
-    DatabaseReference institutionReference = _databaseInstance.reference()
+    DatabaseReference institutionReference = _databaseInstance.reference().child(Authentication().getCurrentSignedInUser().uid) // remove/only include in debug or non-prod code somehow
         .child(this._RESEARCHGROUPROOTLOCATION)
         .child(currentResearchGroupInfo.databaseKey)
         .child(this._RESEARCHGROUPINSTITUTIONSLOCATION)
@@ -111,7 +112,7 @@ class Database {
     // ensure the institution provided has a database key
     assert(currentInstitutionInfo.databaseKey.isNotEmpty);
 
-    DatabaseReference institutionReference = _databaseInstance.reference()
+    DatabaseReference institutionReference = _databaseInstance.reference().child(Authentication().getCurrentSignedInUser().uid) // remove/only include in debug or non-prod code somehow
         .child(this._RESEARCHGROUPDATALOCATION)
         .child(currentResearchGroupInfo.databaseKey)
         .child(this._INSTITUTIONSDATALOCATION)
@@ -144,7 +145,7 @@ class Database {
     assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
     Config.log.i("reading institution: " + institutionInfo.name + " from the database using database key " +
     institutionInfo.databaseKey + " for research group: " + currentResearchGroupInfo.name);
-    DatabaseReference desiredInstitutionReference = _databaseInstance.reference()
+    DatabaseReference desiredInstitutionReference = _databaseInstance.reference().child(Authentication().getCurrentSignedInUser().uid) // remove/only include in debug or non-prod code somehow
         .child(this._RESEARCHGROUPROOTLOCATION)
         .child(currentResearchGroupInfo.databaseKey)
         .child(institutionInfo.databaseKey);
@@ -168,7 +169,7 @@ class Database {
     assert(researchGroupInfo.databaseKey.isNotEmpty);
     Config.log.i("reading research group: " + researchGroupInfo.name + " from the database using database key: " +
     researchGroupInfo.databaseKey);
-    DatabaseReference desiredResearchGroupReference = _databaseInstance.reference()
+    DatabaseReference desiredResearchGroupReference = _databaseInstance.reference().child(Authentication().getCurrentSignedInUser().uid) // remove/only include in debug or non-prod code somehow
         .child(this._RESEARCHGROUPROOTLOCATION)
         .child(researchGroupInfo.databaseKey);
     // use onValue instead of once() to read data here as we want to read data and
@@ -192,7 +193,7 @@ class Database {
     assert(researchGroupInfo.databaseKey.isNotEmpty);
     Config.log.i("reading research group: " + researchGroupInfo.name + " as a stream using key: " +
     researchGroupInfo.databaseKey);
-    DatabaseReference desiredResearchGroupReference = _databaseInstance.reference()
+    DatabaseReference desiredResearchGroupReference = _databaseInstance.reference().child(Authentication().getCurrentSignedInUser().uid) // remove/only include in debug or non-prod code somehow
         .child(this._RESEARCHGROUPROOTLOCATION)
         .child(researchGroupInfo.databaseKey);
     return desiredResearchGroupReference.onValue;
@@ -209,7 +210,7 @@ class Database {
     assert(researchGroupInfo.databaseKey.isNotEmpty);
     Config.log.i("writing research group: " + researchGroup.name + " to the database using key: " +
     researchGroupInfo.databaseKey);
-    DatabaseReference researchGroupDatabaseReference = _databaseInstance.reference()
+    DatabaseReference researchGroupDatabaseReference = _databaseInstance.reference().child(Authentication().getCurrentSignedInUser().uid) // remove/only include in debug or non-prod code somehow
         .child(this._RESEARCHGROUPROOTLOCATION)
         .child(researchGroupInfo.databaseKey);
     // convert the ResearchGroup object to JSON before writing to the db, this also
@@ -239,7 +240,7 @@ class Database {
     assert(currentSubjectInfo.databaseKey.isNotEmpty);
     Config.log.i("adding subject: " + currentSubject.id + " to institution: " + institutionInfo.name +
     " under research group: " + currentResearchGroupInfo.name);
-    DatabaseReference institutionSubjectReference = _databaseInstance.reference()
+    DatabaseReference institutionSubjectReference = _databaseInstance.reference().child(Authentication().getCurrentSignedInUser().uid) // remove/only include in debug or non-prod code somehow
         .child(this._RESEARCHGROUPDATALOCATION)
         .child(currentResearchGroupInfo.databaseKey)
         .child(this._SUBJECTSDATALOCATION)
@@ -271,7 +272,7 @@ class Database {
     assert(currentMealInfo.databaseKey.isNotEmpty);
     Config.log.i("writing meal: " + currentMeal.id + " to the database under research group: " +
     currentResearchGroupInfo.name);
-    DatabaseReference mealReference = _databaseInstance.reference()
+    DatabaseReference mealReference = _databaseInstance.reference().child(Authentication().getCurrentSignedInUser().uid) // remove/only include in debug or non-prod code somehow
         .child(this._RESEARCHGROUPDATALOCATION)
         .child(currentResearchGroupInfo.databaseKey)
         .child(this._MEALSDATALOCATION)
