@@ -283,7 +283,7 @@ class Meal{
     return false;
   }
 
-  @override
+  // @override
   Map<String, dynamic> toJson() => {
     '_mealName': this._mealName,
     '_mealID': this._mealId,

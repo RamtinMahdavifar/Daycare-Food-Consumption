@@ -1,0 +1,66 @@
+name: onMerge
+
+on:
+  pull_request:
+    branches:
+      - main
+      - Development
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+      - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
+      
+      - name: install flutter dependencies
+        run: flutter pub get
+      
+      - name: install dart dependencies
+        run: dart pub get
+
+      - name: run dart tests
+        run: flutter test --no-sound-null-safety
+                 
+
+  build:
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+      - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
+      
+      - name: install flutter dependencies
+        run: flutter pub get
+      
+      - name: install dart dependencies
+        run: dart pub get
+            
+      - name: run coverage tests
+        shell: bash
+        run: |
+          sudo apt-get install lcov
+          flutter test --coverage --no-sound-null-safety
+        
+      - name: genrate coverage results
+        run: genhtml coverage/lcov.info -o coverage/html
+        
+      - name: upload coverage results
+        uses: actions/upload-artifact@v2
+        with: 
+          name: coverage_results
+          path: ./coverage/html/
+          
+      - name: create artifact
+        run: flutter build apk --no-sound-null-safety
+        
+      - name: upload Artifact
+        uses: actions/upload-artifact@v2
+        with: 
+          name: apk
+          path: ./build/app/outputs/flutter-apk
+          
+      
+    
