@@ -12,9 +12,10 @@ import 'package:screenshot/screenshot.dart';
 import 'package:flutter/material.dart';
 import 'food_scanned_uneaten.dart';
 import 'package:flutter/services.dart';
-import 'dart:io';
+
 import "package:flutter_native_screenshot/flutter_native_screenshot.dart";
 import 'package:image/image.dart' as i;
+import 'dart:io';
 
 /*
 
@@ -53,6 +54,7 @@ class _CameraFood2State extends State<CameraFood2> with
   double? width;
   double? height;
   Directory? appPath;
+  Directory? directory;
 
 
   @override
@@ -60,15 +62,48 @@ class _CameraFood2State extends State<CameraFood2> with
     super.initState();
     //this is for the null safety check stuff
     _ambiguate(WidgetsBinding.instance)?.addObserver(this);
+    //set true on first ever launch, false otherwise
     getPath();
+
+    //run this on initial start to create the folder
+
 
     //SystemChrome.
   }
 
   void getPath() async {
-    appPath = await getApplicationDocumentsDirectory();
+    //this could be useful for an issue i was running into with converting a csv to a List
+    //use below line to create a directory for the cropped images
+    directory = await getExternalStorageDirectory();
+    print("EXTERNAL SAVE PATH");
+    print(directory);
+    String newPath = "";
+
+    List<String> paths = directory!.path.split("/");
+
+    for (int x = 1 ; x < paths.length ; x++){
+      String folder = paths[x];
+      newPath += "/" + folder;
+    }
+
+    newPath = newPath + "/croppedOutExternal";
+    directory = Directory(newPath);
+
+
   }
 
+  void savePic(i.Image pic, String fileName) async {
+    if (directory != null) {
+      if (!await directory!.exists()) {
+        await directory!.create(recursive: true);
+      }
+      if (await directory!.exists()) {
+        File(directory!.path + "/$fileName").writeAsBytesSync(i.encodePng(pic));
+      }
+    }else{
+      print("no directory chosen");
+    }
+  }
 
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -84,36 +119,23 @@ class _CameraFood2State extends State<CameraFood2> with
 
   }
 
-  void takeShot() async {
 
+  void takeShot() async {
 
     String? path = await FlutterNativeScreenshot.takeScreenshot();
 
-    //this could be useful for an issue i was running into with converting a csv to a List
-    //use below line to create a directory for the cropped images
-/*    new Directory(appPath.path+'/'+'croppedOut').create(recursive: true)
-// The created directory is returned as a Future.
-        .then((Directory directory) {
-      print('Path of New Dir: '+directory.path);
-    });*/
     print("takeShot: Path!");
     print(path);
-    int testNo = 014; //this makes unique images since they dont overwrite
-    String imgAppend = testNo.toString() + ".png";
-    imgFile = File(path!); //image created from og screenshot
-    i.Image IMG = i.decodePng(File(path).readAsBytesSync())!; //encode the og image into IMG
+    //int testNo = 014; //this makes unique images since they dont overwrite
+    //String imgAppend = testNo.toString() + ".png";
+    //imgFile = File(path!); //image created from og screenshot
+    i.Image IMG = i.decodePng(File(path!).readAsBytesSync())!; //encode the og image into IMG
 
     width != null && height != null
-      ? IMG = i.copyCrop(IMG, 5, 100, (width! - 845).toInt(), (height! - 200).toInt())
+      ? IMG = i.copyCrop(IMG, 5, 90, (width!/2).toInt(), (height! - 200).toInt()) //starting at coords 5,90, to cut off the appbar, and only get the left half, and dont grab bottom portion with capute button on it
       : IMG = i.copyCrop(IMG, 400, 100, 500, 500); //resize OG image to be smaller
-    if (appPath != null){
-      String imgPath = appPath!.path + "/croppedOut/" + imgAppend; //location path called imgPath
-      File(imgPath).writeAsBytesSync(i.encodePng(IMG)); //save new image in new location
-    }else{
-      print("No photoFile folder found!");
-      return;
-    }
 
+    savePic(IMG, "firstTry.png");
 
   }
 
@@ -205,6 +227,8 @@ class _CameraFood2State extends State<CameraFood2> with
     QRcontroller!.resumeCamera();
     print("Image Capture Finish");
   }
+
+
 
 
 }
