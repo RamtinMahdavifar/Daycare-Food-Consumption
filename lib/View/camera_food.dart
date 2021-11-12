@@ -1,3 +1,4 @@
+/*
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
@@ -255,7 +256,7 @@ class _CameraFoodState extends State<CameraFood> with
 
   void onTakePictureButtonPressed() {
     //XFile? file = controller.takePicture();
-    takePicture().then((XFile? file) {
+    takePicture().then((File? file) {
       if (mounted) {
         setState(() {
           imageFile = file;
@@ -268,7 +269,7 @@ class _CameraFoodState extends State<CameraFood> with
           Uint8List? BANDAID;
           showDialog(
               context: context,
-              builder: (_) => foodScannedFirst(context, BANDAID!)
+              builder: (_) => foodScannedFirst(context, file?)
           );
         }
       }
@@ -325,4 +326,4 @@ Future<void> main() async{
 // What's this??? This allows a value of typ T or T? to be treated as a val of type T?
 // Why?? because this thing is not finished and more stable versions of the flutter camera API
 // are not expected to release until late 2021
-T? _ambiguate<T>(T? value) => value;
+T? _ambiguate<T>(T? value) => value;*/
