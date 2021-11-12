@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/View/login_page.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
@@ -28,9 +29,11 @@ class PlateWasteApp extends StatelessWidget {
 }
 
 
-void main() {
-  Config.log.i("running main() of main.dart, initializing app and going to home page...");
+void main() async{
+  Config.log.i("initializing firebase...");
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  Config.log.i("running main() of main.dart, initializing app and going to home page...");
   runApp(PlateWasteApp());
 }
 
