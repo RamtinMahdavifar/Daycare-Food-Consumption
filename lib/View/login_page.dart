@@ -65,8 +65,15 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.all(10.0),
         child: SizedBox(
             height: 50,
-            child:
-            ElevatedButton(
+            child: ElevatedButton(
+              // this particular button will be a "Sign in with Google" button
+              // as such additional restrictions apply, see https://developers.google.com/identity/branding-guidelines?hl=en
+              // for details, button must be pure white ie #FFFFFF
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.white),
+                // specify rounded edges for the button
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(40))),
+              ),
               onPressed: () async {
                 Config.log.i("user has pressed login button");
                 await Authentication().googleSignIn();
@@ -90,13 +97,23 @@ class _LoginPageState extends State<LoginPage> {
                   // clear our text fields before leaving the page
                   this._emailFieldController.clear();
                   this._passwordFieldController.clear();
-                  Navigator.push(context, MaterialPageRoute(
+                  await Navigator.push(context, MaterialPageRoute(
                       builder: (context){
                         return ChooseInstitute();
                       }));
                 }
               },
-              child: const Text("Login"),
+              child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    // specify padding for each element of this button as we need our "Sign in with Google"
+                    // text to be to the right of the google logo, specify a grey font colour for the text or
+                    // else it doesn't show up against the white background of the button
+                    Padding(padding: EdgeInsets.only(left:0), child: Image.asset("Icons/google-logo-button.png")),
+                    Padding(padding: EdgeInsets.only(left: 10), child: Text("Sign in with Google", style: TextStyle(color: Colors.black54)))
+                  ]
+              )
             )
         )
     );
