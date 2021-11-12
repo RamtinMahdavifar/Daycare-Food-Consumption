@@ -33,7 +33,9 @@ class Authentication{
   /// if authentication was successful, information for the currently signed in
   /// user can then be found by calling getCurrentSignedInUser(). A FirebaseAuthException
   /// is thrown if any errors occur during the login process, if the user enters
-  /// invalid credentials for example.
+  /// invalid credentials for example. A Future<void> is returned by this method
+  /// this is because asynchronous methods must return futures and we have no
+  /// data to return here
   Future<void> googleSignIn() async{
     try{
       // attempt to sign in via google, this will wait until the user has specified
@@ -65,8 +67,10 @@ class Authentication{
   /// using getCurrentSignedInUser()
   /// Preconditions: The user must be signed in in order to sign out, otherwise
   /// calling this method does nothing
-  /// Postconditions: the user is signed out of the app as described above
-  void googleSignOut() async{
+  /// Postconditions: the user is signed out of the app as described above.
+  /// A Future<void> is returned by this method this is because asynchronous
+  /// methods must return futures and we have no data to return here
+  Future<void> googleSignOut() async{
     // sign out of both google and firebase authentication
     await _googleAuthenticationInstance.signOut();
     await _firebaseAuthenticationInstance.signOut();

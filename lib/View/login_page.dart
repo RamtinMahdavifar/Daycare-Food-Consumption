@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/View/select_institution.dart';
@@ -35,8 +36,27 @@ class _LoginPageState extends State<LoginPage> {
                 side: MaterialStateProperty.all(BorderSide(width: 1, color: Colors.blue))
               ),
               onPressed: () async {
-                Config.log.i("user has pressed login button");
-                await Authentication().googleSignIn();
+                Config.log.i("user has pressed login button, attempting to login via google");
+                // attempt to login to the app via google
+                try{
+                  await Authentication().googleSignIn();
+                }
+                on FirebaseAuthException catch(e){
+                  // login error has occurred, the user has specified invalid credentials
+                  // or some error has occurred
+                  if(e.code == "account-exists-with-different-credential" || e.code == "invalid-credential"){
+                    // the user specified invalid credentials, inform the user of this via snackbar
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:
+                      const Text("Login failed due to incorrect email address or password")
+                    ));
+                  }
+                  else{
+                    // authentication failed for some other reason
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:
+                      const Text("Login failed, please try again")
+                    ));
+                  }
+                }
                 await Navigator.push(context, MaterialPageRoute(
                   builder: (context){
                     return ChooseInstitute();
