@@ -37,6 +37,8 @@ class _CameraFood2State extends State<CameraFood2> with
   QRViewController? QRcontroller;
   Uint8List? imageFile;
   File? imgFile;
+  double? width;
+  double? height;
 
 
   @override
@@ -68,6 +70,7 @@ class _CameraFood2State extends State<CameraFood2> with
 
     String? path = await FlutterNativeScreenshot.takeScreenshot();
     Directory appPath = await getApplicationDocumentsDirectory();
+    //this could be useful for an issue i was running into with converting a csv to a List
     //use below line to create a directory for the cropped images
 /*    new Directory(appPath.path+'/'+'croppedOut').create(recursive: true)
 // The created directory is returned as a Future.
@@ -76,17 +79,22 @@ class _CameraFood2State extends State<CameraFood2> with
     });*/
     print("takeShot: Path!");
     print(path);
+    int testNo = 013; //this makes unique images since they dont overwrite
+    String imgAppend = testNo.toString() + ".png";
     imgFile = File(path!); //image created from og screenshot
     i.Image IMG = i.decodePng(File(path).readAsBytesSync())!; //encode the og image into IMG
-    IMG = i.copyResize(IMG, width: 500); //resize OG image to be smaller
-    File(appPath.path+"/croppedOut/test.png").writeAsBytesSync(i.encodePng(IMG)); //save new image in new location
-    String imgPath = appPath.path + "/croppedOut/test.png"; //location path called imgPath
+
+    width != null && height != null
+      ? IMG = i.copyCrop(IMG, 5, 100, (width! - 845).toInt(), (height! - 200).toInt())
+      : IMG = i.copyCrop(IMG, 400, 100, 500, 500); //resize OG image to be smaller
+    File(appPath.path+"/croppedOut/" + imgAppend).writeAsBytesSync(i.encodePng(IMG)); //save new image in new location
+    String imgPath = appPath.path + "/croppedOut/" + imgAppend; //location path called imgPath
     showDialog(
         context: context,
         builder: (_) => foodScannedFirst(context, File(imgPath)) //needs to check for null at some point, do this later
     );
 
-    //showImg = Image.file(imgFile);
+
 
 
   }
@@ -109,33 +117,27 @@ class _CameraFood2State extends State<CameraFood2> with
   }
 
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(title: const Text("Camera Food")),
       body: Column(
           children: <Widget>[
             Expanded(
-              child: Screenshot(
-                controller: SScontroller,
-                child: Container(
-                  child: Padding(
-                    //padding: const EdgeInsets.fromLTRB(500.0, 100.0, 500.0, 100.0),
-                    padding: const EdgeInsets.fromLTRB(500.0, 100.0, 500.0, 100.0),
-                    child: Center(
-                        child: Container(
-                          //padding: const EdgeInsets.fromLTRB(500.0, 100.0, 500.0, 100.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.blueAccent, width: 5.0),
-                            color: Colors.amberAccent
-                          ),
-                          child: BuildQrView(context)
-                        ) //this is the Viewfinder
-                      )
-
-                    )
-                  ),
-               )
-              ),
+              child: Container(
+                child: Center(
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 800.0, 0.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blueAccent, width: 5.0),
+                        color: Colors.amberAccent
+                      ),
+                      child: BuildQrView(context)
+                    ) //this is the Viewfinder
+                  )
+                ),
+               ),
             _captureImage(), //camera Capture button
           ]
       ),
