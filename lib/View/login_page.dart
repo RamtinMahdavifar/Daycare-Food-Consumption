@@ -16,9 +16,12 @@ class _LoginPageState extends State<LoginPage> {
   bool _passwordFieldValid = true;
 
   Widget appIcon(){
-    return
-    // return an image we get from a local directory
-      Image.asset("Icons/apple.png", width: 700, height: 700);
+    // return an image we get from a local directory, add padding to the top
+    // so the image isn't right against the top of the screen, specify padding
+    // below so other elements below this aren't too close to the image
+    return Padding(padding: EdgeInsets.only(top: 20, bottom: 30),
+          child: Image.asset("Icons/apple.png", width: 700, height: 500)
+    );
   }
 
   Widget emailField(){
@@ -64,15 +67,17 @@ class _LoginPageState extends State<LoginPage> {
     return Padding(
         padding: const EdgeInsets.all(10.0),
         child: SizedBox(
-            height: 50,
+            height: 70,
             child: ElevatedButton(
               // this particular button will be a "Sign in with Google" button
               // as such additional restrictions apply, see https://developers.google.com/identity/branding-guidelines?hl=en
-              // for details, button must be pure white ie #FFFFFF
+              // for details, buttons must be pure white ie #FFFFFF
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.white),
-                // specify rounded edges for the button
+                // specify rounded edges for the button, add a blue border to make the button
+                // more distinct from the background
                 shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(40))),
+                side: MaterialStateProperty.all(BorderSide(width: 1, color: Colors.blue))
               ),
               onPressed: () async {
                 Config.log.i("user has pressed login button");
@@ -111,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                     // text to be to the right of the google logo, specify a grey font colour for the text or
                     // else it doesn't show up against the white background of the button
                     Padding(padding: EdgeInsets.only(left:0), child: Image.asset("Icons/google-logo-button.png")),
-                    Padding(padding: EdgeInsets.only(left: 10), child: Text("Sign in with Google", style: TextStyle(color: Colors.black54)))
+                    Padding(padding: EdgeInsets.only(left: 10), child: Text("Sign in with Google", style: TextStyle(color: Colors.black54, fontSize: 28.0)))
                   ]
               )
             )
@@ -151,11 +156,7 @@ class _LoginPageState extends State<LoginPage> {
         child: ListView(
           children: <Widget>[
             appIcon(),
-            emailField(),
-            passwordField(),
-            loginButton(),
-            signUpButton(),
-            forgotPasswordButton()
+            loginButton()
           ]
         )
       )
