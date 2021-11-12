@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "467115419472-3gk7vgbjldrsgs4islc2hl93osc6osli.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cmpt371.test",
+            "certificate_hash": "c37bfbc1b4bf02ad519d7e2f7f8f5e9c5665d9cd"
+          }
+        },
+        {
           "client_id": "467115419472-l4b5omsvkub10sgb6d9fkdgk7623ud4k.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -32,10 +40,10 @@
               "client_type": 3
             },
             {
-              "client_id": "467115419472-jurgq4521c3ffn7pr817btgg1a9chofe.apps.googleusercontent.com",
+              "client_id": "467115419472-bt00m3sv2gri9haj2t0ut3q7ihskmp3g.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.flutterApp"
+                "bundle_id": "com.example.plateWasteRecorder"
               }
             }
           ]
@@ -68,10 +76,10 @@
               "client_type": 3
             },
             {
-              "client_id": "467115419472-jurgq4521c3ffn7pr817btgg1a9chofe.apps.googleusercontent.com",
+              "client_id": "467115419472-bt00m3sv2gri9haj2t0ut3q7ihskmp3g.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.flutterApp"
+                "bundle_id": "com.example.plateWasteRecorder"
               }
             }
           ]
@@ -86,6 +94,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "467115419472-jgko7sggrri3bqlr13jb59akk37qvonj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.plate_waste_recorder",
+            "certificate_hash": "c37bfbc1b4bf02ad519d7e2f7f8f5e9c5665d9cd"
+          }
+        },
         {
           "client_id": "467115419472-l4b5omsvkub10sgb6d9fkdgk7623ud4k.apps.googleusercontent.com",
           "client_type": 3
@@ -104,10 +120,10 @@
               "client_type": 3
             },
             {
-              "client_id": "467115419472-jurgq4521c3ffn7pr817btgg1a9chofe.apps.googleusercontent.com",
+              "client_id": "467115419472-bt00m3sv2gri9haj2t0ut3q7ihskmp3g.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.flutterApp"
+                "bundle_id": "com.example.plateWasteRecorder"
               }
             }
           ]
