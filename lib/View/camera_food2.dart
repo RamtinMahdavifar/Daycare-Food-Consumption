@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'qrcode.dart';
 //import 'package:camera/camera.dart';
@@ -12,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'food_scanned_uneaten.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
+import "package:flutter_native_screenshot/flutter_native_screenshot.dart";
+import 'package:image/image.dart' as i;
 
 class CameraFood2 extends StatefulWidget {
   @override
@@ -33,6 +36,7 @@ class _CameraFood2State extends State<CameraFood2> with
   ScreenshotController SScontroller = ScreenshotController();
   QRViewController? QRcontroller;
   Uint8List? imageFile;
+  File? imgFile;
 
 
   @override
@@ -55,6 +59,34 @@ class _CameraFood2State extends State<CameraFood2> with
 
     this.QRcontroller!.flipCamera();
 
+
+
+  }
+
+  void takeShot() async {
+
+
+    String? path = await FlutterNativeScreenshot.takeScreenshot();
+    Directory appPath = await getApplicationDocumentsDirectory();
+    //use below line to create a directory for the cropped images
+/*    new Directory(appPath.path+'/'+'croppedOut').create(recursive: true)
+// The created directory is returned as a Future.
+        .then((Directory directory) {
+      print('Path of New Dir: '+directory.path);
+    });*/
+    print("takeShot: Path!");
+    print(path);
+    imgFile = File(path!); //image created from og screenshot
+    i.Image IMG = i.decodePng(File(path).readAsBytesSync())!; //encode the og image into IMG
+    IMG = i.copyResize(IMG, width: 500); //resize OG image to be smaller
+    File(appPath.path+"/croppedOut/test.png").writeAsBytesSync(i.encodePng(IMG)); //save new image in new location
+    String imgPath = appPath.path + "/croppedOut/test.png"; //location path called imgPath
+    showDialog(
+        context: context,
+        builder: (_) => foodScannedFirst(context, File(imgPath)) //needs to check for null at some point, do this later
+    );
+
+    //showImg = Image.file(imgFile);
 
 
   }
@@ -83,24 +115,27 @@ class _CameraFood2State extends State<CameraFood2> with
       body: Column(
           children: <Widget>[
             Expanded(
-              child: Container(
-                child: Padding(
+              child: Screenshot(
+                controller: SScontroller,
+                child: Container(
+                  child: Padding(
                     //padding: const EdgeInsets.fromLTRB(500.0, 100.0, 500.0, 100.0),
-                    padding: EdgeInsets.all(1.0),
+                    padding: const EdgeInsets.fromLTRB(500.0, 100.0, 500.0, 100.0),
                     child: Center(
-                      child: Screenshot(
-                          controller: SScontroller,
-                          child: Container(
-                            padding: const EdgeInsets.fromLTRB(500.0, 100.0, 500.0, 100.0),
-                            child: BuildQrView(context)
-                          ) //this is the Viewfinder
+                        child: Container(
+                          //padding: const EdgeInsets.fromLTRB(500.0, 100.0, 500.0, 100.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.blueAccent, width: 5.0),
+                            color: Colors.amberAccent
+                          ),
+                          child: BuildQrView(context)
+                        ) //this is the Viewfinder
                       )
 
                     )
-                ),
-
+                  ),
+               )
               ),
-            ),
             _captureImage(), //camera Capture button
           ]
       ),
@@ -132,18 +167,35 @@ class _CameraFood2State extends State<CameraFood2> with
   }
 
   void onTakePictureButtonPressed() {
-    print("image captured");
+    print("image captured Press");
     //XFile? file = controller.takePicture();
     QRcontroller!.pauseCamera();
-    SScontroller!.capture(delay: Duration(milliseconds: 10)).then((img) async {
-      //imageFile = img;
-      print(imageFile);
+    takeShot();
+    QRcontroller!.resumeCamera();
+
+    print("Image Capture In Progress");
+    //print(imgFile!.path);
+    /*showDialog(
+        context: context,
+        builder: (_) => foodScannedFirst(context, imgFile!) //needs to check for null at some point, do this later
+    );*/
+
+    /*SScontroller!.capture().then((Uint8List? img){
+
+      setState(() {
+        imageFile = img;
+      });
+
+      takeShot();
+      print("Image Capture In Progress");
+      print(imgFile!.path);
       showDialog(
           context: context,
-          builder: (_) => foodScannedFirst(context, img!) //needs to check for null at some point, do this later
+          builder: (_) => foodScannedFirst(context, imgFile) //needs to check for null at some point, do this later
       );
-    });
-    QRcontroller!.resumeCamera();
+    });*/
+    //QRcontroller!.resumeCamera();
+    print("Image Capture Finish");
   }
 
 

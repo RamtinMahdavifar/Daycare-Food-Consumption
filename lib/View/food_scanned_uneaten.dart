@@ -20,7 +20,9 @@ bool _weightFoodValid = true;
 //final _newFoodItemKey = GlobalKey<FormState>();
 @override
 //change foodScannedFirst to build when reformatting the code
-Widget foodScannedFirst(BuildContext context, Uint8List imageFile) {
+Widget foodScannedFirst(BuildContext context, File imageFile) {
+  print("Image in Dialog");
+  print(imageFile!.path);
   return Dialog(
     child: Form(
       //key: _newFoodItemKey,
@@ -29,7 +31,8 @@ Widget foodScannedFirst(BuildContext context, Uint8List imageFile) {
           children: [
             Column(
               children: [
-                Image.memory(imageFile),//Image.file(File(imageFile!.path)),
+                //Image.memory(imageFile),//
+                Image.file(imageFile),
                 retakePhoto(context),
               ]
             ),

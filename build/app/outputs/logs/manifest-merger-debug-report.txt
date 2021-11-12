@@ -10,6 +10,7 @@ MERGED from [:camera] /home/keplar/Documents/school/CMPT 371/term-project-fall-2
 MERGED from [:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-19:12
 MERGED from [:flutter_plugin_android_lifecycle] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/flutter_plugin_android_lifecycle/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:qr_code_scanner] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/qr_code_scanner/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-10:12
+MERGED from [:flutter_native_screenshot] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/flutter_native_screenshot/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:flutter_keyboard_visibility] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/flutter_keyboard_visibility/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:path_provider] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/path_provider/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:firebase_database] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_database/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-15:12
@@ -157,6 +158,8 @@ MERGED from [:flutter_plugin_android_lifecycle] /home/keplar/Documents/school/CM
 MERGED from [:flutter_plugin_android_lifecycle] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/flutter_plugin_android_lifecycle/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:qr_code_scanner] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/qr_code_scanner/intermediates/merged_manifest/debug/AndroidManifest.xml:6:5-8:67
 MERGED from [:qr_code_scanner] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/qr_code_scanner/intermediates/merged_manifest/debug/AndroidManifest.xml:6:5-8:67
+MERGED from [:flutter_native_screenshot] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/flutter_native_screenshot/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_native_screenshot] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/flutter_native_screenshot/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:flutter_keyboard_visibility] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/flutter_keyboard_visibility/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:flutter_keyboard_visibility] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/flutter_keyboard_visibility/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:path_provider] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/path_provider/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
@@ -307,6 +310,10 @@ ADDED from [:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-f
 		ADDED from [:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:15:17-72
 	android:name
 		ADDED from [:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:14:17-67
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from [:flutter_native_screenshot] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/flutter_native_screenshot/intermediates/merged_manifest/debug/AndroidManifest.xml:7:5-81
+	android:name
+		ADDED from [:flutter_native_screenshot] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/flutter_native_screenshot/intermediates/merged_manifest/debug/AndroidManifest.xml:7:22-78
 service#com.google.firebase.components.ComponentDiscoveryService
 ADDED from [:firebase_database] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_database/intermediates/merged_manifest/debug/AndroidManifest.xml:8:9-12:19
 MERGED from [:firebase_core] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:8:9-12:19
