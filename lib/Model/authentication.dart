@@ -55,6 +55,8 @@ class Authentication{
     }
     on FirebaseAuthException catch(e){
       Config.log.e("error occurred while logging in via google, error message: " + e.message.toString());
+      // rethrow our exception as we can't deal with it here
+      rethrow;
     }
   }
 
