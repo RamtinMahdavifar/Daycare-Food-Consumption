@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/View/select_institution.dart';
+import 'package:plate_waste_recorder/Model/authentication.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -66,8 +67,9 @@ class _LoginPageState extends State<LoginPage> {
             height: 50,
             child:
             ElevatedButton(
-              onPressed: (){
+              onPressed: () async {
                 Config.log.i("user has pressed login button");
+                await Authentication().googleSignIn();
                 // get the values from each of our input fields
                 String inputEmail = this._emailFieldController.value.text;
                 // TODO: do something about password here, should we refer to this in plaintext
