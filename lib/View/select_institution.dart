@@ -7,22 +7,6 @@ import 'dart:convert'; // required for jsonDecode()
 import 'package:plate_waste_recorder/Helper/config.dart';
 
 
-
-class SelectInstitute extends StatelessWidget {
-  const SelectInstitute({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Config.log.i("building institution select page");
-    return MaterialApp(
-        title: 'Plate Waste Tracker',
-        home: ChooseInstitute()
-    );
-  }
-}
-
 class ChooseInstitute extends StatefulWidget {
   @override
   State<ChooseInstitute> createState() => _ChooseInstituteState();
@@ -176,7 +160,7 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
                   searchInstitution(),
                   //_buildList(),
                   institutionDisplay(context),
-                  //quickfixButton(context)
+                  quickfixButton(context)
                 ])
         ),
 

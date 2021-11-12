@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:plate_waste_recorder/main.dart' as app;
@@ -11,10 +12,24 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      //SUT, in this case login the application
+      final emailInput = find.widgetWithText(TextField, "Email");
+      final passwordInput = find.widgetWithText(TextField, "Password");
+      await tester.enterText(emailInput, "123@usask.ca");
+      await tester.enterText(passwordInput, "abc123");
+      await tester.testTextInput.receiveAction(TextInputAction.done);
+      await tester.pumpAndSettle(Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      expect(find.widgetWithText(ElevatedButton, "Login"), findsOneWidget);
+      final loginButton = find.widgetWithText(ElevatedButton, "Login");
+      await tester.tap(loginButton);
+      await tester.pumpAndSettle();
+
       // Verify the SelectInstitution widget is presented
       expect(find.text("Plate Waste Tracker"), findsOneWidget);
 
-      final addInstitutionButton = find.text("Add Institution");
+      final addInstitutionButton = find.byIcon(Icons.add);
       await tester.tap(addInstitutionButton);
       await tester.pumpAndSettle();
 
@@ -23,8 +38,9 @@ void main() {
 
       final institutionName = find.widgetWithText(TextFormField, "name");
       final institutionAddress = find.widgetWithText(TextFormField, "address");
-
+      final numberOfSubjects = find.widgetWithText(TextFormField, "# of subjects:");
       await tester.enterText(institutionName, "University of Saskatchewan");
+      await tester.enterText(numberOfSubjects, "11");
       await tester.enterText(institutionAddress, "No 1 Campus Dr");
       await tester.pumpAndSettle();
 
@@ -43,6 +59,7 @@ void main() {
 
       await tester.enterText(institutionName, "University");
       await tester.enterText(institutionAddress, "No 2 Campus Dr");
+      await tester.enterText(numberOfSubjects, "22");
       await tester.pumpAndSettle();
 
       final submitButton = find.widgetWithText(ElevatedButton, "Submit");
@@ -80,25 +97,15 @@ void main() {
       expect(find.text( "Address: No 2 Campus Dr"), findsOneWidget);
 
       //Check all button widgets in institution page are presented
-      final QRCodeButton = find.text("QR Code");
-      final cameraButton = find.text("Camera");
       final rosterButton = find.text("Roster");
-      final recordDataButton = find.text("Record Data");
+      final presetButton = find.text("Preset");
       final viewDataButton = find.text("View Data");
-      final foodButton = find.text("Food");
+      final inputDataButton = find.text("Input Data");
 
-      expect(QRCodeButton, findsOneWidget);
-      expect(cameraButton, findsOneWidget);
       expect(rosterButton, findsOneWidget);
-      expect(recordDataButton, findsOneWidget);
+      expect(presetButton, findsOneWidget);
       expect(viewDataButton, findsOneWidget);
-      expect(foodButton, findsOneWidget);
-
-      await tester.tap(cameraButton);
-      await tester.pumpAndSettle();
-
-      // Verify the UploadData widget is presented
-      expect(find.text("Upload Data"), findsOneWidget);
+      expect(inputDataButton, findsOneWidget);
     });
 
 
@@ -106,10 +113,24 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      //SUT, in this case login the application
+      final emailInput = find.widgetWithText(TextField, "Email");
+      final passwordInput = find.widgetWithText(TextField, "Password");
+      await tester.enterText(emailInput, "123@usask.ca");
+      await tester.enterText(passwordInput, "abc123");
+      await tester.testTextInput.receiveAction(TextInputAction.done);
+      await tester.pumpAndSettle(Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      expect(find.widgetWithText(ElevatedButton, "Login"), findsOneWidget);
+      final loginButton =  find.widgetWithText(ElevatedButton, "Login");
+      await tester.tap(loginButton);
+      await tester.pumpAndSettle();
+
       // Verify the institution widget is presented
       expect(find.text("Plate Waste Tracker"), findsOneWidget);
 
-      final addInstitutionButton = find.text("Add Institution");
+      final addInstitutionButton = find.byIcon(Icons.add);
       await tester.tap(addInstitutionButton);
       await tester.pumpAndSettle();
 
@@ -118,17 +139,19 @@ void main() {
 
       final institutionName = find.widgetWithText(TextFormField, "name");
       final institutionAddress = find.widgetWithText(TextFormField, "address");
+      final numberOfSubjects = find.widgetWithText(TextFormField, "# of subjects:");
 
       await tester.enterText(institutionName, "");
       await tester.enterText(institutionAddress, "");
+      await tester.enterText(numberOfSubjects, "");
       await tester.pumpAndSettle();
 
       final submitButton = find.widgetWithText(ElevatedButton, "Submit");
       await tester.tap(submitButton);
       await tester.pumpAndSettle();
 
-      // Verify the error messages occurs in both text input fields
-      expect(find.text("Value Can't Be Empty"), findsNWidgets(2));
+      // Verify the error messages occurs in all text input fields
+      expect(find.text("Value Can't Be Empty"), findsNWidgets(3));
 
       // Verify the AddInstitutionForm widget was not closed
       expect(find.byIcon(Icons.home), findsOneWidget);
