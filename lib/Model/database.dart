@@ -11,6 +11,7 @@ import 'package:plate_waste_recorder/Model/subject.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'meal_info.dart';
+import 'package:flutter/foundation.dart'; // required to check release mode
 
 /// Class to a access the firebase database, this class is implemented using the
 /// singleton pattern and provides methods to read and write data to and from
@@ -74,8 +75,13 @@ class Database {
     InstitutionInfo currentInstitutionInfo = institution.getInstitutionInfo();
     // ensure the input institution has a database key
     assert(currentInstitutionInfo.databaseKey.isNotEmpty);
-    DatabaseReference institutionReference = _databaseInstance.reference().child(Authentication().getCurrentSignedInUser().uid) // remove/only include in debug or non-prod code somehow
-        .child(this._RESEARCHGROUPROOTLOCATION)
+    DatabaseReference institutionReference = _databaseInstance.reference();
+    if(kDebugMode){
+      // app is in debug mode, have the database write to a location specific to each
+      // app user, add this to our ongoing institutionReference
+      institutionReference = institutionReference.child(Authentication().getCurrentSignedInUser().uid);
+    }
+    institutionReference = institutionReference.child(this._RESEARCHGROUPROOTLOCATION)
         .child(currentResearchGroupInfo.databaseKey)
         .child(this._RESEARCHGROUPINSTITUTIONSLOCATION)
         .child(currentInstitutionInfo.databaseKey);
@@ -112,8 +118,13 @@ class Database {
     // ensure the institution provided has a database key
     assert(currentInstitutionInfo.databaseKey.isNotEmpty);
 
-    DatabaseReference institutionReference = _databaseInstance.reference().child(Authentication().getCurrentSignedInUser().uid) // remove/only include in debug or non-prod code somehow
-        .child(this._RESEARCHGROUPDATALOCATION)
+    DatabaseReference institutionReference = _databaseInstance.reference();
+    if(kDebugMode){
+      // app is in debug mode, have the database write to a location specific to each
+      // app user, add this to our ongoing institutionReference
+      institutionReference = institutionReference.child(Authentication().getCurrentSignedInUser().uid);
+    }
+    institutionReference = institutionReference.child(this._RESEARCHGROUPDATALOCATION)
         .child(currentResearchGroupInfo.databaseKey)
         .child(this._INSTITUTIONSDATALOCATION)
         .child(currentInstitutionInfo.databaseKey);
@@ -145,11 +156,17 @@ class Database {
     assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
     Config.log.i("reading institution: " + institutionInfo.name + " from the database using database key " +
     institutionInfo.databaseKey + " for research group: " + currentResearchGroupInfo.name);
-    DatabaseReference desiredInstitutionReference = _databaseInstance.reference().child(Authentication().getCurrentSignedInUser().uid) // remove/only include in debug or non-prod code somehow
-        .child(this._RESEARCHGROUPROOTLOCATION)
+
+    DatabaseReference institutionReference = _databaseInstance.reference();
+    if(kDebugMode){
+      // app is in debug mode, have the database write to a location specific to each
+      // app user, add this to our ongoing institutionReference
+      institutionReference = institutionReference.child(Authentication().getCurrentSignedInUser().uid);
+    }
+    institutionReference = institutionReference.child(this._RESEARCHGROUPROOTLOCATION)
         .child(currentResearchGroupInfo.databaseKey)
         .child(institutionInfo.databaseKey);
-    desiredInstitutionReference.once().then((DataSnapshot dataSnapshot)=>(
+    institutionReference.once().then((DataSnapshot dataSnapshot)=>(
     // call the input function on the data read from the database
         callback(
             Institution.fromJSON(jsonDecode(dataSnapshot.value.toString()) as Map<String, dynamic>)
@@ -169,12 +186,18 @@ class Database {
     assert(researchGroupInfo.databaseKey.isNotEmpty);
     Config.log.i("reading research group: " + researchGroupInfo.name + " from the database using database key: " +
     researchGroupInfo.databaseKey);
-    DatabaseReference desiredResearchGroupReference = _databaseInstance.reference().child(Authentication().getCurrentSignedInUser().uid) // remove/only include in debug or non-prod code somehow
-        .child(this._RESEARCHGROUPROOTLOCATION)
+
+    DatabaseReference researchGroupReference = _databaseInstance.reference();
+    if(kDebugMode){
+      // app is in debug mode, have the database write to a location specific to each
+      // app user, add this to our ongoing researchGroupReference
+      researchGroupReference = researchGroupReference.child(Authentication().getCurrentSignedInUser().uid);
+    }
+    researchGroupReference = researchGroupReference.child(this._RESEARCHGROUPROOTLOCATION)
         .child(researchGroupInfo.databaseKey);
     // use onValue instead of once() to read data here as we want to read data and
     // then also update data if any changes have occurred to the database
-    desiredResearchGroupReference.onValue.listen((event) {
+    researchGroupReference.onValue.listen((event) {
       DataSnapshot dataSnapshot = event.snapshot;
       Map<String, dynamic> researchGroupJSON = jsonDecode(dataSnapshot.value.toString()) as Map<String,dynamic>;
       ResearchGroup retrievedResearchGroup = ResearchGroup.fromJSON(researchGroupJSON);
@@ -193,10 +216,16 @@ class Database {
     assert(researchGroupInfo.databaseKey.isNotEmpty);
     Config.log.i("reading research group: " + researchGroupInfo.name + " as a stream using key: " +
     researchGroupInfo.databaseKey);
-    DatabaseReference desiredResearchGroupReference = _databaseInstance.reference().child(Authentication().getCurrentSignedInUser().uid) // remove/only include in debug or non-prod code somehow
-        .child(this._RESEARCHGROUPROOTLOCATION)
+
+    DatabaseReference researchGroupReference = _databaseInstance.reference();
+    if(kDebugMode){
+      // app is in debug mode, have the database write to a location specific to each
+      // app user, add this to our ongoing researchGroupReference
+      researchGroupReference = researchGroupReference.child(Authentication().getCurrentSignedInUser().uid);
+    }
+    researchGroupReference = researchGroupReference.child(this._RESEARCHGROUPROOTLOCATION)
         .child(researchGroupInfo.databaseKey);
-    return desiredResearchGroupReference.onValue;
+    return researchGroupReference.onValue;
   }
 
   /// writes the input researchGroup to the database in it's entirety
@@ -210,8 +239,14 @@ class Database {
     assert(researchGroupInfo.databaseKey.isNotEmpty);
     Config.log.i("writing research group: " + researchGroup.name + " to the database using key: " +
     researchGroupInfo.databaseKey);
-    DatabaseReference researchGroupDatabaseReference = _databaseInstance.reference().child(Authentication().getCurrentSignedInUser().uid) // remove/only include in debug or non-prod code somehow
-        .child(this._RESEARCHGROUPROOTLOCATION)
+
+    DatabaseReference researchGroupReference = _databaseInstance.reference();
+    if(kDebugMode){
+      // app is in debug mode, have the database write to a location specific to each
+      // app user, add this to our ongoing researchGroupReference
+      researchGroupReference = researchGroupReference.child(Authentication().getCurrentSignedInUser().uid);
+    }
+    researchGroupReference = researchGroupReference.child(this._RESEARCHGROUPROOTLOCATION)
         .child(researchGroupInfo.databaseKey);
     // convert the ResearchGroup object to JSON before writing to the db, this also
     // converts fields and data structures within this object to JSON
@@ -219,7 +254,7 @@ class Database {
     // we cannot write raw JSON to the database, decode this JSON to get a map which
     // preserves the structure of our object when written to the database
     Map<String, dynamic> researchGroupAsMap = json.decode(researchGroupJSON) as Map<String,dynamic>;
-    researchGroupDatabaseReference.set(researchGroupAsMap);
+    researchGroupReference.set(researchGroupAsMap);
   }
 
   /// writes the input Subject as a SubjectInfo to the database relative to the institution
@@ -240,8 +275,14 @@ class Database {
     assert(currentSubjectInfo.databaseKey.isNotEmpty);
     Config.log.i("adding subject: " + currentSubject.id + " to institution: " + institutionInfo.name +
     " under research group: " + currentResearchGroupInfo.name);
-    DatabaseReference institutionSubjectReference = _databaseInstance.reference().child(Authentication().getCurrentSignedInUser().uid) // remove/only include in debug or non-prod code somehow
-        .child(this._RESEARCHGROUPDATALOCATION)
+
+    DatabaseReference institutionSubjectReference = _databaseInstance.reference();
+    if(kDebugMode){
+      // app is in debug mode, have the database write to a location specific to each
+      // app user, add this to our ongoing institutionSubjectReference
+      institutionSubjectReference = institutionSubjectReference.child(Authentication().getCurrentSignedInUser().uid);
+    }
+    institutionSubjectReference = institutionSubjectReference.child(this._RESEARCHGROUPDATALOCATION)
         .child(currentResearchGroupInfo.databaseKey)
         .child(this._SUBJECTSDATALOCATION)
         .child(institutionInfo.databaseKey)
@@ -272,8 +313,14 @@ class Database {
     assert(currentMealInfo.databaseKey.isNotEmpty);
     Config.log.i("writing meal: " + currentMeal.id + " to the database under research group: " +
     currentResearchGroupInfo.name);
-    DatabaseReference mealReference = _databaseInstance.reference().child(Authentication().getCurrentSignedInUser().uid) // remove/only include in debug or non-prod code somehow
-        .child(this._RESEARCHGROUPDATALOCATION)
+
+    DatabaseReference mealReference = _databaseInstance.reference();
+    if(kDebugMode){
+      // app is in debug mode, have the database write to a location specific to each
+      // app user, add this to our ongoing mealReference
+      mealReference = mealReference.child(Authentication().getCurrentSignedInUser().uid);
+    }
+    mealReference = mealReference.child(this._RESEARCHGROUPDATALOCATION)
         .child(currentResearchGroupInfo.databaseKey)
         .child(this._MEALSDATALOCATION)
         .child(currentMealInfo.databaseKey);
