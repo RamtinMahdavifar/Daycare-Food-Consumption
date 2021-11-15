@@ -16,6 +16,12 @@ import 'package:flutter/foundation.dart'; // required to check release mode
 /// Class to a access the firebase database, this class is implemented using the
 /// singleton pattern and provides methods to read and write data to and from
 /// Firebase
+/// If methods from this class are invoked from an app in debug mode, ie kDebugMode is true,
+/// database reads and writes occur in a sort of sandbox for the current user of the app
+/// ie data is stored relative to Authentication().getCurrentSignedInUser().uid, the
+/// user ID of the current signed in user of the app, otherwise, if the app is not
+/// being ran in debug mode database reads and writes use a shared location accessible
+/// by all users of the app
 class Database {
   // private instance of our firebase database
   static final FirebaseDatabase _databaseInstance = FirebaseDatabase.instance;
@@ -60,6 +66,35 @@ class Database {
     return _instance;
   }
 
+  /// Checks if the Institution specified by the input InstitutionInfo object is
+  /// present on the database for the input research group
+  /// Preconditions: institutionInfo.databaseKey.isNotEmpty, currentResearchGroupInfo.databaseKey.isNotEmpty
+  /// Postconditions: Returns a Future<bool> containing true if the Institution
+  /// specified by the input InstitutionInfo exists for the current research group
+  /// ie if an Institution is associated with institutionInfo.databaseKey under the research
+  /// group with currentResearchGroupInfo.databaseKey on the database, and false otherwise
+  Future<bool> checkIfInstitutionExists(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo) async{
+    assert(institutionInfo.databaseKey.isNotEmpty);
+    assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
+    // there is no other way to check if data exists on our database at some location
+    // than to attempt read the data at that location and check if we receive any results
+    DatabaseReference desiredInstitutionReference = _databaseInstance.reference();
+    if(kDebugMode){
+      // app is in debug mode, check a database location specific to the current app
+      // user instead of the normal database location
+      desiredInstitutionReference = desiredInstitutionReference.child(Authentication().getCurrentSignedInUser().uid);
+    }
+    desiredInstitutionReference = desiredInstitutionReference.child(this._RESEARCHGROUPROOTLOCATION)
+        .child(currentResearchGroupInfo.databaseKey)
+        .child(this._RESEARCHGROUPINSTITUTIONSLOCATION)
+        .child(institutionInfo.databaseKey);
+
+    // read the data at desiredInstitutionReference and determine if any values are retrieved
+    // calling .then will return a Future by default, store whether
+    // our desired data exists within this future
+    return await desiredInstitutionReference.once().then((DataSnapshot dataSnapshot)=>(dataSnapshot.exists));
+  }
+
   /// writes the input institution as an InstitutionInfo under the research group specified by the
   /// input ResearchGroupInfo, the input institution is also written in it's entirety to the database in
   /// it's own distinct location, this location is still relative to the input research group
@@ -75,6 +110,14 @@ class Database {
     InstitutionInfo currentInstitutionInfo = institution.getInstitutionInfo();
     // ensure the input institution has a database key
     assert(currentInstitutionInfo.databaseKey.isNotEmpty);
+    checkIfInstitutionExists(currentInstitutionInfo, currentResearchGroupInfo).then((value){
+      if(value){
+
+      }
+      else{
+
+      }
+    });
     DatabaseReference institutionReference = _databaseInstance.reference();
     if(kDebugMode){
       // app is in debug mode, have the database write to a location specific to each
