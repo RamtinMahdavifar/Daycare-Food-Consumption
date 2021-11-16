@@ -75,7 +75,7 @@ class Database {
   /// test for the child example of the root of the database.
   /// Postconditions: Returns a Future<bool> containing true if the input databasePath
   /// exists and data is stored at this location on the database, and false otherwise.
-  Future<bool> dataExistsAtPath(String databasePath) async{
+  Future<bool> _dataExistsAtPath(String databasePath) async{
     assert(databasePath.isNotEmpty);
     // there is no other way to check if data exists on our database at some location
     // than to attempt read the data at that location and check if we receive any results
@@ -93,8 +93,8 @@ class Database {
   /// Preconditions: currentResearchGroupInfo.databaseKey.isNotEmpty, institution.getInstitutionInfo().databaseKey.isNotEmpty,
   /// An institution with the database key institution.getInstitutionInfo().databaseKey,
   /// must not already exist for the research group specified by the database key
-  ///  currentResearchGroupInfo.databaseKey, if such an institution already exists
-  ///
+  /// currentResearchGroupInfo.databaseKey, if such an institution already exists
+  /// an exception is thrown
   /// Postconditions: writes the input institution as an InstitutionInfo under the research group specified by the
   /// input ResearchGroupInfo, the input institution is also written in it's entirety to the database in
   /// it's own distinct location, this location is still relative to the input research group
@@ -115,23 +115,34 @@ class Database {
       dataPath = "$currentUserID";
     }
     dataPath = "$dataPath/$_RESEARCHGROUPROOTLOCATION/${currentResearchGroupInfo.databaseKey}/$_RESEARCHGROUPINSTITUTIONSLOCATION/${currentInstitutionInfo.databaseKey}";
-    DatabaseReference institutionReference = _databaseInstance.reference().child(dataPath);
+    // check if the input institution already exists for the input research group
+    _dataExistsAtPath(dataPath).then((dataExists){
+      if(dataExists){
+        Config.log.e("Institution with address: ${institution.address} already exists for the research group: ${currentResearchGroupInfo.databaseKey}");
+        throw Exception("Institution with address: ${institution.address} already exists on the database");
+      }
+      else{
+        // the institution we're trying to write to the database doesn't already exist there
+        // write this institution
+        DatabaseReference institutionReference = _databaseInstance.reference().child(dataPath);
 
-    Config.log.i("writing institution: " + institution.name + " to research group: "
-        + currentResearchGroupInfo.name + " on the database");
+        Config.log.i("writing institution: " + institution.name + " to research group: "
+            + currentResearchGroupInfo.name + " on the database");
 
-    // since we are storing this institution for a research group, only write
-    // an InstitutionInfo to the database, convert this InstitutionInfo to JSON
+        // since we are storing this institution for a research group, only write
+        // an InstitutionInfo to the database, convert this InstitutionInfo to JSON
 
-    String institutionInfoJSON = jsonEncode(currentInstitutionInfo);
+        String institutionInfoJSON = jsonEncode(currentInstitutionInfo);
 
-    // convert the produced JSON to a map which can be stored on our database
-    Map<String, dynamic> institutionInfoMap = json.decode(institutionInfoJSON) as Map<String,dynamic>;
-    institutionReference.set(institutionInfoMap);
+        // convert the produced JSON to a map which can be stored on our database
+        Map<String, dynamic> institutionInfoMap = json.decode(institutionInfoJSON) as Map<String,dynamic>;
+        institutionReference.set(institutionInfoMap);
 
-    // upon adding an institution to a research group, we want to also store this entire
-    // institution to the database in a separate location
-    _writeInstitutionToDatabase(institution,currentResearchGroupInfo);
+        // upon adding an institution to a research group, we want to also store this entire
+        // institution to the database in a separate location
+        _writeInstitutionToDatabase(institution,currentResearchGroupInfo);
+      }
+    });
   }
 
   /// writes the input institution in it's entirety to a location on the database relative to
