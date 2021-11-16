@@ -30,6 +30,36 @@ import 'dart:io';
 
  */
 
+String? FOODNAME;
+String? WEIGHT;
+String? COMMENTS;
+String? ID;
+String? INSTITUTE;
+
+//plan to add the variables for the date and the food status
+
+void setFoodVars(String? foodName, String? weight, String? comments){
+  FOODNAME = foodName;
+  WEIGHT = weight;
+  COMMENTS = comments;
+  print("FOOD DATA ENTERED!");
+
+}
+
+void setIDVar(String? id){
+  ID = id;
+  print("ID SET");
+}
+
+void setInstituteVar(String? institute){
+  INSTITUTE = institute;
+  print("INSTITUTION SET");
+}
+
+bool isNull(String? val){
+  return val == null ? true : false;
+}
+
 class CameraFood2 extends StatefulWidget {
   @override
   _CameraFood2State createState() => _CameraFood2State();
@@ -55,6 +85,8 @@ class _CameraFood2State extends State<CameraFood2> with
   double? height;
   Directory? appPath;
   Directory? directory;
+
+  String testStringVar = "unmodified";
 
 
   @override
@@ -85,10 +117,39 @@ class _CameraFood2State extends State<CameraFood2> with
       String folder = paths[x];
       newPath += "/" + folder;
     }
+    if (!isNull(INSTITUTE) && !isNull(ID)){
+      newPath = newPath + "/" + INSTITUTE! + "/" + ID!;
+      directory = Directory(newPath);
+      print(Text("USING PATH: " + directory!.path));
+    }
 
-    newPath = newPath + "/croppedOutExternal";
-    directory = Directory(newPath);
+  }
 
+  Future<int> newPath(String foodname) async{
+    Directory newDir;
+    String newPath = "";
+    List<String> paths = directory!.path.split("/");
+
+    for (int x = 1 ; x < paths.length ; x++){
+      String folder = paths[x];
+      newPath += "/" + folder;
+    }
+
+    if (!isNull(foodname) && directory != null){
+      newPath = newPath + "/" + foodname;
+      newDir = Directory(newPath);
+
+      if (!await newDir.exists()) {
+        print("one line before");
+        await newDir.create(recursive: true);
+        print(Text("CREATED PATH: " + newDir.path));
+        return 1;
+      }
+    }
+    else{
+      print("null foodname");
+    }
+    return 0;
 
   }
 
@@ -98,7 +159,12 @@ class _CameraFood2State extends State<CameraFood2> with
         await directory!.create(recursive: true);
       }
       if (await directory!.exists()) {
-        File(directory!.path + "/$fileName").writeAsBytesSync(i.encodePng(pic));
+        await newPath(FOODNAME!) == 1
+         //make new path
+        ? File(directory!.path + "/$fileName").writeAsBytesSync(i.encodePng(pic))
+
+        : print("new path not created");
+
       }
     }else{
       print("no directory chosen");
@@ -123,6 +189,7 @@ class _CameraFood2State extends State<CameraFood2> with
   void takeShot() async {
 
     String? path = await FlutterNativeScreenshot.takeScreenshot();
+    String? filename;
 
     print("takeShot: Path!");
     print(path);
@@ -135,10 +202,14 @@ class _CameraFood2State extends State<CameraFood2> with
       ? IMG = i.copyCrop(IMG, 5, 90, (width!/2).toInt(), (height! - 200).toInt()) //starting at coords 5,90, to cut off the appbar, and only get the left half, and dont grab bottom portion with capute button on it
       : IMG = i.copyCrop(IMG, 400, 100, 500, 500); //resize OG image to be smaller
 
-    savePic(i.flipHorizontal(IMG), "firstTry.png");
+    //image =  i.flipHorizontal(IMG);
+    filename = FOODNAME! + "/" + ID!+"_"+FOODNAME!+"_status.png";
 
+    savePic(i.flipHorizontal(IMG), filename); //PUT THIS AS THE FUNCTION FOR ONPRESS IN WIDGEST OF FOOOD_SCANNED_UNEATEN
 
   }
+
+
 
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
     log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
@@ -213,15 +284,20 @@ class _CameraFood2State extends State<CameraFood2> with
   void onTakePictureButtonPressed() async {
     print("image captured Press");
     //XFile? file = controller.takePicture();
-    QRcontroller!.pauseCamera();
+
     QRcontroller == null
     ? print("No QR Controller active")
-    : await showDialog( //open the dialog first before begining the image capture process
-        barrierColor: null,//jank workaround remove the shadow from the dialog
-        barrierDismissible: false,
-        context: context,
-        builder: (_) => foodScannedFirst(context, QRcontroller!) //needs to check for null at some point, do this later
-    );
+    :
+      print(Text("BEFORE CHANGE IN CAMERA" + testStringVar));
+      QRcontroller!.pauseCamera();
+      await showDialog( //open the dialog first before begining the image capture process
+          barrierColor: null,//jank workaround remove the shadow from the dialog
+          barrierDismissible: false,
+          context: context,
+          builder: (_) => foodScannedFirst(context, QRcontroller!, testStringVar) //needs to check for null at some point, do this later
+      );
+      print(Text("AFTER CHANGE IN CAMERA"));
+      print(FOODNAME);
     print("Dialog Code passed");
     takeShot();
     print("takeShot completed");
