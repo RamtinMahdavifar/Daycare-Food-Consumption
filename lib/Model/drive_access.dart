@@ -1,6 +1,6 @@
 import 'package:http/http.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
-import 'package:googleapis/drive/v3.dart';
+import 'package:googleapis/drive/v3.dart' as drive; // import this package with the name drive to avoid type clobbering
 import 'package:plate_waste_recorder/Model/authentication.dart';
 
 /// Class used to access google drive to write or read files, this class is defined
@@ -10,7 +10,7 @@ class DriveAccess{
   static final DriveAuthenticationClient _googleDriveClient = DriveAuthenticationClient();
 
   // define our DriveApi for actually accessing google drive
-  static final DriveApi _driveAccessApi = DriveApi(_googleDriveClient);
+  static final drive.DriveApi _driveAccessApi = drive.DriveApi(_googleDriveClient);
 
   // define our one instance of this class
   static final DriveAccess _instance = DriveAccess._privateConstructor();
@@ -24,8 +24,16 @@ class DriveAccess{
     return _instance;
   }
 
-
-
+  Future<void> uploadFile() async{
+    // example
+    final Stream<List<int>> mediaStream =
+    Future.value([104, 105]).asStream().asBroadcastStream();
+    var media = new drive.Media(mediaStream, 2);
+    var driveFile = new drive.File();
+    driveFile.name = "hello_world.txt";
+    final result = await _driveAccessApi.files.create(driveFile, uploadMedia: media);
+    print("Upload result: $result");
+  }
 }
 
 

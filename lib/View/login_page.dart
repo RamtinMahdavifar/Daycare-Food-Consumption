@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
+import 'package:plate_waste_recorder/Model/drive_access.dart';
 import 'package:plate_waste_recorder/View/select_institution.dart';
 import 'package:plate_waste_recorder/Model/authentication.dart';
 
@@ -50,22 +51,23 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   onPressed: () async {
                     Config.log.i("user has pressed login button, attempting to login via google");
-                    await Authentication().googleSignOut();
+                    await Authentication().googleSignOut(); // TODO: remove this
                     // the user has pressed the login button, change the state to reflect that
                     // the app is waiting for the google authentication popup
                     setState((){
                       this._authenticationLoading = true;
                     });
                     // attempt to login to the app via google
-                    await Authentication().googleSignIn().then((result){
+                    await Authentication().googleSignIn().then((result) async{
                       // we have finished authenticating without errors
                       Config.log.i("Authentication finished successfully, navigating to home page...");
+                      await DriveAccess().uploadFile();
                       setState((){
                         this._authenticationLoading = false;
                       });
 
                       // we've logged in without errors, go to the ChooseInstitute page
-                      Navigator.push(context, MaterialPageRoute(
+                      await Navigator.push(context, MaterialPageRoute(
                           builder: (context){
                             return ChooseInstitute();
                           }));
