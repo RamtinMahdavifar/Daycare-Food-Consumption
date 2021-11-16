@@ -1,4 +1,6 @@
 // import 'package:flutter/material.dart';
+import 'dart:io';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:plate_waste_recorder/Model/authentication.dart';
 import 'package:plate_waste_recorder/Model/institution.dart';
@@ -66,39 +68,33 @@ class Database {
     return _instance;
   }
 
-  /// Checks if the Institution specified by the input InstitutionInfo object is
-  /// present on the database for the input research group
-  /// Preconditions: institutionInfo.databaseKey.isNotEmpty, currentResearchGroupInfo.databaseKey.isNotEmpty
-  /// Postconditions: Returns a Future<bool> containing true if the Institution
-  /// specified by the input InstitutionInfo exists for the current research group
-  /// ie if an Institution is associated with institutionInfo.databaseKey under the research
-  /// group with currentResearchGroupInfo.databaseKey on the database, and false otherwise
-  Future<bool> checkIfInstitutionExists(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo) async{
-    assert(institutionInfo.databaseKey.isNotEmpty);
-    assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
+  /// Asynchronously checks if there is data at the location specified by the input String database path
+  /// Preconditions: databasePath.isNotEmpty, this databasePath should be the path
+  /// to some location on the database relative to the root of the database, for example
+  /// providing a path "/example/test" checks if there is a data item with the key
+  /// test for the child example of the root of the database.
+  /// Postconditions: Returns a Future<bool> containing true if the input databasePath
+  /// exists and data is stored at this location on the database, and false otherwise.
+  Future<bool> dataExistsAtPath(String databasePath) async{
+    assert(databasePath.isNotEmpty);
     // there is no other way to check if data exists on our database at some location
     // than to attempt read the data at that location and check if we receive any results
-    DatabaseReference desiredInstitutionReference = _databaseInstance.reference();
-    if(kDebugMode){
-      // app is in debug mode, check a database location specific to the current app
-      // user instead of the normal database location
-      desiredInstitutionReference = desiredInstitutionReference.child(Authentication().getCurrentSignedInUser().uid);
-    }
-    desiredInstitutionReference = desiredInstitutionReference.child(this._RESEARCHGROUPROOTLOCATION)
-        .child(currentResearchGroupInfo.databaseKey)
-        .child(this._RESEARCHGROUPINSTITUTIONSLOCATION)
-        .child(institutionInfo.databaseKey);
+    DatabaseReference desiredLocationReference = _databaseInstance.reference().child(databasePath);
 
-    // read the data at desiredInstitutionReference and determine if any values are retrieved
+    // read the data at desiredLocationReference and determine if any values are retrieved
     // calling .then will return a Future by default, store whether
     // our desired data exists within this future
-    return await desiredInstitutionReference.once().then((DataSnapshot dataSnapshot)=>(dataSnapshot.exists));
+    return await desiredLocationReference.once().then((DataSnapshot dataSnapshot)=>(dataSnapshot.exists));
   }
 
   /// writes the input institution as an InstitutionInfo under the research group specified by the
   /// input ResearchGroupInfo, the input institution is also written in it's entirety to the database in
   /// it's own distinct location, this location is still relative to the input research group
-  /// Preconditions: currentResearchGroupInfo.databaseKey.isNotEmpty, institution.getInstitutionInfo().databaseKey.isNotEmpty
+  /// Preconditions: currentResearchGroupInfo.databaseKey.isNotEmpty, institution.getInstitutionInfo().databaseKey.isNotEmpty,
+  /// An institution with the database key institution.getInstitutionInfo().databaseKey,
+  /// must not already exist for the research group specified by the database key
+  ///  currentResearchGroupInfo.databaseKey, if such an institution already exists
+  ///
   /// Postconditions: writes the input institution as an InstitutionInfo under the research group specified by the
   /// input ResearchGroupInfo, the input institution is also written in it's entirety to the database in
   /// it's own distinct location, this location is still relative to the input research group
@@ -110,24 +106,16 @@ class Database {
     InstitutionInfo currentInstitutionInfo = institution.getInstitutionInfo();
     // ensure the input institution has a database key
     assert(currentInstitutionInfo.databaseKey.isNotEmpty);
-    checkIfInstitutionExists(currentInstitutionInfo, currentResearchGroupInfo).then((value){
-      if(value){
-
-      }
-      else{
-
-      }
-    });
-    DatabaseReference institutionReference = _databaseInstance.reference();
+    // path to the desired data on the database
+    String dataPath = "";
     if(kDebugMode){
-      // app is in debug mode, have the database write to a location specific to each
-      // app user, add this to our ongoing institutionReference
-      institutionReference = institutionReference.child(Authentication().getCurrentSignedInUser().uid);
+      // app is in debug mode, check a database location specific to the current app
+      // user instead of the normal database location
+      String currentUserID = Authentication().getCurrentSignedInUser().uid;
+      dataPath = "$currentUserID";
     }
-    institutionReference = institutionReference.child(this._RESEARCHGROUPROOTLOCATION)
-        .child(currentResearchGroupInfo.databaseKey)
-        .child(this._RESEARCHGROUPINSTITUTIONSLOCATION)
-        .child(currentInstitutionInfo.databaseKey);
+    dataPath = "$dataPath/$_RESEARCHGROUPROOTLOCATION/${currentResearchGroupInfo.databaseKey}/$_RESEARCHGROUPINSTITUTIONSLOCATION/${currentInstitutionInfo.databaseKey}";
+    DatabaseReference institutionReference = _databaseInstance.reference().child(dataPath);
 
     Config.log.i("writing institution: " + institution.name + " to research group: "
         + currentResearchGroupInfo.name + " on the database");
@@ -161,16 +149,17 @@ class Database {
     // ensure the institution provided has a database key
     assert(currentInstitutionInfo.databaseKey.isNotEmpty);
 
-    DatabaseReference institutionReference = _databaseInstance.reference();
+
+    // path to the desired data on the database
+    String dataPath = "";
     if(kDebugMode){
-      // app is in debug mode, have the database write to a location specific to each
-      // app user, add this to our ongoing institutionReference
-      institutionReference = institutionReference.child(Authentication().getCurrentSignedInUser().uid);
+      // app is in debug mode, check a database location specific to the current app
+      // user instead of the normal database location
+      String currentUserID = Authentication().getCurrentSignedInUser().uid;
+      dataPath = "$currentUserID";
     }
-    institutionReference = institutionReference.child(this._RESEARCHGROUPDATALOCATION)
-        .child(currentResearchGroupInfo.databaseKey)
-        .child(this._INSTITUTIONSDATALOCATION)
-        .child(currentInstitutionInfo.databaseKey);
+    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_INSTITUTIONSDATALOCATION/${currentInstitutionInfo.databaseKey}";
+    DatabaseReference institutionReference = _databaseInstance.reference().child(dataPath);
 
     Config.log.i("Writing institution: " + institution.name + " to the database");
 
@@ -200,15 +189,17 @@ class Database {
     Config.log.i("reading institution: " + institutionInfo.name + " from the database using database key " +
     institutionInfo.databaseKey + " for research group: " + currentResearchGroupInfo.name);
 
-    DatabaseReference institutionReference = _databaseInstance.reference();
+
+    // path to the desired data on the database
+    String dataPath = "";
     if(kDebugMode){
-      // app is in debug mode, have the database write to a location specific to each
-      // app user, add this to our ongoing institutionReference
-      institutionReference = institutionReference.child(Authentication().getCurrentSignedInUser().uid);
+      // app is in debug mode, check a database location specific to the current app
+      // user instead of the normal database location
+      String currentUserID = Authentication().getCurrentSignedInUser().uid;
+      dataPath = "$currentUserID";
     }
-    institutionReference = institutionReference.child(this._RESEARCHGROUPROOTLOCATION)
-        .child(currentResearchGroupInfo.databaseKey)
-        .child(institutionInfo.databaseKey);
+    dataPath = "$dataPath/$_RESEARCHGROUPROOTLOCATION/${currentResearchGroupInfo.databaseKey}/${institutionInfo.databaseKey}";
+    DatabaseReference institutionReference = _databaseInstance.reference().child(dataPath);
     institutionReference.once().then((DataSnapshot dataSnapshot)=>(
     // call the input function on the data read from the database
         callback(
@@ -230,14 +221,18 @@ class Database {
     Config.log.i("reading research group: " + researchGroupInfo.name + " from the database using database key: " +
     researchGroupInfo.databaseKey);
 
-    DatabaseReference researchGroupReference = _databaseInstance.reference();
+
+    // path to the desired data on the database
+    String dataPath = "";
     if(kDebugMode){
-      // app is in debug mode, have the database write to a location specific to each
-      // app user, add this to our ongoing researchGroupReference
-      researchGroupReference = researchGroupReference.child(Authentication().getCurrentSignedInUser().uid);
+      // app is in debug mode, check a database location specific to the current app
+      // user instead of the normal database location
+      String currentUserID = Authentication().getCurrentSignedInUser().uid;
+      dataPath = "$currentUserID";
     }
-    researchGroupReference = researchGroupReference.child(this._RESEARCHGROUPROOTLOCATION)
-        .child(researchGroupInfo.databaseKey);
+    dataPath = "$dataPath/$_RESEARCHGROUPROOTLOCATION/${researchGroupInfo.databaseKey}";
+    DatabaseReference researchGroupReference = _databaseInstance.reference().child(dataPath);
+
     // use onValue instead of once() to read data here as we want to read data and
     // then also update data if any changes have occurred to the database
     researchGroupReference.onValue.listen((event) {
@@ -260,14 +255,17 @@ class Database {
     Config.log.i("reading research group: " + researchGroupInfo.name + " as a stream using key: " +
     researchGroupInfo.databaseKey);
 
-    DatabaseReference researchGroupReference = _databaseInstance.reference();
+
+    // path to the desired data on the database
+    String dataPath = "";
     if(kDebugMode){
-      // app is in debug mode, have the database write to a location specific to each
-      // app user, add this to our ongoing researchGroupReference
-      researchGroupReference = researchGroupReference.child(Authentication().getCurrentSignedInUser().uid);
+      // app is in debug mode, check a database location specific to the current app
+      // user instead of the normal database location
+      String currentUserID = Authentication().getCurrentSignedInUser().uid;
+      dataPath = "$currentUserID";
     }
-    researchGroupReference = researchGroupReference.child(this._RESEARCHGROUPROOTLOCATION)
-        .child(researchGroupInfo.databaseKey);
+    dataPath = "$dataPath/$_RESEARCHGROUPROOTLOCATION/${researchGroupInfo.databaseKey}";
+    DatabaseReference researchGroupReference = _databaseInstance.reference().child(dataPath);
     return researchGroupReference.onValue;
   }
 
@@ -283,14 +281,17 @@ class Database {
     Config.log.i("writing research group: " + researchGroup.name + " to the database using key: " +
     researchGroupInfo.databaseKey);
 
-    DatabaseReference researchGroupReference = _databaseInstance.reference();
+
+    // path to the desired data on the database
+    String dataPath = "";
     if(kDebugMode){
-      // app is in debug mode, have the database write to a location specific to each
-      // app user, add this to our ongoing researchGroupReference
-      researchGroupReference = researchGroupReference.child(Authentication().getCurrentSignedInUser().uid);
+      // app is in debug mode, check a database location specific to the current app
+      // user instead of the normal database location
+      String currentUserID = Authentication().getCurrentSignedInUser().uid;
+      dataPath = "$currentUserID";
     }
-    researchGroupReference = researchGroupReference.child(this._RESEARCHGROUPROOTLOCATION)
-        .child(researchGroupInfo.databaseKey);
+    dataPath = "$dataPath/$_RESEARCHGROUPROOTLOCATION/${researchGroupInfo.databaseKey}";
+    DatabaseReference researchGroupReference = _databaseInstance.reference().child(dataPath);
     // convert the ResearchGroup object to JSON before writing to the db, this also
     // converts fields and data structures within this object to JSON
     String researchGroupJSON = jsonEncode(researchGroup);
@@ -319,17 +320,17 @@ class Database {
     Config.log.i("adding subject: " + currentSubject.id + " to institution: " + institutionInfo.name +
     " under research group: " + currentResearchGroupInfo.name);
 
-    DatabaseReference institutionSubjectReference = _databaseInstance.reference();
+
+    // path to the desired data on the database
+    String dataPath = "";
     if(kDebugMode){
-      // app is in debug mode, have the database write to a location specific to each
-      // app user, add this to our ongoing institutionSubjectReference
-      institutionSubjectReference = institutionSubjectReference.child(Authentication().getCurrentSignedInUser().uid);
+      // app is in debug mode, check a database location specific to the current app
+      // user instead of the normal database location
+      String currentUserID = Authentication().getCurrentSignedInUser().uid;
+      dataPath = "$currentUserID";
     }
-    institutionSubjectReference = institutionSubjectReference.child(this._RESEARCHGROUPDATALOCATION)
-        .child(currentResearchGroupInfo.databaseKey)
-        .child(this._SUBJECTSDATALOCATION)
-        .child(institutionInfo.databaseKey)
-        .child(currentSubjectInfo.databaseKey);
+    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_SUBJECTSDATALOCATION/${institutionInfo.databaseKey}/${currentSubjectInfo.databaseKey}";
+    DatabaseReference institutionSubjectReference = _databaseInstance.reference().child(dataPath);
 
     // convert our SubjectInfo to be added to this institution to JSON
     String subjectInfoJSON = jsonEncode(currentSubjectInfo);
@@ -357,16 +358,17 @@ class Database {
     Config.log.i("writing meal: " + currentMeal.id + " to the database under research group: " +
     currentResearchGroupInfo.name);
 
-    DatabaseReference mealReference = _databaseInstance.reference();
+
+    // path to the desired data on the database
+    String dataPath = "";
     if(kDebugMode){
-      // app is in debug mode, have the database write to a location specific to each
-      // app user, add this to our ongoing mealReference
-      mealReference = mealReference.child(Authentication().getCurrentSignedInUser().uid);
+      // app is in debug mode, check a database location specific to the current app
+      // user instead of the normal database location
+      String currentUserID = Authentication().getCurrentSignedInUser().uid;
+      dataPath = "$currentUserID";
     }
-    mealReference = mealReference.child(this._RESEARCHGROUPDATALOCATION)
-        .child(currentResearchGroupInfo.databaseKey)
-        .child(this._MEALSDATALOCATION)
-        .child(currentMealInfo.databaseKey);
+    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_MEALSDATALOCATION/${currentMealInfo.databaseKey}";
+    DatabaseReference mealReference = _databaseInstance.reference().child(dataPath);
 
     // convert our Meal to be added to the database to JSON
     String mealJSON = jsonEncode(currentMeal);
