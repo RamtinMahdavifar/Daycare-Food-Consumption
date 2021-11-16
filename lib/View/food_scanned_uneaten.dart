@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter/rendering.dart';
+import "camera_food2.dart";
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 //Image.file(File(img!.path))
@@ -15,14 +16,19 @@ List<String> exampleFoodItems = ["Apple", "Sandwich", "Juice"]; //for String foo
 final nameTextController = new TextEditingController();
 final weightTextController = new TextEditingController(text: "69"); //this value of text would be the value returned by our scale
 final commentsTextController = new TextEditingController();
+
 //XFile? _imageFile;
 bool _nameFoodValid = true;
 bool _weightFoodValid = true;
 //final _newFoodItemKey = GlobalKey<FormState>();
 @override
 //change foodScannedFirst to build when reformatting the code
-Widget foodScannedFirst(BuildContext context, QRViewController controller) {
+Widget foodScannedFirst(BuildContext context, QRViewController controller, String changeThis) {
   print("Image submit dialog opens");
+
+  print(Text("BEFORE CHANGE INSIDE OTHER CLASS" + changeThis));
+  changeThis = "This has changed";
+  print(Text("AFTER CHANGE INSIDE OTHER CLASS" + changeThis));
   //controller.pauseCamera();
   double w = MediaQuery.of(context).size.width;
   return Container(
@@ -41,7 +47,7 @@ Widget foodScannedFirst(BuildContext context, QRViewController controller) {
                         itemPresets(nameTextController),
                         weightEntry(weightTextController, _weightFoodValid),
                         addComments(context, commentsTextController),
-                        submitData(context, controller),
+                        submitData(context, controller, nameTextController, weightTextController, commentsTextController),
                         retakePhoto(context, controller),
                       ],
                     )
@@ -64,12 +70,17 @@ Widget retakePhoto(BuildContext context, QRViewController controller){
   );
 }
 
-Widget submitData(BuildContext context, QRViewController controller){
+Widget submitData(BuildContext context, QRViewController controller, TextEditingController n, TextEditingController w, TextEditingController c){
   return ElevatedButton(
       onPressed: () {
         //submit name - weight - ID - photo - comments - date - institution
         controller.resumeCamera();
         Navigator.of(context, rootNavigator: true).pop();
+        setFoodVars(n.text, w.text, c.text);
+        n.text = "";
+        w.text = "";
+        c;
+
         },
       child: const Text("Submit"),
       style: ElevatedButton.styleFrom(primary: Colors.lightGreen)
