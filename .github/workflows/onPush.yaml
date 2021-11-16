@@ -11,6 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: subosito/flutter-action@v1
+        with: 
+          flutter-version: '2.5.2'
+        
       - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
       
       - name: install flutter dependencies
@@ -21,6 +24,9 @@ jobs:
 
       - name: run dart tests
         run: flutter test --no-sound-null-safety
+        
+      - name: run linter
+        run: flutter analyze
         
       - name: run smoke tests
         uses: reactivecircus/android-emulator-runner@v2
