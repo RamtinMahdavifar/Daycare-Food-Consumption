@@ -70,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                             return ChooseInstitute();
                           }));
                     }).catchError((error){
-                      // we must use catchError to deal with any exceptions thrown by this function
+                      // we must use catchError to deal with any exceptions thrown by this sign in function
                       // as exceptions can be thrown asynchronously or are not caught
                       // by regular try-catches, this is an ongoing flutter bug, see: https://github.com/flutter/flutter/issues/44431
                       Config.log.e("Error occurred during login, error: ${error.toString()}");
