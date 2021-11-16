@@ -1,12 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:googleapis/drive/v3.dart' as drive; // required to request permissions to use google drive
 import 'package:plate_waste_recorder/Helper/config.dart';
 
 /// This class is implemented using the singleton pattern so there can only be
 /// one instance of this authentication class
 class Authentication{
   static final FirebaseAuth _firebaseAuthenticationInstance = FirebaseAuth.instance;
-  static final GoogleSignIn _googleAuthenticationInstance = GoogleSignIn();
+  // specify the google drive scope to our google authentication instance as we want
+  // to ask the user for permission to access their google drive
+  static final GoogleSignIn _googleAuthenticationInstance = GoogleSignIn(scopes: [drive.DriveApi.driveScope]);
 
   // create an instance of this class right away, this instance is our singleton
   // instance
@@ -76,18 +79,34 @@ class Authentication{
     await _firebaseAuthenticationInstance.signOut();
   }
 
-  /// Returns a User object denoting the currently signed in user of the app,
+  /// Returns a User object denoting the currently signed in Firebase user of the app,
   /// Preconditions: User must have signed in previously, if the user hasn't signed
   /// in using google authentication, an Exception is thrown
-  /// Postconditions: Returns a User object describing the currently signed in user
+  /// Postconditions: Returns a User object describing the currently signed in Firebase user
   /// of the app
-  User getCurrentSignedInUser(){
+  User getCurrentSignedInFirebaseUser(){
     User? currentSignedInUser = _firebaseAuthenticationInstance.currentUser;
     if(currentSignedInUser == null){
-      throw new Exception("There is no user currently signed in, to get the currently signed in user, log in");
+      throw new Exception("There is no user currently signed in, to get the currently signed in Firebase user, log in");
     }
     else{
       return currentSignedInUser;
+    }
+  }
+
+  /// Returns a GoogleSignInAccount object representing the google account of the
+  /// current signed in user of the app
+  /// Preconditions: user must have signed into the app previously, if the user
+  /// hasn't signed in to the app using google authentication, an Exception is thrown
+  /// Postconditions: Returns a GoogleSignInAccount object with information from the
+  /// currently signed in user's google account
+  GoogleSignInAccount getCurrentSignedInGoogleAccount(){
+    GoogleSignInAccount? currentUserGoogleAccount = _googleAuthenticationInstance.currentUser;
+    if(currentUserGoogleAccount == null){
+      throw new Exception("There is no user currently signed in, unable to get the current user's google account");
+    }
+    else{
+      return currentUserGoogleAccount;
     }
   }
 }
