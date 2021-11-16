@@ -100,7 +100,7 @@ class Database {
   /// it's own distinct location, this location is still relative to the input research group
   /// if the location specified by the input research group info doesn't
   /// yet exist on the database, it is created.
-  void addInstitutionToResearchGroup(Institution institution, ResearchGroupInfo currentResearchGroupInfo){
+  Future<void> addInstitutionToResearchGroup(Institution institution, ResearchGroupInfo currentResearchGroupInfo) async{
     // ensure the input researchgroup has a database key
     assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
     InstitutionInfo currentInstitutionInfo = institution.getInstitutionInfo();
@@ -116,7 +116,7 @@ class Database {
     }
     dataPath = "$dataPath/$_RESEARCHGROUPROOTLOCATION/${currentResearchGroupInfo.databaseKey}/$_RESEARCHGROUPINSTITUTIONSLOCATION/${currentInstitutionInfo.databaseKey}";
     // check if the input institution already exists for the input research group
-    _dataExistsAtPath(dataPath).then((dataExists){
+    await _dataExistsAtPath(dataPath).then((dataExists){
       if(dataExists){
         Config.log.e("Institution with address: ${institution.address} already exists for the research group: ${currentResearchGroupInfo.databaseKey}");
         throw Exception("Institution with address: ${institution.address} already exists on the database");
