@@ -111,7 +111,7 @@ class Database {
     if(kDebugMode){
       // app is in debug mode, check a database location specific to the current app
       // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInUser().uid;
+      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
       dataPath = "$currentUserID";
     }
     dataPath = "$dataPath/$_RESEARCHGROUPROOTLOCATION/${currentResearchGroupInfo.databaseKey}/$_RESEARCHGROUPINSTITUTIONSLOCATION/${currentInstitutionInfo.databaseKey}";
@@ -166,7 +166,7 @@ class Database {
     if(kDebugMode){
       // app is in debug mode, check a database location specific to the current app
       // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInUser().uid;
+      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
       dataPath = "$currentUserID";
     }
     dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_INSTITUTIONSDATALOCATION/${currentInstitutionInfo.databaseKey}";
@@ -206,7 +206,7 @@ class Database {
     if(kDebugMode){
       // app is in debug mode, check a database location specific to the current app
       // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInUser().uid;
+      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
       dataPath = "$currentUserID";
     }
     dataPath = "$dataPath/$_RESEARCHGROUPROOTLOCATION/${currentResearchGroupInfo.databaseKey}/${institutionInfo.databaseKey}";
@@ -238,7 +238,7 @@ class Database {
     if(kDebugMode){
       // app is in debug mode, check a database location specific to the current app
       // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInUser().uid;
+      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
       dataPath = "$currentUserID";
     }
     dataPath = "$dataPath/$_RESEARCHGROUPROOTLOCATION/${researchGroupInfo.databaseKey}";
@@ -272,7 +272,7 @@ class Database {
     if(kDebugMode){
       // app is in debug mode, check a database location specific to the current app
       // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInUser().uid;
+      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
       dataPath = "$currentUserID";
     }
     dataPath = "$dataPath/$_RESEARCHGROUPROOTLOCATION/${researchGroupInfo.databaseKey}";
@@ -298,7 +298,7 @@ class Database {
     if(kDebugMode){
       // app is in debug mode, check a database location specific to the current app
       // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInUser().uid;
+      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
       dataPath = "$currentUserID";
     }
     dataPath = "$dataPath/$_RESEARCHGROUPROOTLOCATION/${researchGroupInfo.databaseKey}";
@@ -337,7 +337,7 @@ class Database {
     if(kDebugMode){
       // app is in debug mode, check a database location specific to the current app
       // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInUser().uid;
+      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
       dataPath = "$currentUserID";
     }
     dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_SUBJECTSDATALOCATION/${institutionInfo.databaseKey}/${currentSubjectInfo.databaseKey}";
@@ -375,7 +375,7 @@ class Database {
     if(kDebugMode){
       // app is in debug mode, check a database location specific to the current app
       // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInUser().uid;
+      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
       dataPath = "$currentUserID";
     }
     dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_MEALSDATALOCATION/${currentMealInfo.databaseKey}";
