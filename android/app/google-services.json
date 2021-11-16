@@ -103,6 +103,14 @@
           }
         },
         {
+          "client_id": "467115419472-kh9duom51hmdeg3qk8anconj8bnj3k3a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.plate_waste_recorder",
+            "certificate_hash": "98b0300506780a61c33616665d6a9555b028a251"
+          }
+        },
+        {
           "client_id": "467115419472-l4b5omsvkub10sgb6d9fkdgk7623ud4k.apps.googleusercontent.com",
           "client_type": 3
         }
