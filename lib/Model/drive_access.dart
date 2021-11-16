@@ -6,12 +6,14 @@ import 'package:plate_waste_recorder/Model/authentication.dart';
 /// Class used to access google drive to write or read files, this class is defined
 /// using the singleton pattern
 class DriveAccess{
+  // define the http client we'll use to access google drive
+  static final DriveAuthenticationClient _googleDriveClient = DriveAuthenticationClient();
+
+  // define our DriveApi for actually accessing google drive
+  static final DriveApi _driveAccessApi = DriveApi(_googleDriveClient);
 
   // define our one instance of this class
   static final DriveAccess _instance = DriveAccess._privateConstructor();
-
-
-
 
   // define a private constructor so this class cannot be instantiated outside of itself
   DriveAccess._privateConstructor();
@@ -23,6 +25,7 @@ class DriveAccess{
   }
 
 
+
 }
 
 
@@ -31,10 +34,10 @@ class DriveAccess{
 
 
 
-/// Class used to handle authentication when using google drive apis, this class
+/// Class used as an http client to handle authentication when using google drive apis, this class
 /// extends the http BaseClient class as this class already has implementations for
 /// standard http operations ie get, post etc
-class DriveAuthentication extends BaseClient{ // this class is a sort of helper class for our DriveAccess class
+class DriveAuthenticationClient extends BaseClient{ // this class is a sort of helper class for our DriveAccess class
   // we use standard http requests to access google drive, store our http client
   Client _httpClient = new Client();
 
