@@ -50,46 +50,40 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   onPressed: () async {
                     Config.log.i("user has pressed login button, attempting to login via google");
+                    await Authentication().googleSignOut();
                     // the user has pressed the login button, change the state to reflect that
                     // the app is waiting for the google authentication popup
                     setState((){
                       this._authenticationLoading = true;
                     });
                     // attempt to login to the app via google
-                    try{
-                      await Authentication().googleSignIn();
-
-                      // we have finished authenticating
+                    await Authentication().googleSignIn().then((result){
+                      // we have finished authenticating without errors
+                      Config.log.i("Authentication finished successfully, navigating to home page...");
                       setState((){
                         this._authenticationLoading = false;
                       });
 
                       // we've logged in without errors, go to the ChooseInstitute page
-                      await Navigator.push(context, MaterialPageRoute(
+                      Navigator.push(context, MaterialPageRoute(
                           builder: (context){
                             return ChooseInstitute();
                           }));
-                    }
-                    on FirebaseAuthException catch(e){
-                      // login error has occurred, the user has specified invalid credentials
-                      // or some error has occurred
-                      // we have also finished loading our authentication
+                    }).catchError((error){
+                      // we must use catchError to deal with any exceptions thrown by this function
+                      // as exceptions can be thrown asynchronously or are not caught
+                      // by regular try-catches, this is an ongoing flutter bug, see: https://github.com/flutter/flutter/issues/44431
+                      Config.log.e("Error occurred during login, error: ${error.toString()}");
+                      // authentication has finished due to error occurrence
                       setState((){
                         this._authenticationLoading = false;
                       });
-                      if(e.code == "account-exists-with-different-credential" || e.code == "invalid-credential"){
-                        // the user specified invalid credentials, inform the user of this via snackbar
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:
-                        const Text("Login failed due to incorrect email address or password")
-                        ));
-                      }
-                      else{
-                        // authentication failed for some other reason
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:
+
+                      // display to the user that an error has occurred during login
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:
                         const Text("Login failed, please try again")
-                        ));
-                      }
-                    }
+                      ));
+                    });
                   },
                   child: Row(
                       mainAxisSize: MainAxisSize.min,
