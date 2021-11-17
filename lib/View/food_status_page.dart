@@ -36,7 +36,7 @@ class _FoodStatusPageState extends State<FoodStatusPage> {
                 children:  <Widget>[
                   foodStatusButton(context,"Food Uneaten",()=>ID_InputPage()),
 
-                  foodStatusButton(context,"Food Eaten: not thrown out ",()=>UploadData()),
+                  foodStatusButton(context,"Food Eaten: not thrown out",()=>UploadData()),
 
                   foodStatusButton(context,"Food Wasted: container weight",()=>UploadData()),
 
