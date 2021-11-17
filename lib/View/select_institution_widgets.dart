@@ -160,6 +160,6 @@ Widget quickfixButton(BuildContext context){
               return MyHome();
             }));
       },
-      child: Icon(Icons.edit)
+      child: Icon(Icons.edit,size: 50.0,)
   );
 }
