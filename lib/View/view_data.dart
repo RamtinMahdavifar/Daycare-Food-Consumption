@@ -35,11 +35,11 @@ class _ViewDataPageState extends State<ViewDataPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children:  <Widget>[
-                  foodStatusButton(context,"Type 1",()=>ID_InputPage()),
+                  foodStatusButton(context,"Scan QR",()=>ID_InputPage()),
 
-                  foodStatusButton(context,"Type 2",()=>Roster()),
-
-                  foodStatusButton(context,"Type 3",()=>UploadData()),
+                  foodStatusButton(context,"Roster",()=>Roster()),
+                 //TODO: Added a new widget page for export data and replace it with the upload data stub
+                  foodStatusButton(context,"Export All Data",()=>UploadData()),
 
 
 
