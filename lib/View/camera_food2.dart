@@ -251,6 +251,12 @@ class _CameraFood2State extends State<CameraFood2> with
                   )
                 ),
                ),
+/*            Dialog(
+                barrierColor: null,//jank workaround remove the shadow from the dialog
+                barrierDismissible: false,
+                context: context,
+                builder: (_) => foodScannedFirst(context, QRcontroller!, testStringVar) //needs to check for null at some point, do this later
+            ),*/
             _captureImage(), //camera Capture button
           ]
       ),
