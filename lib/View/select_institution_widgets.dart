@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Model/database.dart';
-import 'package:plate_waste_recorder/View/upload_data.dart';
-import '../Model/institution.dart';
 import 'add_institutions_form.dart';
 import 'institution_page.dart';
 import 'qrcode.dart';
