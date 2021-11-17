@@ -14,6 +14,10 @@ class ViewDataPage extends StatefulWidget {
 class _ViewDataPageState extends State<ViewDataPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Center(
+        child: Column(
+            children:
+        )
+    );
   }
 }
