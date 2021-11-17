@@ -36,17 +36,17 @@ class _ID_InputPageState extends State<ID_InputPage> {
               Expanded(
                 child: Icon(
                   Icons.qr_code_scanner,
-                  size: 500.0,
+                  size: 300.0,
                 )
               ),
               Expanded(
-                child: Padding(padding: EdgeInsets.all(10),
+                child: Padding(padding: EdgeInsets.all(0),
                     child: Row(
 
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         //most of the buttons do not navigate anywhere and have null as their navigation parameter
-                        menuButton(context,"Input ID", () => InputIDForm(), 1),
+                        manualInput(context,"Input ID", () => InputIDForm(), 1),
 
                       ],
 
