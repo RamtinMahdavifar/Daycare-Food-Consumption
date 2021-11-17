@@ -34,11 +34,11 @@ class _FoodStatusPageState extends State<FoodStatusPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children:  <Widget>[
-                  foodStatusButton(context,"Food Type 1",()=>ID_InputPage()),
+                  foodStatusButton(context,"Food Uneaten",()=>ID_InputPage()),
 
-                  foodStatusButton(context,"Food Type 2",()=>UploadData()),
+                  foodStatusButton(context,"Food Eaten: not thrown out ",()=>UploadData()),
 
-                  foodStatusButton(context,"Food Type 3",()=>UploadData()),
+                  foodStatusButton(context,"Food Wasted: container weight",()=>UploadData()),
 
 
 
