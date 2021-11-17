@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'food_status_widget.dart';
+import 'id_input_page.dart';
 import 'institution_page_widgets.dart';
 import 'upload_data.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
@@ -33,7 +34,7 @@ class _FoodStatusPageState extends State<FoodStatusPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children:  <Widget>[
-                  foodStatusButton(context,"Food Type 1",()=>UploadData()),
+                  foodStatusButton(context,"Food Type 1",()=>ID_InputPage()),
 
                   foodStatusButton(context,"Food Type 2",()=>UploadData()),
 
