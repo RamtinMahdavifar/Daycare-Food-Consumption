@@ -373,7 +373,17 @@ class _CameraFood2State extends State<CameraFood2> with
           ),
         ),
         child: Text("Finish", style: TextStyle(fontSize: 32)),
-        onPressed: () {},
+        onPressed: () {
+          //await reassemble();
+          Navigator.of(context, rootNavigator: true).pop(); //leave camera
+          Navigator.of(context, rootNavigator: true).pop(); //leave old qr
+          Navigator.push(context, MaterialPageRoute( //open new one to scan
+              builder: (context) {
+                return QRViewExample();
+              }));
+
+
+        },
       )
     );
   }
