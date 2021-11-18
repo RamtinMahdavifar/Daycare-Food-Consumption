@@ -56,6 +56,10 @@ dependencies:
   permission_handler: ^7.1.0
   file_picker: ^3.0.4
   camera: ^0.9.4+3
+  screenshot: ^1.2.3
+  flutter_native_screenshot: ^1.1.2
+  image: ^3.0.8
+
 
 
 dev_dependencies:

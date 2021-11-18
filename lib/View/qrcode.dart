@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-
+import "camera_food2.dart";
 
 class MyHome extends StatelessWidget {
   const MyHome({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class MyHome extends StatelessWidget {
             ),
           ),
           QrImage(
-            data: 'ID 00-420-69',
+            data: 'This is a working QR Code which will hold a child ID',
             version: QrVersions.auto,
             size: 430,
           )
@@ -65,7 +65,7 @@ class _QRViewExampleState extends State<QRViewExample> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Expanded(flex: 4, child: _buildQrView(context)),
+          Expanded(flex: 4, child: BuildQrView(context)),
           Expanded(
             flex: 1,
             child: FittedBox(
@@ -96,7 +96,8 @@ class _QRViewExampleState extends State<QRViewExample> {
                               builder: (context, snapshot) {
                                 return Text('Flash: ${snapshot.data}');
                               },
-                            )),
+                            )
+                        ),
                       ),
                       Container(
                         margin: EdgeInsets.all(8),
@@ -152,7 +153,7 @@ class _QRViewExampleState extends State<QRViewExample> {
     );
   }
 
-  Widget _buildQrView(BuildContext context) {
+  Widget BuildQrView(BuildContext context) {
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
         MediaQuery.of(context).size.height < 400)
@@ -174,14 +175,43 @@ class _QRViewExampleState extends State<QRViewExample> {
     );
   }
 
-  void _onQRViewCreated(QRViewController controller) {
+  void _onQRViewCreated(QRViewController controller) async{
     setState(() {
       this.controller = controller;
+      if (this.controller != null){
+        this.controller!.flipCamera();
+      }else{
+        print("null controller used");
+      }
+
+// code below was my attempt at making sure the camera was actually facing the front before just flipping the camera
+/*      if (this.controller != null) {
+        if (describeEnum(this.controller!.getCameraInfo()) == "front") {
+          this.controller!.flipCamera();
+        }
+        print(Text("CAMERA IS FACING: " + describeEnum(this.controller!.getCameraInfo())));
+      }else{
+        print("Invalid Controller");
+      }*/
+
     });
+
+
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
+        setIDVar(result!.code);
       });
+
+      Navigator.push(context, MaterialPageRoute(
+          builder: (context){
+            reassemble();
+            return CameraFood2();
+            // on qr found, take to food data input screen, this will be
+            // modified to account for viewing id data and the two different
+            // food data input screens
+          }));
+
     });
   }
 
