@@ -95,6 +95,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "467115419472-0hi179em041j0hniu33jghr0fdj8cejk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.plate_waste_recorder",
+            "certificate_hash": "224e9077348212f82424201708d645d3503ebd5f"
+          }
+        },
+        {
           "client_id": "467115419472-jgko7sggrri3bqlr13jb59akk37qvonj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
