@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'food_status_page.dart';
 import 'institution_page_widgets.dart';
 import 'upload_data.dart';
+import 'camera_food2.dart';
+import 'qrcode.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
+import 'camera_food.dart';
+import 'qrcode.dart';
 
 class InstitutionPage extends StatefulWidget {
   String institutionName;
@@ -48,7 +52,6 @@ class _InstitutionPageState extends State<InstitutionPage> {
                       ],
 
                     )),
-                
               ),
               Expanded(
                 child: Padding(padding: EdgeInsets.all(10),
