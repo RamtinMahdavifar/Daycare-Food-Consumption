@@ -57,7 +57,6 @@ class _InstitutionPageState extends State<InstitutionPage> {
 
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        //most of the buttons do not navigate anywhere and have null as their navigation parameter
                         menuButton(context,"View Data", () => ViewDataPage(widget.institutionName, widget.institutionAddress), 3),
                         SizedBox(width: 50),
                         menuButton(context,"Input Data", () => FoodStatusPage(), 1),
