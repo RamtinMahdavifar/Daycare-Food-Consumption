@@ -5,7 +5,7 @@ include: package:pedantic/analysis_options.yaml
 analyzer:
   exclude:
     - lib/generated/**
-    - lib/view/
+    - lib/View/
     - test/
     - lib/Model/food.dart
 
