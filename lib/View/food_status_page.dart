@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'food_status_widget.dart';
 import 'institution_page_widgets.dart';
-import 'upload_data.dart';
+import 'qrcode.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 
 class FoodStatusPage extends StatefulWidget {
@@ -33,11 +33,11 @@ class _FoodStatusPageState extends State<FoodStatusPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children:  <Widget>[
-                  foodStatusButton(context,"Food Type 1",()=>UploadData()),
+                  foodStatusButton(context,"Food Type 1",()=>QRViewExample()),
 
-                  foodStatusButton(context,"Food Type 2",()=>UploadData()),
+                  foodStatusButton(context,"Food Type 2",()=>QRViewExample()),
 
-                  foodStatusButton(context,"Food Type 3",()=>UploadData()),
+                  foodStatusButton(context,"Food Type 3",()=>QRViewExample()),
 
 
 

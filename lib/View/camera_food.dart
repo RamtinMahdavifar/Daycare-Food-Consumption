@@ -1,10 +1,16 @@
+/*
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'food_scanned_uneaten.dart';
+import 'package:flutter/services.dart';
 //import 'package:video_player/video_player.dart';
+//import 'package:qr_code_scanner/qr_code_scanner.dart';
+//import 'package:qr_flutter/qr_flutter.dart';
+import 'dart:typed_data';
+
 
 
 class CameraFood extends StatefulWidget {
@@ -22,26 +28,17 @@ void logError(String code, String? message) {
 
 class _CameraFoodState extends State<CameraFood> with
     WidgetsBindingObserver, TickerProviderStateMixin {
+  //REMOVE LIKE ALL OF THIS WHEN YOU GET A CHANCE, EXCEPT FOR CAMERA CONTROLLER AND IMAGEFILE
+
   CameraController? controller;
   XFile? imageFile;
   XFile? videoFile;
-  //VideoPlayerController? videoController;
-  VoidCallback? videoPlayerListener;
+  //VideoPlayerController? videoControllVoidCallback? videoPlayerListener;
   bool enableAudio = true;
-  double _minAvailableExposureOffset = 0.0;
-  double _maxAvailableExposureOffset = 0.0;
-  double _currentExposureOffset = 0.0;
-  late AnimationController _flashModeControlRowAnimationController;
-  late Animation<double> _flashModeControlRowAnimation;
-  late AnimationController _exposureModeControlRowAnimationController;
-  late Animation<double> _exposureModeControlRowAnimation;
-  late AnimationController _focusModeControlRowAnimationController;
-  late Animation<double> _focusModeControlRowAnimation;
   double _minAvailableZoom = 1.0;
   double _maxAvailableZoom = 1.0;
   double _currentScale = 1.0;
   double _baseScale = 1.0;
-
 
   int _pointers = 0;
   @override
@@ -50,7 +47,9 @@ class _CameraFoodState extends State<CameraFood> with
     //this is for the null safety check stuff
     _ambiguate(WidgetsBinding.instance)?.addObserver(this);
     initializeCameras();
+    //SystemChrome.
   }
+
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -73,6 +72,13 @@ class _CameraFoodState extends State<CameraFood> with
     try {
       WidgetsFlutterBinding.ensureInitialized();
       cameras = await availableCameras();
+      print("AVAILABLE CAMERAS:");
+      for (CameraDescription cameraDescription in cameras){
+        print(cameraDescription);
+        //cameraDescription.lensDirection = cameras[0].lensDirection;
+        //cameraDescription.set(cameras[0].lensDirection);
+      }
+      //print(cameras[1].lensDirection);
     } on CameraException catch (e) {
       logError(e.code, e.description);
     }
@@ -124,6 +130,7 @@ class _CameraFoodState extends State<CameraFood> with
 
   Widget _cameraPreviewWidget() {
     final CameraController? cameraController = controller;
+
 
     if (cameraController == null || !cameraController.value.isInitialized) {
       return Text(
@@ -225,7 +232,7 @@ class _CameraFoodState extends State<CameraFood> with
       await controller!.dispose();
     }
     final CameraController cameraController = CameraController(
-      cameraDescription, ResolutionPreset.medium, enableAudio: false,
+      cameraDescription, ResolutionPreset.high, enableAudio: false,
       imageFormatGroup: ImageFormatGroup.jpeg
     );
 
@@ -249,7 +256,7 @@ class _CameraFoodState extends State<CameraFood> with
 
   void onTakePictureButtonPressed() {
     //XFile? file = controller.takePicture();
-    takePicture().then((XFile? file) {
+    takePicture().then((File? file) {
       if (mounted) {
         setState(() {
           imageFile = file;
@@ -259,10 +266,10 @@ class _CameraFoodState extends State<CameraFood> with
         });
         if (file != null){
           showInSnackBar('Picture saved to ${file.path}');
-
+          Uint8List? BANDAID;
           showDialog(
               context: context,
-              builder: (_) => foodScannedFirst(context, file)
+              builder: (_) => foodScannedFirst(context, file?)
           );
         }
       }
@@ -319,4 +326,4 @@ Future<void> main() async{
 // What's this??? This allows a value of typ T or T? to be treated as a val of type T?
 // Why?? because this thing is not finished and more stable versions of the flutter camera API
 // are not expected to release until late 2021
-T? _ambiguate<T>(T? value) => value;
+T? _ambiguate<T>(T? value) => value;*/

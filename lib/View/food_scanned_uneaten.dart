@@ -1,10 +1,13 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 import 'name_suggest.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter/rendering.dart';
+import "camera_food2.dart";
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 //Image.file(File(img!.path))
@@ -13,57 +16,67 @@ List<String> exampleFoodItems = ["Apple", "Sandwich", "Juice"]; //for String foo
 final nameTextController = new TextEditingController();
 final weightTextController = new TextEditingController(text: "69"); //this value of text would be the value returned by our scale
 final commentsTextController = new TextEditingController();
+
 //XFile? _imageFile;
 bool _nameFoodValid = true;
 bool _weightFoodValid = true;
 //final _newFoodItemKey = GlobalKey<FormState>();
 @override
 //change foodScannedFirst to build when reformatting the code
-Widget foodScannedFirst(BuildContext context, XFile? imageFile) {
-  return Dialog(
-    child: Form(
-      //key: _newFoodItemKey,
-      child: Scaffold(
-        body: Row(
-          children: [
-            Column(
-              children: [
-                Image.file(File(imageFile!.path)),
-                retakePhoto(context),
-              ]
-            ),
-            Flexible(
-              child: Column(
-                children: [
-                  //nameEntrySuggester(nameTextController, _nameFoodValid),
-                  suggestBox(context, nameTextController, _nameFoodValid),
-                  itemPresets(nameTextController),
-                  weightEntry(weightTextController, _weightFoodValid),
-                  addComments(context, commentsTextController),
-                  submitData(context)
-                ],
-              )
+Widget foodScannedFirst(BuildContext context, QRViewController controller, String changeThis) {
+  print("Image submit dialog opens");
+  //controller.pauseCamera();
+  double w = MediaQuery.of(context).size.width;
+  return Container(
+      padding: EdgeInsets.fromLTRB(w/2, 37, 0, 30), // bottom 30, top 37, these are precision measurements for all screens btw
+      child:Dialog(
+        elevation: 0,
+        child: Form(
+          //key: _newFoodItemKey,
+            child: Scaffold(
+              body:
+                Center(
+                    child: Column(
+                      children: [
+                        //nameEntrySuggester(nameTextController, _nameFoodValid),
+                        suggestBox(context, nameTextController, _nameFoodValid),
+                        itemPresets(nameTextController),
+                        weightEntry(weightTextController, _weightFoodValid),
+                        addComments(context, commentsTextController),
+                        submitData(context, controller, nameTextController, weightTextController, commentsTextController),
+                        retakePhoto(context, controller),
+                      ],
+                    )
+                )
             )
-          ]
         )
       )
-    )
   );
+
 }
 
-Widget retakePhoto(BuildContext context){
+Widget retakePhoto(BuildContext context, QRViewController controller){
   return ElevatedButton(
-      onPressed: () {Navigator.of(context, rootNavigator: true).pop();},
+      onPressed: () {
+        controller.resumeCamera();
+        Navigator.of(context, rootNavigator: true).pop();
+        },
       child: const Text("Retake Photo"),
       style: ElevatedButton.styleFrom(primary: Colors.redAccent)
   );
 }
 
-Widget submitData(BuildContext context){
+Widget submitData(BuildContext context, QRViewController controller, TextEditingController n, TextEditingController w, TextEditingController c){
   return ElevatedButton(
       onPressed: () {
         //submit name - weight - ID - photo - comments - date - institution
+        controller.resumeCamera();
         Navigator.of(context, rootNavigator: true).pop();
+        setFoodVars(n.text, w.text, c.text);
+        n.text = "";
+        w.text = "";
+        c;
+
         },
       child: const Text("Submit"),
       style: ElevatedButton.styleFrom(primary: Colors.lightGreen)
