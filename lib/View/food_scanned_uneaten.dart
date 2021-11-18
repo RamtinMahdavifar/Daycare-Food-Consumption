@@ -73,9 +73,9 @@ Widget submitData(BuildContext context, QRViewController controller, TextEditing
         controller.resumeCamera();
         Navigator.of(context, rootNavigator: true).pop();
         setFoodVars(n.text, w.text, c.text);
-        n.text = "";
-        w.text = "";
-        c.text = "";
+        n.clear();
+        w.clear();
+        c.clear();
 
         },
       child: const Text("Submit"),
