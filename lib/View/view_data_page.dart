@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:plate_waste_recorder/Helper/config.dart';
+import 'package:plate_waste_recorder/View/qrcode.dart';
 
 class ViewDataPage extends StatefulWidget {
   String institutionName;
@@ -19,34 +21,51 @@ class _ViewDataPageState extends State<ViewDataPage> {
       body: Center(
           child: Column(
               children: <Widget>[
-                SizedBox(height: 80.0),
-                Card(
-                  // TODO: make sizes relative to screen size
-                    child: SizedBox(width: 800.0, height: 80.0,
-                        child: Container(margin: EdgeInsets.only(top: 20.0, bottom: 20.0, left: 40.0, right: 40.0),
-                            child: ListTile(title: Center(child: Text("test 1"))))
-                    )
-                ),
-                SizedBox(height: 80.0), // add an empty SizedBox between column elements
+                // add an empty SizedBox between column elements
                 // to create space between elements
-                Card(
-                    child: SizedBox(width: 800.0, height: 80.0,
-                        child: Container(margin: EdgeInsets.only(top: 20.0, bottom: 20.0, left: 40.0, right: 40.0),
-                            child: ListTile(
-                                title: Center(child: Text("test 2"))),
-                        )
-                    )
-                ),
                 SizedBox(height: 80.0),
-                Card(
-                    child: SizedBox(width: 800.0, height: 80.0,
-                        child: Container(margin: EdgeInsets.only(top: 20.0, bottom: 20.0, left: 40.0, right: 40.0),
-                            child: ListTile(title: Center(child: Text("test 3"))))
-                    )
-                )
+                ViewDataOption("Scan QR Code", (){
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context){
+                      return QRViewExample(); // TODO: replace with actual QR code page
+                    }));
+                }),
+                SizedBox(height: 80.0),
+                ViewDataOption("Select From Roster", (){
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context){
+                        return QRViewExample(); // TODO: replace with roster page
+                      }));
+                }),
+                SizedBox(height: 80.0),
+                ViewDataOption("Export Data", (){
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context){
+                        return QRViewExample();
+                      }));
+                }),
               ]
           )
       )
+    );
+  }
+
+  Widget ViewDataOption(String optionName, void Function() tapFunction){
+    assert(optionName.isNotEmpty);
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    return Card(
+        child: SizedBox(width: screenWidth*0.625, height: screenHeight*0.15,
+            child: ListTile(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+              tileColor: Colors.green,
+              title: Center(child: Text(optionName)),
+              onTap: (){
+                Config.log.i("User selected the option: $optionName");
+                tapFunction();
+              },
+            )
+        )
     );
   }
 }
