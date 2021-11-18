@@ -25,8 +25,7 @@ jobs:
       - name: run flutter doctor
         run: flutter doctor -v
               
-      - name: run linter
-        run: flutter analyze
+
         
 
         
