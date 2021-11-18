@@ -41,7 +41,7 @@ class _InstitutionPageState extends State<InstitutionPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     //most of the buttons do not navigate anywhere and have null as their navigation parameter
-                    menuButton(context, "QR Code", () => MyHome()),
+                    menuButton(context, "QR Code", () => QRViewExample()),
                     menuButton(context, "Camera", () => CameraFood2()),
                     menuButton(context, "Roster", () => UploadData()),
                   ],

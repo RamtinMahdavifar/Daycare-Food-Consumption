@@ -25,14 +25,10 @@ bool _weightFoodValid = true;
 //change foodScannedFirst to build when reformatting the code
 Widget foodScannedFirst(BuildContext context, QRViewController controller, String changeThis) {
   print("Image submit dialog opens");
-
-  print(Text("BEFORE CHANGE INSIDE OTHER CLASS" + changeThis));
-  changeThis = "This has changed";
-  print(Text("AFTER CHANGE INSIDE OTHER CLASS" + changeThis));
   //controller.pauseCamera();
   double w = MediaQuery.of(context).size.width;
   return Container(
-      padding: EdgeInsets.fromLTRB(w/2, 37, 0, 30), //botton 30, top 37, these are precision measurements for all screens btw
+      padding: EdgeInsets.fromLTRB(w/2, 37, 0, 30), // bottom 30, top 37, these are precision measurements for all screens btw
       child:Dialog(
         elevation: 0,
         child: Form(
