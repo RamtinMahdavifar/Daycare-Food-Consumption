@@ -70,9 +70,11 @@ class _ID_InputPageState extends State<ID_InputPage> {
         setIDVar(result!.code);
       });
 
+      controller.stopCamera();
+
       Navigator.push(context, MaterialPageRoute(
           builder: (context){
-            reassemble();
+            //reassemble();
             return CameraFood2();
             // on qr found, take to food data input screen, this will be
             // modified to account for viewing id data and the two different
