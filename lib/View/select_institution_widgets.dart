@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Model/database.dart';
+import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/View/upload_data.dart';
 import '../Model/institution.dart';
 import 'add_institutions_form.dart';
@@ -105,49 +106,84 @@ Widget institutionDisplay(BuildContext context) {
           builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {
             List<Widget> children;
             if (snapshot.hasError) {
-              children = <Widget>[Text("errors in database read occured")];
-              Config.log.e("errors occured while reading institutions from the database on institution page, error: " + snapshot.error.toString());
+              Config.log.e("errors occurred while reading institutions from the database on institution page, error: " + snapshot.error.toString());
+              return Text("errors in database read occurred");
             }
             else {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
-                  children = <Widget>[Text("connection state none")];
                   Config.log.w("connection state none when reading institutions from the database");
-                  // TODO: include a network error message or read local data
+                  // display a loading animation here, this will continue until we are
+                  // able to connect to the database
+                  // TODO: consider displaying something else here, ex an error message indicating no database connection
+                  return Center(child: CircularProgressIndicator(
+                    value: null,
+                    color: Colors.green,
+                  ));
                   break;
                 case ConnectionState.waiting:
                   Config.log.i("connection state waiting when reading institutions from the database");
-                  children = <Widget>[Text("connection state waiting")];
-                  // TODO: include a loading or progress bar
+                  // include a waiting animation while we connect to the database
+                  // value: null here indicates that the progress animation will
+                  // continue forever, until we read data from the database
+                  return Center(child: CircularProgressIndicator(
+                    value: null,
+                    color: Colors.green,
+                  ));
                   break;
                 case ConnectionState.active:
                   Config.log.i("active connection state when reading institutions from the database");
                 // TODO: see about using async database function to return a ResearchGroup to do all this
                 // TODO: instead of having to have the below code to create a ResearchGroup here
                   DataSnapshot researchGroupSnapshot = snapshot.data!.snapshot;
-                  Map<dynamic, dynamic> testMap = researchGroupSnapshot.value as Map<dynamic,dynamic>;
-                  String encodedMap = jsonEncode(testMap);
+                  if(researchGroupSnapshot.value == null){
+                    // if the retrieved researchGroupSnapshot contains null ie
+                    // doesn't have any data, there are no institutions
+                    // present on the database for the current research group
+                    // display a message indicating this
+                    Config.log.w("DataSnapshot has null value when reading institutions from the database, ie no institutions are read");
+                    return Center(child:
+                      Text("No Institutions Have Yet Been Created, be the First to Create One Above",
+                        style: TextStyle(fontSize: 28.0))
+                    );
+                  }
+                  else{
+                    // otherwise we do have institutions on the database, display these
+                    Config.log.i("Institutions present in DataSnapshot, displaying these");
+                    Map<dynamic, dynamic> snapshotValueMap = researchGroupSnapshot.value as Map<dynamic,dynamic>;
+                    String encodedMap = jsonEncode(snapshotValueMap);
+                    Map<String, dynamic> researchGroupJSON = json.decode(
+                        encodedMap) as Map<String,dynamic>;
+                    // in lieu of creating an entire ResearchGroup object from the read
+                    // in data, merely display the institutions of the researchgroup
+                    // until research group creation is implemented
+                    Map<String, dynamic> institutionsMap = researchGroupJSON["_institutionsMap"];
+                    // convert the values of this map to a list of InstitutionInfos
+                    // as each value in this map is the JSON representing an InstitutionInfo object
+                    List<InstitutionInfo> existingInstitutions = institutionsMap.values.map((institutionJSON)=>
+                      InstitutionInfo.fromJSON(institutionJSON)).toList();
+                    // finally produce a list of widgets each representing an institution
+                    // to be displayed in our list view, here converting to institutionInfoss
+                    // above is a convenience as opposed to accessing fields of JSON directly
+                    children = existingInstitutions.map((institutionInfo) =>
+                            listedInst(context, institutionInfo.name, institutionInfo.institutionAddress)).toList();
+                    // TODO: doing one pass of the JSON directly is of course more efficient
 
-                  Map<String, dynamic> researchGroupJSON = json.decode(
-                      encodedMap
-                  ) as Map<String,dynamic>;
-                  ResearchGroup retrievedResearchGroup = ResearchGroup.fromJSON(
-                      researchGroupJSON);
-                  children = retrievedResearchGroup.institutionsMap.values.map(
-                          (institution) =>
-                          listedInst(context, institution.name,
-                              institution.institutionAddress)
-                  ).toList();
+                    /*ResearchGroup retrievedResearchGroup = ResearchGroup.fromJSON(researchGroupJSON);
+                    children = retrievedResearchGroup.institutionsMap.values.map(
+                            (institution) =>
+                            listedInst(context, institution.name, institution.institutionAddress)).toList();
+                     */
+                    // display these read in institutions in a listview
+                    return ListView(children: children);
+                  }
                   break;
                 case ConnectionState.done:
                   Config.log.i("connection state done when reading institutions from the database");
-                  children = <Widget>[Text("connection state done")];
+                  return Text("connection state done");
                   break;
               }
             }
-            return ListView(
-                children: children
-            );
           })
   );
 }
@@ -159,7 +195,6 @@ Widget quickfixButton(BuildContext context){
         // pass the name of the clicked on institution to the daycare screen
         Navigator.push(context, MaterialPageRoute(
             builder: (context){
-
               return MyHome();
             }));
       },
