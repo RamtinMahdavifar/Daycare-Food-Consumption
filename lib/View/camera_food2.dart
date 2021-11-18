@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:plate_waste_recorder/View/id_input_page.dart';
 
 import 'qrcode.dart';
 import "../Model/variables.dart";
@@ -379,7 +380,7 @@ class _CameraFood2State extends State<CameraFood2> with
           Navigator.of(context, rootNavigator: true).pop(); //leave old qr
           Navigator.push(context, MaterialPageRoute( //open new one to scan
               builder: (context) {
-                return QRViewExample();
+                return ID_InputPage();
               }));
 
 
