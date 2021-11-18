@@ -4,13 +4,14 @@ import 'package:plate_waste_recorder/View/upload_data.dart';
 import '../Model/institution.dart';
 import 'add_institutions_form.dart';
 import 'institution_page.dart';
+import 'camera_food.dart';
 import 'qrcode.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
 import 'package:plate_waste_recorder/Model/research_group.dart';
 import 'dart:convert'; // required for jsonDecode()
 import 'package:plate_waste_recorder/Helper/config.dart';
-
+import "camera_food2.dart";
 
 //select_institution page button which navigates to that desired institution_page
 Widget listedInst(BuildContext context, String name, String address){
@@ -21,6 +22,7 @@ Widget listedInst(BuildContext context, String name, String address){
             // pass the name of the clicked on institution to the daycare screen
             Navigator.push(context, MaterialPageRoute(
                 builder: (context){
+                  setInstituteVar(name);
                   return InstitutionPage(name, address);
                 }));
           },
