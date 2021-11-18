@@ -140,7 +140,6 @@ class _CameraFood2State extends State<CameraFood2> with
       newDir = Directory(newPath);
 
       if (!await newDir.exists()) {
-        print("one line before");
         await newDir.create(recursive: true);
         print(Text("CREATED PATH: " + newDir.path));
         return 1;
@@ -197,9 +196,10 @@ class _CameraFood2State extends State<CameraFood2> with
     //String imgAppend = testNo.toString() + ".png";
     //imgFile = File(path!); //image created from og screenshot
     i.Image IMG = i.decodePng(File(path!).readAsBytesSync())!; //encode the og image into IMG
-
     width != null && height != null
-      ? IMG = i.copyCrop(IMG, 5, 90, (width!/2).toInt(), (height! - 200).toInt()) //starting at coords 5,90, to cut off the appbar, and only get the left half, and dont grab bottom portion with capute button on it
+      ? IMG = i.copyCrop(IMG, 5, 61, (width!/2).toInt() - 5, (height! - 139).toInt())
+    //starting at coords 5,61, to cut off the appbar, and only get the left half, and dont grab bottom portion with capture button on it
+    // appbar is 56 + size 5 border,
       : IMG = i.copyCrop(IMG, 400, 100, 500, 500); //resize OG image to be smaller
 
     //image =  i.flipHorizontal(IMG);
@@ -241,12 +241,44 @@ class _CameraFood2State extends State<CameraFood2> with
               child: Container(
                 child: Center(
                     child: Container(
-                      padding: EdgeInsets.fromLTRB(0.0, 0.0, width!/2 , 0.0),
+                      //padding: EdgeInsets.fromLTRB(0.0, 0.0, width!/2 , 0.0),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.blueAccent, width: 5.0),
                         color: Colors.white
                       ),
-                      child: BuildQrView(context)
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Flexible(
+                              child: BuildQrView(context)
+                          ),
+                          Flexible(
+                            fit: FlexFit.loose,
+                            child: Center(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  idLabel(),
+                                  SizedBox(height: height!/5),
+                                  captureImageButton(),
+                                  SizedBox(height: 20),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      viewDataButton(),
+                                      SizedBox(width: 20),
+                                      finishButton()
+                                    ]
+                                  ),
+                                  SizedBox(height: 20),
+                                ]
+                              )
+                            )
+                          )
+
+                        ],
+                      )
                     ) //this is the Viewfinder
                   )
                 ),
@@ -294,7 +326,6 @@ class _CameraFood2State extends State<CameraFood2> with
     QRcontroller == null
     ? print("No QR Controller active")
     :
-      print(Text("BEFORE CHANGE IN CAMERA" + testStringVar));
       QRcontroller!.pauseCamera();
       await showDialog( //open the dialog first before begining the image capture process
           barrierColor: null,//jank workaround remove the shadow from the dialog
@@ -302,13 +333,73 @@ class _CameraFood2State extends State<CameraFood2> with
           context: context,
           builder: (_) => foodScannedFirst(context, QRcontroller!, testStringVar) //needs to check for null at some point, do this later
       );
-      print(Text("AFTER CHANGE IN CAMERA"));
-      print(FOODNAME);
     print("Dialog Code passed");
     takeShot();
     print("takeShot completed");
     QRcontroller!.resumeCamera();
     print("Image Capture Finish");
+  }
+
+  Widget captureImageButton() {
+    return SizedBox(
+      height: height!/5,
+      width: (width!/3) + 20,
+      child: ElevatedButton(
+
+        style: ElevatedButton.styleFrom(
+          primary: Colors.white70,
+          shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.lightGreen, width: 5),
+            borderRadius: new BorderRadius.circular(3)
+          ),
+        ),
+        child: Text(" Capture Image " + " [SPACE]", style: TextStyle(fontSize: 38, color: Colors.black)),
+        onPressed:
+          SScontroller != null
+              ? onTakePictureButtonPressed : null
+
+      )
+    );
+  }
+
+  Widget viewDataButton() {
+    return SizedBox(
+      height: height!/6,
+      width: width!/6,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.white70,
+          shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.black, width: 5),
+              borderRadius: new BorderRadius.circular(3)
+          ),
+        ),
+        child: Text("View Data", style: TextStyle(fontSize: 32, color: Colors.black)),
+        onPressed: () {},
+      )
+    );
+  }
+
+  Widget finishButton() {
+    return SizedBox(
+      height: height!/6,
+      width: width!/6,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.green,
+          shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.black, width: 5),
+              borderRadius: new BorderRadius.circular(3)
+          ),
+        ),
+        child: Text("Finish", style: TextStyle(fontSize: 32)),
+        onPressed: () {},
+      )
+    );
+  }
+
+  Widget idLabel() {
+    return Container(child:(Text("0000042069", style: TextStyle(fontSize: 56))));
   }
 
 

@@ -174,9 +174,25 @@ class _QRViewExampleState extends State<QRViewExample> {
     );
   }
 
-  void _onQRViewCreated(QRViewController controller) {
+  void _onQRViewCreated(QRViewController controller) async{
     setState(() {
       this.controller = controller;
+      if (this.controller != null){
+        this.controller!.flipCamera();
+      }else{
+        print("null controller used");
+      }
+
+// code below was my attempt at making sure the camera was actually facing the front before just flipping the camera
+/*      if (this.controller != null) {
+        if (describeEnum(this.controller!.getCameraInfo()) == "front") {
+          this.controller!.flipCamera();
+        }
+        print(Text("CAMERA IS FACING: " + describeEnum(this.controller!.getCameraInfo())));
+      }else{
+        print("Invalid Controller");
+      }*/
+
     });
 
 
@@ -185,10 +201,16 @@ class _QRViewExampleState extends State<QRViewExample> {
         result = scanData;
         setIDVar(result!.code);
       });
+
       Navigator.push(context, MaterialPageRoute(
           builder: (context){
+            reassemble();
             return CameraFood2();
+            // on qr found, take to food data input screen, this will be
+            // modified to account for viewing id data and the two different
+            // food data input screens
           }));
+
     });
   }
 
