@@ -86,6 +86,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                       Container(
                         margin: EdgeInsets.all(8),
                         child: ElevatedButton(
+                            key: ValueKey('flash button'),
                             onPressed: () async {
                               await controller?.toggleFlash();
                               setState(() {});
