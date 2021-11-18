@@ -51,7 +51,6 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   onPressed: () async {
                     Config.log.i("user has pressed login button, attempting to login via google");
-                    await Authentication().googleSignOut(); // TODO: remove this
                     // the user has pressed the login button, change the state to reflect that
                     // the app is waiting for the google authentication popup
                     setState((){
@@ -61,7 +60,6 @@ class _LoginPageState extends State<LoginPage> {
                     await Authentication().googleSignIn().then((result) async{
                       // we have finished authenticating without errors
                       Config.log.i("Authentication finished successfully, navigating to home page...");
-                      await DriveAccess().uploadFile();
                       setState((){
                         this._authenticationLoading = false;
                       });
