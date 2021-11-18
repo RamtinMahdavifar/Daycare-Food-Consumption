@@ -11,7 +11,7 @@ import 'package:firebase_database/firebase_database.dart'; // need to include fo
 import 'package:plate_waste_recorder/Model/research_group.dart';
 import 'dart:convert'; // required for jsonDecode()
 import 'package:plate_waste_recorder/Helper/config.dart';
-import "camera_food2.dart";
+import "../Model/variables.dart";
 
 //select_institution page button which navigates to that desired institution_page
 Widget listedInst(BuildContext context, String name, String address){
@@ -23,6 +23,7 @@ Widget listedInst(BuildContext context, String name, String address){
             Navigator.push(context, MaterialPageRoute(
                 builder: (context){
                   setInstituteVar(name);
+                  setDATE();
                   return InstitutionPage(name, address);
                 }));
           },

@@ -5,6 +5,7 @@ import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'qrcode.dart';
+import "../Model/variables.dart";
 //import 'package:camera/camera.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -30,31 +31,7 @@ import 'dart:io';
 
  */
 
-String? FOODNAME;
-String? WEIGHT;
-String? COMMENTS;
-String? ID;
-String? INSTITUTE;
 
-//plan to add the variables for the date and the food status
-
-void setFoodVars(String? foodName, String? weight, String? comments){
-  FOODNAME = foodName;
-  WEIGHT = weight;
-  COMMENTS = comments;
-  print("FOOD DATA ENTERED!");
-
-}
-
-void setIDVar(String? id){
-  ID = id;
-  print("ID SET");
-}
-
-void setInstituteVar(String? institute){
-  INSTITUTE = institute;
-  print("INSTITUTION SET");
-}
 
 bool isNull(String? val){
   return val == null ? true : false;
@@ -117,8 +94,8 @@ class _CameraFood2State extends State<CameraFood2> with
       String folder = paths[x];
       newPath += "/" + folder;
     }
-    if (!isNull(INSTITUTE) && !isNull(ID)){
-      newPath = newPath + "/" + INSTITUTE! + "/" + ID!;
+    if (!isNull(getInst()) && !isNull(getID())){
+      newPath = newPath + "/" + getInst()! + "/" + getID()!;
       directory = Directory(newPath);
       print(Text("USING PATH: " + directory!.path));
     }
@@ -158,7 +135,7 @@ class _CameraFood2State extends State<CameraFood2> with
         await directory!.create(recursive: true);
       }
       if (await directory!.exists()) {
-        await newPath(FOODNAME!) == 1
+        await newPath(getFoodName()!) == 1
          //make new path
         ? File(directory!.path + "/$fileName").writeAsBytesSync(i.encodePng(pic))
 
@@ -203,7 +180,10 @@ class _CameraFood2State extends State<CameraFood2> with
       : IMG = i.copyCrop(IMG, 400, 100, 500, 500); //resize OG image to be smaller
 
     //image =  i.flipHorizontal(IMG);
-    filename = FOODNAME! + "/" + ID!+"_"+FOODNAME!+"_status.png";
+    filename = getFoodName()! + "/"
+        + getID()! + "_"
+        + getFoodName()! + "_"
+        + getStatus()! + ".png";
 
     savePic(i.flipHorizontal(IMG), filename); //PUT THIS AS THE FUNCTION FOR ONPRESS IN WIDGEST OF FOOOD_SCANNED_UNEATEN
 
@@ -399,7 +379,13 @@ class _CameraFood2State extends State<CameraFood2> with
   }
 
   Widget idLabel() {
-    return Container(child:(Text("0000042069", style: TextStyle(fontSize: 56))));
+    if (!isNull(getID())){
+      return Container(child:(Text(getID()!, style: TextStyle(fontSize: 56))));
+    }else{
+      print("NULL ID USED");
+      return Text("INVALID ID");
+    }
+
   }
 
 
