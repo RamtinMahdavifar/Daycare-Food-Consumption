@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import "camera_food2.dart";
+import "../Model/variables.dart";
 
 class MyHome extends StatelessWidget {
   const MyHome({Key? key}) : super(key: key);
