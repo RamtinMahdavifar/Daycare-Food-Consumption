@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
+import "../Model/variables.dart";
+import 'camera_food2.dart';
 
 
 class InputIDForm extends StatefulWidget {
@@ -66,6 +68,15 @@ class _InputIDFormState extends State<InputIDForm> {
             // clear our text fields before exiting the add Institution popup
             this._newIdInputController.clear();
             Navigator.of(context, rootNavigator: true).pop();
+            setIDVar(newId);
+            Navigator.push(context, MaterialPageRoute(
+                builder: (context){
+                  //reassemble();
+                  return CameraFood2();
+                  // on qr found, take to food data input screen, this will be
+                  // modified to account for viewing id data and the two different
+                  // food data input screens
+                }));
           }
           else{
             Config.log.w("User Id not valid");
