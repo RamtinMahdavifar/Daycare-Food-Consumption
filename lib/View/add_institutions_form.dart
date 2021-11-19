@@ -44,7 +44,7 @@ class _AddInstitutionFormState extends State<AddInstitutionForm> {
   }
   Widget formSubmit(BuildContext context){
     return ElevatedButton(
-        onPressed: (){
+        onPressed: () async{
           // validate form inputs manually as validate() function of form isn't working
           String newName = _newInstitutionNameController.value.text;
           String newAddress = _newInstitutionAddressController.value.text;
@@ -70,11 +70,22 @@ class _AddInstitutionFormState extends State<AddInstitutionForm> {
             // both input fields are valid, we can successfully create an institution
             // here we are using a dummy research group to add database values to until
             // authentication and research group creation is added
-            Database().addInstitutionToResearchGroup(Institution(newName, newAddress, newNumberOfSubjects),
-                ResearchGroupInfo("testResearchGroupName"));
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Institution Created Successfully")),
-            );
+            try{
+              // try to add this new institution to the database, this method will
+              // throw an exception if the institution already exists for this research group
+              await Database().addInstitutionToResearchGroup(Institution(newName, newAddress, newNumberOfSubjects),
+                  ResearchGroupInfo("testResearchGroupName"));
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Institution Created Successfully")),
+              );
+            } catch(e){
+              Config.log.e("Institution creation failed, exception occured, error message: ${e.toString()}");
+              // display a different snackbar indicating the institution creation failed
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("Failed to create Institution, Institution with address: $newAddress already exists")),
+              );
+            }
+
             // clear our text fields before exiting the add Institution popup
             this._newInstitutionNameController.clear();
             this._newInstitutionAddressController.clear();
