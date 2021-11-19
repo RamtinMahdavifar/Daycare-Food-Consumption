@@ -32,68 +32,6 @@ class _ID_InputPageState extends State<ID_InputPage> {
     );
   }
 
-  /*Widget BuildQrView(BuildContext context) {
-    // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
-    var scanArea = (MediaQuery.of(context).size.width < 400 ||
-        MediaQuery.of(context).size.height < 400)
-        ? 150.0
-
-        : 350.0;
-    // To ensure the Scanner view is properly sizes after rotation
-    // we need to listen for Flutter SizeChanged notification and update controller
-    return QRView(
-      key: qrKey,
-      onQRViewCreated: _onQRViewCreated,
-      overlay: QrScannerOverlayShape(
-          borderColor: Colors.red,
-          borderRadius: 10,
-          borderLength: 30,
-          borderWidth: 10,
-          cutOutSize: scanArea),
-      onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
-    );
-  }
-
-  void _onQRViewCreated(QRViewController controller) async{
-    setState(() {
-      this.controller = controller;
-      if (this.controller != null) {
-        this.controller!.flipCamera();
-      } else {
-        print("null controller used");
-      }
-    });
-
-
-    controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
-        setIDVar(result!.code);
-      });
-
-      controller.stopCamera();
-
-      Navigator.push(context, MaterialPageRoute(
-          builder: (context){
-            //reassemble();
-            return CameraFood2();
-            // on qr found, take to food data input screen, this will be
-            // modified to account for viewing id data and the two different
-            // food data input screens
-          }));
-
-    });
-  }*/
-
-
-  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
-    Config.log.i('${DateTime.now().toIso8601String()}_onPermissionSet $p');
-    if (!p) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('no Permission')),
-      );
-    }
-  }
 
   Widget inputIDButton(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
