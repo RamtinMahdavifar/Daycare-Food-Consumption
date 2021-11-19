@@ -23,6 +23,7 @@ bool _weightFoodValid = true;
 //final _newFoodItemKey = GlobalKey<FormState>();
 @override
 //change foodScannedFirst to build when reformatting the code
+// TODO: this should be a class extending stateful widget so text controllers can be a part of widget state
 Widget foodScannedFirst(BuildContext context, QRViewController controller) {
   print("Image submit dialog opens");
   //controller.pauseCamera();
@@ -76,7 +77,6 @@ Widget submitData(BuildContext context, QRViewController controller, TextEditing
         n.clear();
         w.clear();
         c.clear();
-
         },
       child: const Text("Submit"),
       style: ElevatedButton.styleFrom(primary: Colors.lightGreen)
@@ -131,7 +131,7 @@ Widget nameEntrySuggester(TextEditingController controller, bool fieldIsValid) {
 Widget weightEntry(TextEditingController controller, bool fieldIsValid){
 
   return TextFormField(
-    validator: (value) {
+    validator: (value) { // TODO: this form of validation does not work, ie this does nothing
       if (value == null || value.isEmpty){
         return 'missing fields';
       }
@@ -145,6 +145,7 @@ Widget weightEntry(TextEditingController controller, bool fieldIsValid){
         errorText: !fieldIsValid ? "Value"
             "Can't Be Empty" : null
     ),
+    // TODO: in this text field the keyboard should be specified, user should only be able to enter decimal values
     controller: controller,
   );
 
