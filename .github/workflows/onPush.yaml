@@ -21,11 +21,7 @@ jobs:
       
       - name: install dart dependencies
         run: dart pub get
-      
+
       - name: run flutter doctor
         run: flutter doctor -v
-              
 
-        
-
-        
