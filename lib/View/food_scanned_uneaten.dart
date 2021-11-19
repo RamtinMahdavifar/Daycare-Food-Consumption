@@ -1,6 +1,7 @@
 
 import 'package:image/image.dart' as image; // import this package with the name image to avoid naming collisions
 import 'package:flutter_native_screenshot/flutter_native_screenshot.dart';
+import 'package:plate_waste_recorder/Model/string_image_converter.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'name_suggest.dart';
@@ -120,7 +121,8 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
             // our fields are valid, submit the input data to the database
             // get the image the user has submitted
             takeShot().then((capturedImage){
-              capturedImage.getBytes();
+              // convert our image to a string
+              convertImageToString(capturedImage);
             });
 
 

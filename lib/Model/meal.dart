@@ -1,58 +1,60 @@
+import 'package:plate_waste_recorder/Model/database.dart';
 import 'package:plate_waste_recorder/Model/meal_info.dart';
 import 'package:plate_waste_recorder/Model/string_image_converter.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
-
-
-enum MealType{
-  before,
-  after
-}
+import 'package:plate_waste_recorder/Model/food_status.dart';
 
 /// Class representing a Meal served to a particular subject
 /// a subject can have multiple meals in a day and multiple meals throughout time
 class Meal{
   //**** Meal Properties ********
+  // all fields are declared late as our constructor doesn't take references to these
+  // fields directly but instead takes separate variables which are validated before
+  // being stored as our local fields, some fields like _mealID are generated locally
+  // in our constructor instead of being passed in
 
-  //Meal Id, unique ID for each meal
+  // Meal Id, unique ID for each meal
   late String _mealId;
+
+  // status of the meal, denotes whether meal represents a just served, uneaten food
+  // item, or food that has been served and not eaten etc
+  late FoodStatus _mealStatus;
 
   // give each non-mandatory field a default value as we meals may not be provided
   // String representing the name of this particular meal
-  String _mealName = "";
+  late String _mealName;
 
-  // Images are converted to strings when stored, this is the string representing
+  // this is the string representing
   // the image of the meal before being eaten by a subject
-  String _beforeImageAsString = "";
+  late String _imageString;
 
-  // String representing the image of the meal after being eaten by the subject
-  String _afterImageAsString = "";
-
-
-  //Meal type its and enum from Meal class which has value before and after
-  MealType _mealType = MealType.before;
-
-  // define a constant initial placeholder weight that the weight fields are given
-  // before having been initialized
-  final double _INITIALPLACEHOLDERWEIGHT = -1.0;
-
-
-  // double precision value recording the weight of the meal before being eaten
-  double _beforeMealWeight = -1.0;
-
-  // double precision value recording the weight of the meal after being eaten
-  double _afterMealWeight = -1.0;
+  // double precision value recording the weight of the meal
+  late double _mealWeight;
 
   // Comment associated with this particular meal, can be added to give additional
   // context or information about a meal
-  String _comment = "";
+  late String _comment;
 
 
   //***** Meal constructor ********
   // only accept the mandatory fields for a meal here, all other fields are optional and
   // can be filled in later
-  Meal(String mealID){
-    assert(mealID.isNotEmpty);
-    this._mealId = mealID;
+  Meal(String mealName, FoodStatus mealStatus, String imageString, double mealWeight, String comment){
+    // ensure our input fields are valid, here our comment field can be the empty string
+    // if this particular meal doesn't have any comments
+    assert(mealName.isNotEmpty);
+    assert(imageString.isNotEmpty);
+    assert(mealWeight>0.0);
+    // meal cannot be have the view status, as we only store data for either freshly served
+    // uneaten meals, leftover eaten meals or containers
+    assert(mealStatus!=FoodStatus.view);
+    this._mealName = mealName;
+    this._mealStatus = mealStatus;
+    this._imageString = imageString;
+    this._mealWeight = mealWeight;
+    this._comment = comment;
+    // generate a unique ID for this meal using our firebase database
+    this._mealId = Database().generateUniqueID();
   }
 
 
