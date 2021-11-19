@@ -35,7 +35,7 @@ import 'dart:io';
  */
 
 
-
+/// used as a shorter way to determine if a value is null or not
 bool isNull(String? val){
   return val == null ? true : false;
 }
@@ -82,6 +82,9 @@ class _CameraFood2State extends State<CameraFood2> with
     //SystemChrome.
   }
 
+  /// locates the external storage location where images will be stored on the
+  /// device and then creates an organized file directory for the
+  /// institute and the ID if they do not yet exist
   void getPath() async {
     //this could be useful for an issue i was running into with converting a csv to a List
     //use below line to create a directory for the cropped images
@@ -104,6 +107,8 @@ class _CameraFood2State extends State<CameraFood2> with
 
   }
 
+  /// for each ID, this creates a new directory for every new food item submitted
+  /// takes in a String of the name of the new food item that was entered
   Future<int> newPath(String foodname) async{
     Directory newDir;
     String newPath = "";
@@ -131,6 +136,8 @@ class _CameraFood2State extends State<CameraFood2> with
 
   }
 
+  /// stores an image to the local device in a specified location set by
+  /// getPath() + newPath(), takes an Image that is stored with the name filename
   void savePic(i.Image pic, String fileName) async {
     if (directory != null) {
       if (!await directory!.exists()) {
@@ -152,6 +159,8 @@ class _CameraFood2State extends State<CameraFood2> with
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  /// when the viewfinder is opened, assign the controller and flip the camera
+  /// to use either the rear facing or the external camera by default
   void _onQRViewCreated(QRViewController controller) {
     setState(() {
       this.QRcontroller = controller;
