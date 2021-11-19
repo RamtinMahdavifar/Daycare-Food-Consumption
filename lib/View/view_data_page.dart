@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/View/qrcode.dart';
+import '../Model/variables.dart';
+import 'id_input_page.dart';
 
 class ViewDataPage extends StatefulWidget {
   String institutionName;
@@ -27,7 +29,8 @@ class _ViewDataPageState extends State<ViewDataPage> {
                 ViewDataOption("Scan QR Code", (){
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context){
-                      return QRViewExample(); // TODO: replace with actual QR code page
+                      setStatusVar("view");
+                      return ID_InputPage(); // TODO: replace with actual QR code page
                     }));
                 }),
                 SizedBox(height: 80.0),

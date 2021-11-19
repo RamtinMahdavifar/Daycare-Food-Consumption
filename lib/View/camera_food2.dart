@@ -3,8 +3,11 @@ import 'dart:developer';
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:plate_waste_recorder/View/food_scanned_eaten.dart';
+import 'package:plate_waste_recorder/View/id_input_page.dart';
 
 import 'qrcode.dart';
+import "../Model/variables.dart";
 //import 'package:camera/camera.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -12,6 +15,7 @@ import 'package:screenshot/screenshot.dart';
 import 'package:flutter/material.dart';
 import 'food_scanned_uneaten.dart';
 import 'package:flutter/services.dart';
+import 'qr_scan_id.dart';
 
 import "package:flutter_native_screenshot/flutter_native_screenshot.dart";
 import 'package:image/image.dart' as i;
@@ -30,32 +34,8 @@ import 'dart:io';
 
  */
 
-String? FOODNAME;
-String? WEIGHT;
-String? COMMENTS;
-String? ID;
-String? INSTITUTE;
 
-//plan to add the variables for the date and the food status
-
-void setFoodVars(String? foodName, String? weight, String? comments){
-  FOODNAME = foodName;
-  WEIGHT = weight;
-  COMMENTS = comments;
-  print("FOOD DATA ENTERED!");
-
-}
-
-void setIDVar(String? id){
-  ID = id;
-  print("ID SET");
-}
-
-void setInstituteVar(String? institute){
-  INSTITUTE = institute;
-  print("INSTITUTION SET");
-}
-
+/// used as a shorter way to determine if a value is null or not
 bool isNull(String? val){
   return val == null ? true : false;
 }
@@ -86,7 +66,6 @@ class _CameraFood2State extends State<CameraFood2> with
   Directory? appPath;
   Directory? directory;
 
-  String testStringVar = "unmodified";
 
 
   @override
@@ -103,6 +82,9 @@ class _CameraFood2State extends State<CameraFood2> with
     //SystemChrome.
   }
 
+  /// locates the external storage location where images will be stored on the
+  /// device and then creates an organized file directory for the
+  /// institute and the ID if they do not yet exist
   void getPath() async {
     //this could be useful for an issue i was running into with converting a csv to a List
     //use below line to create a directory for the cropped images
@@ -117,14 +99,16 @@ class _CameraFood2State extends State<CameraFood2> with
       String folder = paths[x];
       newPath += "/" + folder;
     }
-    if (!isNull(INSTITUTE) && !isNull(ID)){
-      newPath = newPath + "/" + INSTITUTE! + "/" + ID!;
+    if (!isNull(getInst()) && !isNull(getID())){
+      newPath = newPath + "/" + getInst()! + "/" + getID()!;
       directory = Directory(newPath);
       print(Text("USING PATH: " + directory!.path));
     }
 
   }
 
+  /// for each ID, this creates a new directory for every new food item submitted
+  /// takes in a String of the name of the new food item that was entered
   Future<int> newPath(String foodname) async{
     Directory newDir;
     String newPath = "";
@@ -152,13 +136,15 @@ class _CameraFood2State extends State<CameraFood2> with
 
   }
 
+  /// stores an image to the local device in a specified location set by
+  /// getPath() + newPath(), takes an Image that is stored with the name filename
   void savePic(i.Image pic, String fileName) async {
     if (directory != null) {
       if (!await directory!.exists()) {
         await directory!.create(recursive: true);
       }
       if (await directory!.exists()) {
-        await newPath(FOODNAME!) == 1
+        await newPath(getFoodName()!) == 1
          //make new path
         ? File(directory!.path + "/$fileName").writeAsBytesSync(i.encodePng(pic))
 
@@ -173,6 +159,8 @@ class _CameraFood2State extends State<CameraFood2> with
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  /// when the viewfinder is opened, assign the controller and flip the camera
+  /// to use either the rear facing or the external camera by default
   void _onQRViewCreated(QRViewController controller) {
     setState(() {
       this.QRcontroller = controller;
@@ -184,33 +172,34 @@ class _CameraFood2State extends State<CameraFood2> with
 
   }
 
-
+  /// perform the image capture by screenshotting the whole screen, and then
+  /// cropping and horizontally flipping the the captured screenshot, and then
+  /// saving it with savePic with the filename determined by the ID, foodName
+  /// and foodStatus
   void takeShot() async {
 
     String? path = await FlutterNativeScreenshot.takeScreenshot();
     String? filename;
-
     print("takeShot: Path!");
     print(path);
-    //int testNo = 014; //this makes unique images since they dont overwrite
-    //String imgAppend = testNo.toString() + ".png";
-    //imgFile = File(path!); //image created from og screenshot
     i.Image IMG = i.decodePng(File(path!).readAsBytesSync())!; //encode the og image into IMG
     width != null && height != null
       ? IMG = i.copyCrop(IMG, 5, 61, (width!/2).toInt() - 5, (height! - 139).toInt())
-    //starting at coords 5,61, to cut off the appbar, and only get the left half, and dont grab bottom portion with capture button on it
+    // starting at coords 5,61, to cut off the appbar, and only get the left half, and dont grab bottom portion with capture button on it
     // appbar is 56 + size 5 border,
       : IMG = i.copyCrop(IMG, 400, 100, 500, 500); //resize OG image to be smaller
 
-    //image =  i.flipHorizontal(IMG);
-    filename = FOODNAME! + "/" + ID!+"_"+FOODNAME!+"_status.png";
+    filename = getFoodName()! + "/"
+        + getID()! + "_"
+        + getFoodName()! + "_"
+        + getStatus()! + ".png";
 
     savePic(i.flipHorizontal(IMG), filename); //PUT THIS AS THE FUNCTION FOR ONPRESS IN WIDGEST OF FOOOD_SCANNED_UNEATEN
 
   }
 
 
-
+  /// permission handler for when you first want to use the camera
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
     log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
     if (!p) {
@@ -220,6 +209,7 @@ class _CameraFood2State extends State<CameraFood2> with
     }
   }
 
+  /// creates the qr reader
   Widget BuildQrView(BuildContext context) {
     return QRView(
       key: qrKey,
@@ -283,12 +273,6 @@ class _CameraFood2State extends State<CameraFood2> with
                   )
                 ),
                ),
-/*            Dialog(
-                barrierColor: null,//jank workaround remove the shadow from the dialog
-                barrierDismissible: false,
-                context: context,
-                builder: (_) => foodScannedFirst(context, QRcontroller!, testStringVar) //needs to check for null at some point, do this later
-            ),*/
             _captureImage(), //camera Capture button
           ]
       ),
@@ -296,7 +280,7 @@ class _CameraFood2State extends State<CameraFood2> with
 
   }
 
-
+  /// button for capturing image
   Widget _captureImage() {
     //final CameraController? cameraController = controller;
 
@@ -319,20 +303,67 @@ class _CameraFood2State extends State<CameraFood2> with
     _scaffoldKey.currentState?.showSnackBar(SnackBar(content: Text(message)));
   }
 
+  /// handles what happens when the image capture button is pressed, not only is
+  /// the image captured, but depending on the FoodStatus, it will pull up
+  /// different data submission dialogs for food eaten or uneaten/container
+  /// and if the status is "preset" rather than saving the image to local storage
+  /// it creates a new container preset.
+  ///
+  /// due to the long delay when screenshotting, cropping and then saving the
+  /// image, with a bit of illusion tricks, the viewfinder is paused to show the
+  /// user what the image will look like after its been cropped and saved, the
+  /// image will be backwards however
   void onTakePictureButtonPressed() async {
-    print("image captured Press");
-    //XFile? file = controller.takePicture();
 
+    print("image captured Press");
     QRcontroller == null
     ? print("No QR Controller active")
     :
       QRcontroller!.pauseCamera();
-      await showDialog( //open the dialog first before begining the image capture process
-          barrierColor: null,//jank workaround remove the shadow from the dialog
-          barrierDismissible: false,
-          context: context,
-          builder: (_) => foodScannedFirst(context, QRcontroller!, testStringVar) //needs to check for null at some point, do this later
-      );
+      if(getStatus() == "uneaten"){
+
+        await showDialog( //open the dialog first before begining the image capture process
+            barrierColor: null,//jank workaround remove the shadow from the dialog
+            barrierDismissible: false,
+            context: context,
+            builder: (_) => foodScannedFirst(context, QRcontroller!) //needs to check for null at some point, do this later
+        );
+        print("Dialog Code passed");
+        takeShot();
+        print("takeShot completed");
+        QRcontroller!.resumeCamera();
+        print("Image Capture Finish");
+
+      }else if (getStatus() == "eaten" || getStatus() == "container"){
+
+        await showDialog( //open the dialog first before begining the image capture process
+            barrierColor: null,//jank workaround remove the shadow from the dialog
+            barrierDismissible: false,
+            context: context,
+            builder: (_) => foodScannedSecond(context, QRcontroller!) //needs to check for null at some point, do this later
+        );
+        print("Dialog Code passed");
+        takeShot();
+        print("takeShot completed");
+        QRcontroller!.resumeCamera();
+        print("Image Capture Finish");
+
+      }else if(getStatus == "preset"){
+
+        print("Adding Preset Container Placeholder");
+        await showDialog( //open the dialog first before begining the image capture process
+            barrierColor: null,//jank workaround remove the shadow from the dialog
+            barrierDismissible: false,
+            context: context,
+            builder: (_) => foodScannedFirst(context, QRcontroller!) //needs to check for null at some point, do this later
+        );
+
+        addContainer(getFoodName());
+
+      }else{
+        throw Exception("Invalid Food Status");
+      }
+
     print("Dialog Code passed");
     takeShot();
     print("takeShot completed");
@@ -393,13 +424,29 @@ class _CameraFood2State extends State<CameraFood2> with
           ),
         ),
         child: Text("Finish", style: TextStyle(fontSize: 32)),
-        onPressed: () {},
+        onPressed: () {
+          //await reassemble();
+          Navigator.of(context, rootNavigator: true).pop(); //leave camera
+          Navigator.of(context, rootNavigator: true).pop(); //leave old qr
+          Navigator.push(context, MaterialPageRoute( //open new one to scan
+              builder: (context) {
+                return ID_InputPage();
+              }));
+
+
+        },
       )
     );
   }
 
   Widget idLabel() {
-    return Container(child:(Text("0000042069", style: TextStyle(fontSize: 56))));
+    if (!isNull(getID())){
+      return Container(child:(Text(getID()!, style: TextStyle(fontSize: 56))));
+    }else{
+      print("NULL ID USED");
+      return Text("INVALID ID");
+    }
+
   }
 
 
