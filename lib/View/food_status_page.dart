@@ -35,11 +35,11 @@ class _FoodStatusPageState extends State<FoodStatusPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children:  <Widget>[
-                  foodStatusButton(context,"uneaten",()=>QR_PreFoodCam()),
+                  foodStatusButton(context,"uneaten",()=>ID_InputPage()),
 
-                  foodStatusButton(context,"eaten",()=>QR_PreFoodCam()),
+                  foodStatusButton(context,"eaten",()=>ID_InputPage()),
 
-                  foodStatusButton(context,"container",()=>QR_PreFoodCam()),
+                  foodStatusButton(context,"container",()=>ID_InputPage()),
 
 
 
