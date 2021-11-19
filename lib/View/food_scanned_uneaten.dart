@@ -1,16 +1,9 @@
-import 'dart:developer';
-import 'dart:io';
-import 'dart:typed_data';
+
 import 'name_suggest.dart';
-import 'package:camera/camera.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter/rendering.dart';
 import "../Model/variables.dart";
-import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-//Image.file(File(img!.path))
 
 List<String> exampleFoodItems = ["Apple", "Sandwich", "Juice"]; //for String foodItem in exampleFoodItems
 final nameTextController = new TextEditingController();
@@ -23,6 +16,8 @@ bool _weightFoodValid = true;
 //final _newFoodItemKey = GlobalKey<FormState>();
 @override
 //change foodScannedFirst to build when reformatting the code
+
+/// the dialog for entering the data of an image that was caputed.
 Widget foodScannedFirst(BuildContext context, QRViewController controller) {
   print("Image submit dialog opens");
   //controller.pauseCamera();
