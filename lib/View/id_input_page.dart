@@ -63,6 +63,7 @@ class _ID_InputPageState extends State<ID_InputPage> {
 
   Widget _ID_InputOptions(){
     return SafeArea(
+
       child: Scaffold(
           body: Column(
             mainAxisAlignment: MainAxisAlignment.end,

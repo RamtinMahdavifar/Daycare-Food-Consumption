@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:plate_waste_recorder/Helper/icons.dart';
 
 Widget backButton(BuildContext context){
   return InkWell(
@@ -17,25 +17,12 @@ Widget modifyButton(){
   );
 }
 
-class Category {
-String name;
-IconData icon;
 
-Category(this.name, this.icon);
-}
-
-List<Category> _categories = [
-  Category('Food', Icons.fastfood),
-  Category('Input Data', Icons.drive_file_rename_outline),
-  Category('Roster', Icons.view_list),
-  Category('View Data', Icons.pageview),
-
-];
 
 Widget menuButton(BuildContext context, String btnName, Widget Function() page,int iconIndex){
   return Flexible(
       child: SizedBox(
-          height: 250,
+          height:150,
           width: 250,
           child: ElevatedButton(
             onPressed: () {  Navigator.push(context, MaterialPageRoute(
@@ -51,7 +38,7 @@ Widget menuButton(BuildContext context, String btnName, Widget Function() page,i
                   ),),
 
                 Icon(
-                  _categories[iconIndex].icon,
+                  categories[iconIndex].icon,
                   color: Colors.orange,
                   size: 50.0,
                   semanticLabel: 'Text to announce in accessibility modes',
