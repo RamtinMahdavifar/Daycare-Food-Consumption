@@ -187,17 +187,3 @@ Widget institutionDisplay(BuildContext context) {
           })
   );
 }
-
-//used if the database breaks, a bandaid solution to allow me to go to any screen nessessary
-Widget quickfixButton(BuildContext context){
-  return InkWell(
-      onTap: (){
-        // pass the name of the clicked on institution to the daycare screen
-        Navigator.push(context, MaterialPageRoute(
-            builder: (context){
-              return MyHome();
-            }));
-      },
-      child: Icon(Icons.edit)
-  );
-}
