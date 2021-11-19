@@ -1,16 +1,9 @@
-import 'dart:developer';
-import 'dart:io';
-import 'dart:typed_data';
+
 import 'name_suggest.dart';
-import 'package:camera/camera.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter/rendering.dart';
 import "../Model/variables.dart";
-import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-//Image.file(File(img!.path))
 
 List<String> exampleFoodItems = ["Apple", "Sandwich", "Juice"]; //for String foodItem in exampleFoodItems
 final nameTextController = new TextEditingController();
@@ -23,7 +16,8 @@ bool _weightFoodValid = true;
 //final _newFoodItemKey = GlobalKey<FormState>();
 @override
 //change foodScannedFirst to build when reformatting the code
-// TODO: this should be a class extending stateful widget so text controllers can be a part of widget state
+
+/// the dialog for entering the data of an image that was caputed.
 Widget foodScannedFirst(BuildContext context, QRViewController controller) {
   print("Image submit dialog opens");
   //controller.pauseCamera();
@@ -77,6 +71,7 @@ Widget submitData(BuildContext context, QRViewController controller, TextEditing
         n.clear();
         w.clear();
         c.clear();
+
         },
       child: const Text("Submit"),
       style: ElevatedButton.styleFrom(primary: Colors.lightGreen)
@@ -131,7 +126,7 @@ Widget nameEntrySuggester(TextEditingController controller, bool fieldIsValid) {
 Widget weightEntry(TextEditingController controller, bool fieldIsValid){
 
   return TextFormField(
-    validator: (value) { // TODO: this form of validation does not work, ie this does nothing
+    validator: (value) {
       if (value == null || value.isEmpty){
         return 'missing fields';
       }
@@ -145,7 +140,6 @@ Widget weightEntry(TextEditingController controller, bool fieldIsValid){
         errorText: !fieldIsValid ? "Value"
             "Can't Be Empty" : null
     ),
-    // TODO: in this text field the keyboard should be specified, user should only be able to enter decimal values
     controller: controller,
   );
 
