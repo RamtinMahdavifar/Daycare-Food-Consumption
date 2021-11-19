@@ -316,7 +316,7 @@ class _CameraFood2State extends State<CameraFood2> with
               barrierColor: null,
               barrierDismissible: false,
               context: context,
-              builder: (_) => UneatenFoodDialog(widget.currentInstitution, widget.currentSubject)
+              builder: (_) => UneatenFoodDialog(widget.currentInstitution, widget.currentSubject, widget.currentFoodStatus)
           );//needs to check for null at some point, do this later
       }
       else if (widget.currentFoodStatus == FoodStatus.eaten || widget.currentFoodStatus == FoodStatus.container){
