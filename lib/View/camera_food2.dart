@@ -179,6 +179,8 @@ class _CameraFood2State extends State<CameraFood2> with
     });
 
     this.QRcontroller!.flipCamera(); //default use the external camera
+    // pause and resume our camera to sort of refresh the image displayed to
+    // prevent a blank image from being shown
     this.QRcontroller!.pauseCamera();
     this.QRcontroller!.resumeCamera();
 
