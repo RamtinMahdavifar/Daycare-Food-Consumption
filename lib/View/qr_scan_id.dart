@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'id_input_widget.dart';
 import 'institution_page_widgets.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
@@ -11,10 +12,10 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 /// ID and depending on the context of why a QR is being scanned, ie the foodStatus
 /// it will redirect to the camera screen for data input, or to the view data
 /// screen
-class QR_ScanID extends StatefulWidget {
+class QR_ScanID extends StatefulWidget { // TODO: why is there an _ in this name
 
-
-  QR_ScanID( {Key? key}) : super(key: key);
+  InstitutionInfo currentInstitution;
+  QR_ScanID(this.currentInstitution, {Key? key}) : super(key: key);
 
   @override
   State<QR_ScanID> createState() => _QR_ScanIDState();
@@ -81,9 +82,9 @@ class _QR_ScanIDState extends State<QR_ScanID> {
             List<String> inputOptions = ["eaten", "container", "uneaten"];
             //reassemble();
             if (getStatus() == "view"){
-              return CameraFood2(); //TODO change this to view data page of scanned ID
+              return CameraFood2(widget.currentInstitution); //TODO change this to view data page of scanned ID
             }else if (inputOptions.contains(getStatus())){
-              return CameraFood2();
+              return CameraFood2(widget.currentInstitution);
             }else{
               throw Exception("Invalid Food Status: not set");
             }

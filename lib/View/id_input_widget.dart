@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
+import 'package:plate_waste_recorder/Model/institution_info.dart';
 import "../Model/variables.dart";
 import 'camera_food2.dart';
 import 'package:plate_waste_recorder/Helper/icons.dart';
@@ -8,6 +9,9 @@ import 'package:responsive_flutter/responsive_flutter.dart';
 
 
 class InputIDForm extends StatefulWidget {
+  InstitutionInfo currentInstitution;
+  InputIDForm(this.currentInstitution, {Key? key}) : super(key: key);
+
   @override
   _InputIDFormState createState() => _InputIDFormState();
 }
@@ -76,12 +80,12 @@ class _InputIDFormState extends State<InputIDForm> {
                 builder: (context){
                   //reassemble();
                   if (getStatus() == "uneaten"){
-                    return CameraFood2();
+                    return CameraFood2(widget.currentInstitution);
                   }else if (getStatus() == "eaten"){
-                    return CameraFood2();
+                    return CameraFood2(widget.currentInstitution);
                   }
                   else if (getStatus() == "container"){
-                    return CameraFood2();
+                    return CameraFood2(widget.currentInstitution);
                   }
                   else{
                     throw Exception("Invalid Food State");

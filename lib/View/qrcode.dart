@@ -3,12 +3,17 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'camera_food2.dart';
 import '../Model/variables.dart';
 
 class QRViewExample extends StatefulWidget {
+
+  InstitutionInfo currentInstitution;
+  QRViewExample(this.currentInstitution, {Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _QRViewExampleState();
 }
@@ -175,7 +180,7 @@ class _QRViewExampleState extends State<QRViewExample> {
       Navigator.push(context, MaterialPageRoute(
           builder: (context){
             reassemble();
-            return CameraFood2();
+            return CameraFood2(widget.currentInstitution);
             // on qr found, take to food data input screen, this will be
             // modified to account for viewing id data and the two different
             // food data input screens
