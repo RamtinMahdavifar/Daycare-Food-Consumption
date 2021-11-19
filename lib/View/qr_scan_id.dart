@@ -6,8 +6,11 @@ import '../Model/variables.dart';
 import 'camera_food2.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-/// prefood will actually cover all food screens as the code for handling which
-/// screen to show is elsewhere
+
+/// this is the Qr reading screen, here a viewfinder is built, it scans for an
+/// ID and depending on the context of why a QR is being scanned, ie the foodStatus
+/// it will redirect to the camera screen for data input, or to the view data
+/// screen
 class QR_ScanID extends StatefulWidget {
 
 
@@ -73,9 +76,6 @@ class _QR_ScanIDState extends State<QR_ScanID> {
 
       controller.stopCamera();
 
-      /// all of the qr scanners are rougly the same, the only difference
-      /// between them all is here, this chunk of code determines where the qr
-      /// reader redirects you [ViewData, prefoodCam, postfoodCam]
       Navigator.push(context, MaterialPageRoute(
           builder: (context){
             List<String> inputOptions = ["eaten", "container", "uneaten"];
