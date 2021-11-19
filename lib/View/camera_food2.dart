@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/View/food_scanned_eaten.dart';
 import 'package:plate_waste_recorder/View/id_input_page.dart';
-
+import 'package:plate_waste_recorder/View/login_page.dart';
 import 'qrcode.dart';
 import "../Model/variables.dart";
 //import 'package:camera/camera.dart';
@@ -356,7 +356,7 @@ class _CameraFood2State extends State<CameraFood2> with
             barrierColor: null,//jank workaround remove the shadow from the dialog
             barrierDismissible: false,
             context: context,
-            builder: (_) => UneatenFoodDialog(QRcontroller!, widget.currentInstitution, widget.currentSubject) //needs to check for null at some point, do this later
+            builder: (_) => LoginPage() //needs to check for null at some point, do this later
         );
 
         addContainer(getFoodName());
