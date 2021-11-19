@@ -73,23 +73,16 @@ class _ID_InputPageState extends State<ID_InputPage> {
                   child: Text("Scan a Student ID", style: TextStyle(fontSize: 40))
               ),
               Expanded(
-
                 child: QR_ScanID(widget.currentInstitution)//BuildQrView(context)
               ),
               Container(
                 child: Padding(padding: EdgeInsets.all(10),
                     child: Row(
-
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        //most of the buttons do not navigate anywhere and have null as their navigation parameter
-                        //menuButton(context,"Input ID", () => InputIDForm(), 1),
                         inputIDButton(context)
-
                       ],
-
                     )),
-
               ),
             ],
           )

@@ -6,6 +6,8 @@ import 'package:plate_waste_recorder/Helper/config.dart';
 import '../Model/variables.dart';
 import 'camera_food2.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:plate_waste_recorder/Model/subject_info.dart';
+
 
 
 /// this is the Qr reading screen, here a viewfinder is built, it scans for an
@@ -22,8 +24,6 @@ class QR_ScanID extends StatefulWidget { // TODO: why is there an _ in this name
 }
 
 class _QR_ScanIDState extends State<QR_ScanID> {
-
-  Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
@@ -70,23 +70,22 @@ class _QR_ScanIDState extends State<QR_ScanID> {
 
 
     controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
-        setIDVar(result!.code);
-      });
-
+      Config.log.i("scanned subject ID ${scanData.code} from QR code");
       controller.stopCamera();
 
+      // use our retrieved subject ID to construct a subjectInfo object
+      // TODO: ensure subject with this code actually exists
+      SubjectInfo targetSubjectInfo = SubjectInfo(scanData.code);
       Navigator.push(context, MaterialPageRoute(
           builder: (context){
             List<String> inputOptions = ["eaten", "container", "uneaten"];
             //reassemble();
             if (getStatus() == "view"){
-              return CameraFood2(widget.currentInstitution); //TODO change this to view data page of scanned ID
+              return CameraFood2(widget.currentInstitution, targetSubjectInfo); //TODO change this to view data page of scanned ID
             }else if (inputOptions.contains(getStatus())){
-              return CameraFood2(widget.currentInstitution);
+              return CameraFood2(widget.currentInstitution, targetSubjectInfo);
             }else{
-              throw Exception("Invalid Food Status: not set");
+              throw Exception("Invalid Food Status: not set"); // TODO: does this exception ever occur?
             }
 
             // on qr found, take to food data input screen, this will be
