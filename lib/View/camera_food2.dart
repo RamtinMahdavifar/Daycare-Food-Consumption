@@ -304,17 +304,21 @@ class _CameraFood2State extends State<CameraFood2> with
     print("image captured Press");
     QRcontroller == null
     ? print("No QR Controller active")
-    :
-      QRcontroller!.pauseCamera();
-      QRcontroller!.resumeCamera();
-      if(widget.currentFoodStatus == FoodStatus.eaten){
+    : QRcontroller!.pauseCamera();
+      if(widget.currentFoodStatus == FoodStatus.uneaten){
         // take a picture of the food on screen, send this to our uneaten food dialog for submission
           await showDialog(
               barrierColor: null,
               barrierDismissible: false,
               context: context,
-              builder: (context) => UneatenFoodDialog(QRcontroller!, widget.currentInstitution, widget.currentSubject)
+              builder: (_) => UneatenFoodDialog(QRcontroller!, widget.currentInstitution, widget.currentSubject)
           );//needs to check for null at some point, do this later
+
+          await QRcontroller!.resumeCamera();
+          print("Dialog Code passed");
+          print("takeShot completed");
+          print("Image Capture Finish");
+
       }else if (widget.currentFoodStatus == FoodStatus.eaten || widget.currentFoodStatus == FoodStatus.container){
 
         await showDialog( //open the dialog first before begining the image capture process
