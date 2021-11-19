@@ -14,12 +14,10 @@ import 'dart:io';
 
 class UneatenFoodDialog extends StatefulWidget {
 
-  // take as parameters to this page the controller for our qr camera view
-  // and the institution and subject info this meal belongs under
-  QRViewController qrViewController;
+  // take as parameters to this page the institution and subject info this meal belongs under
   InstitutionInfo currentInstitution;
   SubjectInfo currentSubject;
-  UneatenFoodDialog(this.qrViewController, this.currentInstitution, this.currentSubject, {Key? key}) : super(key: key);
+  UneatenFoodDialog(this.currentInstitution, this.currentSubject, {Key? key}) : super(key: key);
 
 
   @override
@@ -42,7 +40,7 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
   @override
   Widget build(BuildContext context) {
     Config.log.i("Opening image submit dialog");
-    widget.qrViewController.resumeCamera();
+    //widget.qrViewController.resumeCamera();
     //widget.qrViewController.pauseCamera();
 
     //controller.pauseCamera();
@@ -63,8 +61,8 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
                             itemPresets(nameTextController),
                             foodEntry(weightTextController, "Weight(g)", this._foodWeightValid),
                             foodEntry(commentsTextController, "Comments", this._foodCommentsValid),
-                            submitData(context, widget.qrViewController),
-                            retakePhoto(context, widget.qrViewController),
+                            submitData(),
+                            retakePhoto(),
                           ],
                         )
                     )
@@ -90,7 +88,7 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
     return capturedImage;
   }
 
-  Widget retakePhoto(BuildContext context, QRViewController controller){
+  Widget retakePhoto(){
     return ElevatedButton(
         onPressed: () {
           Navigator.of(context, rootNavigator: true).pop();
@@ -100,7 +98,7 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
     );
   }
 
-  Widget submitData(BuildContext context, QRViewController controller){
+  Widget submitData(){
     return ElevatedButton(
         onPressed: () {
           //submit name - weight - ID - photo - comments - date - institution
@@ -130,7 +128,6 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
             });
 
             // unpause our camera so the user can take successive pictures after data has been submitted
-
             // return to the previous screen/close this popup dialog
             Navigator.of(context, rootNavigator: true).pop();
           }

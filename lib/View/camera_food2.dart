@@ -179,6 +179,8 @@ class _CameraFood2State extends State<CameraFood2> with
     });
 
     this.QRcontroller!.flipCamera(); //default use the external camera
+    this.QRcontroller!.pauseCamera();
+    this.QRcontroller!.resumeCamera();
 
 
 
@@ -210,6 +212,7 @@ class _CameraFood2State extends State<CameraFood2> with
     width == null ? width = 480 : null; //if a width dimension not returned
     return Scaffold(
       key: _scaffoldKey,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: const Text("Camera Food")),
       body: Column(
           children: <Widget>[
@@ -311,15 +314,10 @@ class _CameraFood2State extends State<CameraFood2> with
               barrierColor: null,
               barrierDismissible: false,
               context: context,
-              builder: (_) => UneatenFoodDialog(QRcontroller!, widget.currentInstitution, widget.currentSubject)
+              builder: (_) => UneatenFoodDialog(widget.currentInstitution, widget.currentSubject)
           );//needs to check for null at some point, do this later
-
-          await QRcontroller!.resumeCamera();
-          print("Dialog Code passed");
-          print("takeShot completed");
-          print("Image Capture Finish");
-
-      }else if (widget.currentFoodStatus == FoodStatus.eaten || widget.currentFoodStatus == FoodStatus.container){
+      }
+      else if (widget.currentFoodStatus == FoodStatus.eaten || widget.currentFoodStatus == FoodStatus.container){
 
         await showDialog( //open the dialog first before begining the image capture process
             barrierColor: null,//jank workaround remove the shadow from the dialog
@@ -350,7 +348,7 @@ class _CameraFood2State extends State<CameraFood2> with
 
     print("Dialog Code passed");
     print("takeShot completed");
-    //QRcontroller!.resumeCamera();
+    QRcontroller!.resumeCamera();
     print("Image Capture Finish");
   }
 
