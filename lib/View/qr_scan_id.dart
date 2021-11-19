@@ -7,6 +7,7 @@ import '../Model/variables.dart';
 import 'camera_food2.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
+import 'package:plate_waste_recorder/Model/food_status.dart';
 
 
 
@@ -17,7 +18,8 @@ import 'package:plate_waste_recorder/Model/subject_info.dart';
 class QR_ScanID extends StatefulWidget { // TODO: why is there an _ in this name
 
   InstitutionInfo currentInstitution;
-  QR_ScanID(this.currentInstitution, {Key? key}) : super(key: key);
+  FoodStatus currentFoodStatus;
+  QR_ScanID(this.currentInstitution, this.currentFoodStatus, {Key? key}) : super(key: key);
 
   @override
   State<QR_ScanID> createState() => _QR_ScanIDState();

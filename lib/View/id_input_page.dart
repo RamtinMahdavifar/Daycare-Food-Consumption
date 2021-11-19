@@ -7,12 +7,14 @@ import '../Model/variables.dart';
 import 'camera_food2.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'qr_scan_id.dart';
+import 'package:plate_waste_recorder/Model/food_status.dart';
 
 
 class ID_InputPage extends StatefulWidget { // TODO: why is there an _ in this name
 
   InstitutionInfo currentInstitution;
-  ID_InputPage(this.currentInstitution, {Key? key}) : super(key: key);
+  FoodStatus currentFoodStatus;
+  ID_InputPage(this.currentInstitution, this.currentFoodStatus, {Key? key}) : super(key: key);
 
 
   @override

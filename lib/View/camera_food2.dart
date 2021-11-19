@@ -20,6 +20,7 @@ import 'qr_scan_id.dart';
 import 'package:image/image.dart' as i;
 import 'dart:io';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
+import 'package:plate_waste_recorder/Model/food_status.dart';
 
 /*
 
@@ -46,7 +47,8 @@ class CameraFood2 extends StatefulWidget {
   // the institution the user is currently adding data for
   InstitutionInfo currentInstitution;
   SubjectInfo currentSubject;
-  CameraFood2(this.currentInstitution, this.currentSubject, {Key? key}) : super(key: key);
+  FoodStatus currentFoodStatus;
+  CameraFood2(this.currentInstitution, this.currentSubject, this.currentFoodStatus, {Key? key}) : super(key: key);
 
   @override
   _CameraFood2State createState() => _CameraFood2State();
@@ -303,7 +305,7 @@ class _CameraFood2State extends State<CameraFood2> with
     ? print("No QR Controller active")
     :
       QRcontroller!.pauseCamera();
-      if(getStatus() == "uneaten"){
+      if(widget.currentFoodStatus == FoodStatus.eaten){
         // take a picture of the food on screen, send this to our uneaten food dialog for submission
           await showDialog(
               barrierColor: null,
@@ -314,7 +316,7 @@ class _CameraFood2State extends State<CameraFood2> with
         // after returning from our image submission, resume our camera to allow
         // taking pictures for successive meals
         await QRcontroller!.resumeCamera();
-      }else if (getStatus() == "eaten" || getStatus() == "container"){
+      }else if (widget.currentFoodStatus == FoodStatus.eaten || widget.currentFoodStatus == FoodStatus.container){
 
         await showDialog( //open the dialog first before begining the image capture process
             barrierColor: null,//jank workaround remove the shadow from the dialog
@@ -339,8 +341,6 @@ class _CameraFood2State extends State<CameraFood2> with
 
         addContainer(getFoodName());
 
-      }else{
-        throw Exception("Invalid Food Status");
       }
 
     print("Dialog Code passed");

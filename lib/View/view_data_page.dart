@@ -32,7 +32,6 @@ class _ViewDataPageState extends State<ViewDataPage> {
                 ViewDataOption("Scan QR Code", (){
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context){
-                      setStatusVar("view");
                       return ID_InputPage(InstitutionInfo(widget.institutionName, widget.institutionAddress));
                     }));
                 }),

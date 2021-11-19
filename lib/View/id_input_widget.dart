@@ -6,13 +6,15 @@ import 'camera_food2.dart';
 import 'package:plate_waste_recorder/Helper/icons.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
+import 'package:plate_waste_recorder/Model/food_status.dart';
 
 
 
 
 class InputIDForm extends StatefulWidget {
   InstitutionInfo currentInstitution;
-  InputIDForm(this.currentInstitution, {Key? key}) : super(key: key);
+  FoodStatus currentFoodStatus;
+  InputIDForm(this.currentInstitution, this.currentFoodStatus, {Key? key}) : super(key: key);
 
   @override
   _InputIDFormState createState() => _InputIDFormState();
