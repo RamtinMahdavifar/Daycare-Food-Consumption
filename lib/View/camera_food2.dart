@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:plate_waste_recorder/View/food_scanned_eaten.dart';
 import 'package:plate_waste_recorder/View/id_input_page.dart';
 
 import 'qrcode.dart';
@@ -14,6 +15,7 @@ import 'package:screenshot/screenshot.dart';
 import 'package:flutter/material.dart';
 import 'food_scanned_uneaten.dart';
 import 'package:flutter/services.dart';
+import 'qr_prefood_data.dart';
 
 import "package:flutter_native_screenshot/flutter_native_screenshot.dart";
 import 'package:image/image.dart' as i;
@@ -64,7 +66,6 @@ class _CameraFood2State extends State<CameraFood2> with
   Directory? appPath;
   Directory? directory;
 
-  String testStringVar = "unmodified";
 
 
   @override
@@ -308,12 +309,24 @@ class _CameraFood2State extends State<CameraFood2> with
     ? print("No QR Controller active")
     :
       QRcontroller!.pauseCamera();
-      await showDialog( //open the dialog first before begining the image capture process
-          barrierColor: null,//jank workaround remove the shadow from the dialog
-          barrierDismissible: false,
-          context: context,
-          builder: (_) => foodScannedFirst(context, QRcontroller!, testStringVar) //needs to check for null at some point, do this later
-      );
+      if(getStatus() == "uneaten"){
+        await showDialog( //open the dialog first before begining the image capture process
+            barrierColor: null,//jank workaround remove the shadow from the dialog
+            barrierDismissible: false,
+            context: context,
+            builder: (_) => foodScannedFirst(context, QRcontroller!) //needs to check for null at some point, do this later
+        );
+      }else if (getStatus() == "eaten" || getStatus() == "container"){
+        await showDialog( //open the dialog first before begining the image capture process
+            barrierColor: null,//jank workaround remove the shadow from the dialog
+            barrierDismissible: false,
+            context: context,
+            builder: (_) => foodScannedSecond(context, QRcontroller!) //needs to check for null at some point, do this later
+        );
+      }else{
+        throw Exception("Invalid Food Status");
+      }
+
     print("Dialog Code passed");
     takeShot();
     print("takeShot completed");
@@ -380,7 +393,7 @@ class _CameraFood2State extends State<CameraFood2> with
           Navigator.of(context, rootNavigator: true).pop(); //leave old qr
           Navigator.push(context, MaterialPageRoute( //open new one to scan
               builder: (context) {
-                return ID_InputPage();
+                return QR_PreFoodCam();
               }));
 
 
