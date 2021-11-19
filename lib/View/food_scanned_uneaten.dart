@@ -1,4 +1,5 @@
 
+import 'package:image/image.dart' as image; // import this package with the name image to avoid naming collisions
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'name_suggest.dart';
@@ -16,7 +17,8 @@ class UneatenFoodDialog extends StatefulWidget {
   QRViewController qrViewController;
   InstitutionInfo currentInstitution;
   SubjectInfo currentSubject;
-  UneatenFoodDialog(this.qrViewController, this.currentInstitution, this.currentSubject, {Key? key}) : super(key: key);
+  image.Image uneatenFoodImage;
+  UneatenFoodDialog(this.qrViewController, this.currentInstitution, this.currentSubject, this.uneatenFoodImage, {Key? key}) : super(key: key);
 
 
   @override
@@ -55,7 +57,7 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
                             itemPresets(nameTextController),
                             weightEntry(weightTextController, _weightFoodValid),
                             addComments(context, commentsTextController),
-                            submitData(context, widget.qrViewController, nameTextController, weightTextController, commentsTextController),
+                            submitData(context, widget.qrViewController),
                             retakePhoto(context, widget.qrViewController),
                           ],
                         )
