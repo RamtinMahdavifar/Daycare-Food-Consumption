@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Model/database.dart';
+
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/View/upload_data.dart';
 import '../Model/institution.dart';
+
 import 'add_institutions_form.dart';
 import 'institution_page.dart';
 import 'camera_food.dart';
@@ -198,6 +200,6 @@ Widget quickfixButton(BuildContext context){
               return MyHome();
             }));
       },
-      child: Icon(Icons.edit)
+      child: Icon(Icons.edit,size: 50.0,)
   );
 }

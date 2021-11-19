@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import "../Model/variables.dart";
 import 'camera_food2.dart';
+import 'package:plate_waste_recorder/Helper/icons.dart';
+import 'package:responsive_flutter/responsive_flutter.dart';
+
 
 
 class InputIDForm extends StatefulWidget {
@@ -137,4 +140,38 @@ class _InputIDFormState extends State<InputIDForm> {
 
 }
 
+
+Widget manualInput(BuildContext context, String btnName, Widget Function() page,int iconIndex){
+  return Flexible(
+      child: SizedBox(
+          height: 140,
+          width: 300,
+          child: ElevatedButton(
+              onPressed: () {  Navigator.push(context, MaterialPageRoute(
+                  builder: (context){
+                    return page();
+                  })); },
+              child:Column(
+                  children:  <Widget>[
+
+                    Text(btnName,
+                      style: TextStyle(
+                        fontSize: ResponsiveFlutter.of(context).fontSize(4),// insert your font size here
+                      ),),
+
+                    Icon(
+                      categories[iconIndex].icon,
+                      color: Colors.orange,
+                      size: 50.0,
+                      semanticLabel: 'Text to announce in accessibility modes',
+                    )
+
+                  ]
+
+              )
+          )
+
+      )
+  );
+}
 
