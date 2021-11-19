@@ -21,6 +21,7 @@ import 'package:image/image.dart' as i;
 import 'dart:io';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/Model/food_status.dart';
+import 'package:plate_waste_recorder/Helper/config.dart';
 
 /*
 
@@ -305,6 +306,7 @@ class _CameraFood2State extends State<CameraFood2> with
     ? print("No QR Controller active")
     :
       QRcontroller!.pauseCamera();
+      QRcontroller!.resumeCamera();
       if(widget.currentFoodStatus == FoodStatus.eaten){
         // take a picture of the food on screen, send this to our uneaten food dialog for submission
           await showDialog(
@@ -313,9 +315,6 @@ class _CameraFood2State extends State<CameraFood2> with
               context: context,
               builder: (context) => UneatenFoodDialog(QRcontroller!, widget.currentInstitution, widget.currentSubject)
           );//needs to check for null at some point, do this later
-        // after returning from our image submission, resume our camera to allow
-        // taking pictures for successive meals
-        await QRcontroller!.resumeCamera();
       }else if (widget.currentFoodStatus == FoodStatus.eaten || widget.currentFoodStatus == FoodStatus.container){
 
         await showDialog( //open the dialog first before begining the image capture process
@@ -324,9 +323,11 @@ class _CameraFood2State extends State<CameraFood2> with
             context: context,
             builder: (_) => foodScannedSecond(context, QRcontroller!) //needs to check for null at some point, do this later
         );
+        // after returning from our image submission, resume our camera to allow
+        // taking pictures for successive meals
+        await QRcontroller!.resumeCamera();
         print("Dialog Code passed");
         print("takeShot completed");
-        QRcontroller!.resumeCamera();
         print("Image Capture Finish");
 
       }else if(getStatus == "preset"){
@@ -345,7 +346,7 @@ class _CameraFood2State extends State<CameraFood2> with
 
     print("Dialog Code passed");
     print("takeShot completed");
-    QRcontroller!.resumeCamera();
+    //QRcontroller!.resumeCamera();
     print("Image Capture Finish");
   }
 
@@ -408,7 +409,7 @@ class _CameraFood2State extends State<CameraFood2> with
           Navigator.of(context, rootNavigator: true).pop(); //leave old qr
           Navigator.push(context, MaterialPageRoute( //open new one to scan
               builder: (context) {
-                return ID_InputPage(widget.currentInstitution, FoodStatus.view); //////////////////////////
+                return ID_InputPage(widget.currentInstitution, FoodStatus.view);
               }));
 
 
@@ -418,13 +419,9 @@ class _CameraFood2State extends State<CameraFood2> with
   }
 
   Widget idLabel() {
-    if (!isNull(getID())){
-      return Container(child:(Text(getID()!, style: TextStyle(fontSize: 56))));
-    }else{
-      print("NULL ID USED");
-      return Text("INVALID ID");
-    }
-
+    String currentSubjectID = widget.currentSubject.subjectId;
+    assert(currentSubjectID.isNotEmpty);
+    return Container(child:(Text(currentSubjectID, style: TextStyle(fontSize: 56))));
   }
 
 
