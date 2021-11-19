@@ -193,7 +193,7 @@ class Meal{
     // ensure the provided image path is not an empty string
     assert(newBeforeImagePath.isNotEmpty);
     // convert the image at the specified path to a string, make this the new beforeImageString
-    this._beforeImageAsString = convertImageToString(newBeforeImagePath);
+    this._beforeImageAsString = convertImagePathToString(newBeforeImagePath);
   }
 
   /// sets the after image of the meal to the image at the path provided, this
@@ -206,7 +206,7 @@ class Meal{
     // ensure the provided image path is not an empty string
     assert(newAfterImagePath.isNotEmpty);
     // convert the image at the specified path to a string, make this the new afterImageString
-    this._afterImageAsString = convertImageToString(newAfterImagePath);
+    this._afterImageAsString = convertImagePathToString(newAfterImagePath);
   }
 
   /// sets the before weight of the meal to the double weight provided, the previous before

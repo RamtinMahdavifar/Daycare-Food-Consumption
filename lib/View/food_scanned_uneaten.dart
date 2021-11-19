@@ -117,17 +117,18 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
           });
 
           if(this._foodNameValid && this._foodWeightValid && this._foodCommentsValid){
-            // our fields are valid
+            // our fields are valid, submit the input data to the database
+            // get the image the user has submitted
+            takeShot().then((capturedImage){
+              capturedImage.getBytes();
+            });
+
+
             // clear our text fields before returning to the previous screen after data submit
             this.nameTextController.clear();
             this.weightTextController.clear();
             this.commentsTextController.clear();
-            // get the image the user has submitted
-            takeShot().then((capturedImage){
 
-            });
-
-            // unpause our camera so the user can take successive pictures after data has been submitted
             // return to the previous screen/close this popup dialog
             Navigator.of(context, rootNavigator: true).pop();
           }
