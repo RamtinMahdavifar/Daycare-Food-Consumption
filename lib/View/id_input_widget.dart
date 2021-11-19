@@ -87,17 +87,7 @@ class _InputIDFormState extends State<InputIDForm> {
             // proceed to the pages to enter data for this particular subject
             Navigator.push(context, MaterialPageRoute(
                 builder: (context){
-                  if (getStatus() == "uneaten"){
-                    return CameraFood2(widget.currentInstitution, targetSubjectInfo);
-                  }else if (getStatus() == "eaten"){
-                    return CameraFood2(widget.currentInstitution, targetSubjectInfo);
-                  }
-                  else if (getStatus() == "container"){
-                    return CameraFood2(widget.currentInstitution, targetSubjectInfo);
-                  }
-                  else{
-                    throw Exception("Invalid Food State");
-                  }
+                  return CameraFood2(widget.currentInstitution, targetSubjectInfo, widget.currentFoodStatus);
 
                   // on qr found, take to food data input screen, this will be
                   // modified to account for viewing id data and the two different

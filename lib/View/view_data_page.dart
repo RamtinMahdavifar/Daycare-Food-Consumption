@@ -6,6 +6,7 @@ import 'package:plate_waste_recorder/View/roster_page.dart';
 import '../Model/variables.dart';
 import 'id_input_page.dart';
 import 'package:plate_waste_recorder/View/login_page.dart';
+import 'package:plate_waste_recorder/Model/food_status.dart';
 
 class ViewDataPage extends StatefulWidget {
   String institutionName;
@@ -32,7 +33,7 @@ class _ViewDataPageState extends State<ViewDataPage> {
                 ViewDataOption("Scan QR Code", (){
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context){
-                      return ID_InputPage(InstitutionInfo(widget.institutionName, widget.institutionAddress));
+                      return ID_InputPage(InstitutionInfo(widget.institutionName, widget.institutionAddress), FoodStatus.view);
                     }));
                 }),
                 SizedBox(height: 80.0),

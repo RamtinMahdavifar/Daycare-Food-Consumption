@@ -80,16 +80,14 @@ class _QR_ScanIDState extends State<QR_ScanID> {
       SubjectInfo targetSubjectInfo = SubjectInfo(scanData.code);
       Navigator.push(context, MaterialPageRoute(
           builder: (context){
-            List<String> inputOptions = ["eaten", "container", "uneaten"];
-            //reassemble();
-            if (getStatus() == "view"){
-              return CameraFood2(widget.currentInstitution, targetSubjectInfo); //TODO change this to view data page of scanned ID
-            }else if (inputOptions.contains(getStatus())){
-              return CameraFood2(widget.currentInstitution, targetSubjectInfo);
-            }else{
-              throw Exception("Invalid Food Status: not set"); // TODO: does this exception ever occur?
+            if (widget.currentFoodStatus == FoodStatus.view){
+              // we simply want to view data here, go the meal data page
+              return CameraFood2(widget.currentInstitution, targetSubjectInfo, widget.currentFoodStatus); //TODO change this to view data page of scanned ID
+            }else {
+              // our FoodStatus must be eaten, uneaten or container, here we want to input data for these states
+              // navigate to the meal input page
+              return CameraFood2(widget.currentInstitution, targetSubjectInfo, widget.currentFoodStatus);
             }
-
             // on qr found, take to food data input screen, this will be
             // modified to account for viewing id data and the two different
             // food data input screens

@@ -56,7 +56,7 @@ class _ID_InputPageState extends State<ID_InputPage> {
             //await reassemble();
             Navigator.push(context, MaterialPageRoute( //open new one to scan
                 builder: (context) {
-                  return InputIDForm(widget.currentInstitution);
+                  return InputIDForm(widget.currentInstitution, widget.currentFoodStatus);
                 }));
 
 
@@ -75,7 +75,7 @@ class _ID_InputPageState extends State<ID_InputPage> {
                   child: Text("Scan a Student ID", style: TextStyle(fontSize: 40))
               ),
               Expanded(
-                child: QR_ScanID(widget.currentInstitution)//BuildQrView(context)
+                child: QR_ScanID(widget.currentInstitution, widget.currentFoodStatus)//BuildQrView(context)
               ),
               Container(
                 child: Padding(padding: EdgeInsets.all(10),
