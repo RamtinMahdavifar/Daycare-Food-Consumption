@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:plate_waste_recorder/View/roster_page.dart';
-import 'package:plate_waste_recorder/View/view_data.dart';
+
 import 'package:plate_waste_recorder/View/view_data_page.dart';
 
 import 'food_status_page.dart';
