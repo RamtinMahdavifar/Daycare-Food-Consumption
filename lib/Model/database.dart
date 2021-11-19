@@ -389,4 +389,12 @@ class Database {
 
     mealReference.set(mealMap);
   }
+
+  /// Generates a unique String ID, this idea is generated entirely client side,
+  /// ie communication to our database to generate this ID isn't required at all
+  /// Preconditions: None
+  /// Postconditions: returns a String ID described above
+  String generateUniqueID(){
+    return _databaseInstance.reference().push().key;
+  }
 }
