@@ -17,8 +17,6 @@ import 'package:flutter/material.dart';
 import 'food_scanned_uneaten.dart';
 import 'package:flutter/services.dart';
 import 'qr_scan_id.dart';
-
-import "package:flutter_native_screenshot/flutter_native_screenshot.dart";
 import 'package:image/image.dart' as i;
 import 'dart:io';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
@@ -183,23 +181,6 @@ class _CameraFood2State extends State<CameraFood2> with
 
   }
 
-  /// perform the image capture by screenshotting the whole screen, and then
-  /// cropping and horizontally flipping the the captured screenshot, and then
-  /// saving it with savePic with the filename determined by the ID, foodName
-  /// and foodStatus
-  Future<i.Image> takeShot() async {
-    String? path = await FlutterNativeScreenshot.takeScreenshot();
-    print("takeShot: Path!");
-    print(path);
-    i.Image capturedImage = i.decodePng(File(path!).readAsBytesSync())!; //encode the og image into IMG
-    width != null && height != null
-      ? capturedImage = i.copyCrop(capturedImage, 5, 61, (width!/2).toInt() - 5, (height! - 139).toInt())
-    // starting at coords 5,61, to cut off the appbar, and only get the left half, and dont grab bottom portion with capture button on it
-    // appbar is 56 + size 5 border,
-      : capturedImage = i.copyCrop(capturedImage, 400, 100, 500, 500); //resize OG image to be smaller
-    return capturedImage;
-  }
-
 
   /// permission handler for when you first want to use the camera
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
@@ -324,14 +305,12 @@ class _CameraFood2State extends State<CameraFood2> with
       QRcontroller!.pauseCamera();
       if(getStatus() == "uneaten"){
         // take a picture of the food on screen, send this to our uneaten food dialog for submission
-        await takeShot().then((capturedImage){
-          showDialog(
+          await showDialog(
               barrierColor: null,
               barrierDismissible: false,
               context: context,
-              builder: (context) => UneatenFoodDialog(QRcontroller!, widget.currentInstitution, widget.currentSubject, capturedImage) //needs to check for null at some point, do this later
-          );
-        });
+              builder: (context) => UneatenFoodDialog(QRcontroller!, widget.currentInstitution, widget.currentSubject)
+          );//needs to check for null at some point, do this later
         // after returning from our image submission, resume our camera to allow
         // taking pictures for successive meals
         await QRcontroller!.resumeCamera();
@@ -344,7 +323,6 @@ class _CameraFood2State extends State<CameraFood2> with
             builder: (_) => foodScannedSecond(context, QRcontroller!) //needs to check for null at some point, do this later
         );
         print("Dialog Code passed");
-        takeShot();
         print("takeShot completed");
         QRcontroller!.resumeCamera();
         print("Image Capture Finish");
@@ -366,7 +344,6 @@ class _CameraFood2State extends State<CameraFood2> with
       }
 
     print("Dialog Code passed");
-    takeShot();
     print("takeShot completed");
     QRcontroller!.resumeCamera();
     print("Image Capture Finish");
