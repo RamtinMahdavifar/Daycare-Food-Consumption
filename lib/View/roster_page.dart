@@ -13,24 +13,37 @@ class _RosterState extends State<Roster> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Roster')),
-      body: Container(
-        // margin: EdgeInsets.symmetric(horizontal: 8.0),
+      appBar: AppBar(title: Text('Roster'),),
+      body: Column(
+          children: <Widget>[  Expanded(
           child: ListView(
+
               children: <Widget>[
                 RosterRecord(context,"Type 3",()=>MyHome(),"0000000123"),
                 RosterRecord(context,"Type 3",()=>MyHome(),"0000000456"),
-                RosterRecord(context,"Type 3",()=>MyHome(),"0000000789"),
                 RosterRecord(context,"Type 3",()=>MyHome(),"0000000123"),
                 RosterRecord(context,"Type 3",()=>MyHome(),"0000000456"),
-                RosterRecord(context,"Type 3",()=>MyHome(),"0000000789"),
                 RosterRecord(context,"Type 3",()=>MyHome(),"0000000123"),
                 RosterRecord(context,"Type 3",()=>MyHome(),"0000000456"),
-                RosterRecord(context,"Type 3",()=>MyHome(),"0000000789"),
-              ])
-      ),
+                RosterRecord(context,"Type 3",()=>MyHome(),"0000000123"),
+                RosterRecord(context,"Type 3",()=>MyHome(),"0000000456"),
 
-    );
+              ])
+      ),SizedBox(
+              height: 100,
+              child:Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                addNewId(context, "Add new ID ", () => MyHome()),
+                SizedBox(width: 10),
+                exportToPdf(context, "Export QR to PDF ", () => MyHome()),
+            ]
+
+    )
+
+          )],
+
+    ));
   }
 
 }
