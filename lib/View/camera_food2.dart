@@ -15,7 +15,7 @@ import 'package:screenshot/screenshot.dart';
 import 'package:flutter/material.dart';
 import 'food_scanned_uneaten.dart';
 import 'package:flutter/services.dart';
-import 'qr_prefood_data.dart';
+import 'qr_scan_id.dart';
 
 import "package:flutter_native_screenshot/flutter_native_screenshot.dart";
 import 'package:image/image.dart' as i;
