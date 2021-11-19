@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'select_institution_widgets.dart';
 import 'package:plate_waste_recorder/View/roster_page_widget.dart';
 import 'package:plate_waste_recorder/View/qrcode.dart';
+import 'package:plate_waste_recorder/View/camera_food2.dart';
 class Roster extends StatefulWidget {
   @override
   State<Roster> createState() => _RosterState();
@@ -19,14 +20,14 @@ class _RosterState extends State<Roster> {
           child: ListView(
 
               children: <Widget>[
-                RosterRecord(context,"Type 3",()=>MyHome(),"0000000123"),
-                RosterRecord(context,"Type 3",()=>MyHome(),"0000000456"),
-                RosterRecord(context,"Type 3",()=>MyHome(),"0000000123"),
-                RosterRecord(context,"Type 3",()=>MyHome(),"0000000456"),
-                RosterRecord(context,"Type 3",()=>MyHome(),"0000000123"),
-                RosterRecord(context,"Type 3",()=>MyHome(),"0000000456"),
-                RosterRecord(context,"Type 3",()=>MyHome(),"0000000123"),
-                RosterRecord(context,"Type 3",()=>MyHome(),"0000000456"),
+                RosterRecord(context,"Type 3",()=>CameraFood2(),"0000000123"),
+                RosterRecord(context,"Type 3",()=>CameraFood2(),"0000000456"),
+                RosterRecord(context,"Type 3",()=>CameraFood2(),"0000000123"),
+                RosterRecord(context,"Type 3",()=>CameraFood2(),"0000000456"),
+                RosterRecord(context,"Type 3",()=>CameraFood2(),"0000000123"),
+                RosterRecord(context,"Type 3",()=>CameraFood2(),"0000000456"),
+                RosterRecord(context,"Type 3",()=>CameraFood2(),"0000000123"),
+                RosterRecord(context,"Type 3",()=>CameraFood2(),"0000000456"),
 
               ])
       ),SizedBox(
@@ -34,9 +35,9 @@ class _RosterState extends State<Roster> {
               child:Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                addNewId(context, "Add new ID ", () => MyHome()),
+                addNewId(context, "Add new ID ", () => CameraFood2()),
                 SizedBox(width: 10),
-                exportToPdf(context, "Export QR to PDF ", () => MyHome()),
+                exportToPdf(context, "Export QR to PDF ", () => CameraFood2()),
             ]
 
     )

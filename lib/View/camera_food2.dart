@@ -37,6 +37,7 @@ import 'dart:io';
 
 /// used as a shorter way to determine if a value is null or not
 bool isNull(String? val){
+  // TODO: why can't you just check val==null???
   return val == null ? true : false;
 }
 

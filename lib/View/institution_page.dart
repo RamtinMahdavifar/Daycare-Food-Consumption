@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:plate_waste_recorder/View/roster_page.dart';
 import 'package:plate_waste_recorder/View/view_data.dart';
-import 'package:plate_waste_recorder/View/view_data_page.dart';
+//import 'package:plate_waste_recorder/View/view_data_page.dart';
 
 import 'food_status_page.dart';
 import 'institution_page_widgets.dart';
@@ -68,7 +68,7 @@ class _InstitutionPageState extends State<InstitutionPage> {
                         //most of the buttons do not navigate anywhere and have null as their navigation parameter
                  
 
-                        menuButton(context,"View Data", () => ViewDataPage(widget.institutionName, widget.institutionAddress), 3),
+                        menuButton(context,"View Data", () => ViewDataPage(/*widget.institutionName, widget.institutionAddress*/), 3),
 
                         SizedBox(width: 50),
                         menuButton(context,"Input Data", () => FoodStatusPage(), 1),
