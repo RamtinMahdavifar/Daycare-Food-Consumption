@@ -112,9 +112,11 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
 
           setState((){
             // check whether our fields are valid
-            this._foodNameValid = inputName.isNotEmpty;
-            this._foodWeightValid = inputWeight.isNotEmpty;
-            this._foodCommentsValid = inputComments.isNotEmpty;
+            this._foodNameValid = inputName.isNotEmpty && inputName!=null;
+            this._foodWeightValid = inputWeight.isNotEmpty && inputWeight!=null;
+            // our comment field is optional and as such can be an empty string,
+            // ensure this value is not null however
+            this._foodCommentsValid = inputComments!=null;
           });
 
           if(this._foodNameValid && this._foodWeightValid && this._foodCommentsValid){
