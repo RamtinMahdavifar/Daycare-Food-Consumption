@@ -8,6 +8,7 @@ String? ID;
 String? INSTITUTE;
 String? STATUS;
 String? DATE;
+List<String?> CONTAINERS = [];
 
 void setFoodVars(String? foodName, String? weight, String? comments){
   FOODNAME = foodName;
@@ -37,6 +38,11 @@ void setDATE(){
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
   DATE = formatter.format(now);
   print("DATE SET");
+}
+
+void addContainer(String? preset){
+  CONTAINERS.add(preset);
+  print("ADDED NEW CONTAINER");
 }
 
 String? getFoodName(){

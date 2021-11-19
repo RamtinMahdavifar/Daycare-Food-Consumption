@@ -265,12 +265,6 @@ class _CameraFood2State extends State<CameraFood2> with
                   )
                 ),
                ),
-/*            Dialog(
-                barrierColor: null,//jank workaround remove the shadow from the dialog
-                barrierDismissible: false,
-                context: context,
-                builder: (_) => foodScannedFirst(context, QRcontroller!, testStringVar) //needs to check for null at some point, do this later
-            ),*/
             _captureImage(), //camera Capture button
           ]
       ),
@@ -310,19 +304,44 @@ class _CameraFood2State extends State<CameraFood2> with
     :
       QRcontroller!.pauseCamera();
       if(getStatus() == "uneaten"){
+
         await showDialog( //open the dialog first before begining the image capture process
             barrierColor: null,//jank workaround remove the shadow from the dialog
             barrierDismissible: false,
             context: context,
             builder: (_) => foodScannedFirst(context, QRcontroller!) //needs to check for null at some point, do this later
         );
+        print("Dialog Code passed");
+        takeShot();
+        print("takeShot completed");
+        QRcontroller!.resumeCamera();
+        print("Image Capture Finish");
+
       }else if (getStatus() == "eaten" || getStatus() == "container"){
+
         await showDialog( //open the dialog first before begining the image capture process
             barrierColor: null,//jank workaround remove the shadow from the dialog
             barrierDismissible: false,
             context: context,
             builder: (_) => foodScannedSecond(context, QRcontroller!) //needs to check for null at some point, do this later
         );
+        print("Dialog Code passed");
+        takeShot();
+        print("takeShot completed");
+        QRcontroller!.resumeCamera();
+        print("Image Capture Finish");
+      }else if(getStatus == "preset"){
+
+        print("Adding Preset Container Placeholder");
+        await showDialog( //open the dialog first before begining the image capture process
+            barrierColor: null,//jank workaround remove the shadow from the dialog
+            barrierDismissible: false,
+            context: context,
+            builder: (_) => foodScannedFirst(context, QRcontroller!) //needs to check for null at some point, do this later
+        );
+
+        addContainer(getFoodName());
+
       }else{
         throw Exception("Invalid Food Status");
       }

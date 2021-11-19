@@ -106,67 +106,7 @@ class _QR_ScanIDState extends State<QR_ScanID> {
     }
   }
 
-/*
-  Widget inputIDButton(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    return SizedBox(
-        height: height/12,
-        width: width/2,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: Colors.blue,
-            shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.black, width: 5),
-                borderRadius: new BorderRadius.circular(3)
-            ),
-          ),
-          child: Text("Manual ID Entry", style: TextStyle(fontSize: 32)),
-          onPressed: () {
-            //await reassemble();
-            Navigator.push(context, MaterialPageRoute( //open new one to scan
-                builder: (context) {
-                  return InputIDForm();
-                }));
 
-
-          },
-        )
-    );
-  }
-*/
-
-  /*Widget _ID_InputOptions(){
-    return SafeArea(
-      child: Scaffold(
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children:  <Widget>[
-              Container(
-                  child: Text("Scan a Student ID", style: TextStyle(fontSize: 40))
-              ),
-              Expanded(
-                  child: BuildQrView(context)
-              ),
-              Container(
-                child: Padding(padding: EdgeInsets.all(10),
-                    child: Row(
-
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        //most of the buttons do not navigate anywhere and have null as their navigation parameter
-                        //menuButton(context,"Input ID", () => InputIDForm(), 1),
-                        inputIDButton(context)
-
-                      ],
-
-                    )),
-
-              ),
-            ],
-          )
-      ),);
-  }*/
 }
 
 
