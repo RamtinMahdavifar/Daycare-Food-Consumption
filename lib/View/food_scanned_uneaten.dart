@@ -40,9 +40,12 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
   @override
   Widget build(BuildContext context) {
     Config.log.i("Opening image submit dialog");
+    widget.qrViewController.resumeCamera();
+    widget.qrViewController.pauseCamera();
+
     //controller.pauseCamera();
     double w = MediaQuery.of(context).size.width;
-    return Container(
+    return Scaffold(body: Container(
         padding: EdgeInsets.fromLTRB(w/2, 37, 0, 30), // bottom 30, top 37, these are precision measurements for all screens btw
         child:Dialog(
             elevation: 0,
@@ -66,7 +69,7 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
                 )
             )
         )
-    );
+    ));
   }
 
 
