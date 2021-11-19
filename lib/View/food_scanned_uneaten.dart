@@ -1,6 +1,8 @@
 
 import 'package:image/image.dart' as image; // import this package with the name image to avoid naming collisions
 import 'package:flutter_native_screenshot/flutter_native_screenshot.dart';
+import 'package:plate_waste_recorder/Model/meal.dart';
+import 'package:plate_waste_recorder/Model/food_status.dart';
 import 'package:plate_waste_recorder/Model/string_image_converter.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
@@ -18,7 +20,8 @@ class UneatenFoodDialog extends StatefulWidget {
   // take as parameters to this page the institution and subject info this meal belongs under
   InstitutionInfo currentInstitution;
   SubjectInfo currentSubject;
-  UneatenFoodDialog(this.currentInstitution, this.currentSubject, {Key? key}) : super(key: key);
+  FoodStatus currentFoodStatus;
+  UneatenFoodDialog(this.currentInstitution, this.currentSubject, this.currentFoodStatus, {Key? key}) : super(key: key);
 
 
   @override
@@ -124,7 +127,10 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
             // get the image the user has submitted
             takeShot().then((capturedImage){
               // convert our image to a string
-              convertImageToString(capturedImage);
+              String imageString = convertImageToString(capturedImage);
+              // construct a meal using the data we've collected and write this to our database
+              Meal submittedMeal = Meal(inputName, widget.currentFoodStatus, imageString, double.parse(inputWeight), inputComments);
+
             });
 
 

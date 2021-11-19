@@ -108,11 +108,11 @@ class _UploadDataState extends State<UploadData>{
         // we require the user to have chosen an image before allowing them to submit
         // their data
         // TODO: use firebase push() functionality to generate a unique ID for meals, consider using this in meal constructor
-        Meal newMeal = Meal("test meal ID");
+        //Meal newMeal = Meal("test meal ID");
         // add the submitted image to this meal
         // assume this is a new meal
         // TODO: add UI and functionality to choose and add data to prexisting meals
-        newMeal.beforeImageAsString = this._imageFileList![0].path;
+        //newMeal.beforeImageAsString = this._imageFileList![0].path;
         Config.log.i("writing the image with path: " + this._imageFileList![0].path + " to the database");
         // add weight, meal name, and comments to this Meal object if such fields are
         // filled in, here these fields are optional to aid in fast data entry
@@ -120,26 +120,26 @@ class _UploadDataState extends State<UploadData>{
         if(inputWeight.isNotEmpty){
           // weight has been input, add to meal, the input string weight must be in
           // valid double format due to input restrictions on our weight field
-          newMeal.beforeMealWeight = double.parse(inputWeight);
+          //newMeal.beforeMealWeight = double.parse(inputWeight);
           Config.log.i("user has input meal weight: " + inputWeight);
         }
         String inputComment = this._commentFieldController.value.text;
         if(inputComment.isNotEmpty){
           // comment has been input, add to meal
-          newMeal.comment = inputComment;
+          //newMeal.comment = inputComment;
           Config.log.i("user has input comment: " + inputComment);
         }
         String inputMealName = this._mealNameFieldController.value.text;
         if(inputMealName.isNotEmpty){
           // meal name has been input, add to meal
-          newMeal.mealName = inputMealName;
+          //newMeal.mealName = inputMealName;
           Config.log.i("user has input meal name: " + inputMealName);
         }
         // all input data has been added to newMeal, write this to the database
         // write this meal to the database under a test research group as adding and joining
         // research groups is not yet implemented
         Config.log.i("writing newly created meal to database");
-        Database().writeMealToDatabase(ResearchGroupInfo("testResearchGroupName"), newMeal);
+        //Database().writeMealToDatabase(ResearchGroupInfo("testResearchGroupName"), newMeal);
 
         // after the new meal has been submitted, clear the data in the fields so
         // the user can submit other meals
