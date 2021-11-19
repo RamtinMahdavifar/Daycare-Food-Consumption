@@ -38,201 +38,322 @@
 26    <uses-permission android:name="android.permission.CAMERA" />
 26-->[:camera] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/camera/intermediates/merged_manifest/debug/AndroidManifest.xml:7:5-65
 26-->[:camera] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/camera/intermediates/merged_manifest/debug/AndroidManifest.xml:7:22-62
-27    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- Although the *SdkVersion is captured in gradle build files, this is required for non gradle builds -->
+27    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 27-->[:camera] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/camera/intermediates/merged_manifest/debug/AndroidManifest.xml:8:5-71
 27-->[:camera] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/camera/intermediates/merged_manifest/debug/AndroidManifest.xml:8:22-68
-28    <!-- <uses-sdk android:minSdkVersion="14"/> -->
-29    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Don't require camera, as this requires a rear camera. This allows it to work on the Nexus 7 -->
-29-->[com.google.firebase:firebase-database:20.0.2] /home/keplar/.gradle/caches/transforms-3/24b3675404ac641b995923ee59146823/transformed/jetified-firebase-database-20.0.2/AndroidManifest.xml:25:5-79
-29-->[com.google.firebase:firebase-database:20.0.2] /home/keplar/.gradle/caches/transforms-3/24b3675404ac641b995923ee59146823/transformed/jetified-firebase-database-20.0.2/AndroidManifest.xml:25:22-76
-30    <uses-feature
-30-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:25:5-27:36
-31        android:name="android.hardware.camera"
-31-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:26:9-47
-32        android:required="false" />
-32-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:27:9-33
-33    <uses-feature
-33-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:28:5-30:36
-34        android:name="android.hardware.camera.front"
-34-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:29:9-53
-35        android:required="false" /> <!-- TODO replace above two with next line after Android 4.2 -->
-35-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:30:9-33
-36    <!-- <uses-feature android:name="android.hardware.camera.any"/> -->
-37    <uses-feature
-37-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:33:5-35:36
-38        android:name="android.hardware.camera.autofocus"
-38-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:34:9-57
-39        android:required="false" />
-39-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:35:9-33
-40    <uses-feature
-40-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:36:5-38:36
-41        android:name="android.hardware.camera.flash"
-41-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:37:9-53
-42        android:required="false" />
-42-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:38:9-33
-43    <uses-feature
-43-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:39:5-41:36
-44        android:name="android.hardware.screen.landscape"
-44-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:40:9-57
-45        android:required="false" />
-45-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:41:9-33
-46    <uses-feature
-46-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:42:5-44:36
-47        android:name="android.hardware.wifi"
-47-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:43:9-45
-48        android:required="false" />
-48-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:44:9-33
-49
-50    <application
-50-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:3:4-32:19
-51        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-51-->[androidx.core:core:1.5.0] /home/keplar/.gradle/caches/transforms-3/80d090194b19f099ba4e166c7f0f71f0/transformed/core-1.5.0/AndroidManifest.xml:24:18-86
-52        android:debuggable="true"
-53        android:icon="@mipmap/ic_launcher"
-53-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:6:9-43
-54        android:label="plate_waste_recorder"
-54-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:5:9-45
-55        android:requestLegacyExternalStorage="true" >
-55-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:4:9-52
-56        <activity
-56-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:7:9-26:20
-57            android:name="com.example.plate_waste_recorder.MainActivity"
-57-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:8:13-41
-58            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-58-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:11:13-163
-59            android:hardwareAccelerated="true"
-59-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:12:13-47
-60            android:launchMode="singleTop"
-60-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:9:13-43
-61            android:theme="@style/LaunchTheme"
-61-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:10:13-47
-62            android:windowSoftInputMode="adjustResize" >
-62-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:13:13-55
-63
-64            <!--
-65                 Specifies an Android theme to apply to this Activity as soon as
-66                 the Android process has started. This theme is visible to the user
-67                 while the Flutter UI initializes. After that, this theme continues
-68                 to determine the Window background behind the Flutter UI.
-69            -->
-70            <meta-data
-70-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:18:13-21:17
-71                android:name="io.flutter.embedding.android.NormalTheme"
-71-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:19:15-70
-72                android:resource="@style/NormalTheme" />
-72-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:20:15-52
-73
-74            <intent-filter>
-74-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:22:13-25:29
-75                <action android:name="android.intent.action.MAIN" />
-75-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:23:17-68
-75-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:23:25-66
-76
-77                <category android:name="android.intent.category.LAUNCHER" />
-77-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:24:17-76
-77-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:24:27-74
-78            </intent-filter>
-79        </activity>
-80        <!--
-81             Don't delete the meta-data below.
-82             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
-83        -->
-84        <meta-data
-84-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:29:9-31:33
-85            android:name="flutterEmbedding"
-85-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:30:13-44
-86            android:value="2" />
-86-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:31:13-30
-87
-88        <provider
-88-->[:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:8:9-16:20
-89            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
-89-->[:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:9:13-82
-90            android:authorities="com.example.plate_waste_recorder.flutter.image_provider"
-90-->[:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:10:13-74
-91            android:exported="false"
-91-->[:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-37
-92            android:grantUriPermissions="true" >
-92-->[:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-47
-93            <meta-data
-93-->[:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-15:75
-94                android:name="android.support.FILE_PROVIDER_PATHS"
-94-->[:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:14:17-67
-95                android:resource="@xml/flutter_image_picker_file_paths" />
-95-->[:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:15:17-72
-96        </provider>
-97
-98        <service
-98-->[:firebase_database] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_database/intermediates/merged_manifest/debug/AndroidManifest.xml:8:9-12:19
-99            android:name="com.google.firebase.components.ComponentDiscoveryService"
-99-->[:firebase_database] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_database/intermediates/merged_manifest/debug/AndroidManifest.xml:8:18-89
-100            android:directBootAware="true"
-100-->[com.google.firebase:firebase-common:20.0.0] /home/keplar/.gradle/caches/transforms-3/040553dd0106c9ab4bf2d17d5f6a4e52/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:35:13-43
-101            android:exported="false" >
-101-->[com.google.firebase:firebase-database:20.0.2] /home/keplar/.gradle/caches/transforms-3/24b3675404ac641b995923ee59146823/transformed/jetified-firebase-database-20.0.2/AndroidManifest.xml:31:13-37
-102            <meta-data
-102-->[:firebase_database] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_database/intermediates/merged_manifest/debug/AndroidManifest.xml:9:13-11:85
-103                android:name="com.google.firebase.components:io.flutter.plugins.firebase.database.FlutterFirebaseAppRegistrar"
-103-->[:firebase_database] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_database/intermediates/merged_manifest/debug/AndroidManifest.xml:10:17-127
-104                android:value="com.google.firebase.components.ComponentRegistrar" />
-104-->[:firebase_database] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_database/intermediates/merged_manifest/debug/AndroidManifest.xml:11:17-82
-105            <meta-data
-105-->[:firebase_core] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:9:13-11:85
-106                android:name="com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar"
-106-->[:firebase_core] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:10:17-124
-107                android:value="com.google.firebase.components.ComponentRegistrar" />
-107-->[:firebase_core] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:11:17-82
-108            <meta-data
-108-->[com.google.firebase:firebase-database:20.0.2] /home/keplar/.gradle/caches/transforms-3/24b3675404ac641b995923ee59146823/transformed/jetified-firebase-database-20.0.2/AndroidManifest.xml:32:13-34:85
-109                android:name="com.google.firebase.components:com.google.firebase.database.DatabaseRegistrar"
-109-->[com.google.firebase:firebase-database:20.0.2] /home/keplar/.gradle/caches/transforms-3/24b3675404ac641b995923ee59146823/transformed/jetified-firebase-database-20.0.2/AndroidManifest.xml:33:17-109
-110                android:value="com.google.firebase.components.ComponentRegistrar" />
-110-->[com.google.firebase:firebase-database:20.0.2] /home/keplar/.gradle/caches/transforms-3/24b3675404ac641b995923ee59146823/transformed/jetified-firebase-database-20.0.2/AndroidManifest.xml:34:17-82
-111        </service>
-112
-113        <provider
-113-->[com.google.firebase:firebase-common:20.0.0] /home/keplar/.gradle/caches/transforms-3/040553dd0106c9ab4bf2d17d5f6a4e52/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:26:9-31:39
-114            android:name="com.google.firebase.provider.FirebaseInitProvider"
-114-->[com.google.firebase:firebase-common:20.0.0] /home/keplar/.gradle/caches/transforms-3/040553dd0106c9ab4bf2d17d5f6a4e52/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:27:13-77
-115            android:authorities="com.example.plate_waste_recorder.firebaseinitprovider"
-115-->[com.google.firebase:firebase-common:20.0.0] /home/keplar/.gradle/caches/transforms-3/040553dd0106c9ab4bf2d17d5f6a4e52/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:28:13-72
-116            android:directBootAware="true"
-116-->[com.google.firebase:firebase-common:20.0.0] /home/keplar/.gradle/caches/transforms-3/040553dd0106c9ab4bf2d17d5f6a4e52/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:29:13-43
-117            android:exported="false"
-117-->[com.google.firebase:firebase-common:20.0.0] /home/keplar/.gradle/caches/transforms-3/040553dd0106c9ab4bf2d17d5f6a4e52/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:30:13-37
-118            android:initOrder="100" />
-118-->[com.google.firebase:firebase-common:20.0.0] /home/keplar/.gradle/caches/transforms-3/040553dd0106c9ab4bf2d17d5f6a4e52/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:31:13-36
-119
-120        <activity
-120-->[com.google.android.gms:play-services-base:17.1.0] /home/keplar/.gradle/caches/transforms-3/41ad468a20ba456e77bc1aebe84faa61/transformed/jetified-play-services-base-17.1.0/AndroidManifest.xml:23:9-26:75
-121            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-121-->[com.google.android.gms:play-services-base:17.1.0] /home/keplar/.gradle/caches/transforms-3/41ad468a20ba456e77bc1aebe84faa61/transformed/jetified-play-services-base-17.1.0/AndroidManifest.xml:24:13-79
-122            android:exported="false"
-122-->[com.google.android.gms:play-services-base:17.1.0] /home/keplar/.gradle/caches/transforms-3/41ad468a20ba456e77bc1aebe84faa61/transformed/jetified-play-services-base-17.1.0/AndroidManifest.xml:25:13-37
-123            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-123-->[com.google.android.gms:play-services-base:17.1.0] /home/keplar/.gradle/caches/transforms-3/41ad468a20ba456e77bc1aebe84faa61/transformed/jetified-play-services-base-17.1.0/AndroidManifest.xml:26:13-72
-124
-125        <meta-data
-125-->[com.google.android.gms:play-services-basement:17.0.0] /home/keplar/.gradle/caches/transforms-3/fcef437940f0adde9cd1f4db3d573cff/transformed/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
-126            android:name="com.google.android.gms.version"
-126-->[com.google.android.gms:play-services-basement:17.0.0] /home/keplar/.gradle/caches/transforms-3/fcef437940f0adde9cd1f4db3d573cff/transformed/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
-127            android:value="@integer/google_play_services_version" />
-127-->[com.google.android.gms:play-services-basement:17.0.0] /home/keplar/.gradle/caches/transforms-3/fcef437940f0adde9cd1f4db3d573cff/transformed/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
-128
-129        <activity
-129-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:47:9-53:63
-130            android:name="com.journeyapps.barcodescanner.CaptureActivity"
-130-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:48:13-74
-131            android:clearTaskOnLaunch="true"
-131-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:49:13-45
-132            android:screenOrientation="sensorLandscape"
-132-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:50:13-56
-133            android:stateNotNeeded="true"
-133-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:51:13-42
-134            android:theme="@style/zxing_CaptureTheme"
-134-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:52:13-54
-135            android:windowSoftInputMode="stateAlwaysHidden" />
-135-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:53:13-60
-136    </application>
-137
-138</manifest>
+28    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Don't require camera, as this requires a rear camera. This allows it to work on the Nexus 7 -->
+28-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:24:5-79
+28-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:24:22-76
+29    <uses-feature
+29-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:25:5-27:36
+30        android:name="android.hardware.camera"
+30-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:26:9-47
+31        android:required="false" />
+31-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:27:9-33
+32    <uses-feature
+32-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:28:5-30:36
+33        android:name="android.hardware.camera.front"
+33-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:29:9-53
+34        android:required="false" /> <!-- TODO replace above two with next line after Android 4.2 -->
+34-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:30:9-33
+35    <!-- <uses-feature android:name="android.hardware.camera.any"/> -->
+36    <uses-feature
+36-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:33:5-35:36
+37        android:name="android.hardware.camera.autofocus"
+37-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:34:9-57
+38        android:required="false" />
+38-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:35:9-33
+39    <uses-feature
+39-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:36:5-38:36
+40        android:name="android.hardware.camera.flash"
+40-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:37:9-53
+41        android:required="false" />
+41-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:38:9-33
+42    <uses-feature
+42-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:39:5-41:36
+43        android:name="android.hardware.screen.landscape"
+43-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:40:9-57
+44        android:required="false" />
+44-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:41:9-33
+45    <uses-feature
+45-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:42:5-44:36
+46        android:name="android.hardware.wifi"
+46-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:43:9-45
+47        android:required="false" />
+47-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:44:9-33
+48
+49    <application
+49-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:3:4-32:19
+50        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+50-->[androidx.core:core:1.5.0] /home/keplar/.gradle/caches/transforms-3/80d090194b19f099ba4e166c7f0f71f0/transformed/core-1.5.0/AndroidManifest.xml:24:18-86
+51        android:debuggable="true"
+52        android:icon="@mipmap/ic_launcher"
+52-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:6:9-43
+53        android:label="plate_waste_recorder"
+53-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:5:9-45
+54        android:requestLegacyExternalStorage="true" >
+54-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:4:9-52
+55        <activity
+55-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:7:9-26:20
+56            android:name="com.example.plate_waste_recorder.MainActivity"
+56-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:8:13-41
+57            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+57-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:11:13-163
+58            android:hardwareAccelerated="true"
+58-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:12:13-47
+59            android:launchMode="singleTop"
+59-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:9:13-43
+60            android:theme="@style/LaunchTheme"
+60-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:10:13-47
+61            android:windowSoftInputMode="adjustResize" >
+61-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:13:13-55
+62
+63            <!--
+64                 Specifies an Android theme to apply to this Activity as soon as
+65                 the Android process has started. This theme is visible to the user
+66                 while the Flutter UI initializes. After that, this theme continues
+67                 to determine the Window background behind the Flutter UI.
+68            -->
+69            <meta-data
+69-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:18:13-21:17
+70                android:name="io.flutter.embedding.android.NormalTheme"
+70-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:19:15-70
+71                android:resource="@style/NormalTheme" />
+71-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:20:15-52
+72
+73            <intent-filter>
+73-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:22:13-25:29
+74                <action android:name="android.intent.action.MAIN" />
+74-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:23:17-68
+74-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:23:25-66
+75
+76                <category android:name="android.intent.category.LAUNCHER" />
+76-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:24:17-76
+76-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:24:27-74
+77            </intent-filter>
+78        </activity>
+79        <!--
+80             Don't delete the meta-data below.
+81             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+82        -->
+83        <meta-data
+83-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:29:9-31:33
+84            android:name="flutterEmbedding"
+84-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:30:13-44
+85            android:value="2" />
+85-->/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/android/app/src/main/AndroidManifest.xml:31:13-30
+86
+87        <provider
+87-->[:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:8:9-16:20
+88            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
+88-->[:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:9:13-82
+89            android:authorities="com.example.plate_waste_recorder.flutter.image_provider"
+89-->[:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:10:13-74
+90            android:exported="false"
+90-->[:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-37
+91            android:grantUriPermissions="true" >
+91-->[:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-47
+92            <meta-data
+92-->[:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-15:75
+93                android:name="android.support.FILE_PROVIDER_PATHS"
+93-->[:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:14:17-67
+94                android:resource="@xml/flutter_image_picker_file_paths" />
+94-->[:image_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/image_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:15:17-72
+95        </provider>
+96
+97        <service
+97-->[:firebase_database] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_database/intermediates/merged_manifest/debug/AndroidManifest.xml:8:9-12:19
+98            android:name="com.google.firebase.components.ComponentDiscoveryService"
+98-->[:firebase_database] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_database/intermediates/merged_manifest/debug/AndroidManifest.xml:8:18-89
+99            android:directBootAware="true"
+99-->[com.google.firebase:firebase-common:20.0.0] /home/keplar/.gradle/caches/transforms-3/040553dd0106c9ab4bf2d17d5f6a4e52/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:35:13-43
+100            android:exported="false" >
+100-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:76:13-37
+101            <meta-data
+101-->[:firebase_database] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_database/intermediates/merged_manifest/debug/AndroidManifest.xml:9:13-11:85
+102                android:name="com.google.firebase.components:io.flutter.plugins.firebase.database.FlutterFirebaseAppRegistrar"
+102-->[:firebase_database] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_database/intermediates/merged_manifest/debug/AndroidManifest.xml:10:17-127
+103                android:value="com.google.firebase.components.ComponentRegistrar" />
+103-->[:firebase_database] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_database/intermediates/merged_manifest/debug/AndroidManifest.xml:11:17-82
+104            <meta-data
+104-->[:firebase_auth] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:9:13-11:85
+105                android:name="com.google.firebase.components:io.flutter.plugins.firebase.auth.FlutterFirebaseAuthRegistrar"
+105-->[:firebase_auth] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:10:17-124
+106                android:value="com.google.firebase.components.ComponentRegistrar" />
+106-->[:firebase_auth] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:11:17-82
+107            <meta-data
+107-->[:firebase_core] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:9:13-11:85
+108                android:name="com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar"
+108-->[:firebase_core] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:10:17-124
+109                android:value="com.google.firebase.components.ComponentRegistrar" />
+109-->[:firebase_core] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:11:17-82
+110            <meta-data
+110-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:77:13-79:85
+111                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+111-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:78:17-109
+112                android:value="com.google.firebase.components.ComponentRegistrar" />
+112-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:79:17-82
+113            <meta-data
+113-->[com.google.firebase:firebase-database:20.0.2] /home/keplar/.gradle/caches/transforms-3/24b3675404ac641b995923ee59146823/transformed/jetified-firebase-database-20.0.2/AndroidManifest.xml:32:13-34:85
+114                android:name="com.google.firebase.components:com.google.firebase.database.DatabaseRegistrar"
+114-->[com.google.firebase:firebase-database:20.0.2] /home/keplar/.gradle/caches/transforms-3/24b3675404ac641b995923ee59146823/transformed/jetified-firebase-database-20.0.2/AndroidManifest.xml:33:17-109
+115                android:value="com.google.firebase.components.ComponentRegistrar" />
+115-->[com.google.firebase:firebase-database:20.0.2] /home/keplar/.gradle/caches/transforms-3/24b3675404ac641b995923ee59146823/transformed/jetified-firebase-database-20.0.2/AndroidManifest.xml:34:17-82
+116        </service>
+117
+118        <activity
+118-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:27:9-44:20
+119            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
+119-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:28:13-80
+120            android:excludeFromRecents="true"
+120-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:29:13-46
+121            android:exported="true"
+121-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:30:13-36
+122            android:launchMode="singleTask"
+122-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:31:13-44
+123            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+123-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:32:13-72
+124            <intent-filter>
+124-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:33:13-43:29
+125                <action android:name="android.intent.action.VIEW" />
+125-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:34:17-69
+125-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:34:25-66
+126
+127                <category android:name="android.intent.category.DEFAULT" />
+127-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:36:17-76
+127-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:36:27-73
+128                <category android:name="android.intent.category.BROWSABLE" />
+128-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:37:17-78
+128-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:37:27-75
+129
+130                <data
+130-->[:file_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-44
+131                    android:host="firebase.auth"
+132                    android:path="/"
+133                    android:scheme="genericidp" />
+134            </intent-filter>
+135        </activity>
+136        <activity
+136-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:45:9-62:20
+137            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
+137-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:46:13-79
+138            android:excludeFromRecents="true"
+138-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:47:13-46
+139            android:exported="true"
+139-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:48:13-36
+140            android:launchMode="singleTask"
+140-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:49:13-44
+141            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+141-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:50:13-72
+142            <intent-filter>
+142-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:51:13-61:29
+143                <action android:name="android.intent.action.VIEW" />
+143-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:34:17-69
+143-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:34:25-66
+144
+145                <category android:name="android.intent.category.DEFAULT" />
+145-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:36:17-76
+145-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:36:27-73
+146                <category android:name="android.intent.category.BROWSABLE" />
+146-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:37:17-78
+146-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:37:27-75
+147
+148                <data
+148-->[:file_picker] /home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-44
+149                    android:host="firebase.auth"
+150                    android:path="/"
+151                    android:scheme="recaptcha" />
+152            </intent-filter>
+153        </activity>
+154
+155        <service
+155-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:64:9-73:19
+156            android:name="com.google.firebase.auth.api.fallback.service.FirebaseAuthFallbackService"
+156-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:65:13-101
+157            android:enabled="true"
+157-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:66:13-35
+158            android:exported="false" >
+158-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:67:13-37
+159            <intent-filter>
+159-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:68:13-72:29
+160                <action android:name="com.google.firebase.auth.api.gms.service.START" />
+160-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:69:17-89
+160-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:69:25-86
+161
+162                <category android:name="android.intent.category.DEFAULT" />
+162-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:36:17-76
+162-->[com.google.firebase:firebase-auth:21.0.1] /home/keplar/.gradle/caches/transforms-3/cf2584f684f05fdb291e5e5c406fbf5e/transformed/jetified-firebase-auth-21.0.1/AndroidManifest.xml:36:27-73
+163            </intent-filter>
+164        </service>
+165
+166        <activity
+166-->[com.google.android.gms:play-services-auth:19.2.0] /home/keplar/.gradle/caches/transforms-3/abe123ee954c78b4d49599f1d8910e5c/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:23:9-27:75
+167            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+167-->[com.google.android.gms:play-services-auth:19.2.0] /home/keplar/.gradle/caches/transforms-3/abe123ee954c78b4d49599f1d8910e5c/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:24:13-93
+168            android:excludeFromRecents="true"
+168-->[com.google.android.gms:play-services-auth:19.2.0] /home/keplar/.gradle/caches/transforms-3/abe123ee954c78b4d49599f1d8910e5c/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:25:13-46
+169            android:exported="false"
+169-->[com.google.android.gms:play-services-auth:19.2.0] /home/keplar/.gradle/caches/transforms-3/abe123ee954c78b4d49599f1d8910e5c/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:26:13-37
+170            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+170-->[com.google.android.gms:play-services-auth:19.2.0] /home/keplar/.gradle/caches/transforms-3/abe123ee954c78b4d49599f1d8910e5c/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:27:13-72
+171        <!--
+172            Service handling Google Sign-In user revocation. For apps that do not integrate with
+173            Google Sign-In, this service will never be started.
+174        -->
+175        <service
+175-->[com.google.android.gms:play-services-auth:19.2.0] /home/keplar/.gradle/caches/transforms-3/abe123ee954c78b4d49599f1d8910e5c/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:33:9-37:51
+176            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+176-->[com.google.android.gms:play-services-auth:19.2.0] /home/keplar/.gradle/caches/transforms-3/abe123ee954c78b4d49599f1d8910e5c/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:34:13-89
+177            android:exported="true"
+177-->[com.google.android.gms:play-services-auth:19.2.0] /home/keplar/.gradle/caches/transforms-3/abe123ee954c78b4d49599f1d8910e5c/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:35:13-36
+178            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+178-->[com.google.android.gms:play-services-auth:19.2.0] /home/keplar/.gradle/caches/transforms-3/abe123ee954c78b4d49599f1d8910e5c/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:36:13-107
+179            android:visibleToInstantApps="true" />
+179-->[com.google.android.gms:play-services-auth:19.2.0] /home/keplar/.gradle/caches/transforms-3/abe123ee954c78b4d49599f1d8910e5c/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:37:13-48
+180
+181        <provider
+181-->[com.google.firebase:firebase-common:20.0.0] /home/keplar/.gradle/caches/transforms-3/040553dd0106c9ab4bf2d17d5f6a4e52/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:26:9-31:39
+182            android:name="com.google.firebase.provider.FirebaseInitProvider"
+182-->[com.google.firebase:firebase-common:20.0.0] /home/keplar/.gradle/caches/transforms-3/040553dd0106c9ab4bf2d17d5f6a4e52/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:27:13-77
+183            android:authorities="com.example.plate_waste_recorder.firebaseinitprovider"
+183-->[com.google.firebase:firebase-common:20.0.0] /home/keplar/.gradle/caches/transforms-3/040553dd0106c9ab4bf2d17d5f6a4e52/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:28:13-72
+184            android:directBootAware="true"
+184-->[com.google.firebase:firebase-common:20.0.0] /home/keplar/.gradle/caches/transforms-3/040553dd0106c9ab4bf2d17d5f6a4e52/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:29:13-43
+185            android:exported="false"
+185-->[com.google.firebase:firebase-common:20.0.0] /home/keplar/.gradle/caches/transforms-3/040553dd0106c9ab4bf2d17d5f6a4e52/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:30:13-37
+186            android:initOrder="100" />
+186-->[com.google.firebase:firebase-common:20.0.0] /home/keplar/.gradle/caches/transforms-3/040553dd0106c9ab4bf2d17d5f6a4e52/transformed/jetified-firebase-common-20.0.0/AndroidManifest.xml:31:13-36
+187
+188        <activity
+188-->[com.google.android.gms:play-services-base:17.5.0] /home/keplar/.gradle/caches/transforms-3/f5cbc9d53613c5f063407cfff4bed4f1/transformed/jetified-play-services-base-17.5.0/AndroidManifest.xml:23:9-26:75
+189            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+189-->[com.google.android.gms:play-services-base:17.5.0] /home/keplar/.gradle/caches/transforms-3/f5cbc9d53613c5f063407cfff4bed4f1/transformed/jetified-play-services-base-17.5.0/AndroidManifest.xml:24:13-79
+190            android:exported="false"
+190-->[com.google.android.gms:play-services-base:17.5.0] /home/keplar/.gradle/caches/transforms-3/f5cbc9d53613c5f063407cfff4bed4f1/transformed/jetified-play-services-base-17.5.0/AndroidManifest.xml:25:13-37
+191            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+191-->[com.google.android.gms:play-services-base:17.5.0] /home/keplar/.gradle/caches/transforms-3/f5cbc9d53613c5f063407cfff4bed4f1/transformed/jetified-play-services-base-17.5.0/AndroidManifest.xml:26:13-72
+192
+193        <meta-data
+193-->[com.google.android.gms:play-services-basement:17.5.0] /home/keplar/.gradle/caches/transforms-3/bbfd457d787e90fd4b4bb36b9f4213cf/transformed/jetified-play-services-basement-17.5.0/AndroidManifest.xml:23:9-25:69
+194            android:name="com.google.android.gms.version"
+194-->[com.google.android.gms:play-services-basement:17.5.0] /home/keplar/.gradle/caches/transforms-3/bbfd457d787e90fd4b4bb36b9f4213cf/transformed/jetified-play-services-basement-17.5.0/AndroidManifest.xml:24:13-58
+195            android:value="@integer/google_play_services_version" />
+195-->[com.google.android.gms:play-services-basement:17.5.0] /home/keplar/.gradle/caches/transforms-3/bbfd457d787e90fd4b4bb36b9f4213cf/transformed/jetified-play-services-basement-17.5.0/AndroidManifest.xml:25:13-66
+196
+197        <activity
+197-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:47:9-53:63
+198            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+198-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:48:13-74
+199            android:clearTaskOnLaunch="true"
+199-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:49:13-45
+200            android:screenOrientation="sensorLandscape"
+200-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:50:13-56
+201            android:stateNotNeeded="true"
+201-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:51:13-42
+202            android:theme="@style/zxing_CaptureTheme"
+202-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:52:13-54
+203            android:windowSoftInputMode="stateAlwaysHidden" />
+203-->[com.journeyapps:zxing-android-embedded:4.1.0] /home/keplar/.gradle/caches/transforms-3/d11e73b4cb083fc21513168ffbed9ad6/transformed/jetified-zxing-android-embedded-4.1.0/AndroidManifest.xml:53:13-60
+204    </application>
+205
+206</manifest>

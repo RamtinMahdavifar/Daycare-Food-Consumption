@@ -4,24 +4,7 @@
             "outputFile": "/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-pt-rPT/values-pt-rPT.xml",
             "map": [
                 {
-                    "source": "/home/keplar/.gradle/caches/transforms-3/fcef437940f0adde9cd1f4db3d573cff/transformed/jetified-play-services-basement-17.0.0/res/values-pt-rPT/values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "251",
-                        "endColumns": "203",
-                        "endOffsets": "454"
-                    },
-                    "to": {
-                        "startLines": "37",
-                        "startColumns": "4",
-                        "startOffsets": "4025",
-                        "endColumns": "203",
-                        "endOffsets": "4224"
-                    }
-                },
-                {
-                    "source": "/home/keplar/.gradle/caches/transforms-3/41ad468a20ba456e77bc1aebe84faa61/transformed/jetified-play-services-base-17.1.0/res/values-pt-rPT/values.xml",
+                    "source": "/home/keplar/.gradle/caches/transforms-3/f5cbc9d53613c5f063407cfff4bed4f1/transformed/jetified-play-services-base-17.5.0/res/values-pt-rPT/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -52,6 +35,23 @@
                         "startOffsets": "105,213,319,426,515,616,734,819,899,991,1085,1182,1276,1375,1469,1565,1660,1752,1844,1929,2036,2147,2249,2357,2465,2572,2737,5659",
                         "endColumns": "107,105,106,88,100,117,84,79,91,93,96,93,98,93,95,94,91,91,84,106,110,101,107,107,106,164,98,85",
                         "endOffsets": "208,314,421,510,611,729,814,894,986,1080,1177,1271,1370,1464,1560,1655,1747,1839,1924,2031,2142,2244,2352,2460,2567,2732,2831,5740"
+                    }
+                },
+                {
+                    "source": "/home/keplar/.gradle/caches/transforms-3/bbfd457d787e90fd4b4bb36b9f4213cf/transformed/jetified-play-services-basement-17.5.0/res/values-pt-rPT/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "251",
+                        "endColumns": "203",
+                        "endOffsets": "454"
+                    },
+                    "to": {
+                        "startLines": "37",
+                        "startColumns": "4",
+                        "startOffsets": "4025",
+                        "endColumns": "203",
+                        "endOffsets": "4224"
                     }
                 },
                 {

@@ -9,8 +9,6 @@ String? INSTITUTE;
 String? STATUS;
 String? DATE;
 
-//plan to add the variables for the date and the food status
-
 void setFoodVars(String? foodName, String? weight, String? comments){
   FOODNAME = foodName;
   WEIGHT = weight;
@@ -38,6 +36,7 @@ void setDATE(){
   final DateTime now = DateTime.now();
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
   DATE = formatter.format(now);
+  print("DATE SET");
 }
 
 String? getFoodName(){

@@ -5,6 +5,7 @@ import 'package:plate_waste_recorder/Helper/config.dart';
 import '../Model/variables.dart';
 import 'camera_food2.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'qr_prefood_data.dart';
 
 
 class ID_InputPage extends StatefulWidget {
@@ -132,7 +133,7 @@ class _ID_InputPageState extends State<ID_InputPage> {
                   child: Text("Scan a Student ID", style: TextStyle(fontSize: 40))
               ),
               Expanded(
-                child: BuildQrView(context)
+                child: QR_PreFoodCam()//BuildQrView(context)
               ),
               Container(
                 child: Padding(padding: EdgeInsets.all(10),

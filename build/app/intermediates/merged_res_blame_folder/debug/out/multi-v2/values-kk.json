@@ -4,7 +4,7 @@
             "outputFile": "/home/keplar/Documents/school/CMPT 371/term-project-fall-2021-team-2-1/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-kk/values-kk.xml",
             "map": [
                 {
-                    "source": "/home/keplar/.gradle/caches/transforms-3/fcef437940f0adde9cd1f4db3d573cff/transformed/jetified-play-services-basement-17.0.0/res/values-kk/values.xml",
+                    "source": "/home/keplar/.gradle/caches/transforms-3/bbfd457d787e90fd4b4bb36b9f4213cf/transformed/jetified-play-services-basement-17.5.0/res/values-kk/values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "/home/keplar/.gradle/caches/transforms-3/41ad468a20ba456e77bc1aebe84faa61/transformed/jetified-play-services-base-17.1.0/res/values-kk/values.xml",
+                    "source": "/home/keplar/.gradle/caches/transforms-3/f5cbc9d53613c5f063407cfff4bed4f1/transformed/jetified-play-services-base-17.5.0/res/values-kk/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",

@@ -21,24 +21,7 @@
                     }
                 },
                 {
-                    "source": "/home/keplar/.gradle/caches/transforms-3/41ad468a20ba456e77bc1aebe84faa61/transformed/jetified-play-services-base-17.1.0/res/values-or/values.xml",
-                    "from": {
-                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
-                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
-                        "startOffsets": "245,354,547,678,793,1008,1142,1283,1418,1645,1756,1948,2080,2291,2475,2566,2664",
-                        "endColumns": "108,192,130,114,214,133,140,134,226,110,191,131,210,183,90,97,111",
-                        "endOffsets": "353,546,677,792,1007,1141,1282,1417,1644,1755,1947,2079,2290,2474,2565,2663,2775"
-                    },
-                    "to": {
-                        "startLines": "29,30,31,32,33,34,35,36,38,39,40,41,42,43,44,45,46",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "2850,2963,3156,3291,3410,3625,3763,3908,4246,4473,4588,4780,4916,5127,5315,5410,5512",
-                        "endColumns": "112,192,134,118,214,137,144,138,226,114,191,135,210,187,94,101,115",
-                        "endOffsets": "2958,3151,3286,3405,3620,3758,3903,4042,4468,4583,4775,4911,5122,5310,5405,5507,5623"
-                    }
-                },
-                {
-                    "source": "/home/keplar/.gradle/caches/transforms-3/fcef437940f0adde9cd1f4db3d573cff/transformed/jetified-play-services-basement-17.0.0/res/values-or/values.xml",
+                    "source": "/home/keplar/.gradle/caches/transforms-3/bbfd457d787e90fd4b4bb36b9f4213cf/transformed/jetified-play-services-basement-17.5.0/res/values-or/values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -52,6 +35,23 @@
                         "startOffsets": "4047",
                         "endColumns": "198",
                         "endOffsets": "4241"
+                    }
+                },
+                {
+                    "source": "/home/keplar/.gradle/caches/transforms-3/f5cbc9d53613c5f063407cfff4bed4f1/transformed/jetified-play-services-base-17.5.0/res/values-or/values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
+                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
+                        "startOffsets": "245,354,547,678,793,1008,1142,1283,1418,1645,1756,1948,2080,2291,2475,2566,2664",
+                        "endColumns": "108,192,130,114,214,133,140,134,226,110,191,131,210,183,90,97,111",
+                        "endOffsets": "353,546,677,792,1007,1141,1282,1417,1644,1755,1947,2079,2290,2474,2565,2663,2775"
+                    },
+                    "to": {
+                        "startLines": "29,30,31,32,33,34,35,36,38,39,40,41,42,43,44,45,46",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "2850,2963,3156,3291,3410,3625,3763,3908,4246,4473,4588,4780,4916,5127,5315,5410,5512",
+                        "endColumns": "112,192,134,118,214,137,144,138,226,114,191,135,210,187,94,101,115",
+                        "endOffsets": "2958,3151,3286,3405,3620,3758,3903,4042,4468,4583,4775,4911,5122,5310,5405,5507,5623"
                     }
                 },
                 {
