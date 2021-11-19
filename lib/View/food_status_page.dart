@@ -40,7 +40,7 @@ class _FoodStatusPageState extends State<FoodStatusPage> {
 
                   foodStatusButton(context,"Food Eaten: not thrown out",()=>ID_InputPage()),
 
-                  foodStatusButton(context,"Food Wasted: container weight",()=>ID_InputPage())),
+                  foodStatusButton(context,"Food Wasted: container weight",()=>ID_InputPage()),
 
 
 
