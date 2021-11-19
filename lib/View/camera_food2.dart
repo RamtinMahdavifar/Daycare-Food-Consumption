@@ -20,6 +20,7 @@ import 'qr_scan_id.dart';
 import "package:flutter_native_screenshot/flutter_native_screenshot.dart";
 import 'package:image/image.dart' as i;
 import 'dart:io';
+import 'package:plate_waste_recorder/Model/institution_info.dart';
 
 /*
 
@@ -42,6 +43,11 @@ bool isNull(String? val){
 }
 
 class CameraFood2 extends StatefulWidget {
+  // this page accepts as a parameter when created, an InstitutionInfo object representing
+  // the institution the user is currently adding data for
+  InstitutionInfo currentInstitution;
+  CameraFood2(this.currentInstitution, {Key? key}) : super(key: key);
+
   @override
   _CameraFood2State createState() => _CameraFood2State();
 }
@@ -66,6 +72,8 @@ class _CameraFood2State extends State<CameraFood2> with
   double? height;
   Directory? appPath;
   Directory? directory;
+
+
 
 
 
@@ -431,7 +439,7 @@ class _CameraFood2State extends State<CameraFood2> with
           Navigator.of(context, rootNavigator: true).pop(); //leave old qr
           Navigator.push(context, MaterialPageRoute( //open new one to scan
               builder: (context) {
-                return ID_InputPage();
+                return ID_InputPage(widget.currentInstitution);
               }));
 
 
@@ -454,6 +462,8 @@ class _CameraFood2State extends State<CameraFood2> with
 
 
 }
+
+/*
 class FoodCamera2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -470,6 +480,7 @@ Future<void> main() async{
 
   runApp(FoodCamera2());
 }
+ */
 // What's this??? This allows a value of typ T or T? to be treated as a val of type T?
 // Why?? because this thing is not finished and more stable versions of the flutter camera API
 // are not expected to release until late 2021

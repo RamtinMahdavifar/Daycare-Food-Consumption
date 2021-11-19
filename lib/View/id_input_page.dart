@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'id_input_widget.dart';
 import 'institution_page_widgets.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
@@ -8,10 +9,11 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'qr_scan_id.dart';
 
 
-class ID_InputPage extends StatefulWidget {
+class ID_InputPage extends StatefulWidget { // TODO: why is there an _ in this name
 
+  InstitutionInfo currentInstitution;
+  ID_InputPage(this.currentInstitution, {Key? key}) : super(key: key);
 
-  ID_InputPage( {Key? key}) : super(key: key);
 
   @override
   State<ID_InputPage> createState() => _ID_InputPageState();
@@ -52,7 +54,7 @@ class _ID_InputPageState extends State<ID_InputPage> {
             //await reassemble();
             Navigator.push(context, MaterialPageRoute( //open new one to scan
                 builder: (context) {
-                  return InputIDForm();
+                  return InputIDForm(widget.currentInstitution);
                 }));
 
 
@@ -72,7 +74,7 @@ class _ID_InputPageState extends State<ID_InputPage> {
               ),
               Expanded(
 
-                child: QR_ScanID()//BuildQrView(context)
+                child: QR_ScanID(widget.currentInstitution)//BuildQrView(context)
               ),
               Container(
                 child: Padding(padding: EdgeInsets.all(10),
