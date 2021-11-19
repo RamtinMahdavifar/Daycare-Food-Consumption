@@ -1,5 +1,6 @@
 
 import 'package:image/image.dart' as image; // import this package with the name image to avoid naming collisions
+import 'package:flutter_native_screenshot/flutter_native_screenshot.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'name_suggest.dart';
@@ -8,6 +9,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter/rendering.dart';
 import "../Model/variables.dart";
 import 'package:plate_waste_recorder/Helper/config.dart';
+import 'dart:io';
 
 
 class UneatenFoodDialog extends StatefulWidget {
@@ -17,8 +19,7 @@ class UneatenFoodDialog extends StatefulWidget {
   QRViewController qrViewController;
   InstitutionInfo currentInstitution;
   SubjectInfo currentSubject;
-  image.Image uneatenFoodImage;
-  UneatenFoodDialog(this.qrViewController, this.currentInstitution, this.currentSubject, this.uneatenFoodImage, {Key? key}) : super(key: key);
+  UneatenFoodDialog(this.qrViewController, this.currentInstitution, this.currentSubject, {Key? key}) : super(key: key);
 
 
   @override
@@ -38,7 +39,7 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
 
   @override
   Widget build(BuildContext context) {
-    print("Image submit dialog opens");
+    Config.log.i("Opening image submit dialog");
     //controller.pauseCamera();
     double w = MediaQuery.of(context).size.width;
     return Container(
@@ -68,10 +69,25 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
     );
   }
 
+
+  /// perform the image capture by screenshotting the whole screen, and then
+  /// cropping and horizontally flipping the the captured screenshot, and then
+  /// saving it with savePic with the filename determined by the ID, foodName
+  /// and foodStatus
+  Future<image.Image> takeShot() async {
+    String? path = await FlutterNativeScreenshot.takeScreenshot();
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    image.Image capturedImage = image.decodePng(File(path!).readAsBytesSync())!; //encode the og image into IMG
+    capturedImage = image.copyCrop(capturedImage, 5, 61, (width/2).toInt() - 5, (height - 139).toInt());
+    // starting at coords 5,61, to cut off the appbar, and only get the left half, and dont grab bottom portion with capture button on it
+    // appbar is 56 + size 5 border,
+    return capturedImage;
+  }
+
   Widget retakePhoto(BuildContext context, QRViewController controller){
     return ElevatedButton(
         onPressed: () {
-          controller.resumeCamera();
           Navigator.of(context, rootNavigator: true).pop();
         },
         child: const Text("Retake Photo"),
@@ -91,8 +107,13 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
           this.nameTextController.clear();
           this.weightTextController.clear();
           this.commentsTextController.clear();
+          // get the image the user has submitted
+          takeShot().then((capturedImage){
+
+          });
+
           // unpause our camera so the user can take successive pictures after data has been submitted
-          controller.resumeCamera();
+
           // return to the previous screen/close this popup dialog
           Navigator.of(context, rootNavigator: true).pop();
         },
