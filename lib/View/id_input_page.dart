@@ -5,7 +5,7 @@ import 'package:plate_waste_recorder/Helper/config.dart';
 import '../Model/variables.dart';
 import 'camera_food2.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'qr_prefood_data.dart';
+import 'qr_scan_id.dart';
 
 
 class ID_InputPage extends StatefulWidget {
@@ -32,7 +32,7 @@ class _ID_InputPageState extends State<ID_InputPage> {
     );
   }
 
-  Widget BuildQrView(BuildContext context) {
+  /*Widget BuildQrView(BuildContext context) {
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
         MediaQuery.of(context).size.height < 400)
@@ -83,7 +83,7 @@ class _ID_InputPageState extends State<ID_InputPage> {
           }));
 
     });
-  }
+  }*/
 
 
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
@@ -133,7 +133,7 @@ class _ID_InputPageState extends State<ID_InputPage> {
                   child: Text("Scan a Student ID", style: TextStyle(fontSize: 40))
               ),
               Expanded(
-                child: QR_PreFoodCam()//BuildQrView(context)
+                child: QR_ScanID()//BuildQrView(context)
               ),
               Container(
                 child: Padding(padding: EdgeInsets.all(10),

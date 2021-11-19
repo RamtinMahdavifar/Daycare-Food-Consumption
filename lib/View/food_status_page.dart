@@ -3,7 +3,7 @@ import 'food_status_widget.dart';
 import 'institution_page_widgets.dart';
 import 'qrcode.dart';
 import 'id_input_page.dart';
-import 'qr_prefood_data.dart';
+import 'qr_scan_id.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 
 class FoodStatusPage extends StatefulWidget {

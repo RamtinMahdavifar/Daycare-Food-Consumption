@@ -6,17 +6,18 @@ import '../Model/variables.dart';
 import 'camera_food2.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
+/// prefood will actually cover all food screens as the code for handling which
+/// screen to show is elsewhere
+class QR_ScanID extends StatefulWidget {
 
-class QR_PreFoodCam extends StatefulWidget {
 
-
-  QR_PreFoodCam( {Key? key}) : super(key: key);
+  QR_ScanID( {Key? key}) : super(key: key);
 
   @override
-  State<QR_PreFoodCam> createState() => _QR_PreFoodCamState();
+  State<QR_ScanID> createState() => _QR_ScanIDState();
 }
 
-class _QR_PreFoodCamState extends State<QR_PreFoodCam> {
+class _QR_ScanIDState extends State<QR_ScanID> {
 
   Barcode? result;
   QRViewController? controller;
@@ -77,8 +78,16 @@ class _QR_PreFoodCamState extends State<QR_PreFoodCam> {
       /// reader redirects you [ViewData, prefoodCam, postfoodCam]
       Navigator.push(context, MaterialPageRoute(
           builder: (context){
+            List<String> inputOptions = ["eaten", "container", "uneaten"];
             //reassemble();
-            return CameraFood2();
+            if (getStatus() == "view"){
+              return CameraFood2(); //TODO change this to view data page of scanned ID
+            }else if (inputOptions.contains(getStatus())){
+              return CameraFood2();
+            }else{
+              throw Exception("Invalid Food Status: not set");
+            }
+
             // on qr found, take to food data input screen, this will be
             // modified to account for viewing id data and the two different
             // food data input screens
