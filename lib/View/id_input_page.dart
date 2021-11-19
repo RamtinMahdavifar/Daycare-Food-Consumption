@@ -63,7 +63,6 @@ class _ID_InputPageState extends State<ID_InputPage> {
 
   Widget _ID_InputOptions(){
     return SafeArea(
-
       child: Scaffold(
           body: Column(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -72,6 +71,7 @@ class _ID_InputPageState extends State<ID_InputPage> {
                   child: Text("Scan a Student ID", style: TextStyle(fontSize: 40))
               ),
               Expanded(
+
                 child: QR_ScanID()//BuildQrView(context)
               ),
               Container(

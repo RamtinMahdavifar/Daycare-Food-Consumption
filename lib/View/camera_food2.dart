@@ -173,25 +173,23 @@ class _CameraFood2State extends State<CameraFood2> with
 
   }
 
-
+  /// perform the image capture by screenshotting the whole screen, and then
+  /// cropping and horizontally flipping the the captured screenshot, and then
+  /// saving it with savePic with the filename determined by the ID, foodName
+  /// and foodStatus
   void takeShot() async {
 
     String? path = await FlutterNativeScreenshot.takeScreenshot();
     String? filename;
-
     print("takeShot: Path!");
     print(path);
-    //int testNo = 014; //this makes unique images since they dont overwrite
-    //String imgAppend = testNo.toString() + ".png";
-    //imgFile = File(path!); //image created from og screenshot
     i.Image IMG = i.decodePng(File(path!).readAsBytesSync())!; //encode the og image into IMG
     width != null && height != null
       ? IMG = i.copyCrop(IMG, 5, 61, (width!/2).toInt() - 5, (height! - 139).toInt())
-    //starting at coords 5,61, to cut off the appbar, and only get the left half, and dont grab bottom portion with capture button on it
+    // starting at coords 5,61, to cut off the appbar, and only get the left half, and dont grab bottom portion with capture button on it
     // appbar is 56 + size 5 border,
       : IMG = i.copyCrop(IMG, 400, 100, 500, 500); //resize OG image to be smaller
 
-    //image =  i.flipHorizontal(IMG);
     filename = getFoodName()! + "/"
         + getID()! + "_"
         + getFoodName()! + "_"
@@ -202,7 +200,7 @@ class _CameraFood2State extends State<CameraFood2> with
   }
 
 
-
+  /// permission handler for when you first want to use the camera
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
     log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
     if (!p) {
@@ -212,6 +210,7 @@ class _CameraFood2State extends State<CameraFood2> with
     }
   }
 
+  /// creates the qr reader
   Widget BuildQrView(BuildContext context) {
     return QRView(
       key: qrKey,
@@ -282,7 +281,7 @@ class _CameraFood2State extends State<CameraFood2> with
 
   }
 
-
+  /// button for capturing image
   Widget _captureImage() {
     //final CameraController? cameraController = controller;
 
@@ -305,10 +304,19 @@ class _CameraFood2State extends State<CameraFood2> with
     _scaffoldKey.currentState?.showSnackBar(SnackBar(content: Text(message)));
   }
 
+  /// handles what happens when the image capture button is pressed, not only is
+  /// the image captured, but depending on the FoodStatus, it will pull up
+  /// different data submission dialogs for food eaten or uneaten/container
+  /// and if the status is "preset" rather than saving the image to local storage
+  /// it creates a new container preset.
+  ///
+  /// due to the long delay when screenshotting, cropping and then saving the
+  /// image, with a bit of illusion tricks, the viewfinder is paused to show the
+  /// user what the image will look like after its been cropped and saved, the
+  /// image will be backwards however
   void onTakePictureButtonPressed() async {
-    print("image captured Press");
-    //XFile? file = controller.takePicture();
 
+    print("image captured Press");
     QRcontroller == null
     ? print("No QR Controller active")
     :
@@ -340,6 +348,7 @@ class _CameraFood2State extends State<CameraFood2> with
         print("takeShot completed");
         QRcontroller!.resumeCamera();
         print("Image Capture Finish");
+
       }else if(getStatus == "preset"){
 
         print("Adding Preset Container Placeholder");

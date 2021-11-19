@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'food_status_widget.dart';
+import 'id_input_page.dart';
 import 'institution_page_widgets.dart';
 import 'qrcode.dart';
 import 'id_input_page.dart';
@@ -35,14 +36,11 @@ class _FoodStatusPageState extends State<FoodStatusPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children:  <Widget>[
+                  foodStatusButton(context,"uneaten",()=>ID_InputPage()),
 
-                  foodStatusButton(context,"Food Uneaten",()=>ID_InputPage()),
+                  foodStatusButton(context,"eaten",()=>ID_InputPage()),
 
-                  foodStatusButton(context,"Food Eaten: not thrown out",()=>ID_InputPage()),
-
-                  foodStatusButton(context,"Food Wasted: container weight",()=>ID_InputPage()),
-
-
+                  foodStatusButton(context,"container",()=>ID_InputPage()),
 
                 ],
               )
