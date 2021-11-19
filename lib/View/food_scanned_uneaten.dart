@@ -33,19 +33,21 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
   final commentsTextController = new TextEditingController();
 
   //XFile? _imageFile;
-  bool _nameFoodValid = true;
-  bool _weightFoodValid = true;
+  // assume our input fields are valid by default
+  bool _foodNameValid = true;
+  bool _foodWeightValid = true;
+  bool _foodCommentsValid = true;
 
 
   @override
   Widget build(BuildContext context) {
     Config.log.i("Opening image submit dialog");
     widget.qrViewController.resumeCamera();
-    widget.qrViewController.pauseCamera();
+    //widget.qrViewController.pauseCamera();
 
     //controller.pauseCamera();
     double w = MediaQuery.of(context).size.width;
-    return Scaffold(body: Container(
+    return Container(
         padding: EdgeInsets.fromLTRB(w/2, 37, 0, 30), // bottom 30, top 37, these are precision measurements for all screens btw
         child:Dialog(
             elevation: 0,
@@ -57,10 +59,10 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
                         child: Column(
                           children: [
                             //nameEntrySuggester(nameTextController, _nameFoodValid),
-                            suggestBox(context, nameTextController, _nameFoodValid),
+                            suggestBox(context, nameTextController, this._foodNameValid),
                             itemPresets(nameTextController),
-                            weightEntry(weightTextController, _weightFoodValid),
-                            addComments(context, commentsTextController),
+                            foodEntry(weightTextController, "Weight(g)", this._foodWeightValid),
+                            foodEntry(commentsTextController, "Comments", this._foodCommentsValid),
                             submitData(context, widget.qrViewController),
                             retakePhoto(context, widget.qrViewController),
                           ],
@@ -69,7 +71,7 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
                 )
             )
         )
-    ));
+    );
   }
 
 
@@ -102,36 +104,42 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
     return ElevatedButton(
         onPressed: () {
           //submit name - weight - ID - photo - comments - date - institution
+
           Config.log.i("User has pressed button to submit meal data");
-
           // extract relevant data from our fields for data submit
+          String inputName = this.nameTextController.value.text;
+          String inputWeight = this.weightTextController.value.text;
+          String inputComments = this.commentsTextController.value.text;
 
-          // clear our text fields before returning to the previous screen after data submit
-          this.nameTextController.clear();
-          this.weightTextController.clear();
-          this.commentsTextController.clear();
-          // get the image the user has submitted
-          takeShot().then((capturedImage){
-
+          setState((){
+            // check whether our fields are valid
+            this._foodNameValid = inputName.isNotEmpty;
+            this._foodWeightValid = inputWeight.isNotEmpty;
+            this._foodCommentsValid = inputComments.isNotEmpty;
           });
 
-          // unpause our camera so the user can take successive pictures after data has been submitted
+          if(this._foodNameValid && this._foodWeightValid && this._foodCommentsValid){
+            // our fields are valid
+            // clear our text fields before returning to the previous screen after data submit
+            this.nameTextController.clear();
+            this.weightTextController.clear();
+            this.commentsTextController.clear();
+            // get the image the user has submitted
+            takeShot().then((capturedImage){
 
-          // return to the previous screen/close this popup dialog
-          Navigator.of(context, rootNavigator: true).pop();
+            });
+
+            // unpause our camera so the user can take successive pictures after data has been submitted
+
+            // return to the previous screen/close this popup dialog
+            Navigator.of(context, rootNavigator: true).pop();
+          }
+          else{
+            Config.log.i("meal submission fields are not valid");
+          }
         },
         child: const Text("Submit"),
         style: ElevatedButton.styleFrom(primary: Colors.lightGreen)
-    );
-  }
-
-  Widget addComments(BuildContext context, TextEditingController controller) {
-    return TextField(
-      decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: 'Comments'
-      ),
-      controller: controller,
     );
   }
 
@@ -151,48 +159,29 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
   Widget nameEntrySuggester(TextEditingController controller, bool fieldIsValid) {
     return TextFormField(
       controller: controller,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'missing fields';
-        }
-        return null;
-      },
       decoration: InputDecoration(
-
           labelText: "Name of Food Item",
           // if the field isn't valid errorText has the value "Value Can't Be Empty"
           // otherwise errorText is null
-          errorText: !fieldIsValid ? "Value"
-              "Can't Be Empty" : null
+          errorText: !fieldIsValid ? "Value Can't Be Empty" : null
       ),
 
     );
 
   }
 
-  Widget weightEntry(TextEditingController controller, bool fieldIsValid){
-
+  Widget foodEntry(TextEditingController controller, String fieldName, bool fieldIsValid){
+    assert(fieldName.isNotEmpty);
     return TextFormField(
-      validator: (value) {
-        if (value == null || value.isEmpty){
-          return 'missing fields';
-        }
-        return null;
-      },
       decoration: InputDecoration(
-
-          labelText: "Weight (g)",
+          labelText: fieldName,
           // if the field isn't valid errorText has the value "Value Can't Be Empty"
           // otherwise errorText is null
-          errorText: !fieldIsValid ? "Value"
-              "Can't Be Empty" : null
+          errorText: !fieldIsValid ? "Value Can't Be Empty" : null
       ),
       controller: controller,
     );
-
   }
-
-
 }
 
 
