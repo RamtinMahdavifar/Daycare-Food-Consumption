@@ -1,6 +1,0 @@
-net/bengkelrobot/flutter_native_screenshot/BuildConfig.java
- net.bengkelrobot.flutter_native_screenshot.BuildConfig
-net/bengkelrobot/flutter_native_screenshot/PixelListener.java
- net.bengkelrobot.flutter_native_screenshot.PixelListener
-net/bengkelrobot/flutter_native_screenshot/FlutterNativeScreenshotPlugin.java
- net.bengkelrobot.flutter_native_screenshot.FlutterNativeScreenshotPlugin
