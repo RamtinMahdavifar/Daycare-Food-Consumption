@@ -16,9 +16,9 @@ void main() {
       final inputDataPageHeader = find.text('Select the food status');
       expect(inputDataPageHeader, findsOneWidget);
 
-      final foodType1Button = find.widgetWithText(ElevatedButton, "Food Type 1");
-      final foodType2Button = find.widgetWithText(ElevatedButton, "Food Type 2");
-      final foodType3Button = find.widgetWithText(ElevatedButton, "Food Type 3");
+      final foodType1Button = find.widgetWithText(ElevatedButton, "Food Uneaten");
+      final foodType2Button = find.widgetWithText(ElevatedButton, "Food Eaten: not thrown out");
+      final foodType3Button = find.widgetWithText(ElevatedButton, "Food Wasted: container weight");
 
       //Verify all food options are presented
       expect(foodType1Button, findsOneWidget);
