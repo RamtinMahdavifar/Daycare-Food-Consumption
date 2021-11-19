@@ -145,7 +145,7 @@ class Institution {
   Map<String, dynamic> toJson() => {
     '_name': this._name,
     '_address': this._address,
-    '_subjectsMap': jsonEncode(this._subjectsMap)
+    '_subjectsMap': this._subjectsMap
   };
 
   Institution.fromJSON(Map<String, dynamic> json)
