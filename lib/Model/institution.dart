@@ -58,7 +58,7 @@ class Institution {
     // TODO: call subject() with no parameters and have subject simply generate it's own ID
     // TODO: that way subjects are forced to use this unique ID generation
     // TODO: do we even care about globally unique IDs
-    return id;
+    return "ID $id";
   }
 
   Map<String, SubjectInfo>get subjectsMap{
@@ -154,7 +154,12 @@ class Institution {
   };
 
   Institution.fromJSON(Map<String, dynamic> json)
-  : _name = json["_name"].toString(), _address = json["_address"].toString(), _subjectsMap = json["_subjectsMap"] as Map<String, SubjectInfo>;
+  : _name = json["_name"].toString(), _address = json["_address"].toString(), _subjectsMap = (json["_subjectsMap"] as Map<String, dynamic>).map((key, value){
+    Config.log.e(value);
+    return MapEntry<String, SubjectInfo>(key, SubjectInfo.fromJSON(value));
+  });
+  // here we need to convert each value of subjects map into a SubjectInfo object
+  // by converting from JSON directly to a SubjectInfo
 
   // define the equality operator
   // TODO: overwrite hashcode(), two equal objects should have the same hashcode
