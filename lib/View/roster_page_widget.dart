@@ -3,6 +3,7 @@ import 'package:plate_waste_recorder/Helper/icons.dart';
 import 'package:plate_waste_recorder/Model/institution.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
+import 'package:plate_waste_recorder/View/subject_data_page.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -240,7 +241,9 @@ Widget subjectDisplay(InstitutionInfo currentInstitutionInfo){
                     // Institution
                     Institution retrievedInstitution = Institution.fromJSON(institutionJSON);
                     // create a roster record out of each SubjectInfo we have in this institution
-                    children = retrievedInstitution.subjectsMap.values.map((value)=>RosterRecord(context, "", ()=>LoginPage(), value.subjectId)).toList();
+                    // clicking on each of these roster records will take us to the subject data page
+                    // for that individual on the roster
+                    children = retrievedInstitution.subjectsMap.values.map((value)=>RosterRecord(context, "", ()=>SubjectDataPage(currentInstitutionInfo, value), value.subjectId)).toList();
 
                     // display these read in subjects in a listview
                     return ListView(children: children);
