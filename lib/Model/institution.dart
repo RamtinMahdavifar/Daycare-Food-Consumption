@@ -154,7 +154,7 @@ class Institution {
   };
 
   Institution.fromJSON(Map<String, dynamic> json)
-  : _name = json["_name"].toString(), _address = json["_address"].toString();
+  : _name = json["_name"].toString(), _address = json["_address"].toString(), _subjectsMap = json["_subjectsMap"] as Map<String, SubjectInfo>;
 
   // define the equality operator
   // TODO: overwrite hashcode(), two equal objects should have the same hashcode
