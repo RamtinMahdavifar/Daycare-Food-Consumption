@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plate_waste_recorder/View/institution_page.dart';
 import 'package:plate_waste_recorder/View/select_institution.dart';
+import 'package:plate_waste_recorder/Helper/config.dart';
+
 
 void main() {
   group("Institution UI Tests",() {
@@ -9,7 +11,8 @@ void main() {
       // Build our app and trigger a frame.
       await tester.pumpWidget(MaterialApp(
           home:  ChooseInstitute()));
-
+      Config.log.i("Component Testing - Institution");
+      Config.log.i("");
       expect(find.widgetWithText(ChooseInstitute, "Plate Waste Tracker"), findsOneWidget);
 
       //The Text widgets appear exactly once in the widget tree.
