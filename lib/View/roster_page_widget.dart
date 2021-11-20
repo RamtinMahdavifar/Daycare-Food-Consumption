@@ -241,24 +241,8 @@ Widget subjectDisplay(InstitutionInfo currentInstitutionInfo){
                     Institution retrievedInstitution = Institution.fromJSON(institutionJSON);
                     // create a roster record out of each SubjectInfo we have in this institution
                     children = retrievedInstitution.subjectsMap.values.map((value)=>RosterRecord(context, "", ()=>LoginPage(), value.subjectId)).toList();
-                    //Map<String, dynamic> institutionsMap = institutionJSON["_institutionsMap"];
-                    // convert the values of this map to a list of InstitutionInfos
-                    // as each value in this map is the JSON representing an InstitutionInfo object
-                    //List<InstitutionInfo> existingInstitutions = institutionsMap.values.map((institutionJSON)=>
-                       // InstitutionInfo.fromJSON(institutionJSON)).toList();
-                    // finally produce a list of widgets each representing an institution
-                    // to be displayed in our list view, here converting to institutionInfoss
-                    // above is a convenience as opposed to accessing fields of JSON directly
-                    //children = existingInstitutions.map((institutionInfo) =>
-                        //listedInst(context, institutionInfo.name, institutionInfo.institutionAddress)).toList();
-                    // TODO: doing one pass of the JSON directly is of course more efficient
 
-                    /*ResearchGroup retrievedResearchGroup = ResearchGroup.fromJSON(institutionJSON);
-                    children = retrievedResearchGroup.institutionsMap.values.map(
-                            (institution) =>
-                            listedInst(context, institution.name, institution.institutionAddress)).toList();
-                     */
-                    // display these read in institutions in a listview
+                    // display these read in subjects in a listview
                     return ListView(children: children);
                   }
                   break;
