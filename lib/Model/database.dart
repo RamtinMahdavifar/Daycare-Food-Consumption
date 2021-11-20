@@ -235,15 +235,15 @@ class Database {
     }
 
 
-  /// reads in the institution specified by institutionInfo for the research group specified
-  /// by currentResearchGroupInfo, executes function callback on the read in institution
+  /// reads in a stream of Event objects representing data for the institution specified
+  /// ie the institution object represented by the input InstitutionInfo and located under
+  /// the input research group, each of these Event objects contains a datasnapshot
+  /// with data related to the desired Institution, new events are automatically read
+  /// whenever data related to the desired institution updated on the database
   /// Preconditions: institutionInfo.databaseKey.isNotEmpty && currentResearchGroupInfo.databaseKey.isNotEmpty
-  /// Postconditions: function callback is executed on the Institution specified by the input
-  /// institutionInfo for the research group specified by currentResearchGroupInfo after being read in
-  /// from the database
-  void readInstitution(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
-        Function(Institution) callback){
-    // ensure the input info objects contain database keys
+  /// Postconditions: a Stream<Event> is returned as described above
+  Stream<Event> getInstitutionStream(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo){
+    // ensure the input info objects contain valid database keys
     assert(institutionInfo.databaseKey.isNotEmpty);
     assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
     Config.log.i("reading institution: " + institutionInfo.name + " from the database using database key " +
@@ -258,14 +258,9 @@ class Database {
       String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
       dataPath = "$currentUserID";
     }
-    dataPath = "$dataPath/$_RESEARCHGROUPROOTLOCATION/${currentResearchGroupInfo.databaseKey}/${institutionInfo.databaseKey}";
+    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_INSTITUTIONSDATALOCATION/${institutionInfo.databaseKey}";
     DatabaseReference institutionReference = _databaseInstance.reference().child(dataPath);
-    institutionReference.once().then((DataSnapshot dataSnapshot)=>(
-    // call the input function on the data read from the database
-        callback(
-            Institution.fromJSON(jsonDecode(dataSnapshot.value.toString()) as Map<String, dynamic>)
-        )
-    ));
+    return institutionReference.onValue;
   }
 
 
