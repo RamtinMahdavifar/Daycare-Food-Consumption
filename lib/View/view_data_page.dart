@@ -40,7 +40,7 @@ class _ViewDataPageState extends State<ViewDataPage> {
                 ViewDataOption("Select From Roster", (){
                   Navigator.push(context, MaterialPageRoute(
                       builder: (context){
-                        return Roster();
+                        return Roster(InstitutionInfo(widget.institutionName, widget.institutionAddress));
                       }));
                 }),
                 SizedBox(height: 80.0),
