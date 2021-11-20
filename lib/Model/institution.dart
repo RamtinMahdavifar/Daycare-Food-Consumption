@@ -61,6 +61,11 @@ class Institution {
     return id;
   }
 
+  get subjectsMap{
+    assert(this._subjectsMap.isNotEmpty);
+    return this._subjectsMap;
+  }
+
   String get name{
     return this._name;
   }
