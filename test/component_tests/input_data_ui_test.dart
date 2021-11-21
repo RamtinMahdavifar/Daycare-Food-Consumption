@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plate_waste_recorder/View/food_status_page.dart';
+import 'package:plate_waste_recorder/View/id_input_page.dart';
 // import 'package:plate_waste_recorder/View/upload_data.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
-
-
+import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:plate_waste_recorder/View/id_input_widget.dart';
 
 void main() {
   group("Input Data Component Tests",() {
@@ -18,9 +19,9 @@ void main() {
       final inputDataPageHeader = find.text('Select the food status');
       expect(inputDataPageHeader, findsOneWidget);
 
-      final foodType1Button = find.widgetWithText(ElevatedButton, "Food Uneaten");
-      final foodType2Button = find.widgetWithText(ElevatedButton, "Food Eaten: not thrown out");
-      final foodType3Button = find.widgetWithText(ElevatedButton, "Food Wasted: container weight");
+      final foodType1Button = find.widgetWithText(ElevatedButton, "uneaten");
+      final foodType2Button = find.widgetWithText(ElevatedButton, "eaten");
+      final foodType3Button = find.widgetWithText(ElevatedButton, "container");
 
       //Verify all food options are presented
       Config.log.i("Verify all food options are present");
