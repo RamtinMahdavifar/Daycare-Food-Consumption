@@ -3,9 +3,10 @@ import 'dart:developer';
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/View/food_scanned_eaten.dart';
 import 'package:plate_waste_recorder/View/id_input_page.dart';
-
+import 'package:plate_waste_recorder/View/login_page.dart';
 import 'qrcode.dart';
 import "../Model/variables.dart";
 //import 'package:camera/camera.dart';
@@ -16,10 +17,11 @@ import 'package:flutter/material.dart';
 import 'food_scanned_uneaten.dart';
 import 'package:flutter/services.dart';
 import 'qr_scan_id.dart';
-
-import "package:flutter_native_screenshot/flutter_native_screenshot.dart";
 import 'package:image/image.dart' as i;
 import 'dart:io';
+import 'package:plate_waste_recorder/Model/institution_info.dart';
+import 'package:plate_waste_recorder/Model/food_status.dart';
+import 'package:plate_waste_recorder/Helper/config.dart';
 
 /*
 
@@ -37,10 +39,18 @@ import 'dart:io';
 
 /// used as a shorter way to determine if a value is null or not
 bool isNull(String? val){
+  // TODO: why can't you just check val==null????
   return val == null ? true : false;
 }
 
 class CameraFood2 extends StatefulWidget {
+  // this page accepts as a parameter when created, an InstitutionInfo object representing
+  // the institution the user is currently adding data for
+  InstitutionInfo currentInstitution;
+  SubjectInfo currentSubject;
+  FoodStatus currentFoodStatus;
+  CameraFood2(this.currentInstitution, this.currentSubject, this.currentFoodStatus, {Key? key}) : super(key: key);
+
   @override
   _CameraFood2State createState() => _CameraFood2State();
 }
@@ -65,6 +75,8 @@ class _CameraFood2State extends State<CameraFood2> with
   double? height;
   Directory? appPath;
   Directory? directory;
+
+
 
 
 
@@ -167,34 +179,12 @@ class _CameraFood2State extends State<CameraFood2> with
     });
 
     this.QRcontroller!.flipCamera(); //default use the external camera
+    // pause and resume our camera to sort of refresh the image displayed to
+    // prevent a blank image from being shown
+    this.QRcontroller!.pauseCamera();
+    this.QRcontroller!.resumeCamera();
 
 
-
-  }
-
-  /// perform the image capture by screenshotting the whole screen, and then
-  /// cropping and horizontally flipping the the captured screenshot, and then
-  /// saving it with savePic with the filename determined by the ID, foodName
-  /// and foodStatus
-  void takeShot() async {
-
-    String? path = await FlutterNativeScreenshot.takeScreenshot();
-    String? filename;
-    print("takeShot: Path!");
-    print(path);
-    i.Image IMG = i.decodePng(File(path!).readAsBytesSync())!; //encode the og image into IMG
-    width != null && height != null
-      ? IMG = i.copyCrop(IMG, 5, 61, (width!/2).toInt() - 5, (height! - 139).toInt())
-    // starting at coords 5,61, to cut off the appbar, and only get the left half, and dont grab bottom portion with capture button on it
-    // appbar is 56 + size 5 border,
-      : IMG = i.copyCrop(IMG, 400, 100, 500, 500); //resize OG image to be smaller
-
-    filename = getFoodName()! + "/"
-        + getID()! + "_"
-        + getFoodName()! + "_"
-        + getStatus()! + ".png";
-
-    savePic(i.flipHorizontal(IMG), filename); //PUT THIS AS THE FUNCTION FOR ONPRESS IN WIDGEST OF FOOOD_SCANNED_UNEATEN
 
   }
 
@@ -224,6 +214,7 @@ class _CameraFood2State extends State<CameraFood2> with
     width == null ? width = 480 : null; //if a width dimension not returned
     return Scaffold(
       key: _scaffoldKey,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: const Text("Camera Food")),
       body: Column(
           children: <Widget>[
@@ -318,23 +309,17 @@ class _CameraFood2State extends State<CameraFood2> with
     print("image captured Press");
     QRcontroller == null
     ? print("No QR Controller active")
-    :
-      QRcontroller!.pauseCamera();
-      if(getStatus() == "uneaten"){
-
-        await showDialog( //open the dialog first before begining the image capture process
-            barrierColor: null,//jank workaround remove the shadow from the dialog
-            barrierDismissible: false,
-            context: context,
-            builder: (_) => foodScannedFirst(context, QRcontroller!) //needs to check for null at some point, do this later
-        );
-        print("Dialog Code passed");
-        takeShot();
-        print("takeShot completed");
-        QRcontroller!.resumeCamera();
-        print("Image Capture Finish");
-
-      }else if (getStatus() == "eaten" || getStatus() == "container"){
+    : QRcontroller!.pauseCamera();
+      if(widget.currentFoodStatus == FoodStatus.uneaten){
+        // take a picture of the food on screen, send this to our uneaten food dialog for submission
+          await showDialog(
+              barrierColor: null,
+              barrierDismissible: false,
+              context: context,
+              builder: (_) => UneatenFoodDialog(widget.currentInstitution, widget.currentSubject, widget.currentFoodStatus)
+          );//needs to check for null at some point, do this later
+      }
+      else if (widget.currentFoodStatus == FoodStatus.eaten || widget.currentFoodStatus == FoodStatus.container){
 
         await showDialog( //open the dialog first before begining the image capture process
             barrierColor: null,//jank workaround remove the shadow from the dialog
@@ -342,10 +327,11 @@ class _CameraFood2State extends State<CameraFood2> with
             context: context,
             builder: (_) => foodScannedSecond(context, QRcontroller!) //needs to check for null at some point, do this later
         );
+        // after returning from our image submission, resume our camera to allow
+        // taking pictures for successive meals
+        await QRcontroller!.resumeCamera();
         print("Dialog Code passed");
-        takeShot();
         print("takeShot completed");
-        QRcontroller!.resumeCamera();
         print("Image Capture Finish");
 
       }else if(getStatus == "preset"){
@@ -355,17 +341,14 @@ class _CameraFood2State extends State<CameraFood2> with
             barrierColor: null,//jank workaround remove the shadow from the dialog
             barrierDismissible: false,
             context: context,
-            builder: (_) => foodScannedFirst(context, QRcontroller!) //needs to check for null at some point, do this later
+            builder: (_) => LoginPage() //needs to check for null at some point, do this later
         );
 
         addContainer(getFoodName());
 
-      }else{
-        throw Exception("Invalid Food Status");
       }
 
     print("Dialog Code passed");
-    takeShot();
     print("takeShot completed");
     QRcontroller!.resumeCamera();
     print("Image Capture Finish");
@@ -430,7 +413,7 @@ class _CameraFood2State extends State<CameraFood2> with
           Navigator.of(context, rootNavigator: true).pop(); //leave old qr
           Navigator.push(context, MaterialPageRoute( //open new one to scan
               builder: (context) {
-                return ID_InputPage();
+                return ID_InputPage(widget.currentInstitution, FoodStatus.view);
               }));
 
 
@@ -440,19 +423,17 @@ class _CameraFood2State extends State<CameraFood2> with
   }
 
   Widget idLabel() {
-    if (!isNull(getID())){
-      return Container(child:(Text(getID()!, style: TextStyle(fontSize: 56))));
-    }else{
-      print("NULL ID USED");
-      return Text("INVALID ID");
-    }
-
+    String currentSubjectID = widget.currentSubject.subjectId;
+    assert(currentSubjectID.isNotEmpty);
+    return Container(child:(Text(currentSubjectID, style: TextStyle(fontSize: 56))));
   }
 
 
 
 
 }
+
+/*
 class FoodCamera2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -469,6 +450,7 @@ Future<void> main() async{
 
   runApp(FoodCamera2());
 }
+ */
 // What's this??? This allows a value of typ T or T? to be treated as a val of type T?
 // Why?? because this thing is not finished and more stable versions of the flutter camera API
 // are not expected to release until late 2021
