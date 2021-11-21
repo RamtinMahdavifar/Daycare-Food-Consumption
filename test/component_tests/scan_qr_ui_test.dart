@@ -5,7 +5,6 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 
 
-
 void main() {
   group("Scan QR Code Tests",() {
     testWidgets('scan qr code ui test', (WidgetTester tester) async {
@@ -15,8 +14,7 @@ void main() {
       Config.log.i("Testing Components - QR Scanner");
       final openQRScannerButton = find.widgetWithText(ElevatedButton,'Open QR Scanner');
 
-      // verify that the Open QR Scanner button widgets appear exactly once in the widget tree.
-      Config.log.i("Verifying open QR scanner button is present on page");
+      Config.log.i("verify that the Open QR Scanner button widgets appear exactly once in the widget tree");
       expect(find.widgetWithText(ElevatedButton,'Open QR Scanner'), findsOneWidget);
 
       await tester.tap(openQRScannerButton);
