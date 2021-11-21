@@ -45,6 +45,9 @@ class Database {
   // stored at: _RESEARCHGROUPDATALOCATION/particular research group/_INSTITUTIONSDATALOCATION
   final String _INSTITUTIONSDATALOCATION = "Institutions";
 
+  // initialize the location we store subjects for a particular institution at
+  final String _INSTITUTIONSSUBJECTSLOCATION = "_subjectsMap";
+
   // initialize the location we store Subject objects at, a subject may be stored at
   // _RESEARCHGROUPDATALOCATION/particular research group/_SUBJECTSDATALOCATION/particular institution
   final String _SUBJECTSDATALOCATION = "Institution Subjects";
@@ -183,18 +186,64 @@ class Database {
     Map<String, dynamic> institutionMap = json.decode(institutionJSON) as Map<String,dynamic>;
     // write this to the location specified above
     institutionReference.set(institutionMap);
+
+    // additionally write the map of subjects present in this institution to a distinct location
+    _initializeInstitutionSubjects(institution, currentResearchGroupInfo);
   }
 
+  /// Writes all initial subjects for an Institution onto the database using a single write
+  /// ie this writes every subject whose corresponding SubjectInfo object is present
+  /// in institution.subjectsMap to the database as a Subject object in a distinct location
+  /// relative to the input institution and research group
+  /// Preconditions: currentResearchGroupInfo.databaseKey.isNotEmpty && currentInstitutionInfo.databaseKey.isNotEmpty
+  /// Postconditions: all subjects present for the input institution are written to the database
+  /// in a single operation as described above
+  void _initializeInstitutionSubjects(Institution institution, ResearchGroupInfo currentResearchGroupInfo){
+    // make sure research group input has a database key
+    assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
+    // get the database key of this particular input institution from an institution info
+    InstitutionInfo currentInstitutionInfo = institution.getInstitutionInfo();
+    // ensure the institution provided has a database key
+    assert(currentInstitutionInfo.databaseKey.isNotEmpty);
 
-  /// reads in the institution specified by institutionInfo for the research group specified
-  /// by currentResearchGroupInfo, executes function callback on the read in institution
+
+    // path to the desired data on the database
+    String dataPath = "";
+    if(kDebugMode){
+    // app is in debug mode, check a database location specific to the current app
+    // user instead of the normal database location
+    String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
+    dataPath = "$currentUserID";
+    }
+    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_SUBJECTSDATALOCATION/${currentInstitutionInfo.databaseKey}";
+    DatabaseReference institutionSubjectsReference = _databaseInstance.reference().child(dataPath);
+
+    // convert the map of SubjectInfo objects from our institution to a map containing
+    // subject objects as values, here the keys of this initial dictionary are subject IDs
+    // and the values are SubjectInfo objects, use this to create a map containing subject ID keys
+    // and Subject values, write this to the database at the location above distinct location
+    Map<String, Subject> subjectsMap = institution.subjectsMap.map((key, value) => MapEntry(key, Subject(value.subjectId)));
+
+    // convert this subjectsMap to JSON as we cannot write objects directly to our database
+    String subjectsJSON = jsonEncode(subjectsMap);
+
+    // convert our JSON back into a map we can write to the database as writing JSON
+    // to the database writes all data as a single string
+    Map<String, dynamic> desiredSubjectsMap = json.decode(subjectsJSON);
+
+    institutionSubjectsReference.set(desiredSubjectsMap);
+    }
+
+
+  /// reads in a stream of Event objects representing data for the institution specified
+  /// ie the institution object represented by the input InstitutionInfo and located under
+  /// the input research group, each of these Event objects contains a datasnapshot
+  /// with data related to the desired Institution, new events are automatically read
+  /// whenever data related to the desired institution updated on the database
   /// Preconditions: institutionInfo.databaseKey.isNotEmpty && currentResearchGroupInfo.databaseKey.isNotEmpty
-  /// Postconditions: function callback is executed on the Institution specified by the input
-  /// institutionInfo for the research group specified by currentResearchGroupInfo after being read in
-  /// from the database
-  void readInstitution(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
-        Function(Institution) callback){
-    // ensure the input info objects contain database keys
+  /// Postconditions: a Stream<Event> is returned as described above
+  Stream<Event> getInstitutionStream(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo){
+    // ensure the input info objects contain valid database keys
     assert(institutionInfo.databaseKey.isNotEmpty);
     assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
     Config.log.i("reading institution: " + institutionInfo.name + " from the database using database key " +
@@ -209,14 +258,9 @@ class Database {
       String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
       dataPath = "$currentUserID";
     }
-    dataPath = "$dataPath/$_RESEARCHGROUPROOTLOCATION/${currentResearchGroupInfo.databaseKey}/${institutionInfo.databaseKey}";
+    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_INSTITUTIONSDATALOCATION/${institutionInfo.databaseKey}";
     DatabaseReference institutionReference = _databaseInstance.reference().child(dataPath);
-    institutionReference.once().then((DataSnapshot dataSnapshot)=>(
-    // call the input function on the data read from the database
-        callback(
-            Institution.fromJSON(jsonDecode(dataSnapshot.value.toString()) as Map<String, dynamic>)
-        )
-    ));
+    return institutionReference.onValue;
   }
 
 
@@ -312,14 +356,13 @@ class Database {
     researchGroupReference.set(researchGroupAsMap);
   }
 
-  /// writes the input Subject as a SubjectInfo to the database relative to the institution
-  /// specified by the input institutionInfo and research group specified by the input currentResearchGroupInfo
-  /// Preconditions: institutionInfo.databaseKey.isNotEmpty && currentResearchGroupInfo.databaseKey.isNotEmpty
-  /// Postconditions: writes the input Subject as a SubjectInfo to the database relative to the institution
-  /// specified by the input institutionInfo and research group specified by the input currentResearchGroupInfo
-  /// if the locations specified by the input research group info or institution info don't
-  /// yet exist on the database, these locations are created.
-  void addSubjectToInstitution(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
+
+  /// Writes the input Subject object in it's entirety to the database at a distinct location
+  /// relative to institution and research group represented by the input institutionInfo and ResearchGroupInfo objects
+  /// Preconditions: institutionInfo.databaseKey.isNotEmpty && currentResearchGroupInfo.databaseKey.isNotEmpty &&
+  /// currentSubject.getSubjectInfo().databaseKey.isNotEmpty
+  /// Postconditions: the input Subject object is written to the database as described above
+  void _writeSubjectToDatabase(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
       Subject currentSubject){
     // ensure our institution and research group have database keys
     assert(institutionInfo.databaseKey.isNotEmpty);
@@ -328,7 +371,7 @@ class Database {
     SubjectInfo currentSubjectInfo = currentSubject.getSubjectInfo();
     // make sure the database key of our subject is not empty
     assert(currentSubjectInfo.databaseKey.isNotEmpty);
-    Config.log.i("adding subject: " + currentSubject.id + " to institution: " + institutionInfo.name +
+    Config.log.i("adding subject: " + currentSubject.id + " to the database relative to institution: " + institutionInfo.name +
     " under research group: " + currentResearchGroupInfo.name);
 
 
@@ -341,18 +384,87 @@ class Database {
       dataPath = "$currentUserID";
     }
     dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_SUBJECTSDATALOCATION/${institutionInfo.databaseKey}/${currentSubjectInfo.databaseKey}";
-    DatabaseReference institutionSubjectReference = _databaseInstance.reference().child(dataPath);
+    DatabaseReference subjectReference = _databaseInstance.reference().child(dataPath);
 
-    // convert our SubjectInfo to be added to this institution to JSON
-    String subjectInfoJSON = jsonEncode(currentSubjectInfo);
+    // convert our Subject to be added to the database to JSON
+    String subjectJSON = jsonEncode(currentSubject);
 
     // convert the resulting JSON to a map that can be properly written to our database
-    Map<String, dynamic> subjectInfoMap = json.decode(subjectInfoJSON) as Map<String,dynamic>;
+    Map<String, dynamic> subjectMap = json.decode(subjectJSON) as Map<String,dynamic>;
     // write this map to the database
 
-    institutionSubjectReference.set(subjectInfoMap);
+    subjectReference.set(subjectMap);
+  }
 
-    // TODO: write this subject object itself to the database additionally
+  /// writes the input Subject as a SubjectInfo to the database relative to the institution
+  /// specified by the input institutionInfo and research group specified by the input currentResearchGroupInfo
+  /// Preconditions: institutionInfo.databaseKey.isNotEmpty && currentResearchGroupInfo.databaseKey.isNotEmpty
+  /// Postconditions: writes the input Subject as a SubjectInfo to the database relative to the institution
+  /// specified by the input institutionInfo and research group specified by the input currentResearchGroupInfo
+  /// if the locations specified by the input research group info or institution info don't
+  /// yet exist on the database, these locations are created.
+  void addSubjectToInstitution(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo,
+        Subject currentSubject){
+      // ensure our institution and research group have database keys
+      assert(institutionInfo.databaseKey.isNotEmpty);
+      assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
+      // create a SubjectInfo object to get the database key of the current subject
+      SubjectInfo currentSubjectInfo = currentSubject.getSubjectInfo();
+      // make sure the database key of our subject is not empty
+      assert(currentSubjectInfo.databaseKey.isNotEmpty);
+      Config.log.i("adding subject: " + currentSubject.id + " to institution: " + institutionInfo.name +
+          " under research group: " + currentResearchGroupInfo.name);
+
+
+      // path to the desired data on the database
+      String dataPath = "";
+      if(kDebugMode){
+        // app is in debug mode, check a database location specific to the current app
+        // user instead of the normal database location
+        String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
+        dataPath = "$currentUserID";
+      }
+      dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_INSTITUTIONSDATALOCATION/${institutionInfo.databaseKey}/${currentSubjectInfo.databaseKey}";
+      DatabaseReference institutionSubjectReference = _databaseInstance.reference().child(dataPath);
+
+      // we only want to store our SubjectInfo object under the particular institution
+      // convert this object to json to be written to location institutionSubjectReference
+      String subjectInfoJSON = jsonEncode(currentSubjectInfo);
+
+      // convert the produced JSON to a map which can be stored on our database, storing
+      // JSON directly will simply store the JSON as a single string instead of storing
+      // each field of our object with it's value as we want
+      Map<String, dynamic> subjectInfoMap = json.decode(subjectInfoJSON) as Map<String,dynamic>;
+      // write this to the location specified above
+      institutionSubjectReference.set(subjectInfoMap);
+
+      // additionally write the subject itself in it's entirety to the database in a distinct location
+      _writeSubjectToDatabase(institutionInfo, currentResearchGroupInfo, currentSubject);
+    }
+
+
+  void addMealToSubject(ResearchGroupInfo currentResearchGroup, InstitutionInfo subjectInstitution,
+        SubjectInfo currentSubject, Meal targetMeal){
+    // ensure we have valid database keys for our researchGroup, institution, subject and meal
+    assert(currentResearchGroup.databaseKey.isNotEmpty);
+    assert(subjectInstitution.databaseKey.isNotEmpty);
+    assert(currentSubject.databaseKey.isNotEmpty);
+    MealInfo currentMealInfo = targetMeal.getMealInfo();
+    assert(currentMealInfo.databaseKey.isNotEmpty);
+
+    Config.log.i("writing meal ${currentMealInfo.databaseKey} to the database for subject ${currentSubject.databaseKey} under institution ${subjectInstitution.databaseKey}");
+    // path to the desired data on the database
+    String dataPath = "";
+    if(kDebugMode){
+      // app is in debug mode, check a database location specific to the current app
+      // user instead of the normal database location
+      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
+      dataPath = "$currentUserID";
+    }
+    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroup.databaseKey}/$_SUBJECTSDATALOCATION/${subjectInstitution.databaseKey}/$_INSTITUTIONSSUBJECTSLOCATION/${currentSubject.databaseKey}/";
+    DatabaseReference institutionSubjectReference = _databaseInstance.reference().child(dataPath);
+
+
   }
 
   /// writes the input Meal in it's entirety to the database in a location relative to the research group
@@ -388,5 +500,13 @@ class Database {
     Map<String,dynamic> mealMap = json.decode(mealJSON) as Map<String,dynamic>;
 
     mealReference.set(mealMap);
+  }
+
+  /// Generates a unique String ID, this idea is generated entirely client side,
+  /// ie communication to our database to generate this ID isn't required at all
+  /// Preconditions: None
+  /// Postconditions: returns a String ID described above
+  String generateUniqueID(){
+    return _databaseInstance.reference().push().key;
   }
 }
