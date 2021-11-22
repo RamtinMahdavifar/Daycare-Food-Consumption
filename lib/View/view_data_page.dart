@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
-import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/View/qrcode.dart';
-import 'package:plate_waste_recorder/View/roster_page.dart';
 import '../Model/variables.dart';
 import 'id_input_page.dart';
-import 'package:plate_waste_recorder/View/login_page.dart';
-import 'package:plate_waste_recorder/Model/food_status.dart';
 
 class ViewDataPage extends StatefulWidget {
   String institutionName;
@@ -33,21 +29,22 @@ class _ViewDataPageState extends State<ViewDataPage> {
                 ViewDataOption("Scan QR Code", (){
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context){
-                      return ID_InputPage(InstitutionInfo(widget.institutionName, widget.institutionAddress), FoodStatus.view);
+                      setStatusVar("view");
+                      return ID_InputPage(); // TODO: replace with actual QR code page
                     }));
                 }),
                 SizedBox(height: 80.0),
                 ViewDataOption("Select From Roster", (){
                   Navigator.push(context, MaterialPageRoute(
                       builder: (context){
-                        return Roster(InstitutionInfo(widget.institutionName, widget.institutionAddress));
+                        return QRViewExample(); // TODO: replace with roster page
                       }));
                 }),
                 SizedBox(height: 80.0),
                 ViewDataOption("Export Data", (){
                   Navigator.push(context, MaterialPageRoute(
                       builder: (context){
-                        return LoginPage();
+                        return QRViewExample();
                       }));
                 }),
               ]

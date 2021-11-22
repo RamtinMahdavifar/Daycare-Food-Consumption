@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
-import 'package:plate_waste_recorder/Model/institution_info.dart';
 import "../Model/variables.dart";
 import 'camera_food2.dart';
 import 'package:plate_waste_recorder/Helper/icons.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
-import 'package:plate_waste_recorder/Model/subject_info.dart';
-import 'package:plate_waste_recorder/Model/food_status.dart';
-
 
 
 
 class InputIDForm extends StatefulWidget {
-  InstitutionInfo currentInstitution;
-  FoodStatus currentFoodStatus;
-  InputIDForm(this.currentInstitution, this.currentFoodStatus, {Key? key}) : super(key: key);
-
   @override
   _InputIDFormState createState() => _InputIDFormState();
 }
@@ -72,22 +64,28 @@ class _InputIDFormState extends State<InputIDForm> {
 
           if(this._IdInputFieldValid){
             Config.log.i("user entered id: "+ newId);
-            // construct a SubjectInfo object using this ID
-            SubjectInfo targetSubjectInfo = SubjectInfo(newId);
-            // TODO: check the database to see if this subject is a part of the current
-            // TODO: institution before proceeding, we cannot allow users to enter data
-            // TODO: for subjects who do not exist or have invalid or unknown IDs
 
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Opening the Camera" )),
+            );
             // clear our text fields before exiting the add Institution popup
-            // exit this popup before going to our next page so this popup isn't
-            // revisited when we press the back button
             this._newIdInputController.clear();
             Navigator.of(context, rootNavigator: true).pop();
-
-            // proceed to the pages to enter data for this particular subject
+            setIDVar(newId);
             Navigator.push(context, MaterialPageRoute(
                 builder: (context){
-                  return CameraFood2(widget.currentInstitution, targetSubjectInfo, widget.currentFoodStatus);
+                  //reassemble();
+                  if (getStatus() == "uneaten"){
+                    return CameraFood2();
+                  }else if (getStatus() == "eaten"){
+                    return CameraFood2();
+                  }
+                  else if (getStatus() == "container"){
+                    return CameraFood2();
+                  }
+                  else{
+                    throw Exception("Invalid Food State");
+                  }
 
                   // on qr found, take to food data input screen, this will be
                   // modified to account for viewing id data and the two different
