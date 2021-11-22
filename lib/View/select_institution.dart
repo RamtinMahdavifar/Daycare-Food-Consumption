@@ -23,6 +23,7 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
                   searchInstitution(),
                   //_buildList(),
                   institutionDisplay(context),
+                  quickfixButton(context)
                 ])
         ),
 
