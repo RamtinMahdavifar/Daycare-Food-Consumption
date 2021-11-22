@@ -28,8 +28,7 @@ Widget suggestBox(BuildContext context, TextEditingController nameSuggestControl
     textFieldConfiguration: TextFieldConfiguration(
         controller: nameSuggestController,
         decoration: InputDecoration(
-            labelText: "Name of Food Item",
-            errorText: !fieldIsValid ? "Value Can't Be Empty" : null
+            labelText: 'Name of Food Item'
         )
     ),
     suggestionsCallback: (pattern) {
@@ -45,6 +44,11 @@ Widget suggestBox(BuildContext context, TextEditingController nameSuggestControl
     },
     onSuggestionSelected: (suggestion) {
       nameSuggestController.text = suggestion.toString();
+    },
+    validator: (value) {
+      if (value!.isEmpty) {
+        return 'Please enter a food';
+      }
     },
     //onSaved: (value) => _selectedFood = value,
   );
@@ -66,6 +70,38 @@ class _ChooseFoodState extends State<ChooseFood> {
 
 
   //final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+
+  Widget suggestBox(BuildContext context, TextEditingController nameSuggestController, bool fieldIsValid) {
+    return TypeAheadFormField(
+      textFieldConfiguration: TextFieldConfiguration(
+          controller: nameSuggestController,
+          decoration: InputDecoration(
+              labelText: 'Name of Food Item'
+          )
+      ),
+      suggestionsCallback: (pattern) {
+        return FoodBank.getSuggestions(pattern);
+      },
+      itemBuilder: (context, suggestion) {
+        return ListTile(
+          title: Text(suggestion.toString()),
+        );
+      },
+      transitionBuilder: (context, suggestionsBox, controller) {
+        return suggestionsBox;
+      },
+      onSuggestionSelected: (suggestion) {
+        nameSuggestController.text = suggestion.toString();
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Please enter a food';
+        }
+      },
+      //onSaved: (value) => _selectedFood = value,
+    );
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
