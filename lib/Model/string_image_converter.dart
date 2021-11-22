@@ -4,19 +4,9 @@ import 'dart:io';
 import 'package:mime/mime.dart';
 import 'dart:convert';
 import 'package:plate_waste_recorder/Helper/config.dart';
-import 'package:image/image.dart' as image; // import this package with the name image to avoid naming collisions
-
-String convertImageToString(image.Image targetImage){
-  // convert our image to a sequence of bytes
-  Uint8List imageBytes = targetImage.getBytes();
-
-  // encode these bytes into a string using base 64 encoding
-  String imageString = base64Encode(imageBytes);
-  return imageString;
-}
 
 
-String convertImagePathToString(String imageFilePath){
+String convertImageToString(String imageFilePath){
   // input file path must refer to some file that actually exists
   assert(File(imageFilePath).existsSync());
   // input file must be an image, check MIME type of file

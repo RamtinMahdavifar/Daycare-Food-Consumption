@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:plate_waste_recorder/Model/institution_info.dart';
 
 import 'package:plate_waste_recorder/View/roster_page.dart';
 
@@ -52,7 +51,7 @@ class _InstitutionPageState extends State<InstitutionPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         //most of the buttons do not navigate anywhere and have null as their navigation parameter
-                        menuButton(context,"Roster", () => Roster(InstitutionInfo(widget.institutionName, widget.institutionAddress)), 2),
+                        menuButton(context,"Roster", () => Roster(), 2),
                         SizedBox(width: 50),
                         menuButton(context,"Preset", () => UploadData(), 0),
                       ],
@@ -72,7 +71,7 @@ class _InstitutionPageState extends State<InstitutionPage> {
                         menuButton(context,"View Data", () => ViewDataPage(widget.institutionName, widget.institutionAddress), 3),
 
                         SizedBox(width: 50),
-                        menuButton(context,"Input Data", () => FoodStatusPage(InstitutionInfo(widget.institutionName, widget.institutionAddress)), 1),
+                        menuButton(context,"Input Data", () => FoodStatusPage(), 1),
                       ],
 
                     )),
