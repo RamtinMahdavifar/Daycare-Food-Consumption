@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'select_institution_widgets.dart';
-import 'package:plate_waste_recorder/View/roster_page_widget.dart';
+import 'package:plate_waste_recorder/View/roster_page_widgets.dart';
 import 'package:plate_waste_recorder/View/qrcode.dart';
 import 'package:plate_waste_recorder/View/login_page.dart';
 class Roster extends StatefulWidget {
