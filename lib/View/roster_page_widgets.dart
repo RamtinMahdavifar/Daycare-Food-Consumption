@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert'; // required for jsonDecode()
 import 'package:plate_waste_recorder/Model/database.dart';
 import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
-import 'package:plate_waste_recorder/View/login_page.dart';
+import 'package:plate_waste_recorder/Model/subject_info.dart';
 
 
 
@@ -189,7 +189,6 @@ Widget subjectDisplay(InstitutionInfo currentInstitutionInfo){
         // TODO: get current ResearchGroup user is in and display it's info here
           stream: Database().getInstitutionStream(currentInstitutionInfo, ResearchGroupInfo("testResearchGroupName")),
           builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {
-            List<Widget> children;
             if (snapshot.hasError) {
               Config.log.e("errors occurred while reading subjects from the database on roster page, error: " + snapshot.error.toString());
               return Text("errors in database read occurred");
@@ -226,7 +225,7 @@ Widget subjectDisplay(InstitutionInfo currentInstitutionInfo){
                     // display a message indicating this
                     Config.log.w("DataSnapshot has null value when reading subjects from the database, ie no institution objects are read");
                     return Center(child:
-                    Text("No Subjects Have Yet Been Created, be the First to Create One Below",
+                    Text("No Subjects Have Yet Been Created For This Institution",
                         style: TextStyle(fontSize: 28.0))
                     );
                   }
@@ -240,13 +239,24 @@ Widget subjectDisplay(InstitutionInfo currentInstitutionInfo){
                     // convert our read in JSON to an Institution object, display the subjects of this
                     // Institution
                     Institution retrievedInstitution = Institution.fromJSON(institutionJSON);
-                    // create a roster record out of each SubjectInfo we have in this institution
-                    // clicking on each of these roster records will take us to the subject data page
-                    // for that individual on the roster
-                    children = retrievedInstitution.subjectsMap.values.map((value)=>RosterRecord(context, "", ()=>SubjectDataPage(currentInstitutionInfo, value), value.subjectId)).toList();
+                    Map<String, SubjectInfo> subjectsMap = retrievedInstitution.subjectsMap;
 
-                    // display these read in subjects in a listview
-                    return ListView(children: children);
+                    if(subjectsMap.isEmpty){
+                      // we don't have any subjects for the institution, display this
+                      return Center(child:
+                      Text("No Subjects Have Yet Been Created For This Institution",
+                          style: TextStyle(fontSize: 28.0))
+                      );
+                    }
+                    else{
+                      // we do have subjects for this institution, create a roster record out of
+                      // each SubjectInfo we have in this institution clicking on each of these roster records
+                      // will take us to the subject data page for that individual on the roster
+                      List<Widget> subjectRecords = retrievedInstitution.subjectsMap.values.map((value)=>RosterRecord(context, "", ()=>SubjectDataPage(currentInstitutionInfo, value), value.subjectId)).toList();
+
+                      // display these read in subjects in a listview
+                      return ListView(children: subjectRecords);
+                    }
                   }
                   break;
                 case ConnectionState.done:
