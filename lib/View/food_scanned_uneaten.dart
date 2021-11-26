@@ -1,4 +1,5 @@
 
+import 'package:flutter/services.dart';
 import 'package:image/image.dart' as image; // import this package with the name image to avoid naming collisions
 import 'package:flutter_native_screenshot/flutter_native_screenshot.dart';
 import 'package:plate_waste_recorder/Model/meal.dart';
@@ -63,8 +64,8 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
                             //nameEntrySuggester(nameTextController, _nameFoodValid),
                             suggestBox(context, nameTextController, this._foodNameValid),
                             itemPresets(nameTextController),
-                            foodEntry(weightTextController, "Weight(g)", this._foodWeightValid),
-                            foodEntry(commentsTextController, "Comments", this._foodCommentsValid),
+                            foodWeightField(weightTextController, "Weight(g)", this._foodWeightValid),
+                            foodNameField(commentsTextController, "Comments", this._foodCommentsValid),
                             submitData(),
                             retakePhoto(),
                           ],
@@ -178,17 +179,49 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
 
   }
 
-  Widget foodEntry(TextEditingController controller, String fieldName, bool fieldIsValid){
+  Widget foodNameField(TextEditingController controller, String fieldName, bool fieldIsValid){
     assert(fieldName.isNotEmpty);
     return TextFormField(
       decoration: InputDecoration(
           labelText: fieldName,
           // if the field isn't valid errorText has the value "Value Can't Be Empty"
           // otherwise errorText is null
-          errorText: !fieldIsValid ? "Value Can't Be Empty" : null
+          errorText: !fieldIsValid ? "Value Can't Be Empty" : null,
       ),
       controller: controller,
     );
+  }
+
+  Widget foodWeightField(TextEditingController controller, String fieldName, bool fieldIsValid){
+    assert(fieldName.isNotEmpty);
+    return TextFormField(
+      decoration: InputDecoration(
+        labelText: fieldName,
+        // if the field isn't valid errorText has the value "Value Can't Be Empty"
+        // otherwise errorText is null
+        errorText: !fieldIsValid ? "Value Can't Be Empty" : null,
+      ),
+      controller: controller,
+      // specify that a digit keyboard should be used, signed values should not be
+      // allowed and decimals should be enabled
+      keyboardType: TextInputType.numberWithOptions(signed: false, decimal:true),
+      // specify an input formatter to ensure our values are in the specified format
+      // here we require at least 1 digit before any decimals, and allow any number
+      // of digits (including 0) following a decimal if one exists, we must allow
+      // 0 digits after the decimal or else the user will be unable to type a decimal
+      // as the field will always require a digit after the '.' and the user can only
+      // type one character at a time
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d+(\.\d*)?'))]
+    );
+  }
+
+
+  @override
+  void dispose(){
+    this.weightTextController.dispose();
+    this.nameTextController.dispose();
+    this.commentsTextController.dispose();
+    super.dispose();
   }
 }
 
