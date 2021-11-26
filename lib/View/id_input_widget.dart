@@ -74,9 +74,7 @@ class _InputIDFormState extends State<InputIDForm> {
             Config.log.i("user entered id: "+ newId);
             // construct a SubjectInfo object using this ID
             SubjectInfo targetSubjectInfo = SubjectInfo(newId);
-            // TODO: check the database to see if this subject is a part of the current
-            // TODO: institution before proceeding, we cannot allow users to enter data
-            // TODO: for subjects who do not exist or have invalid or unknown IDs
+
 
             // clear our text fields before exiting the add Institution popup
             // exit this popup before going to our next page so this popup isn't
