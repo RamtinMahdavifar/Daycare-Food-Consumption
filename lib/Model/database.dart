@@ -90,6 +90,30 @@ class Database {
     return await desiredLocationReference.once().then((DataSnapshot dataSnapshot)=>(dataSnapshot.exists));
   }
 
+  /// Returns a Future<bool> indicating whether the input targetSubject is a member
+  /// of the institution represented by the input InstitutionInfo object for the specified research group
+  /// Preconditions: currentResearchGroupInfo.databaseKey.isNotEmpty && institutionInfo.getInstitutionInfo().databaseKey.isNotEmpty &&
+  /// targetSubject.database.isNotEmpty
+  /// Postconditions: returns a Future<bool> containing true or false depending on whether
+  /// the specified subject is a member of the input institution as described above
+  Future<bool> institutionHasSubject(ResearchGroupInfo currentResearchGroupInfo, InstitutionInfo institutionInfo, SubjectInfo targetSubject){
+    // ensure the input parameters have valid database keys
+    assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
+    assert(institutionInfo.databaseKey.isNotEmpty);
+    assert(targetSubject.databaseKey.isNotEmpty);
+    // create a path to where this data would be stored on the database and see if
+    // data exists for such a path
+    String dataPath = "";
+    if(kDebugMode){
+      // app is in debug mode, check a database location specific to the current app
+      // user instead of the normal database location
+      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
+      dataPath = "$currentUserID";
+    }
+    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_SUBJECTSDATALOCATION/${institutionInfo.databaseKey}/${targetSubject.databaseKey}";
+    return _dataExistsAtPath(dataPath);
+  }
+
   /// writes the input institution as an InstitutionInfo under the research group specified by the
   /// input ResearchGroupInfo, the input institution is also written in it's entirety to the database in
   /// it's own distinct location, this location is still relative to the input research group
