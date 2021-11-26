@@ -260,6 +260,8 @@ class Database {
     }
     dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_INSTITUTIONSDATALOCATION/${institutionInfo.databaseKey}";
     DatabaseReference institutionReference = _databaseInstance.reference().child(dataPath);
+    // ensure data read from this location is stored and synchronized locally
+    institutionReference.keepSynced(true);
     return institutionReference.onValue;
   }
 
@@ -321,6 +323,8 @@ class Database {
     }
     dataPath = "$dataPath/$_RESEARCHGROUPROOTLOCATION/${researchGroupInfo.databaseKey}";
     DatabaseReference researchGroupReference = _databaseInstance.reference().child(dataPath);
+    // ensure data read from this location is stored and synchronized locally
+    researchGroupReference.keepSynced(true);
     return researchGroupReference.onValue;
   }
 

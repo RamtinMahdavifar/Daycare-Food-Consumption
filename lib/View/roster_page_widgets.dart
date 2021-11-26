@@ -199,7 +199,6 @@ Widget subjectDisplay(InstitutionInfo currentInstitutionInfo){
                   Config.log.w("connection state none when reading subjects from the database");
                   // display a loading animation here, this will continue until we are
                   // able to connect to the database
-                  // TODO: consider displaying something else here, ex an error message indicating no database connection
                   return Center(child: CircularProgressIndicator(
                     value: null,
                     color: Colors.green,
