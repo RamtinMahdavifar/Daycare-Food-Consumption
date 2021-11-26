@@ -251,10 +251,17 @@ Widget subjectDisplay(InstitutionInfo currentInstitutionInfo){
                       // we do have subjects for this institution, create a roster record out of
                       // each SubjectInfo we have in this institution clicking on each of these roster records
                       // will take us to the subject data page for that individual on the roster
-                      List<Widget> subjectRecords = retrievedInstitution.subjectsMap.values.map((value)=>RosterRecord(context, "", ()=>SubjectDataPage(currentInstitutionInfo, value), value.subjectId)).toList();
+                      // get all ids of the subjects in this institution in a sorted order for nicer display
+                      List<String> sortedSubjectIDs = retrievedInstitution.subjectsMap.keys.toList();
+                      Config.log.i(sortedSubjectIDs);
+                      sortedSubjectIDs.sort();
+                      Config.log.i(sortedSubjectIDs);
+                      List<Widget> sortedSubjectRecords = sortedSubjectIDs.map((id){
+                        return RosterRecord(context, "", ()=>SubjectDataPage(currentInstitutionInfo, retrievedInstitution.getInstitutionSubject(id)!), id);
+                      }).toList();
 
                       // display these read in subjects in a listview
-                      return ListView(children: subjectRecords);
+                      return ListView(children: sortedSubjectRecords);
                     }
                   }
                   break;
