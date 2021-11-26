@@ -3,6 +3,7 @@ import 'package:plate_waste_recorder/Model/meal_info.dart';
 import 'package:plate_waste_recorder/Model/string_image_converter.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/Model/food_status.dart';
+import 'package:plate_waste_recorder/Helper/date_converter.dart';
 
 /// Class representing a Meal served to a particular subject
 /// a subject can have multiple meals in a day and multiple meals throughout time
@@ -35,6 +36,9 @@ class Meal{
   // context or information about a meal
   late String _comment;
 
+  // String representation of the date the data for this particular meal was captured
+  late String _mealDate;
+
 
   //***** Meal constructor ********
   // only accept the mandatory fields for a meal here, all other fields are optional and
@@ -55,6 +59,9 @@ class Meal{
     this._comment = comment;
     // generate a unique ID for this meal using our firebase database
     this._mealId = Database().generateUniqueID();
+    // this newly created meal will have the current day's date as it's mealDate
+    // as data for this meal has been captured on this day
+    this._mealDate = convertDateToString(DateTime.now());
   }
 
 
@@ -163,6 +170,7 @@ class Meal{
     '_imageAsString': this._imageString,
     '_mealStatus': this._mealStatus,
     '_mealWeight': this._mealWeight,
+    '_mealDate': this._mealDate,
   };
 
 
@@ -172,5 +180,6 @@ class Meal{
         _comment = json['_comments'].toString(),
         _imageString = json['_imageString'].toString(),
         _mealStatus = json['_mealStatus'] as FoodStatus,
-        _mealWeight = json['_mealWeight'] as double;
+        _mealWeight = json['_mealWeight'] as double,
+        _mealDate = json['_mealDate'].toString();
 }

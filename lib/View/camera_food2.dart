@@ -215,7 +215,7 @@ class _CameraFood2State extends State<CameraFood2> with
     return Scaffold(
       key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: const Text("Camera Food")),
+      appBar: AppBar(title: const Text("Capture Food Item")),
       body: Column(
           children: <Widget>[
             Expanded(
