@@ -7,6 +7,8 @@ import 'package:plate_waste_recorder/Helper/icons.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/Model/food_status.dart';
+import 'package:plate_waste_recorder/Model/database.dart';
+import 'package:plate_waste_recorder/Model/research_group_info.dart';
 
 
 
@@ -23,7 +25,9 @@ class InputIDForm extends StatefulWidget {
 class _InputIDFormState extends State<InputIDForm> {
   final _newIdInputController = TextEditingController();
   final _newIdInputFormKey = GlobalKey<FormState>();
-  bool _IdInputFieldValid = true;
+  // assume our input values are valid by default
+  bool _IdInputEmpty = false;
+  bool _IdBelongsToSubject = true;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +44,18 @@ class _InputIDFormState extends State<InputIDForm> {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: formEntry("ID", const Icon(Icons.perm_identity), _newIdInputController, this._IdInputFieldValid),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                        icon: const Icon(Icons.perm_identity),
+                        labelText: "ID",
+                        // if our field is empty our errorText has the value "Value Can't Be Empty"
+                        // otherwise if the input ID doesn't belong to a subject we inform the user of this
+                        // otherwise we have null ie no error message
+                        errorText: _IdInputEmpty ? "Value Can't Be Empty" :
+                          !_IdBelongsToSubject ? "Input ID ${_newIdInputController.value.text} Doesn't Belong To a Subject In This Institution" : null
+                    ),
+                    controller: _newIdInputController,
+                  ),
                 ),
                 Row(
 
@@ -57,43 +72,64 @@ class _InputIDFormState extends State<InputIDForm> {
   }
   Widget formSubmit(BuildContext context){
     return ElevatedButton(
-        onPressed: (){
+        onPressed: () async {
           // validate form inputs manually as validate() function of form isn't working
           String newId =  _newIdInputController.value.text;
 
 
           Config.log.i("pressed button to submit add input id form with student id: " + newId);
 
-          setState((){
-            // update our class variables from within setState so ui which may
-            // depend upon these variables is also updated
-            this._IdInputFieldValid = newId != null && newId.isNotEmpty;
-          });
+          this._IdInputEmpty = newId == null || newId.isEmpty;
 
-          if(this._IdInputFieldValid){
+          if(!this._IdInputEmpty){
+            // the input ID is not empty, determine if this is a valid ID for a subject in this
+            // institution
             Config.log.i("user entered id: "+ newId);
             // construct a SubjectInfo object using this ID
             SubjectInfo targetSubjectInfo = SubjectInfo(newId);
+            // check if the constructed targetSubjectInfo is stored under the current institution
+            // on the database
+            await Database().institutionHasSubject(ResearchGroupInfo("testResearchGroupName"), widget.currentInstitution, targetSubjectInfo).then((subjectExists){
+              setState((){
+                // update our class variables from within setState so ui which may
+                // depend upon these variables is also updated
+                // re-evaluate this._IdInputEmpty here even though we already have this
+                // value as we want to set both of our validation fields within
+                // the same setState to avoid timing issues
+                this._IdInputEmpty = newId == null || newId.isEmpty;
+                // if the subject exists under the current institution on our database, the
+                // input subject ID does correspond to an actual subject for this institution
+                // otherwise the input ID is invalid
+                this._IdBelongsToSubject = subjectExists;
+              });
+              if(this._IdBelongsToSubject) {
+                // input ID is valid, allow the user to submit data for the subject with this ID
 
+                // clear our text fields before exiting the add Institution popup
+                // exit this popup before going to our next page so this popup isn't
+                // revisited when we press the back button
+                this._newIdInputController.clear();
+                Navigator.of(context, rootNavigator: true).pop();
 
-            // clear our text fields before exiting the add Institution popup
-            // exit this popup before going to our next page so this popup isn't
-            // revisited when we press the back button
-            this._newIdInputController.clear();
-            Navigator.of(context, rootNavigator: true).pop();
-
-            // proceed to the pages to enter data for this particular subject
-            Navigator.push(context, MaterialPageRoute(
-                builder: (context){
-                  return CameraFood2(widget.currentInstitution, targetSubjectInfo, widget.currentFoodStatus);
-
-                  // on qr found, take to food data input screen, this will be
-                  // modified to account for viewing id data and the two different
-                  // food data input screens
-                }));
+                // proceed to the pages to enter data for this particular subject
+                Navigator.push(context, MaterialPageRoute(
+                    builder: (context){
+                      return CameraFood2(widget.currentInstitution, targetSubjectInfo, widget.currentFoodStatus);
+                    }));
+              }
+              else{
+                // input ID is invalid, do not allow the user to continue until a
+                // valid ID is provided
+                Config.log.w("Input User Id not valid, doesn't correspond to subject within institution");
+              }
+            });
           }
           else{
-            Config.log.w("User Id not valid");
+            setState((){
+              // set our state again so relevant error messages are displayed
+              this._IdInputEmpty = newId == null || newId.isEmpty;
+            });
+            Config.log.w("User Id not provided");
           }
         },
         child: const Text("Submit")
@@ -109,25 +145,6 @@ class _InputIDFormState extends State<InputIDForm> {
           Navigator.of(context, rootNavigator: true).pop();
         },
         child: const Text("Cancel")
-    );
-  }
-
-  Widget formEntry(String labelName, Icon icon, TextEditingController controller, bool fieldIsValid){
-    return TextFormField(
-      validator: (value) {
-        if (value == null || value.isEmpty){
-          return 'missing fields';
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-          icon: icon,
-          labelText: labelName,
-          // if the field isn't valid errorText has the value "Value Can't Be Empty"
-          // otherwise errorText is null
-          errorText: !fieldIsValid ? "Value Can't Be Empty" : null
-      ),
-      controller: controller,
     );
   }
 
