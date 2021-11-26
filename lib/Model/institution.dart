@@ -61,8 +61,7 @@ class Institution {
     return "ID $id";
   }
 
-  Map<String, SubjectInfo>get subjectsMap{
-    assert(this._subjectsMap.isNotEmpty);
+  Map<String, SubjectInfo> get subjectsMap{
     return this._subjectsMap;
   }
 
