@@ -496,8 +496,8 @@ class Database {
     dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroup.databaseKey}/$_SUBJECTSDATALOCATION/${subjectInstitution.databaseKey}/${currentSubject.databaseKey}";
     // When we write a meal to the database, we write the mealInfo object for that meal to a
     // specific separate location than where we write the Meal object itself
-    DatabaseReference subjectMealInfoReference = _databaseInstance.reference().child(dataPath).child(_SUBJECTMEALINFOLOCATION);
-    DatabaseReference subjectMealDataReference = _databaseInstance.reference().child(dataPath).child(_SUBJECTSDATALOCATION);
+    DatabaseReference subjectMealInfoReference = _databaseInstance.reference().child(dataPath).child(_SUBJECTMEALINFOLOCATION).child(currentMealInfo.databaseKey);
+    DatabaseReference subjectMealDataReference = _databaseInstance.reference().child(dataPath).child(_SUBJECTMEALLOCATION).child(currentMealInfo.databaseKey);
 
     // write both our Meal and MealInfo objects to the database, first convert each to a map
     // that can be stored on firebase

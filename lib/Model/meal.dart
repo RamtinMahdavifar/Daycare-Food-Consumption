@@ -169,7 +169,7 @@ class Meal{
     '_mealID': this._mealId,
     '_comments': this._comment,
     '_imageAsString': this._imageString,
-    '_mealStatus': this._mealStatus,
+    '_mealStatus': this._mealStatus.toString(),
     '_mealWeight': this._mealWeight,
     '_mealDate': this._mealDate,
   };

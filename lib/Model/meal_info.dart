@@ -47,7 +47,7 @@ class MealInfo extends Info{
     '_mealId': this._mealId,
     'databaseKey': this.databaseKey,
     'name': this.name,
-    '_mealStatus': this.mealStatus
+    '_mealStatus': this.mealStatus.toString()
   };
 
   // this is considered a constructor and so cannot be inherited from our super Info

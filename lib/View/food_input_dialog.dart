@@ -4,6 +4,7 @@ import 'package:image/image.dart' as image; // import this package with the name
 import 'package:flutter_native_screenshot/flutter_native_screenshot.dart';
 import 'package:plate_waste_recorder/Model/meal.dart';
 import 'package:plate_waste_recorder/Model/food_status.dart';
+import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:plate_waste_recorder/Model/string_image_converter.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/rendering.dart';
 import "../Model/variables.dart";
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'dart:io';
+import 'package:plate_waste_recorder/Model/database.dart';
 
 
 class FoodInputDialog extends StatefulWidget {
@@ -166,7 +168,7 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
               String imageString = convertImageToString(capturedImage);
               // construct a meal using the data we've collected and write this to our database
               Meal submittedMeal = Meal(inputName, widget.currentFoodStatus, imageString, double.parse(inputWeight), inputComments);
-
+              Database().addMealToSubject(ResearchGroupInfo("testResearchGroupName"), widget.currentInstitution, widget.currentSubject, submittedMeal);
             });
 
 
