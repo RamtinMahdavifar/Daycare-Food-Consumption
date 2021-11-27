@@ -137,9 +137,10 @@ class Meal{
 
 
   MealInfo getMealInfo(){
-    // ensure this object has a valid ID before creating this info
+    // ensure this object has a valid ID and name before creating this info
     assert(this._mealId.isNotEmpty);
-    return MealInfo(this._mealId, this._mealId);
+    assert(this._mealName.isNotEmpty);
+    return MealInfo(this._mealId, this._mealName, this._mealStatus);
   }
 
 
