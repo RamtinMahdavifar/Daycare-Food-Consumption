@@ -13,7 +13,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:flutter/material.dart';
-import 'food_scanned_uneaten.dart';
+import 'food_input_dialog.dart';
 import 'package:flutter/services.dart';
 import 'qr_scan_id.dart';
 import 'package:image/image.dart' as i;
