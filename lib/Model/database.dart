@@ -12,6 +12,7 @@ import 'package:plate_waste_recorder/Model/research_group.dart';
 import 'package:plate_waste_recorder/Model/subject.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
+import 'food_status.dart';
 import 'meal_info.dart';
 import 'package:flutter/foundation.dart'; // required to check release mode
 
@@ -509,6 +510,39 @@ class Database {
     Map<String, dynamic> mealMap = json.decode(mealJSON);
     subjectMealDataReference.set(mealMap);
   }
+
+  Stream<Event> readSubjectMealInfosWithStatus(ResearchGroupInfo currentResearchGroup, InstitutionInfo subjectInstitution,
+      SubjectInfo currentSubject, FoodStatus targetMealStatus){
+    // ensure we have valid database keys for our research group, institution and subject
+    assert(currentResearchGroup.databaseKey.isNotEmpty);
+    assert(subjectInstitution.databaseKey.isNotEmpty);
+    assert(currentSubject.databaseKey.isNotEmpty);
+
+    Config.log.i("reading subject meal infos with status ${targetMealStatus.toString()} for subject ${currentSubject.subjectId} "
+        "under institution ${subjectInstitution.databaseKey}");
+    // path to the desired data on the database
+    String dataPath = "";
+    if(kDebugMode){
+      // app is in debug mode, check a database location specific to the current app
+      // user instead of the normal database location
+      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
+      dataPath = "$currentUserID";
+    }
+    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroup.databaseKey}/$_SUBJECTSDATALOCATION/${subjectInstitution.databaseKey}/${currentSubject.databaseKey}/$_SUBJECTMEALINFOLOCATION";
+    
+    DatabaseReference subjectMealInfosReference = _databaseInstance.reference().child(dataPath);
+    // from this location on the database, read in only those meal Infos who have the desired input status
+    // do this using a query so all searching and filtering of mealInfos is done database side
+    // allowing us to only read in mealInfos with the desired meal status
+    Query subjectMealInfosWithDesiredStatus = subjectMealInfosReference.orderByChild("_mealStatus").equalTo(targetMealStatus.toString());
+    return subjectMealInfosWithDesiredStatus.onValue;
+  }
+  
+  // TODO: create method to read data as a stream etc using a query for a particular
+  // TODO: meal status ex subjectMealDataReference.orderByChild("_mealStatus").equalTo("something").
+  // TODO: consider placing values in a horizontally scrolling list view and using stream builder
+  // TODO: only write images to google drive at the point of export, need to keep track of whether images have already been
+  // TODO: uploaded however
 
   /// writes the input Meal in it's entirety to the database in a location relative to the research group
   /// specified by the input ResearchGroupInfo
