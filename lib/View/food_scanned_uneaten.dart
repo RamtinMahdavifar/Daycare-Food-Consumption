@@ -35,6 +35,11 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
   final weightTextController = new TextEditingController(text: "69"); //this value of text would be the value returned by our scale
   final commentsTextController = new TextEditingController();
 
+  List<String> FoodItems1 = ["Apple", "Sandwich", "Juice"]; //for String foodItem in existingFoodItems for eaten status
+  List<String> Selected1 = []; //items that get selected once are not suggested again for eaten status
+  List<String> FoodItems2 = ["Apple", "Sandwich", "Juice"]; //for String foodItem in existingFoodItems for container status
+  List<String> Selected2 = []; //items that get selected once are not suggested again for container status
+
   //XFile? _imageFile;
   // assume our input fields are valid by default
   bool _foodNameValid = true;
@@ -45,10 +50,9 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
   @override
   Widget build(BuildContext context) {
     Config.log.i("Opening image submit dialog");
-    //widget.qrViewController.resumeCamera();
-    //widget.qrViewController.pauseCamera();
-
-    //controller.pauseCamera();
+    // we must be submitting an entirely new food item and not adding eaten or container data
+    // for an existing food item if the food status is uneaten
+    bool newFoodSubmission = widget.currentFoodStatus == FoodStatus.uneaten;
     double w = MediaQuery.of(context).size.width;
     return Container(
         padding: EdgeInsets.fromLTRB(w/2, 37, 0, 30), // bottom 30, top 37, these are precision measurements for all screens btw
@@ -62,10 +66,15 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
                         child: Column(
                           children: [
                             //nameEntrySuggester(nameTextController, _nameFoodValid),
-                            suggestBox(context, nameTextController, this._foodNameValid),
-                            itemPresets(nameTextController),
+                            // if the user is entering a food for the first time, display a text field allowing
+                            // new meal names to be input, otherwise the user must select between previously entered
+                            // meals if they are entering a container or an eaten entry for an already served food
+                            newFoodSubmission ? Column(children: [suggestBox(context, nameTextController, this._foodNameValid), itemPresets(nameTextController)])
+                                : existingFoods(nameTextController),
+                            // likewise only display previously created preset items if we are entering a food item for
+                            // the first time
                             foodWeightField(weightTextController, "Weight(g)", this._foodWeightValid),
-                            foodNameField(commentsTextController, "Comments", this._foodCommentsValid),
+                            foodInputField(commentsTextController, "Comments", this._foodCommentsValid),
                             submitData(),
                             retakePhoto(),
                           ],
@@ -77,6 +86,32 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
     );
   }
 
+
+  Widget existingFoods(TextEditingController controller) {
+    List<Widget> presets = [];
+    if (widget.currentFoodStatus == FoodStatus.eaten){ // show remaining food items for eaten status
+      for (String foodItem in FoodItems1){
+        presets.add(
+            ElevatedButton(
+                onPressed: () {controller.text = foodItem;} ,
+                child: Text(foodItem)
+            )
+        );
+      }
+    }else if (widget.currentFoodStatus == FoodStatus.container){ //show remaining food items for container status
+      for (String foodItem in FoodItems2){
+        presets.add(
+            ElevatedButton(
+                onPressed: () {controller.text = foodItem;} ,
+                child: Text(foodItem)
+            )
+        );
+      }
+    }else {
+      throw Exception("Invalid Food Status");
+    }
+    return Row(children : presets);
+  }
 
   /// perform the image capture by screenshotting the whole screen, and then
   /// cropping and horizontally flipping the the captured screenshot, and then
@@ -179,7 +214,7 @@ class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
 
   }
 
-  Widget foodNameField(TextEditingController controller, String fieldName, bool fieldIsValid){
+  Widget foodInputField(TextEditingController controller, String fieldName, bool fieldIsValid){
     assert(fieldName.isNotEmpty);
     return TextFormField(
       decoration: InputDecoration(

@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
-import 'package:plate_waste_recorder/View/food_scanned_eaten.dart';
 import 'package:plate_waste_recorder/View/id_input_page.dart';
 import 'package:plate_waste_recorder/View/login_page.dart';
 import 'qrcode.dart';
@@ -212,10 +211,27 @@ class _CameraFood2State extends State<CameraFood2> with
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     width == null ? width = 480 : null; //if a width dimension not returned
+    // display a different title for this page depending on the type or status of
+    // the food items being entered
+    String pageTitle = "";
+    switch (widget.currentFoodStatus){
+      case FoodStatus.uneaten:
+        pageTitle = "Capture Uneaten Food Item";
+        break;
+      case FoodStatus.eaten:
+        pageTitle = "Capture Eaten Food Item";
+        break;
+      case FoodStatus.container:
+        pageTitle = "Capture Food Container";
+        break;
+      default:
+        pageTitle = "Capture Food Item";
+        break;
+    }
     return Scaffold(
       key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: const Text("Capture Food Item")),
+      appBar: AppBar(title: Text(pageTitle)),
       body: Column(
           children: <Widget>[
             Expanded(
@@ -310,7 +326,7 @@ class _CameraFood2State extends State<CameraFood2> with
     QRcontroller == null
     ? print("No QR Controller active")
     : QRcontroller!.pauseCamera();
-      if(widget.currentFoodStatus == FoodStatus.uneaten){
+      if(widget.currentFoodStatus == FoodStatus.uneaten || widget.currentFoodStatus == FoodStatus.eaten || widget.currentFoodStatus == FoodStatus.container){
         // take a picture of the food on screen, send this to our uneaten food dialog for submission
           await showDialog(
               barrierColor: null,
@@ -319,22 +335,7 @@ class _CameraFood2State extends State<CameraFood2> with
               builder: (_) => UneatenFoodDialog(widget.currentInstitution, widget.currentSubject, widget.currentFoodStatus)
           );//needs to check for null at some point, do this later
       }
-      else if (widget.currentFoodStatus == FoodStatus.eaten || widget.currentFoodStatus == FoodStatus.container){
-
-        await showDialog( //open the dialog first before begining the image capture process
-            barrierColor: null,//jank workaround remove the shadow from the dialog
-            barrierDismissible: false,
-            context: context,
-            builder: (_) => foodScannedSecond(context, QRcontroller!) //needs to check for null at some point, do this later
-        );
-        // after returning from our image submission, resume our camera to allow
-        // taking pictures for successive meals
-        await QRcontroller!.resumeCamera();
-        print("Dialog Code passed");
-        print("takeShot completed");
-        print("Image Capture Finish");
-
-      }else if(getStatus == "preset"){
+      else if(getStatus == "preset"){
 
         print("Adding Preset Container Placeholder");
         await showDialog( //open the dialog first before begining the image capture process
