@@ -16,20 +16,20 @@ import 'package:plate_waste_recorder/Helper/config.dart';
 import 'dart:io';
 
 
-class UneatenFoodDialog extends StatefulWidget {
+class FoodInputDialog extends StatefulWidget {
 
   // take as parameters to this page the institution and subject info this meal belongs under
   InstitutionInfo currentInstitution;
   SubjectInfo currentSubject;
   FoodStatus currentFoodStatus;
-  UneatenFoodDialog(this.currentInstitution, this.currentSubject, this.currentFoodStatus, {Key? key}) : super(key: key);
+  FoodInputDialog(this.currentInstitution, this.currentSubject, this.currentFoodStatus, {Key? key}) : super(key: key);
 
 
   @override
-  _UneatenFoodDialogState createState() => _UneatenFoodDialogState();
+  _FoodInputDialogState createState() => _FoodInputDialogState();
 }
 
-class _UneatenFoodDialogState extends State<UneatenFoodDialog> {
+class _FoodInputDialogState extends State<FoodInputDialog> {
   List<String> exampleFoodItems = ["Apple", "Sandwich", "Juice"]; //for String foodItem in exampleFoodItems
   final nameTextController = new TextEditingController();
   final weightTextController = new TextEditingController(text: "69"); //this value of text would be the value returned by our scale
