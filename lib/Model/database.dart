@@ -58,6 +58,10 @@ class Database {
   // need to store meals relative to some subject
   final String _MEALSDATALOCATION = "Subject Meals";
 
+  final String _SUBJECTMEALINFOLOCATION = "_mealMap";
+
+  final String _SUBJECTMEALLOCATION = "_mealData";
+
   // define a private constructor for this class which will allocate memory etc
   // to class, this is only call-able from within this class.
   Database._privateConstructor();
@@ -489,10 +493,21 @@ class Database {
       String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
       dataPath = "$currentUserID";
     }
-    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroup.databaseKey}/$_SUBJECTSDATALOCATION/${subjectInstitution.databaseKey}/$_INSTITUTIONSSUBJECTSLOCATION/${currentSubject.databaseKey}/";
-    DatabaseReference institutionSubjectReference = _databaseInstance.reference().child(dataPath);
+    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroup.databaseKey}/$_SUBJECTSDATALOCATION/${subjectInstitution.databaseKey}/${currentSubject.databaseKey}";
+    // When we write a meal to the database, we write the mealInfo object for that meal to a
+    // specific separate location than where we write the Meal object itself
+    DatabaseReference subjectMealInfoReference = _databaseInstance.reference().child(dataPath).child(_SUBJECTMEALINFOLOCATION);
+    DatabaseReference subjectMealDataReference = _databaseInstance.reference().child(dataPath).child(_SUBJECTSDATALOCATION);
 
+    // write both our Meal and MealInfo objects to the database, first convert each to a map
+    // that can be stored on firebase
+    String mealInfoJSON = jsonEncode(currentMealInfo);
+    Map<String, dynamic> mealInfoMap = json.decode(mealInfoJSON);
+    subjectMealInfoReference.set(mealInfoMap);
 
+    String mealJSON = jsonEncode(targetMeal);
+    Map<String, dynamic> mealMap = json.decode(mealJSON);
+    subjectMealDataReference.set(mealMap);
   }
 
   /// writes the input Meal in it's entirety to the database in a location relative to the research group

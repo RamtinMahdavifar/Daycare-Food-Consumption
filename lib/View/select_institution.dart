@@ -18,7 +18,6 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
             margin: EdgeInsets.symmetric(horizontal: 8.0),
             child: Column(
                 children: <Widget>[
-                  // TODO: move these child widgets to their own files
                   addInstitution(context),
                   searchInstitution(),
                   //_buildList(),
