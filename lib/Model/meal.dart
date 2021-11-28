@@ -41,8 +41,8 @@ class Meal{
 
 
   //***** Meal constructor ********
-  // only accept the mandatory fields for a meal here, all other fields are optional and
-  // can be filled in later
+  // this constructor specifically is for situations where we want a completely new meal
+  // this meal generate it's own new unique ID to be used by default
   Meal(String mealName, FoodStatus mealStatus, String imageString, double mealWeight, String comment){
     // ensure our input fields are valid, here our comment field can be the empty string
     // if this particular meal doesn't have any comments
@@ -59,6 +59,32 @@ class Meal{
     this._comment = comment;
     // generate a unique ID for this meal using our firebase database
     this._mealId = Database().generateUniqueID();
+    // this newly created meal will have the current day's date as it's mealDate
+    // as data for this meal has been captured on this day
+    this._mealDate = convertDateToString(DateTime.now());
+  }
+
+  // specify an additional constructor that allows us to specify a particular meal ID
+  // to use for this new meal, this should only be used when we want to create a new meal
+  // to represent a different status of an existing meal, the input ID should be the ID
+  // of that already existing meal
+  Meal.fromExistingID(String mealName, FoodStatus mealStatus, String imageString, double mealWeight, String comment, String ID){
+    // ensure our input fields are valid, here our comment field can be the empty string
+    // if this particular meal doesn't have any comments
+    assert(mealName.isNotEmpty);
+    assert(imageString.isNotEmpty);
+    assert(mealWeight>0.0);
+    assert(ID.isNotEmpty);
+    // meal cannot be have the view status, as we only store data for either freshly served
+    // uneaten meals, leftover eaten meals or containers
+    assert(mealStatus!=FoodStatus.view);
+    this._mealName = mealName;
+    this._mealStatus = mealStatus;
+    this._imageString = imageString;
+    this._mealWeight = mealWeight;
+    this._comment = comment;
+    // instead of generating a unique ID as we usually do, use the input ID
+    this._mealId = ID;
     // this newly created meal will have the current day's date as it's mealDate
     // as data for this meal has been captured on this day
     this._mealDate = convertDateToString(DateTime.now());
