@@ -475,6 +475,29 @@ class Database {
       _writeSubjectToDatabase(institutionInfo, currentResearchGroupInfo, currentSubject);
     }
 
+  Future<DataSnapshot> readAllInstitutionSubjectData(ResearchGroupInfo currentResearchGroup, InstitutionInfo subjectInstitution){
+    // ensure our input research group and institution infos contain valid database keys
+    assert(currentResearchGroup.databaseKey.isNotEmpty);
+    assert(subjectInstitution.databaseKey.isNotEmpty);
+
+    // path to the desired data on the database
+    String dataPath = "";
+    if(kDebugMode){
+      // app is in debug mode, check a database location specific to the current app
+      // user instead of the normal database location
+      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
+      dataPath = "$currentUserID";
+    }
+    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroup.databaseKey}/$_SUBJECTSDATALOCATION/${subjectInstitution.databaseKey}";
+    DatabaseReference subjectDataReference = _databaseInstance.reference().child(dataPath);
+
+    // ensure the data read from this location subjectDataReference is cached locally in case
+    // we lose network connection
+    subjectDataReference.keepSynced(true);
+    // read data from this location only once, do not update or read data again if
+    // new values etc are added
+    return subjectDataReference.once();
+  }
 
   void addMealToSubject(ResearchGroupInfo currentResearchGroup, InstitutionInfo subjectInstitution,
         SubjectInfo currentSubject, Meal targetMeal){
