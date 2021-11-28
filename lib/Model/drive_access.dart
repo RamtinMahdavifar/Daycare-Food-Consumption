@@ -95,50 +95,24 @@ class DriveAccess{
           // the meal data submitted for that foodStatus
           mealDataMap.values.forEach((value){
             Map<String, dynamic> mealStatusMap = value as Map<String, dynamic>;
+            // extract data from each of the possible meal data states in order
             if(mealStatusMap["uneaten"] != null){
               // the current meal has an uneaten entry submitted, create a line in our spreadsheet for this data
               Map<String, dynamic> mealDataForStatus = mealStatusMap["uneaten"] as Map<String, dynamic>;
-              List<String> currentMealData = [];
-              currentMealData.add(mealDataForStatus["_mealDate"]);
-              currentMealData.add(mealDataForStatus["_mealName"]);
-              currentMealData.add("uneaten");
-              currentMealData.add(mealDataForStatus["_mealWeight"].toString());
-              if(mealDataForStatus["_comments"]!=null && mealDataForStatus["_comments"]!=""){
-                // if we have comments, add these to our new line representing this meal
-                currentMealData.add(mealDataForStatus["_comments"]);
-              }
-              // add our currentMealData list to our list of spread lines
-              spreadsheetExportData.add(currentMealData);
+              // add the extracted data for this meal status our list of spreadsheet lines
+              spreadsheetExportData.add(_extractDataForMealStatus("uneaten", mealDataForStatus));
             }
             if(mealStatusMap["eaten"] != null){
               // the current meal has an uneaten entry submitted, create a line in our spreadsheet for this data
               Map<String, dynamic> mealDataForStatus = mealStatusMap["eaten"] as Map<String, dynamic>;
-              List<String> currentMealData = [];
-              currentMealData.add(mealDataForStatus["_mealDate"]);
-              currentMealData.add(mealDataForStatus["_mealName"]);
-              currentMealData.add("eaten");
-              currentMealData.add(mealDataForStatus["_mealWeight"].toString());
-              if(mealDataForStatus["_comments"]!=null && mealDataForStatus["_comments"]!=""){
-                // if we have comments, add these to our new line representing this meal
-                currentMealData.add(mealDataForStatus["_comments"]);
-              }
-              // add our currentMealData list to our list of spread lines
-              spreadsheetExportData.add(currentMealData);
+              // add the extracted data for this meal status our list of spreadsheet lines
+              spreadsheetExportData.add(_extractDataForMealStatus("eaten", mealDataForStatus));
             }
             if(mealStatusMap["container"] != null){
               // the current meal has an uneaten entry submitted, create a line in our spreadsheet for this data
               Map<String, dynamic> mealDataForStatus = mealStatusMap["container"] as Map<String, dynamic>;
-              List<String> currentMealData = [];
-              currentMealData.add(mealDataForStatus["_mealDate"]);
-              currentMealData.add(mealDataForStatus["_mealName"]);
-              currentMealData.add("container");
-              currentMealData.add(mealDataForStatus["_mealWeight"].toString());
-              if(mealDataForStatus["_comments"]!=null && mealDataForStatus["_comments"]!=""){
-                // if we have comments, add these to our new line representing this meal
-                currentMealData.add(mealDataForStatus["_comments"]);
-              }
-              // add our currentMealData list to our list of spread lines
-              spreadsheetExportData.add(currentMealData);
+              // add the extracted data for this meal status our list of spreadsheet lines
+              spreadsheetExportData.add(_extractDataForMealStatus("container", mealDataForStatus));
             }
           });
         }
@@ -153,6 +127,23 @@ class DriveAccess{
       // our read in data is null, we have no data to export
       // TODO: display a message to the user indicating the specified institution has no data to export
     }
+  }
+
+  List<String> _extractDataForMealStatus(String mealStatusString, Map<String, dynamic> currentStatusMealMap){
+    // create a new list of data to add our extracted meal data to
+    List<String> currentMealData = [];
+    // extract the various fields of data for this particular input meal data map
+    currentMealData.add(currentStatusMealMap["_mealDate"]);
+    currentMealData.add(currentStatusMealMap["_mealName"]);
+    // add the current meal status to our ongoing list of data
+    currentMealData.add(mealStatusString);
+    currentMealData.add(currentStatusMealMap["_mealWeight"].toString());
+    // if we have comments, add these to our new line representing this meal
+    if(currentStatusMealMap["_comments"]!=null && currentStatusMealMap["_comments"]!=""){
+      currentMealData.add(currentStatusMealMap["_comments"]);
+    }
+    // return our constructed list of meal data
+    return currentMealData;
   }
 }
 
