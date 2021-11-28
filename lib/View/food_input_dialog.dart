@@ -1,5 +1,6 @@
 
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:plate_waste_recorder/Model/meal_info.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' as image; // import this package with the name image to avoid naming collisions
@@ -79,7 +80,7 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
                             // new meal names to be input, otherwise the user must select between previously entered
                             // meals if they are entering a container or an eaten entry for an already served food
                             newFoodSubmission ? Column(children: [suggestBox(context, nameTextController, this._foodNameValid), itemPresets(nameTextController)])
-                                : Column(children: [SizedBox(height: 30, child: existingFoods()), Visibility(visible: !_previousFoodItemSelected, child: Text("No food item selected: please select a food item", style: TextStyle(color: Colors.redAccent, fontSize: 18.0)))]),
+                                : Column(children: [existingFoods(), Visibility(visible: !_previousFoodItemSelected, child: Text("No food item selected: please select a food item", style: TextStyle(color: Colors.redAccent, fontSize: 18.0)))]),
                             // likewise only display previously created preset items if we are entering a food item for
                             // the first time, additionally only display an error message indicating the user has not chosen a pre existing
                             // food item if they try to submit without selecting an existing item to submit
@@ -159,8 +160,8 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
                 Config.log.w(
                     "DataSnapshot has null value when reading meal infos from the database, ie no meal infos are present for the current subject");
                 return Center(child:
-                Text("No Food Items Have Yet Been Submitted",
-                    style: TextStyle(fontSize: 28.0))
+                Text("No ${describeEnum(previousFoodStatus)} food items have yet been submitted",
+                    style: TextStyle(fontSize: 24.0))
                 );
               }
               else {
@@ -173,7 +174,7 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
                     encodedMap) as Map<String, dynamic>;
                 // each key in this meal map is the ID of a meal, the corresponding
                 // value is the MealInfo object representing that meal, display each
-                // such MealInfo as a button in a listview
+                // such MealInfo as a button in a row
                 List<Widget> mealInfoList = mealInfoMap.values.map((element){
                   // first convert each element in our values list to a MealInfo object
                   MealInfo currentMealInfo = MealInfo.fromJSON(element);
@@ -183,7 +184,7 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
                   return ChoiceChip(
                     // ensure we use a white font colour so our text can still be seen as
                     // the background colour of the chip changes based on selection
-                      label: Text(currentMealInfo.name, style: TextStyle(color: Colors.white)),
+                      label: Text(currentMealInfo.name, style: TextStyle(color: Colors.white, fontSize: 20.0)),
                       backgroundColor: Colors.blue,
                       selectedColor: Colors.green,
                       selected: selectedExistingFoodItem == currentMealInfo,
@@ -200,7 +201,7 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
                       },
                   );
                 }).toList();
-                return ListView(scrollDirection: Axis.horizontal, children: mealInfoList);
+                return Wrap(direction: Axis.horizontal, children: mealInfoList);
               }
 
             case ConnectionState.done:
