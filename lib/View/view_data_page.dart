@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
+import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:plate_waste_recorder/View/qrcode.dart';
 import 'package:plate_waste_recorder/View/roster_page.dart';
 import '../Model/variables.dart';
 import 'id_input_page.dart';
 import 'package:plate_waste_recorder/View/login_page.dart';
 import 'package:plate_waste_recorder/Model/food_status.dart';
+import 'package:plate_waste_recorder/Model/drive_access.dart';
 
 class ViewDataPage extends StatefulWidget {
   String institutionName;
@@ -45,10 +47,9 @@ class _ViewDataPageState extends State<ViewDataPage> {
                 }),
                 SizedBox(height: 80.0),
                 ViewDataOption("Export Data", (){
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (context){
-                        return LoginPage();
-                      }));
+                  Config.log.i("User has clicked to export institution ${widget.institutionName} data");
+                  DriveAccess().exportDataToDrive(ResearchGroupInfo("testResearchGroupName"), InstitutionInfo(widget.institutionName, widget.institutionAddress));
+                  Config.log.i("data export complete...");
                 }),
               ]
           )

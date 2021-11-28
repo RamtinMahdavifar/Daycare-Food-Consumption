@@ -1,8 +1,11 @@
+import 'dart:convert';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:http/http.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:googleapis/drive/v3.dart' as drive; // import this package with the name drive to avoid type clobbering
 import 'package:googleapis/sheets/v4.dart' as sheets; // import this package with the name sheets to avoid type clobbering
 import 'package:plate_waste_recorder/Model/authentication.dart';
+import 'package:plate_waste_recorder/Model/database.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 
@@ -55,13 +58,101 @@ class DriveAccess{
     // set the file type/mime type of our created file to a google spreadsheet
     institutionDataSpreadsheet.mimeType = 'application/vnd.google-apps.spreadsheet';
     // create our spreadsheet file on drive
-    final result = await _driveAccessApi.files.create(institutionDataSpreadsheet);
-    sheets.ValueRange sheetData = sheets.ValueRange.fromJson({
-      "values": [
-        ["2021/04/05", "via API", "5", "3", "3", "3", "3", "3", "3", "3"]
-      ]
-    });
-    await _sheetsAccessApi.spreadsheets.values.append(sheetData, result.id!, "A:J");
+    drive.File exportedDriveSpreadsheet = await _driveAccessApi.files.create(institutionDataSpreadsheet);
+
+    // now we must read data for all subjects of the specified institution and write this data
+    // to this newly created spreadsheet
+    DataSnapshot snapshotData = await Database().readAllInstitutionSubjectData(currentResearchGroupInfo, currentInstitutionInfo);
+    Config.log.i("subject data ${snapshotData.value}");
+    if(snapshotData.value != null){
+      // our read in data is not null, ie we have some data for export within this institution
+      Map<dynamic, dynamic> snapshotDataMap = snapshotData.value as Map<dynamic, dynamic>;
+      // convert our data to JSON then back to a map to ensure it is in a standardized
+      // usable format with string keys etc
+      String subjectDataJSON = jsonEncode(snapshotDataMap);
+      Map<String, dynamic> subjectDataMap = json.decode(subjectDataJSON);
+      // the keys of this resulting subjectDataMap are subject IDs, the values of this map
+      // are maps containing subject meal data
+      // we can write a line to this spreadsheet using a list of values, create a list
+      // of lists that represent the lines to be written to this spreadsheet
+      List<List<String>> spreadsheetExportData = [];
+      subjectDataMap.values.forEach((value){
+        // first add the subject ID to it's own line of the spreadsheet
+        Map<String, dynamic> currentSubjectData = value as Map<String, dynamic>;
+        spreadsheetExportData.add(["Data For Subject ${currentSubjectData["_subjectId"].toString()}:"]);
+
+        // next add data for all meals the subject has
+        Map<String, dynamic> mealDataMap = currentSubjectData["_mealData"] as Map<String, dynamic>;
+        if(mealDataMap == null){
+          // our mealDataMap does not exist, we do not have meal data for the current subject
+          // indicate that the current subject has no meal data in our exported spreadsheet
+          spreadsheetExportData.add(["No data present for subject"]);
+        }
+        else{
+          // our mealDataMap does exist, we have meal data for the current subject
+          // this new map of meals contains as keys the ID of each meal, and as values
+          // a map containing any of 3 keys, uneaten, eaten or container each having a value of
+          // the meal data submitted for that foodStatus
+          mealDataMap.values.forEach((value){
+            Map<String, dynamic> mealStatusMap = value as Map<String, dynamic>;
+            if(mealStatusMap["uneaten"] != null){
+              // the current meal has an uneaten entry submitted, create a line in our spreadsheet for this data
+              Map<String, dynamic> mealDataForStatus = mealStatusMap["uneaten"] as Map<String, dynamic>;
+              List<String> currentMealData = [];
+              currentMealData.add(mealDataForStatus["_mealDate"]);
+              currentMealData.add(mealDataForStatus["_mealName"]);
+              currentMealData.add("uneaten");
+              currentMealData.add(mealDataForStatus["_mealWeight"].toString());
+              if(mealDataForStatus["_comments"]!=null && mealDataForStatus["_comments"]!=""){
+                // if we have comments, add these to our new line representing this meal
+                currentMealData.add(mealDataForStatus["_comments"]);
+              }
+              // add our currentMealData list to our list of spread lines
+              spreadsheetExportData.add(currentMealData);
+            }
+            if(mealStatusMap["eaten"] != null){
+              // the current meal has an uneaten entry submitted, create a line in our spreadsheet for this data
+              Map<String, dynamic> mealDataForStatus = mealStatusMap["eaten"] as Map<String, dynamic>;
+              List<String> currentMealData = [];
+              currentMealData.add(mealDataForStatus["_mealDate"]);
+              currentMealData.add(mealDataForStatus["_mealName"]);
+              currentMealData.add("eaten");
+              currentMealData.add(mealDataForStatus["_mealWeight"].toString());
+              if(mealDataForStatus["_comments"]!=null && mealDataForStatus["_comments"]!=""){
+                // if we have comments, add these to our new line representing this meal
+                currentMealData.add(mealDataForStatus["_comments"]);
+              }
+              // add our currentMealData list to our list of spread lines
+              spreadsheetExportData.add(currentMealData);
+            }
+            if(mealStatusMap["container"] != null){
+              // the current meal has an uneaten entry submitted, create a line in our spreadsheet for this data
+              Map<String, dynamic> mealDataForStatus = mealStatusMap["container"] as Map<String, dynamic>;
+              List<String> currentMealData = [];
+              currentMealData.add(mealDataForStatus["_mealDate"]);
+              currentMealData.add(mealDataForStatus["_mealName"]);
+              currentMealData.add("container");
+              currentMealData.add(mealDataForStatus["_mealWeight"].toString());
+              if(mealDataForStatus["_comments"]!=null && mealDataForStatus["_comments"]!=""){
+                // if we have comments, add these to our new line representing this meal
+                currentMealData.add(mealDataForStatus["_comments"]);
+              }
+              // add our currentMealData list to our list of spread lines
+              spreadsheetExportData.add(currentMealData);
+            }
+          });
+        }
+      });
+
+      sheets.ValueRange sheetData = sheets.ValueRange.fromJson({
+        "values": spreadsheetExportData
+      });
+      await _sheetsAccessApi.spreadsheets.values.append(sheetData, exportedDriveSpreadsheet.id!, "A:P", valueInputOption: "USER_ENTERED");
+    }
+    else{
+      // our read in data is null, we have no data to export
+      // TODO: display a message to the user indicating the specified institution has no data to export
+    }
   }
 }
 
