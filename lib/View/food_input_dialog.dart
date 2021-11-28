@@ -72,7 +72,7 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
                             // new meal names to be input, otherwise the user must select between previously entered
                             // meals if they are entering a container or an eaten entry for an already served food
                             newFoodSubmission ? Column(children: [suggestBox(context, nameTextController, this._foodNameValid), itemPresets(nameTextController)])
-                                : existingFoods(nameTextController),
+                                : SizedBox(height: 30, child: existingFoods(nameTextController)),
                             // likewise only display previously created preset items if we are entering a food item for
                             // the first time
                             foodWeightField(weightTextController, "Weight(g)", this._foodWeightValid),
@@ -112,7 +112,7 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
     }else {
       throw Exception("Invalid Food Status");
     }
-    return Row(children : presets);
+    return ListView(scrollDirection: Axis.horizontal, children: presets);
   }
 
   /// perform the image capture by screenshotting the whole screen, and then
