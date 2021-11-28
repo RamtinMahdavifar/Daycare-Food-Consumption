@@ -177,12 +177,21 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
                   // display each meal info as a button, when the user clicks this button
                   // store data for the selected meal info to be used later when data is
                   // submitted
-                  return ElevatedButton(
-                      onPressed: () {
-                        Config.log.i("user has selected meal with name: ${currentMealInfo.name} and ID: ${currentMealInfo.mealId} to input new data for");
-                        selectedExistingFoodItem = currentMealInfo;
-                        },
-                      child: Text(currentMealInfo.name)
+                  return ChoiceChip(
+                    // ensure we use a white font colour so our text can still be seen as
+                    // the background colour of the chip changes based on selection
+                      label: Text(currentMealInfo.name, style: TextStyle(color: Colors.white)),
+                      backgroundColor: Colors.blue,
+                      selectedColor: Colors.green,
+                      selected: selectedExistingFoodItem == currentMealInfo,
+                      onSelected: (bool selected) {
+                        if(selected){
+                          Config.log.i("user has selected meal with name: ${currentMealInfo.name} and ID: ${currentMealInfo.mealId} to input new data for");
+                          setState((){
+                            selectedExistingFoodItem = currentMealInfo;
+                          });
+                        }
+                      },
                   );
                 }).toList();
                 return ListView(scrollDirection: Axis.horizontal, children: mealInfoList);
