@@ -262,28 +262,66 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
             this._previousFoodItemSelected = this.selectedExistingFoodItem != null;
           });
 
-          if(this._foodNameValid && this._foodWeightValid && this._foodCommentsValid){
-            // our fields are valid, submit the input data to the database
-            // get the image the user has submitted
-            takeShot().then((capturedImage){
-              // convert our image to a string
-              String imageString = convertImageToString(capturedImage);
-              // construct a meal using the data we've collected and write this to our database
-              Meal submittedMeal = Meal(inputName, widget.currentFoodStatus, imageString, double.parse(inputWeight), inputComments);
-              Database().addMealToSubject(ResearchGroupInfo("testResearchGroupName"), widget.currentInstitution, widget.currentSubject, submittedMeal);
-            });
+          if(widget.currentFoodStatus == FoodStatus.uneaten){
+            // we are submitting an entirely new food item
+            if(this._foodNameValid && this._foodWeightValid && this._foodCommentsValid){
+              Config.log.i("submitting entirely new uneaten meal with name: $inputName, weight: $inputWeight, and comments: $inputComments");
+              // our fields are valid, submit the input data to the database
+              // get the image the user has submitted
+              takeShot().then((capturedImage){
+                // convert our image to a string
+                String imageString = convertImageToString(capturedImage);
+                // construct a meal using the data we've collected and write this to our database
+                Meal submittedMeal = Meal(inputName, widget.currentFoodStatus, imageString, double.parse(inputWeight), inputComments);
+                Database().addMealToSubject(ResearchGroupInfo("testResearchGroupName"), widget.currentInstitution, widget.currentSubject, submittedMeal);
+              });
 
+              // display a snackbar indicating data has been saved successfully
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Food Item Submitted Successfully")),
+              );
 
-            // clear our text fields before returning to the previous screen after data submit
-            this.nameTextController.clear();
-            this.weightTextController.clear();
-            this.commentsTextController.clear();
+              // clear our text fields before returning to the previous screen after data submit
+              this.nameTextController.clear();
+              this.weightTextController.clear();
+              this.commentsTextController.clear();
 
-            // return to the previous screen/close this popup dialog
-            Navigator.of(context, rootNavigator: true).pop();
+              // return to the previous screen/close this popup dialog
+              Navigator.of(context, rootNavigator: true).pop();
+            }
+            else{
+              Config.log.i("meal submission fields are not valid");
+            }
           }
           else{
-            Config.log.i("meal submission fields are not valid");
+            // we are submitting either a container or eaten food item for an already existing meal
+            if(this._previousFoodItemSelected && this._foodWeightValid && this._foodCommentsValid){
+              // our meal submission is valid, submit our data
+              Config.log.i("submitting new meal of status ${widget.currentFoodStatus.toString()} with existing name: ${this.selectedExistingFoodItem.name}, "
+                  " and ID ${this.selectedExistingFoodItem.mealId}, weight: $inputWeight, and comments: $inputComments");
+              // our fields are valid, submit the input data to the database
+              // get the image the user has submitted
+              takeShot().then((capturedImage){
+                // convert our image to a string
+                String imageString = convertImageToString(capturedImage);
+                // construct a meal using the data we've collected and write this to our database
+                Meal submittedMeal = Meal.fromExistingID(inputName, widget.currentFoodStatus, imageString, double.parse(inputWeight), inputComments, this.selectedExistingFoodItem.mealId);
+                Database().addMealToSubject(ResearchGroupInfo("testResearchGroupName"), widget.currentInstitution, widget.currentSubject, submittedMeal);
+              });
+
+              // display a snackbar indicating data has been saved successfully
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Food Item Submitted Successfully")),
+              );
+
+              // clear our text fields before returning to the previous screen after data submit
+              this.nameTextController.clear();
+              this.weightTextController.clear();
+              this.commentsTextController.clear();
+
+              // return to the previous screen/close this popup dialog
+              Navigator.of(context, rootNavigator: true).pop();
+            }
           }
         },
         child: const Text("Submit"),
