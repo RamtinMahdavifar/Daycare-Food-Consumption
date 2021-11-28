@@ -9,7 +9,7 @@ import 'qr_scan_id.dart';
 
 
 class ID_InputPage extends StatefulWidget {
-
+  //Display a option to scan QR code or manually input the id
 
   ID_InputPage( {Key? key}) : super(key: key);
 
@@ -32,34 +32,6 @@ class _ID_InputPageState extends State<ID_InputPage> {
     );
   }
 
-
-  Widget inputIDButton(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    return SizedBox(
-        height: height/12,
-        width: width/2,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: Colors.blue,
-            shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.black, width: 5),
-                borderRadius: new BorderRadius.circular(3)
-            ),
-          ),
-          child: Text("Manual ID Entry", style: TextStyle(fontSize: 32)),
-          onPressed: () {
-            //await reassemble();
-            Navigator.push(context, MaterialPageRoute( //open new one to scan
-                builder: (context) {
-                  return InputIDForm();
-                }));
-
-
-          },
-        )
-    );
-  }
 
   Widget _ID_InputOptions(){
     return SafeArea(

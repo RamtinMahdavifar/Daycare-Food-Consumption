@@ -7,12 +7,51 @@ import 'package:responsive_flutter/responsive_flutter.dart';
 
 
 
+Widget inputIDButton(BuildContext context) {
+  double width = MediaQuery.of(context).size.width;
+  double height = MediaQuery.of(context).size.height;
+  //It displays a button to manually input the id
+  //PreCond:
+  //          1. Requires context of current page,
+  //
+  //
+  //PostCond:
+  //          1. Button is displayed on the page
+  //          2. On press the button open a popup window to take the user input for ID
+  return SizedBox(
+      height: height/12,
+      width: width/2,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.blue,
+          shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.black, width: 5),
+              borderRadius: new BorderRadius.circular(3)
+          ),
+        ),
+        child: Text("Manual ID Entry", style: TextStyle(fontSize: 32)),
+        onPressed: () {
+          //await reassemble();
+          Navigator.push(context, MaterialPageRoute( //open new one to scan
+              builder: (context) {
+                return InputIDForm(); //open the Input id pop box
+              }));
+
+
+        },
+      )
+  );
+}
+
 class InputIDForm extends StatefulWidget {
+  //Widget to input the student/QR id manually
+
   @override
   _InputIDFormState createState() => _InputIDFormState();
 }
 
 class _InputIDFormState extends State<InputIDForm> {
+  //Creates a form to take user input
   final _newIdInputController = TextEditingController();
   final _newIdInputFormKey = GlobalKey<FormState>();
   bool _IdInputFieldValid = true;
@@ -37,7 +76,7 @@ class _InputIDFormState extends State<InputIDForm> {
                 Row(
 
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [formCancel(context), formSubmit(context)],
+                  children: [formCancel(context), formSubmit(context)], //buttons to perform operations to cancel or submit the input
                 ),
 
               ],
@@ -48,6 +87,15 @@ class _InputIDFormState extends State<InputIDForm> {
     );
   }
   Widget formSubmit(BuildContext context){
+    //It displays a form submit button and validates the user input
+    //PreCond:
+    //          1. Requires context of current page
+    //
+    //PostCond:
+    //          1. Button is displayed on the page
+    //          2. On press the button validates the user input and if its not empty then record exists then it opens
+    //             camera for empty food state to take pictures
+
     return ElevatedButton(
         onPressed: (){
           // validate form inputs manually as validate() function of form isn't working
@@ -101,7 +149,15 @@ class _InputIDFormState extends State<InputIDForm> {
   }
 
   Widget formCancel(BuildContext context){
+    //It displays a form cancel button to close the input pop
+    //PreCond:
+    //          1. Requires context of current page
+    //
+    //PostCond:
+    //          1. Button is displayed on the page
+    //          2. On press the button navigates back to the previous page
     return ElevatedButton(
+
         onPressed: (){
           Config.log.i("cancelling form submission");
           // clear the text fields before exiting the add Institution popup
@@ -113,6 +169,18 @@ class _InputIDFormState extends State<InputIDForm> {
   }
 
   Widget formEntry(String labelName, Icon icon, TextEditingController controller, bool fieldIsValid){
+    //It displays a form entry field to take user input
+    //PreCond:
+    //          1. Requires context of current page
+    //          2. Icon to display
+    //             3. Controller for text field
+    //             4. Boolen to check if field is valid
+    //
+    //PostCond:
+    //          1. text input field is displayed on the page
+    //          2. Validates and warn user if field is left empty
+    assert(labelName.isNotEmpty);
+
     return TextFormField(
       validator: (value) {
         if (value == null || value.isEmpty){
@@ -142,6 +210,19 @@ class _InputIDFormState extends State<InputIDForm> {
 
 
 Widget manualInput(BuildContext context, String btnName, Widget Function() page,int iconIndex){
+  //It displays a a button to input the id manually
+  //PreCond:
+  //          1. Requires context of current page,
+  //          2. Button name as an string which should not be empty
+  //          3. Page function to navigate to the next page
+  //          4. icon index to display the button icon
+  //
+  //PostCond:
+  //          1. Button is displayed on the page
+  //          2. On press the button opens the next page (manual id popup)
+
+  assert(btnName.isNotEmpty);
+  assert(iconIndex>=0);
   return Flexible(
       child: SizedBox(
           height: 140,
