@@ -1,4 +1,5 @@
-import 'package:plate_waste_recorder/Helper/icons.dart';
+import 'dart:ui';
+import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,18 @@ import 'package:flutter/material.dart';
 
 
 Widget RosterRecord(BuildContext context, String btnName, Widget Function() page, String StudentID){
-
+  //It displays a student record in a row format with student id and
+  // methods available to perform over record like view, edit and delete.
+  //PreCond:
+  //          1. Requires context of current page,
+  //          2. Button name as an string which should not be empty
+  //          3. Page function to navigate to the next page
+  //
+  //PostCond:
+  //          1. Button is displayed on the page
+  //          2. On press the button takes the user to the next page which was passed initially in arguments
+  assert(btnName.isNotEmpty);
+  assert(StudentID.isNotEmpty);
   return Container(
       margin: const EdgeInsets.all(15.0),
       padding: const EdgeInsets.all(3.0),
@@ -20,8 +32,9 @@ Widget RosterRecord(BuildContext context, String btnName, Widget Function() page
 
           children: <Widget>[
             ElevatedButton(
-
+              //Remove student record button
               onPressed: () {
+                Config.log.v("User clicked to remover the record for "+ StudentID);
                 Navigator.push(context, MaterialPageRoute(
                     builder: (context){
                       return page();
@@ -30,9 +43,7 @@ Widget RosterRecord(BuildContext context, String btnName, Widget Function() page
               },
               style: ElevatedButton.styleFrom(
                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  // textStyle: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-
-                  primary: Colors.red,
+                   primary: Colors.red,
                   ),
 
               child: Icon(
@@ -42,11 +53,21 @@ Widget RosterRecord(BuildContext context, String btnName, Widget Function() page
 
               ),
 
-            ),SizedBox(width: 200),
+            ),SizedBox(width: 200)
+            // add an empty SizedBox between column elements
+            // to create space between elements
+            ,
+            //Text to display the student/QR ID
             Text(StudentID, style: TextStyle(fontSize: 40)),
+
             SizedBox(width: 200),
+            // add an empty SizedBox between column elements
+            // to create space between elements
+
             ElevatedButton(
+              //QR code button to open QR for a particular student
               onPressed: () {
+                Config.log.v("User clicked OR code button for "+ StudentID);
                 Navigator.push(context, MaterialPageRoute(
                     builder: (context){
                       return page();
@@ -65,9 +86,14 @@ Widget RosterRecord(BuildContext context, String btnName, Widget Function() page
               ),
 
             ),
-            SizedBox(width: 180),
+
+            SizedBox(width: 180), // add an empty SizedBox between column elements
+            // to create space between elements
+
             ElevatedButton(
+              //Button to edit and view the student record
           onPressed: () {
+            Config.log.v("User clicked edit button for "+ StudentID);
             Navigator.push(context, MaterialPageRoute(
                 builder: (context){
                   return page();
@@ -83,12 +109,9 @@ Widget RosterRecord(BuildContext context, String btnName, Widget Function() page
           color: Colors.black,
           size: 60.0,
 
-  ),
-
-        )
-
-
-            ]
+           ),
+            )
+          ]
 
       )
   );
@@ -96,6 +119,18 @@ Widget RosterRecord(BuildContext context, String btnName, Widget Function() page
 }
 
 Widget addNewId(BuildContext context, String btnName, Widget Function() page){
+  //Button to add new Id in the roster
+  //PreCond:
+  //          1. Requires context of current page,
+  //          2. Button name as an string which should not be empty
+  //          3. Page function to navigate to the next page
+  //
+  //PostCond:
+  //          1. Add new id Button is displayed on the page
+  //          2. On press the button invokes method to add new id in the roster
+
+
+  assert(btnName.isNotEmpty);
   return Flexible(
 
       child: SizedBox(
@@ -105,8 +140,11 @@ Widget addNewId(BuildContext context, String btnName, Widget Function() page){
           child: ElevatedButton(
 
 
-              onPressed: () {  Navigator.push(context, MaterialPageRoute(
+              onPressed: () {
+                Config.log.i("User clicked on addNewId button named: "+ btnName);
+                Navigator.push(context, MaterialPageRoute(
                   builder: (context){
+                    //TODO: Implement the backend code for adding a new id into the institution
                     return page();
                   })); },
               child:Row(
@@ -134,6 +172,16 @@ Widget addNewId(BuildContext context, String btnName, Widget Function() page){
 }
 
 Widget exportToPdf(BuildContext context, String btnName, Widget Function() page){
+  //Button to add new Id in the roster
+  //PreCond:
+  //          1. Requires context of current page,
+  //          2. Button name as an string which should not be empty
+  //          3. Page function to navigate to the next page
+  //
+  //PostCond:
+  //          1. Add new id Button is displayed on the page
+  //          2. On press the button invokes method to export the institution data into a file
+  assert(btnName.isNotEmpty);
   return Flexible(
 
       child: SizedBox(
@@ -143,8 +191,11 @@ Widget exportToPdf(BuildContext context, String btnName, Widget Function() page)
           child: ElevatedButton(
 
 
-              onPressed: () {  Navigator.push(context, MaterialPageRoute(
+              onPressed: () {
+                Config.log.i("User clicked on export data button named: "+ btnName);
+                Navigator.push(context, MaterialPageRoute(
                   builder: (context){
+                    //TODO: Implement the backend code for exporting the data
                     return page();
                   })); },
               child:Row(

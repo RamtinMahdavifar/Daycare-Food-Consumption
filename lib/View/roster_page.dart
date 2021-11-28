@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'select_institution_widgets.dart';
 import 'package:plate_waste_recorder/View/roster_page_widget.dart';
 import 'package:plate_waste_recorder/View/qrcode.dart';
+
+
 class Roster extends StatefulWidget {
+  //Display a list of all the student/QR id in a institution
+  //Along with the the id's buttons to edit,view or delete a id record is available
   @override
   State<Roster> createState() => _RosterState();
 }
@@ -15,7 +18,9 @@ class _RosterState extends State<Roster> {
     return Scaffold(
       appBar: AppBar(title: Text('Roster'),),
       body: Column(
+
           children: <Widget>[  Expanded(
+            //At the top of page page list all the ids and their methods in the roster format
           child: ListView(
 
               children: <Widget>[
@@ -30,6 +35,8 @@ class _RosterState extends State<Roster> {
 
               ])
       ),SizedBox(
+
+             //At the bottom of page show button to add a new ID and export the data
               height: 100,
               child:Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
