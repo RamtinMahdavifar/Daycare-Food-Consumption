@@ -535,6 +535,8 @@ class Database {
     // do this using a query so all searching and filtering of mealInfos is done database side
     // allowing us to only read in mealInfos with the desired meal status
     Query subjectMealInfosWithDesiredStatus = subjectMealInfosReference.orderByChild("_mealStatus").equalTo(targetMealStatus.toString());
+    // ensure data read here is cached locally in case internet connection is lost
+    subjectMealInfosWithDesiredStatus.keepSynced(true);
     return subjectMealInfosWithDesiredStatus.onValue;
   }
   
