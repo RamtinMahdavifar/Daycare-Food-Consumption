@@ -305,7 +305,9 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
                 // convert our image to a string
                 String imageString = convertImageToString(capturedImage);
                 // construct a meal using the data we've collected and write this to our database
-                Meal submittedMeal = Meal.fromExistingID(inputName, widget.currentFoodStatus, imageString, double.parse(inputWeight), inputComments, this.selectedExistingFoodItem.mealId);
+                // since we're merely adding a new entry with a different status to an existing meal,
+                // this new Meal object will have the same ID and name as the previously selected meal
+                Meal submittedMeal = Meal.fromExistingID(this.selectedExistingFoodItem.name, widget.currentFoodStatus, imageString, double.parse(inputWeight), inputComments, this.selectedExistingFoodItem.mealId);
                 Database().addMealToSubject(ResearchGroupInfo("testResearchGroupName"), widget.currentInstitution, widget.currentSubject, submittedMeal);
               });
 
