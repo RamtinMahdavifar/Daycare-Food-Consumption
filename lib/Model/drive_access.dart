@@ -8,6 +8,9 @@ import 'package:plate_waste_recorder/Model/authentication.dart';
 import 'package:plate_waste_recorder/Model/database.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
+import 'package:plate_waste_recorder/Model/string_image_converter.dart';
+import 'dart:io' as io;
+import 'package:path_provider/path_provider.dart';
 
 /// Class used to access google drive to write or read files, this class is defined
 /// using the singleton pattern
@@ -129,6 +132,21 @@ class DriveAccess{
     }
   }
 
+  void uploadImageToDrive(String imageString, String imageFileName) async {
+    // the only way we can upload an image to google drive
+    // is by writing our image string to a file locally then uploading the local file
+    // to drive, convert our image string to a temporary image file to be used for upload
+    // this string image conversion will create a file with name temp.png that we can then use
+    io.Directory tempDirectory = await getTemporaryDirectory();
+    convertStringToImage(imageString, tempDirectory.path + "/temp.jpg");
+    io.File sourceImageFile = io.File(tempDirectory.path + "/temp.jpg");
+    drive.File newImageFile = drive.File();
+    newImageFile.name = imageFileName;
+    newImageFile.mimeType = "image/jpeg";
+    final result = await _driveAccessApi.files.create(newImageFile, uploadMedia: drive.Media(sourceImageFile.openRead(), sourceImageFile.lengthSync()));
+    print("Upload result: ${result.toJson()}");
+  }
+
   List<String> _extractDataForMealStatus(String mealStatusString, Map<String, dynamic> currentStatusMealMap){
     // create a new list of data to add our extracted meal data to
     List<String> currentMealData = [];
@@ -138,6 +156,19 @@ class DriveAccess{
     // add the current meal status to our ongoing list of data
     currentMealData.add(mealStatusString);
     currentMealData.add(currentStatusMealMap["_mealWeight"].toString());
+    // before adding comments to our ongoing list of data, determine if the image associated
+    // with this meal has been uploaded to google drive
+    if(currentStatusMealMap["_driveImageURL"]!=null){
+      // a url for an image on drive exists for this meal, simply add this to our ongoing
+      // list of data
+      currentMealData.add(currentStatusMealMap["_driveImageURL"]);
+    }
+    else{
+      // otherwise we do not already have the image associated with this meal on google drive
+      // upload this image to google drive and add the resulting url to our ongoing list of data
+      String driveImageFileName = "${currentStatusMealMap["_mealID"]}_$mealStatusString";
+      uploadImageToDrive(currentStatusMealMap["_imageAsString"], driveImageFileName);
+    }
     // if we have comments, add these to our new line representing this meal
     if(currentStatusMealMap["_comments"]!=null && currentStatusMealMap["_comments"]!=""){
       currentMealData.add(currentStatusMealMap["_comments"]);
