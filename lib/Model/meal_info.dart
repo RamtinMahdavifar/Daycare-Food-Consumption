@@ -55,5 +55,5 @@ class MealInfo extends Info{
       : this._mealId = json['_mealId'].toString(),
         this.databaseKey = json['databaseKey'].toString(),
         this.name = json['name'].toString(),
-        this._mealStatus = json['_mealStatus'] as FoodStatus;
+        this._mealStatus = parseFoodStatus(json['_mealStatus']);
 }
