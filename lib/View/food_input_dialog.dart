@@ -53,6 +53,7 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
   bool _foodNameValid = true;
   bool _foodWeightValid = true;
   bool _foodCommentsValid = true;
+  bool _previousFoodItemSelected = true;
 
 
   @override
@@ -78,9 +79,11 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
                             // new meal names to be input, otherwise the user must select between previously entered
                             // meals if they are entering a container or an eaten entry for an already served food
                             newFoodSubmission ? Column(children: [suggestBox(context, nameTextController, this._foodNameValid), itemPresets(nameTextController)])
-                                : SizedBox(height: 30, child: existingFoods()),
+                                : Column(children: [SizedBox(height: 30, child: existingFoods()), Visibility(visible: !_previousFoodItemSelected, child: Text("No food item selected: please select a food item", style: TextStyle(color: Colors.redAccent, fontSize: 18.0)))]),
                             // likewise only display previously created preset items if we are entering a food item for
-                            // the first time
+                            // the first time, additionally only display an error message indicating the user has not chosen a pre existing
+                            // food item if they try to submit without selecting an existing item to submit
+                            // data for if a container or eaten food item is being submitted
                             foodWeightField(weightTextController, "Weight(g)", this._foodWeightValid),
                             foodInputField(commentsTextController, "Comments", this._foodCommentsValid),
                             submitData(),
@@ -188,7 +191,10 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
                         if(selected){
                           Config.log.i("user has selected meal with name: ${currentMealInfo.name} and ID: ${currentMealInfo.mealId} to input new data for");
                           setState((){
+                            // we have selected this particular food item, change our state
+                            // to reflect this
                             selectedExistingFoodItem = currentMealInfo;
+                            _previousFoodItemSelected = true;
                           });
                         }
                       },
@@ -198,7 +204,7 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
               }
 
             case ConnectionState.done:
-              Config.log.i("connection state done when reading institutions from the database");
+              Config.log.i("connection state done when reading meal infos from the database");
               return Text("connection state done");
               break;
           }
@@ -249,6 +255,10 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
             // our comment field is optional and as such can be an empty string,
             // ensure this value is not null however
             this._foodCommentsValid = inputComments!=null;
+
+            // ensure the user has selected a previous food item if they are submitting
+            // either container or eaten food data
+            this._previousFoodItemSelected = this.selectedExistingFoodItem != null;
           });
 
           if(this._foodNameValid && this._foodWeightValid && this._foodCommentsValid){
