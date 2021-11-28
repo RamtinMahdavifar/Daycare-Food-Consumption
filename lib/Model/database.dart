@@ -498,7 +498,11 @@ class Database {
     // When we write a meal to the database, we write the mealInfo object for that meal to a
     // specific separate location than where we write the Meal object itself
     DatabaseReference subjectMealInfoReference = _databaseInstance.reference().child(dataPath).child(_SUBJECTMEALINFOLOCATION).child(currentMealInfo.databaseKey);
-    DatabaseReference subjectMealDataReference = _databaseInstance.reference().child(dataPath).child(_SUBJECTMEALLOCATION).child(currentMealInfo.databaseKey);
+    // store meal objects themselves under a particular meal status, this allows multiple
+    // meals to be saved under the same id so long as the meals have different statuses
+    // this allows us to submit different phases of each meal, before the meal is eaten, leftovers, container
+    // used to serve the meal and so on
+    DatabaseReference subjectMealDataReference = _databaseInstance.reference().child(dataPath).child(_SUBJECTMEALLOCATION).child(currentMealInfo.databaseKey).child(describeEnum(currentMealInfo.mealStatus));
 
     // write both our Meal and MealInfo objects to the database, first convert each to a map
     // that can be stored on firebase
