@@ -1,3 +1,4 @@
+import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ Widget foodStatusButton(BuildContext context, String btnName, Widget Function() 
       child: Padding(padding: EdgeInsets.all(10),
         child: ElevatedButton(
           onPressed: () {
+            Config.log.v("User clicked: "+ btnName);
             setStatusVar(btnName);
             Navigator.push(context, MaterialPageRoute(
                 builder: (context){
