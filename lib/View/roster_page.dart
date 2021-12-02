@@ -24,14 +24,14 @@ class _RosterState extends State<Roster> {
           child: ListView(
 
               children: <Widget>[
-                RosterRecord(context,"Type 3",()=>MyHome(),"0000000123"),
-                RosterRecord(context,"Type 3",()=>MyHome(),"0000000456"),
-                RosterRecord(context,"Type 3",()=>MyHome(),"0000000123"),
-                RosterRecord(context,"Type 3",()=>MyHome(),"0000000456"),
-                RosterRecord(context,"Type 3",()=>MyHome(),"0000000123"),
-                RosterRecord(context,"Type 3",()=>MyHome(),"0000000456"),
-                RosterRecord(context,"Type 3",()=>MyHome(),"0000000123"),
-                RosterRecord(context,"Type 3",()=>MyHome(),"0000000456"),
+                RosterRecord(context,"Type 3",()=>MyHome("ID 0"),"0000000123"),
+                RosterRecord(context,"Type 3",()=>MyHome("ID 1"),"0000000456"),
+                RosterRecord(context,"Type 3",()=>MyHome("ID 2"),"0000000123"),
+                RosterRecord(context,"Type 3",()=>MyHome("ID 3"),"0000000456"),
+                RosterRecord(context,"Type 3",()=>MyHome("ID 4"),"0000000123"),
+                RosterRecord(context,"Type 3",()=>MyHome("ID 5"),"0000000456"),
+                RosterRecord(context,"Type 3",()=>MyHome("ID 6"),"0000000123"),
+                RosterRecord(context,"Type 3",()=>MyHome("ID 7"),"0000000456"),
 
               ])
       ),SizedBox(
@@ -41,9 +41,9 @@ class _RosterState extends State<Roster> {
               child:Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                addNewId(context, "Add new ID ", () => MyHome()),
+                addNewId(context, "Add new ID ", () => MyHome("Test")),
                 SizedBox(width: 10),
-                exportToPdf(context, "Export QR to PDF ", () => MyHome()),
+                exportToPdf(context, "Export QR to PDF ", () => MyHome("Test")),
             ]
 
     )
