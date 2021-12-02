@@ -9,16 +9,14 @@ import "camera_food2.dart";
 import "../Model/variables.dart";
 
 class MyHome extends StatelessWidget {
-
   MyHome(this.qRdata);
   final String qRdata;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Flutter Demo Home Page')),
-      body: Column(
-        children: [
+        appBar: AppBar(title: Text('Flutter Demo Home Page')),
+        body: Column(children: [
           Center(
             child: ElevatedButton(
               onPressed: () {
@@ -34,11 +32,7 @@ class MyHome extends StatelessWidget {
             version: QrVersions.auto,
             size: 430,
           )
-        ]
-      )
-
-
-    );
+        ]));
   }
 }
 
@@ -77,9 +71,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   if (result != null)
-                    Text(
-                        '${result!.code}', style: TextStyle(fontSize: 40))
-
+                    Text('${result!.code}', style: TextStyle(fontSize: 40))
                   else
                     Text('Scan a code'),
                   Row(
@@ -99,8 +91,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                               builder: (context, snapshot) {
                                 return Text('Flash: ${snapshot.data}');
                               },
-                            )
-                        ),
+                            )),
                       ),
                       Container(
                         margin: EdgeInsets.all(8),
@@ -159,9 +150,8 @@ class _QRViewExampleState extends State<QRViewExample> {
   Widget BuildQrView(BuildContext context) {
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
-        MediaQuery.of(context).size.height < 400)
+            MediaQuery.of(context).size.height < 400)
         ? 150.0
-
         : 350.0;
     // To ensure the Scanner view is properly sizes after rotation
     // we need to listen for Flutter SizeChanged notification and update controller
@@ -178,12 +168,12 @@ class _QRViewExampleState extends State<QRViewExample> {
     );
   }
 
-  void _onQRViewCreated(QRViewController controller) async{
+  void _onQRViewCreated(QRViewController controller) async {
     setState(() {
       this.controller = controller;
-      if (this.controller != null){
+      if (this.controller != null) {
         this.controller!.flipCamera();
-      }else{
+      } else {
         print("null controller used");
       }
 
@@ -196,9 +186,7 @@ class _QRViewExampleState extends State<QRViewExample> {
       }else{
         print("Invalid Controller");
       }*/
-
     });
-
 
     controller.scannedDataStream.listen((scanData) {
       setState(() {
@@ -206,15 +194,13 @@ class _QRViewExampleState extends State<QRViewExample> {
         setIDVar(result!.code);
       });
 
-      Navigator.push(context, MaterialPageRoute(
-          builder: (context){
-            reassemble();
-            return CameraFood2();
-            // on qr found, take to food data input screen, this will be
-            // modified to account for viewing id data and the two different
-            // food data input screens
-          }));
-
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        reassemble();
+        return CameraFood2();
+        // on qr found, take to food data input screen, this will be
+        // modified to account for viewing id data and the two different
+        // food data input screens
+      }));
     });
   }
 

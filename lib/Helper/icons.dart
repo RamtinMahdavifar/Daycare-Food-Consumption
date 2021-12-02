@@ -13,6 +13,4 @@ List<Category> categories = [
   Category('Input Data', Icons.drive_file_rename_outline),
   Category('Roster', Icons.view_list),
   Category('View Data', Icons.pageview),
-
-
 ];
