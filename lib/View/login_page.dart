@@ -1,9 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
-import 'package:plate_waste_recorder/Model/drive_access.dart';
-import 'package:plate_waste_recorder/View/select_institution.dart';
 import 'package:plate_waste_recorder/Model/authentication.dart';
+import 'package:plate_waste_recorder/View/select_institution.dart';
 
 class LoginPage extends StatefulWidget {
   @override

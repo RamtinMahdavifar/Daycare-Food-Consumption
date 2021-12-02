@@ -1,12 +1,8 @@
-import 'package:flutter_typeahead/flutter_typeahead.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+
 import '../Model/food.dart';
-import 'dart:convert';
-import 'dart:io';
-import 'package:csv/csv.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:path_provider/path_provider.dart';
 
 class NameSuggest extends StatelessWidget {
   const NameSuggest({

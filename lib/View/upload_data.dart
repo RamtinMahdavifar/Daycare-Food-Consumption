@@ -1,13 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
-import 'dart:io';
 import 'dart:async';
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:plate_waste_recorder/Model/meal.dart';
-import 'package:plate_waste_recorder/Model/database.dart';
-import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
+import 'package:plate_waste_recorder/Model/database.dart';
+import 'package:plate_waste_recorder/Model/meal.dart';
+import 'package:plate_waste_recorder/Model/research_group_info.dart';
 
 class UploadData extends StatefulWidget {
   const UploadData({Key? key}) : super(key: key);

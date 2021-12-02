@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/View/qrcode.dart';
+import 'package:plate_waste_recorder/View/roster_page.dart';
 import 'package:plate_waste_recorder/View/view_data_widgets.dart';
+
 import '../Model/variables.dart';
 import 'id_input_page.dart';
-import 'package:plate_waste_recorder/View/roster_page.dart';
 
 class ViewDataPage extends StatefulWidget {
   //Takes the institution name and address to render a page
   // with options to view the data in different ways
   String institutionName;
   String institutionAddress;
+
   //Renders the view data menu as an page with the institution name and address
   ViewDataPage(this.institutionName, this.institutionAddress, {Key? key})
       : super(key: key);

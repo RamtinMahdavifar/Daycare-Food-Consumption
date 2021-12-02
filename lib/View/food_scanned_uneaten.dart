@@ -1,8 +1,9 @@
-import 'name_suggest.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter/rendering.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
+
 import "../Model/variables.dart";
+import 'name_suggest.dart';
 
 List<String> exampleFoodItems = [
   "Apple",
@@ -27,8 +28,8 @@ Widget foodScannedFirst(BuildContext context, QRViewController controller) {
   //controller.pauseCamera();
   double w = MediaQuery.of(context).size.width;
   return Container(
-      padding: EdgeInsets.fromLTRB(w / 2, 37, 0,
-          30), // bottom 30, top 37, these are precision measurements for all screens btw
+      padding: EdgeInsets.fromLTRB(w / 2, 37, 0, 30),
+      // bottom 30, top 37, these are precision measurements for all screens btw
       child: Dialog(
           elevation: 0,
           child: Form(

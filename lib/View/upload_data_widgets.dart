@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:io';
+
+import 'package:flutter/material.dart';
 //currently unsure how to get around certain widgets needing access to the setState function which can only be used within the statless class in the other file
 
 //TODO: make this thing looks prettier and add a button for submitting the data or selecting a different image, then imporove the look for when the keyboard comes up

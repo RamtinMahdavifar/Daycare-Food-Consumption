@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:plate_waste_recorder/Helper/config.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
+
 import 'id_input_widget.dart';
 import 'institution_page_widgets.dart';
-import 'package:plate_waste_recorder/Helper/config.dart';
-import '../Model/variables.dart';
-import 'camera_food2.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'qr_scan_id.dart';
 
 class ID_InputPage extends StatefulWidget {

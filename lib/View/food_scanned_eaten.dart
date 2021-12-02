@@ -1,15 +1,8 @@
-import 'dart:developer';
-import 'dart:io';
-import 'dart:typed_data';
-import 'name_suggest.dart';
-import 'package:camera/camera.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter/rendering.dart';
-import "../Model/variables.dart";
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+
+import "../Model/variables.dart";
 //Image.file(File(img!.path))
 
 List<String> FoodItems1 = [
@@ -44,8 +37,8 @@ Widget foodScannedSecond(BuildContext context, QRViewController controller) {
   //controller.pauseCamera();
   double w = MediaQuery.of(context).size.width;
   return Container(
-      padding: EdgeInsets.fromLTRB(w / 2, 37, 0,
-          30), // bottom 30, top 37, these are precision measurements for all screens btw
+      padding: EdgeInsets.fromLTRB(w / 2, 37, 0, 30),
+      // bottom 30, top 37, these are precision measurements for all screens btw
       child: Dialog(
           elevation: 0,
           child: Form(

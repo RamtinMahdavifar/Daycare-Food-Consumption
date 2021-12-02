@@ -1,6 +1,6 @@
-import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:plate_waste_recorder/Helper/config.dart';
 
 Widget ViewDataOption(
     BuildContext context, String optionName, void Function() tapFunction) {
