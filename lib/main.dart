@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
-import 'View/roster_page.dart';
+import 'package:plate_waste_recorder/View/login_page.dart';
 class PlateWasteApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class PlateWasteApp extends StatelessWidget {
             caption: TextStyle(fontSize: 18.0),
           ),
         ),
-        home: Roster(),
+        home: LoginPage(),
     );
   }
 }
