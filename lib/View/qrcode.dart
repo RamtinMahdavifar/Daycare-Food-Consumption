@@ -9,7 +9,9 @@ import "camera_food2.dart";
 import "../Model/variables.dart";
 
 class MyHome extends StatelessWidget {
-  const MyHome({Key? key}) : super(key: key);
+
+  MyHome(this.qRdata);
+  final String qRdata;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class MyHome extends StatelessWidget {
             ),
           ),
           QrImage(
-            data: 'This is a working QR Code which will hold a child ID',
+            data: qRdata,
             version: QrVersions.auto,
             size: 430,
           )
