@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:plate_waste_recorder/Helper/config.dart';
+
 import 'food_status_widget.dart';
 import 'id_input_page.dart';
 import 'institution_page_widgets.dart';
-import 'qrcode.dart';
-import 'id_input_page.dart';
-import 'qr_scan_id.dart';
-import 'package:plate_waste_recorder/Helper/config.dart';
 
 class FoodStatusPage extends StatefulWidget {
   FoodStatusPage({Key? key}) : super(key: key);

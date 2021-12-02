@@ -1,25 +1,21 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 import 'dart:typed_data';
+
 import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
+import "package:flutter_native_screenshot/flutter_native_screenshot.dart";
+import 'package:image/image.dart' as i;
 import 'package:path_provider/path_provider.dart';
 import 'package:plate_waste_recorder/View/food_scanned_eaten.dart';
 import 'package:plate_waste_recorder/View/id_input_page.dart';
-
-import 'qrcode.dart';
-import "../Model/variables.dart";
 //import 'package:camera/camera.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:flutter/material.dart';
-import 'food_scanned_uneaten.dart';
-import 'package:flutter/services.dart';
-import 'qr_scan_id.dart';
 
-import "package:flutter_native_screenshot/flutter_native_screenshot.dart";
-import 'package:image/image.dart' as i;
-import 'dart:io';
+import "../Model/variables.dart";
+import 'food_scanned_uneaten.dart';
 
 /*
 

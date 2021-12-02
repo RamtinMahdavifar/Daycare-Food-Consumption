@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'id_input_widget.dart';
-import 'institution_page_widgets.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
+
 import '../Model/variables.dart';
 import 'camera_food2.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 /// this is the Qr reading screen, here a viewfinder is built, it scans for an
 /// ID and depending on the context of why a QR is being scanned, ie the foodStatus

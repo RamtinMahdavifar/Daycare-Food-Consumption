@@ -1,14 +1,16 @@
+import 'dart:convert'; // required for jsonDecode()
+
+import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
 import 'package:flutter/material.dart';
+import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/Model/database.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
+import 'package:plate_waste_recorder/Model/research_group_info.dart';
+
+import "../Model/variables.dart";
 import 'add_institutions_form.dart';
 import 'institution_page.dart';
 import 'qrcode.dart';
-import 'package:plate_waste_recorder/Model/research_group_info.dart';
-import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
-import 'dart:convert'; // required for jsonDecode()
-import 'package:plate_waste_recorder/Helper/config.dart';
-import "../Model/variables.dart";
 
 //select_institution page button which navigates to that desired institution_page
 Widget listedInst(BuildContext context, String name, String address) {

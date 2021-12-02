@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
-import "../Model/variables.dart";
-import 'camera_food2.dart';
 import 'package:plate_waste_recorder/Helper/icons.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
+
+import "../Model/variables.dart";
+import 'camera_food2.dart';
 
 Widget inputIDButton(BuildContext context) {
   double width = MediaQuery.of(context).size.width;
