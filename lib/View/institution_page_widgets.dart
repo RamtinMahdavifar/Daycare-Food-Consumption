@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/icons.dart';
 
-Widget backButton(BuildContext context){
+Widget backButton(BuildContext context) {
   //Button to navigate to the previous page
   //PreCond:
   //          1. Current page context (not null) should be passed
@@ -10,14 +10,13 @@ Widget backButton(BuildContext context){
   //
   //          1. On press the button takes the user to the previous page
   return InkWell(
-      onTap: (){
+      onTap: () {
         Navigator.pop(context);
       },
-      child: Icon(Icons.arrow_back)
-  );
+      child: Icon(Icons.arrow_back));
 }
 
-Widget modifyButton(){
+Widget modifyButton() {
   //edit button to modify the content
   //PreCond:
   //          NA
@@ -25,15 +24,11 @@ Widget modifyButton(){
   //PostCond:
   //
   //          1. On press the button takes the user to edit page
-  return InkWell(
-      onTap: () {},
-      child: Icon(Icons.edit)
-  );
+  return InkWell(onTap: () {}, child: Icon(Icons.edit));
 }
 
-
-
-Widget menuButton(BuildContext context, String btnName, Widget Function() page,int iconIndex){
+Widget menuButton(BuildContext context, String btnName, Widget Function() page,
+    int iconIndex) {
   //menu button to display various options (Roster, presets, view data) under the institution page
   //PreCond:
   //          1. Requires context of current page,
@@ -45,37 +40,30 @@ Widget menuButton(BuildContext context, String btnName, Widget Function() page,i
   //          2. On press the button takes the user to the next page which was passed initially in arguments
 
   assert(btnName.isNotEmpty);
-  assert(iconIndex>=0);
+  assert(iconIndex >= 0);
 
   return Flexible(
       child: SizedBox(
-          height:150,
+          height: 150,
           width: 250,
           child: ElevatedButton(
-            onPressed: () {  Navigator.push(context, MaterialPageRoute(
-                builder: (context){
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return page();
-                })); },
-            child:Column(
-              children:  <Widget>[
-
-                Text(btnName,
+                }));
+              },
+              child: Column(children: <Widget>[
+                Text(
+                  btnName,
                   style: TextStyle(
                     fontSize: 40.0, // insert your font size here
-                  ),),
-
+                  ),
+                ),
                 Icon(
                   categories[iconIndex].icon,
                   color: Colors.orange,
                   size: 50.0,
                   semanticLabel: 'Text to announce in accessibility modes',
                 )
-
-                ]
-
-          )
-          )
-
-      )
-  );
+              ]))));
 }
