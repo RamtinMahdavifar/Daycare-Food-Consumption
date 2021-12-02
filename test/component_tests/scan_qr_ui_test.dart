@@ -10,7 +10,7 @@ void main() {
     testWidgets('scan qr code ui test', (WidgetTester tester) async {
       // Build our app and trigger a frame.
       await tester.pumpWidget(MaterialApp(
-          home:  MyHome()));
+          home:  MyHome("test")));
       Config.log.i("Testing Components - QR Scanner");
       final openQRScannerButton = find.widgetWithText(ElevatedButton,'Open QR Scanner');
 

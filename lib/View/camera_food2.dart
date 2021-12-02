@@ -1,25 +1,21 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 import 'dart:typed_data';
+
 import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
+import "package:flutter_native_screenshot/flutter_native_screenshot.dart";
+import 'package:image/image.dart' as i;
 import 'package:path_provider/path_provider.dart';
 import 'package:plate_waste_recorder/View/food_scanned_eaten.dart';
 import 'package:plate_waste_recorder/View/id_input_page.dart';
-
-import 'qrcode.dart';
-import "../Model/variables.dart";
 //import 'package:camera/camera.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:flutter/material.dart';
-import 'food_scanned_uneaten.dart';
-import 'package:flutter/services.dart';
-import 'qr_scan_id.dart';
 
-import "package:flutter_native_screenshot/flutter_native_screenshot.dart";
-import 'package:image/image.dart' as i;
-import 'dart:io';
+import "../Model/variables.dart";
+import 'food_scanned_uneaten.dart';
 
 /*
 
@@ -34,9 +30,8 @@ import 'dart:io';
 
  */
 
-
 /// used as a shorter way to determine if a value is null or not
-bool isNull(String? val){
+bool isNull(String? val) {
   return val == null ? true : false;
 }
 
@@ -53,8 +48,8 @@ void logError(String code, String? message) {
   }
 }
 
-class _CameraFood2State extends State<CameraFood2> with
-    WidgetsBindingObserver, TickerProviderStateMixin {
+class _CameraFood2State extends State<CameraFood2>
+    with WidgetsBindingObserver, TickerProviderStateMixin {
   //REMOVE LIKE ALL OF THIS WHEN YOU GET A CHANCE, EXCEPT FOR CAMERA CONTROLLER AND IMAGEFILE
 
   ScreenshotController SScontroller = ScreenshotController();
@@ -66,8 +61,6 @@ class _CameraFood2State extends State<CameraFood2> with
   Directory? appPath;
   Directory? directory;
 
-
-
   @override
   void initState() {
     super.initState();
@@ -77,7 +70,6 @@ class _CameraFood2State extends State<CameraFood2> with
     getPath();
 
     //run this on initial start to create the folder
-
 
     //SystemChrome.
   }
@@ -95,31 +87,30 @@ class _CameraFood2State extends State<CameraFood2> with
 
     List<String> paths = directory!.path.split("/");
 
-    for (int x = 1 ; x < paths.length ; x++){
+    for (int x = 1; x < paths.length; x++) {
       String folder = paths[x];
       newPath += "/" + folder;
     }
-    if (!isNull(getInst()) && !isNull(getID())){
+    if (!isNull(getInst()) && !isNull(getID())) {
       newPath = newPath + "/" + getInst()! + "/" + getID()!;
       directory = Directory(newPath);
       print(Text("USING PATH: " + directory!.path));
     }
-
   }
 
   /// for each ID, this creates a new directory for every new food item submitted
   /// takes in a String of the name of the new food item that was entered
-  Future<int> newPath(String foodname) async{
+  Future<int> newPath(String foodname) async {
     Directory newDir;
     String newPath = "";
     List<String> paths = directory!.path.split("/");
 
-    for (int x = 1 ; x < paths.length ; x++){
+    for (int x = 1; x < paths.length; x++) {
       String folder = paths[x];
       newPath += "/" + folder;
     }
 
-    if (!isNull(foodname) && directory != null){
+    if (!isNull(foodname) && directory != null) {
       newPath = newPath + "/" + foodname;
       newDir = Directory(newPath);
 
@@ -128,12 +119,10 @@ class _CameraFood2State extends State<CameraFood2> with
         print(Text("CREATED PATH: " + newDir.path));
         return 1;
       }
-    }
-    else{
+    } else {
       print("null foodname");
     }
     return 0;
-
   }
 
   /// stores an image to the local device in a specified location set by
@@ -145,13 +134,12 @@ class _CameraFood2State extends State<CameraFood2> with
       }
       if (await directory!.exists()) {
         await newPath(getFoodName()!) == 1
-         //make new path
-        ? File(directory!.path + "/$fileName").writeAsBytesSync(i.encodePng(pic))
-
-        : print("new path not created");
-
+            //make new path
+            ? File(directory!.path + "/$fileName")
+                .writeAsBytesSync(i.encodePng(pic))
+            : print("new path not created");
       }
-    }else{
+    } else {
       print("no directory chosen");
     }
   }
@@ -167,9 +155,6 @@ class _CameraFood2State extends State<CameraFood2> with
     });
 
     this.QRcontroller!.flipCamera(); //default use the external camera
-
-
-
   }
 
   /// perform the image capture by screenshotting the whole screen, and then
@@ -177,27 +162,32 @@ class _CameraFood2State extends State<CameraFood2> with
   /// saving it with savePic with the filename determined by the ID, foodName
   /// and foodStatus
   void takeShot() async {
-
     String? path = await FlutterNativeScreenshot.takeScreenshot();
     String? filename;
     print("takeShot: Path!");
     print(path);
-    i.Image IMG = i.decodePng(File(path!).readAsBytesSync())!; //encode the og image into IMG
+    i.Image IMG = i.decodePng(
+        File(path!).readAsBytesSync())!; //encode the og image into IMG
     width != null && height != null
-      ? IMG = i.copyCrop(IMG, 5, 61, (width!/2).toInt() - 5, (height! - 139).toInt())
-    // starting at coords 5,61, to cut off the appbar, and only get the left half, and dont grab bottom portion with capture button on it
-    // appbar is 56 + size 5 border,
-      : IMG = i.copyCrop(IMG, 400, 100, 500, 500); //resize OG image to be smaller
+        ? IMG = i.copyCrop(
+            IMG, 5, 61, (width! / 2).toInt() - 5, (height! - 139).toInt())
+        // starting at coords 5,61, to cut off the appbar, and only get the left half, and dont grab bottom portion with capture button on it
+        // appbar is 56 + size 5 border,
+        : IMG =
+            i.copyCrop(IMG, 400, 100, 500, 500); //resize OG image to be smaller
 
-    filename = getFoodName()! + "/"
-        + getID()! + "_"
-        + getFoodName()! + "_"
-        + getStatus()! + ".png";
+    filename = getFoodName()! +
+        "/" +
+        getID()! +
+        "_" +
+        getFoodName()! +
+        "_" +
+        getStatus()! +
+        ".png";
 
-    savePic(i.flipHorizontal(IMG), filename); //PUT THIS AS THE FUNCTION FOR ONPRESS IN WIDGEST OF FOOOD_SCANNED_UNEATEN
-
+    savePic(i.flipHorizontal(IMG),
+        filename); //PUT THIS AS THE FUNCTION FOR ONPRESS IN WIDGEST OF FOOOD_SCANNED_UNEATEN
   }
-
 
   /// permission handler for when you first want to use the camera
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
@@ -225,59 +215,49 @@ class _CameraFood2State extends State<CameraFood2> with
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(title: const Text("Camera Food")),
-      body: Column(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                child: Center(
-                    child: Container(
+      body: Column(children: <Widget>[
+        Expanded(
+          child: Container(
+              child: Center(
+                  child: Container(
                       //padding: EdgeInsets.fromLTRB(0.0, 0.0, width!/2 , 0.0),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.blueAccent, width: 5.0),
-                        color: Colors.white
-                      ),
+                          border:
+                              Border.all(color: Colors.blueAccent, width: 5.0),
+                          color: Colors.white),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                          Flexible(child: BuildQrView(context)),
                           Flexible(
-                              child: BuildQrView(context)
-                          ),
-                          Flexible(
-                            fit: FlexFit.loose,
-                            child: Center(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  idLabel(),
-                                  SizedBox(height: height!/5),
-                                  captureImageButton(),
-                                  SizedBox(height: 20),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      viewDataButton(),
-                                      SizedBox(width: 20),
-                                      finishButton()
-                                    ]
-                                  ),
-                                  SizedBox(height: 20),
-                                ]
-                              )
-                            )
-                          )
-
+                              fit: FlexFit.loose,
+                              child: Center(
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                    idLabel(),
+                                    SizedBox(height: height! / 5),
+                                    captureImageButton(),
+                                    SizedBox(height: 20),
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          viewDataButton(),
+                                          SizedBox(width: 20),
+                                          finishButton()
+                                        ]),
+                                    SizedBox(height: 20),
+                                  ])))
                         ],
-                      )
-                    ) //this is the Viewfinder
-                  )
-                ),
-               ),
-            _captureImage(), //camera Capture button
-          ]
-      ),
+                      )) //this is the Viewfinder
+                  )),
+        ),
+        _captureImage(), //camera Capture button
+      ]),
     );
-
   }
 
   /// button for capturing image
@@ -291,15 +271,12 @@ class _CameraFood2State extends State<CameraFood2> with
           IconButton(
             icon: const Icon(Icons.camera_alt),
             color: Colors.green,
-            onPressed: SScontroller != null
-                ? onTakePictureButtonPressed : null,
+            onPressed: SScontroller != null ? onTakePictureButtonPressed : null,
           )
-
-
-        ]
-    );
+        ]);
   }
-  void showInSnackBar(String message){
+
+  void showInSnackBar(String message) {
     _scaffoldKey.currentState?.showSnackBar(SnackBar(content: Text(message)));
   }
 
@@ -314,55 +291,56 @@ class _CameraFood2State extends State<CameraFood2> with
   /// user what the image will look like after its been cropped and saved, the
   /// image will be backwards however
   void onTakePictureButtonPressed() async {
-
     print("image captured Press");
     QRcontroller == null
-    ? print("No QR Controller active")
-    :
-      QRcontroller!.pauseCamera();
-      if(getStatus() == "uneaten"){
+        ? print("No QR Controller active")
+        : QRcontroller!.pauseCamera();
+    if (getStatus() == "uneaten") {
+      await showDialog(
+          //open the dialog first before begining the image capture process
+          barrierColor:
+              null, //jank workaround remove the shadow from the dialog
+          barrierDismissible: false,
+          context: context,
+          builder: (_) => foodScannedFirst(context,
+              QRcontroller!) //needs to check for null at some point, do this later
+          );
+      print("Dialog Code passed");
+      takeShot();
+      print("takeShot completed");
+      QRcontroller!.resumeCamera();
+      print("Image Capture Finish");
+    } else if (getStatus() == "eaten" || getStatus() == "container") {
+      await showDialog(
+          //open the dialog first before begining the image capture process
+          barrierColor:
+              null, //jank workaround remove the shadow from the dialog
+          barrierDismissible: false,
+          context: context,
+          builder: (_) => foodScannedSecond(context,
+              QRcontroller!) //needs to check for null at some point, do this later
+          );
+      print("Dialog Code passed");
+      takeShot();
+      print("takeShot completed");
+      QRcontroller!.resumeCamera();
+      print("Image Capture Finish");
+    } else if (getStatus == "preset") {
+      print("Adding Preset Container Placeholder");
+      await showDialog(
+          //open the dialog first before begining the image capture process
+          barrierColor:
+              null, //jank workaround remove the shadow from the dialog
+          barrierDismissible: false,
+          context: context,
+          builder: (_) => foodScannedFirst(context,
+              QRcontroller!) //needs to check for null at some point, do this later
+          );
 
-        await showDialog( //open the dialog first before begining the image capture process
-            barrierColor: null,//jank workaround remove the shadow from the dialog
-            barrierDismissible: false,
-            context: context,
-            builder: (_) => foodScannedFirst(context, QRcontroller!) //needs to check for null at some point, do this later
-        );
-        print("Dialog Code passed");
-        takeShot();
-        print("takeShot completed");
-        QRcontroller!.resumeCamera();
-        print("Image Capture Finish");
-
-      }else if (getStatus() == "eaten" || getStatus() == "container"){
-
-        await showDialog( //open the dialog first before begining the image capture process
-            barrierColor: null,//jank workaround remove the shadow from the dialog
-            barrierDismissible: false,
-            context: context,
-            builder: (_) => foodScannedSecond(context, QRcontroller!) //needs to check for null at some point, do this later
-        );
-        print("Dialog Code passed");
-        takeShot();
-        print("takeShot completed");
-        QRcontroller!.resumeCamera();
-        print("Image Capture Finish");
-
-      }else if(getStatus == "preset"){
-
-        print("Adding Preset Container Placeholder");
-        await showDialog( //open the dialog first before begining the image capture process
-            barrierColor: null,//jank workaround remove the shadow from the dialog
-            barrierDismissible: false,
-            context: context,
-            builder: (_) => foodScannedFirst(context, QRcontroller!) //needs to check for null at some point, do this later
-        );
-
-        addContainer(getFoodName());
-
-      }else{
-        throw Exception("Invalid Food Status");
-      }
+      addContainer(getFoodName());
+    } else {
+      throw Exception("Invalid Food Status");
+    }
 
     print("Dialog Code passed");
     takeShot();
@@ -373,86 +351,72 @@ class _CameraFood2State extends State<CameraFood2> with
 
   Widget captureImageButton() {
     return SizedBox(
-      height: height!/5,
-      width: (width!/3) + 20,
-      child: ElevatedButton(
-
-        style: ElevatedButton.styleFrom(
-          primary: Colors.white70,
-          shape: RoundedRectangleBorder(
-              side: BorderSide(color: Colors.lightGreen, width: 5),
-            borderRadius: new BorderRadius.circular(3)
-          ),
-        ),
-        child: Text(" Capture Image " + " [SPACE]", style: TextStyle(fontSize: 38, color: Colors.black)),
-        onPressed:
-          SScontroller != null
-              ? onTakePictureButtonPressed : null
-
-      )
-    );
+        height: height! / 5,
+        width: (width! / 3) + 20,
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.white70,
+              shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.lightGreen, width: 5),
+                  borderRadius: new BorderRadius.circular(3)),
+            ),
+            child: Text(" Capture Image " + " [SPACE]",
+                style: TextStyle(fontSize: 38, color: Colors.black)),
+            onPressed:
+                SScontroller != null ? onTakePictureButtonPressed : null));
   }
 
   Widget viewDataButton() {
     return SizedBox(
-      height: height!/6,
-      width: width!/6,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: Colors.white70,
-          shape: RoundedRectangleBorder(
-              side: BorderSide(color: Colors.black, width: 5),
-              borderRadius: new BorderRadius.circular(3)
+        height: height! / 6,
+        width: width! / 6,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.white70,
+            shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.black, width: 5),
+                borderRadius: new BorderRadius.circular(3)),
           ),
-        ),
-        child: Text("View Data", style: TextStyle(fontSize: 32, color: Colors.black)),
-        onPressed: () {},
-      )
-    );
+          child: Text("View Data",
+              style: TextStyle(fontSize: 32, color: Colors.black)),
+          onPressed: () {},
+        ));
   }
 
   Widget finishButton() {
     return SizedBox(
-      height: height!/6,
-      width: width!/6,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: Colors.green,
-          shape: RoundedRectangleBorder(
-              side: BorderSide(color: Colors.black, width: 5),
-              borderRadius: new BorderRadius.circular(3)
+        height: height! / 6,
+        width: width! / 6,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.green,
+            shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.black, width: 5),
+                borderRadius: new BorderRadius.circular(3)),
           ),
-        ),
-        child: Text("Finish", style: TextStyle(fontSize: 32)),
-        onPressed: () {
-          //await reassemble();
-          Navigator.of(context, rootNavigator: true).pop(); //leave camera
-          Navigator.of(context, rootNavigator: true).pop(); //leave old qr
-          Navigator.push(context, MaterialPageRoute( //open new one to scan
-              builder: (context) {
-                return ID_InputPage();
-              }));
-
-
-        },
-      )
-    );
+          child: Text("Finish", style: TextStyle(fontSize: 32)),
+          onPressed: () {
+            //await reassemble();
+            Navigator.of(context, rootNavigator: true).pop(); //leave camera
+            Navigator.of(context, rootNavigator: true).pop(); //leave old qr
+            Navigator.push(context, MaterialPageRoute(//open new one to scan
+                builder: (context) {
+              return ID_InputPage();
+            }));
+          },
+        ));
   }
 
   Widget idLabel() {
-    if (!isNull(getID())){
-      return Container(child:(Text(getID()!, style: TextStyle(fontSize: 56))));
-    }else{
+    if (!isNull(getID())) {
+      return Container(child: (Text(getID()!, style: TextStyle(fontSize: 56))));
+    } else {
       print("NULL ID USED");
       return Text("INVALID ID");
     }
-
   }
-
-
-
-
 }
+
 class FoodCamera2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -461,14 +425,16 @@ class FoodCamera2 extends StatelessWidget {
     );
   }
 }
+
 List<CameraDescription> cameras = [];
 
-Future<void> main() async{
+Future<void> main() async {
   //assign avaialbe camera
   print("Start");
 
   runApp(FoodCamera2());
 }
+
 // What's this??? This allows a value of typ T or T? to be treated as a val of type T?
 // Why?? because this thing is not finished and more stable versions of the flutter camera API
 // are not expected to release until late 2021
