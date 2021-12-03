@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/View/roster_page.dart';
 import 'package:plate_waste_recorder/View/view_data_page.dart';
-
+import 'package:plate_waste_recorder/Model/institution_info.dart';
+import 'package:plate_waste_recorder/Model/food_status.dart';
 import 'food_status_page.dart';
 import 'institution_page_widgets.dart';
-import 'upload_data.dart';
+import 'qr_scan_id.dart';
 
 class InstitutionPage extends StatefulWidget {
   //Display a buttons like roster, view data to perform operations for a institution
@@ -49,11 +50,11 @@ class _InstitutionPageState extends State<InstitutionPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     //Navigates to roster page
-                    menuButton(context, "Roster", () => Roster(), 2),
+                    menuButton(context, "Roster", () => Roster(InstitutionInfo(widget.institutionName,widget.institutionAddress)), 2),
                     //idx 2: is the position of roster icon in list of icon categories
                     SizedBox(width: 50),
                     //Navigates to preset page page
-                    menuButton(context, "Preset", () => UploadData(), 0),
+                    menuButton(context, "Preset", () => QR_ScanID(InstitutionInfo(widget.institutionName,widget.institutionAddress), FoodStatus.preset), 0),
                     //idx 0: is the position of preset icon in list of icon categories
                   ],
                 )),
@@ -77,7 +78,7 @@ class _InstitutionPageState extends State<InstitutionPage> {
                     SizedBox(width: 50),
                     //Navigates to Input data
                     menuButton(
-                        context, "Input Data", () => FoodStatusPage(), 1),
+                        context, "Input Data", () => FoodStatusPage(InstitutionInfo(widget.institutionName,widget.institutionAddress)), 1),
                     //idx 1: is the position of preset Input in list of icon categories
                   ],
                 )),
