@@ -17,20 +17,18 @@ import 'package:firebase_database/firebase_database.dart'; // need to include fo
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 
 
-Widget RosterRecord(BuildContext context, String btnName,
-    Widget Function() page, String StudentID) {
-  //It displays a student record in a row format with student id and
-  // methods available to perform over record like view, edit and delete.
-  //PreCond:
-  //          1. Requires context of current page,
-  //          2. Button name as an string which should not be empty
-  //          3. Page function to navigate to the next page
-  //
-  //PostCond:
-  //          1. Button is displayed on the page
-  //          2. On press the button takes the user to the next page which was passed initially in arguments
-  assert(btnName.isNotEmpty);
-  assert(StudentID.isNotEmpty);
+/// displays a student record in a row format with student id and
+/// methods available to perform over record like view, edit and delete.
+/// PreConditions:
+///   1. Requires context of current page,
+///   2. Input subjectID should not be empty
+///   3. Page function to navigate to the next page
+/// PostConditions:
+///   1. Button is displayed on the page
+///   2. On press the button takes the user to the next page which was passed initially in arguments
+Widget RosterRecord(BuildContext context,
+    Widget Function() page, String subjectID) {
+  assert(subjectID.isNotEmpty);
   return Container(
       margin: const EdgeInsets.all(15.0),
       padding: const EdgeInsets.all(3.0),
@@ -41,7 +39,7 @@ Widget RosterRecord(BuildContext context, String btnName,
         ElevatedButton(
           //Remove student record button
           onPressed: () {
-            Config.log.v("User clicked to remover the record for " + StudentID);
+            Config.log.v("User clicked to remover the record for " + subjectID);
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return page();
             }));
@@ -62,7 +60,7 @@ Widget RosterRecord(BuildContext context, String btnName,
         // to create space between elements
         ,
         //Text to display the student/QR ID
-        Text(StudentID, style: TextStyle(fontSize: 40)),
+        Text(subjectID, style: TextStyle(fontSize: 40)),
 
         SizedBox(width: 200),
         // add an empty SizedBox between column elements
@@ -71,7 +69,7 @@ Widget RosterRecord(BuildContext context, String btnName,
         ElevatedButton(
           //QR code button to open QR for a particular student
           onPressed: () {
-            Config.log.v("User clicked OR code button for " + StudentID);
+            Config.log.v("User clicked OR code button for " + subjectID);
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return page();
             }));
@@ -93,7 +91,7 @@ Widget RosterRecord(BuildContext context, String btnName,
         ElevatedButton(
           //Button to edit and view the student record
           onPressed: () {
-            Config.log.v("User clicked edit button for " + StudentID);
+            Config.log.v("User clicked edit button for " + subjectID);
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return page();
             }));
@@ -132,7 +130,6 @@ Widget addNewId(BuildContext context, String btnName, Widget Function() page) {
                 Config.log
                     .i("User clicked on addNewId button named: " + btnName);
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  //TODO: Implement the backend code for adding a new id into the institution
                   return page();
                 }));
               },
@@ -173,10 +170,7 @@ Widget exportToPdf(
               onPressed: () {
                 Config.log
                     .i("User clicked on export data button named: " + btnName);
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  //TODO: Implement the backend code for exporting the data
-                  return page();
-                }));
+
               },
               child: Row(children: <Widget>[
                 Text(
@@ -201,7 +195,6 @@ Widget subjectDisplay(InstitutionInfo currentInstitutionInfo){
       child: StreamBuilder<Event>(
         // use the ResearchGroup with name testResearchGroupName as a sort of stub
         // as we don't yet have adding/joining research groups implemented
-        // TODO: get current ResearchGroup user is in and display it's info here
           stream: Database().getInstitutionStream(currentInstitutionInfo, ResearchGroupInfo("testResearchGroupName")),
           builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {
             if (snapshot.hasError) {
@@ -272,7 +265,7 @@ Widget subjectDisplay(InstitutionInfo currentInstitutionInfo){
                       sortedSubjectIDs.sort();
                       Config.log.i(sortedSubjectIDs);
                       List<Widget> sortedSubjectRecords = sortedSubjectIDs.map((id){
-                        return RosterRecord(context, "", ()=>SubjectDataPage(currentInstitutionInfo, retrievedInstitution.getInstitutionSubject(id)!), id);
+                        return RosterRecord(context, ()=>SubjectDataPage(currentInstitutionInfo, retrievedInstitution.getInstitutionSubject(id)!), id);
                       }).toList();
 
                       // display these read in subjects in a listview
@@ -290,4 +283,3 @@ Widget subjectDisplay(InstitutionInfo currentInstitutionInfo){
   );
 
 }
-
