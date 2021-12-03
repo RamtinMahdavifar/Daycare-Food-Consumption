@@ -45,7 +45,7 @@ class DriveAccess{
     var driveFile = new drive.File();
     driveFile.name = "hello_world.txt";
     final result = await _driveAccessApi.files.create(driveFile, uploadMedia: media);
-    print("Upload result: $result");
+    Config.log.i("Upload result: $result");
   }
 
   void exportDataToDrive(ResearchGroupInfo currentResearchGroupInfo, InstitutionInfo currentInstitutionInfo) async {
@@ -148,7 +148,7 @@ class DriveAccess{
     newImageFile.name = imageFileName;
     newImageFile.mimeType = "image/jpeg";
     final result = await _driveAccessApi.files.create(newImageFile, uploadMedia: drive.Media(sourceImageFile.openRead(), sourceImageFile.lengthSync()));
-    print("Upload result: ${result.toJson()}");
+    Config.log.i("Upload result: ${result.toJson()}");
   }
 
   List<String> _extractDataForMealStatus(String mealStatusString, Map<String, dynamic> currentStatusMealMap){
