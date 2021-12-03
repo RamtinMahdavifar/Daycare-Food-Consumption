@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
-import 'id_input_widget.dart';
-import 'institution_page_widgets.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
-import '../Model/variables.dart';
 import 'food_capture.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/Model/food_status.dart';
+import 'package:plate_waste_recorder/Model/database.dart';
+import 'package:plate_waste_recorder/Model/research_group_info.dart';
 
 
 
@@ -60,7 +59,7 @@ class _QR_ScanIDState extends State<QR_ScanID> {
     );
   }
 
-  void _onQRViewCreated(QRViewController controller) async{
+  void _onQRViewCreated(QRViewController controller) async {
     setState(() {
       this.controller = controller;
       if (this.controller != null) {
@@ -71,31 +70,47 @@ class _QR_ScanIDState extends State<QR_ScanID> {
     });
 
 
-    controller.scannedDataStream.listen((scanData) {
+    controller.scannedDataStream.listen((scanData) async {
       Config.log.i("scanned subject ID ${scanData.code} from QR code");
       controller.stopCamera();
 
       // use our retrieved subject ID to construct a subjectInfo object
       // TODO: ensure subject with this code actually exists
       SubjectInfo targetSubjectInfo = SubjectInfo(scanData.code);
-      Navigator.push(context, MaterialPageRoute(
-          builder: (context){
-            if (widget.currentFoodStatus == FoodStatus.view){
-              // we simply want to view data here, go the meal data page
-              return FoodCapture(widget.currentInstitution, targetSubjectInfo, widget.currentFoodStatus); //TODO change this to view data page of scanned ID
-            }else {
-              // our FoodStatus must be eaten, uneaten or container, here we want to input data for these states
-              // navigate to the meal input page
-              return FoodCapture(widget.currentInstitution, targetSubjectInfo, widget.currentFoodStatus);
-            }
-            // on qr found, take to food data input screen, this will be
-            // modified to account for viewing id data and the two different
-            // food data input screens
-          }));
 
+      await Database().institutionHasSubject(
+          ResearchGroupInfo("testResearchGroupName"), widget.currentInstitution,
+          targetSubjectInfo).then((subjectExists) {
+        if (subjectExists) {
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                if (widget.currentFoodStatus == FoodStatus.view) {
+                  // we simply want to view data here, go the meal data page
+                  return FoodCapture(
+                      widget.currentInstitution, targetSubjectInfo, widget
+                      .currentFoodStatus); //TODO change this to view data page of scanned ID
+                } else {
+                  // our FoodStatus must be eaten, uneaten or container, here we want to input data for these states
+                  // navigate to the meal input page
+                  return FoodCapture(
+                      widget.currentInstitution, targetSubjectInfo,
+                      widget.currentFoodStatus);
+                }
+                // on qr found, take to food data input screen, this will be
+                // modified to account for viewing id data and the two different
+                // food data input screens
+              }));
+        }
+        else {
+          Config.log.w(
+              "Input User Id not valid, doesn't correspond to subject within institution");
+          controller.resumeCamera();
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(duration: const Duration(seconds: 2),content: Text(
+              "ID does not belong to: ${widget.currentInstitution.name}")));
+        };
+      });
     });
   }
-
 
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
     Config.log.i('${DateTime.now().toIso8601String()}_onPermissionSet $p');
