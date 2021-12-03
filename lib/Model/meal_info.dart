@@ -30,13 +30,13 @@ class MealInfo extends Info{
     return this._mealStatus;
   }
 
-  // TODO: overwrite hashcode(), two equal objects should have the same hashcode
   @override
   bool operator ==(Object other){
     if (other.runtimeType == this.runtimeType){
       MealInfo otherInfo = other as MealInfo;
       return this._mealId == otherInfo._mealId &&
       this.databaseKey == otherInfo.databaseKey &&
+      this._mealStatus == otherInfo._mealStatus &&
       this.name == otherInfo.name;
     }
     return false;
