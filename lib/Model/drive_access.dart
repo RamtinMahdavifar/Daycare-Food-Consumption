@@ -79,10 +79,11 @@ class DriveAccess{
       // we can write a line to this spreadsheet using a list of values, create a list
       // of lists that represent the lines to be written to this spreadsheet
       List<List<String>> spreadsheetExportData = [];
+      spreadsheetExportData.add(["Date","Institution","SubjectID", "FoodName", "FoodStatus", "Weight", "Comments"]);
       subjectDataMap.values.forEach((value){
         // first add the subject ID to it's own line of the spreadsheet
         Map<String, dynamic> currentSubjectData = value as Map<String, dynamic>;
-        spreadsheetExportData.add(["Data For Subject ${currentSubjectData["_subjectId"].toString()}:"]);
+        //spreadsheetExportData.add(["Data For Subject ${currentSubjectData["_subjectId"].toString()}:"]);
 
         // next add data for all meals the subject has
         Map<String, dynamic> mealDataMap = currentSubjectData["_mealData"] as Map<String, dynamic>;
