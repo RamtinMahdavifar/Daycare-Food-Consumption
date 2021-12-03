@@ -1,28 +1,17 @@
-import 'dart:async';
-import 'dart:developer';
-import 'dart:io';
-import 'dart:typed_data';
-
-
 import 'package:plate_waste_recorder/Helper/config.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import "package:flutter_native_screenshot/flutter_native_screenshot.dart";
-import 'package:image/image.dart' as i;
-import 'package:path_provider/path_provider.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/View/id_input_page.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:flutter/material.dart';
-import 'food_input_dialog.dart';
-import 'package:flutter/services.dart';
-import 'qr_scan_id.dart';
-import 'package:image/image.dart' as i;
-import 'dart:io';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/Model/food_status.dart';
-import 'package:plate_waste_recorder/Helper/config.dart';
+
+import 'dart:developer';
+
+import 'food_input_dialog.dart';
+
+
 
 /*
 
@@ -42,16 +31,16 @@ bool isNull(String? val) {
   return val == null ? true : false;
 }
 
-class CameraFood2 extends StatefulWidget {
+class FoodCapture extends StatefulWidget {
   // this page accepts as a parameter when created, an InstitutionInfo object representing
   // the institution the user is currently adding data for
   InstitutionInfo currentInstitution;
   SubjectInfo currentSubject;
   FoodStatus currentFoodStatus;
-  CameraFood2(this.currentInstitution, this.currentSubject, this.currentFoodStatus, {Key? key}) : super(key: key);
+  FoodCapture(this.currentInstitution, this.currentSubject, this.currentFoodStatus, {Key? key}) : super(key: key);
 
   @override
-  _CameraFood2State createState() => _CameraFood2State();
+  _FoodCaptureState createState() => _FoodCaptureState();
 }
 
 void logError(String code, String? message) {
@@ -62,7 +51,7 @@ void logError(String code, String? message) {
   }
 }
 
-class _CameraFood2State extends State<CameraFood2> with
+class _FoodCaptureState extends State<FoodCapture> with
     WidgetsBindingObserver, TickerProviderStateMixin {
   ScreenshotController SScontroller = ScreenshotController();
   QRViewController? QRcontroller;

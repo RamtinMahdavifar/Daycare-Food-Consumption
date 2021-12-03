@@ -1,5 +1,3 @@
-
-import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:plate_waste_recorder/Model/meal_info.dart';
@@ -12,15 +10,18 @@ import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:plate_waste_recorder/Model/string_image_converter.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
-import 'name_suggest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import "../Model/variables.dart";
 import 'package:plate_waste_recorder/Helper/config.dart';
-import 'dart:io';
 import 'package:plate_waste_recorder/Model/database.dart';
 import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
 import 'package:image/image.dart' as i;
+
+import 'dart:convert';
+import 'dart:io';
+
+import 'name_suggest.dart';
+
 
 
 class FoodInputDialog extends StatefulWidget {

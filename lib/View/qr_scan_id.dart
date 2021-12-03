@@ -4,7 +4,7 @@ import 'id_input_widget.dart';
 import 'institution_page_widgets.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import '../Model/variables.dart';
-import 'camera_food2.dart';
+import 'food_capture.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/Model/food_status.dart';
@@ -82,11 +82,11 @@ class _QR_ScanIDState extends State<QR_ScanID> {
           builder: (context){
             if (widget.currentFoodStatus == FoodStatus.view){
               // we simply want to view data here, go the meal data page
-              return CameraFood2(widget.currentInstitution, targetSubjectInfo, widget.currentFoodStatus); //TODO change this to view data page of scanned ID
+              return FoodCapture(widget.currentInstitution, targetSubjectInfo, widget.currentFoodStatus); //TODO change this to view data page of scanned ID
             }else {
               // our FoodStatus must be eaten, uneaten or container, here we want to input data for these states
               // navigate to the meal input page
-              return CameraFood2(widget.currentInstitution, targetSubjectInfo, widget.currentFoodStatus);
+              return FoodCapture(widget.currentInstitution, targetSubjectInfo, widget.currentFoodStatus);
             }
             // on qr found, take to food data input screen, this will be
             // modified to account for viewing id data and the two different

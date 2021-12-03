@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
-import "../Model/variables.dart";
-import 'camera_food2.dart';
 import 'package:plate_waste_recorder/Helper/icons.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
@@ -10,7 +8,7 @@ import 'package:plate_waste_recorder/Model/food_status.dart';
 import 'package:plate_waste_recorder/Model/database.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 
-
+import 'food_capture.dart';
 
 
 class InputIDForm extends StatefulWidget {
@@ -114,7 +112,7 @@ class _InputIDFormState extends State<InputIDForm> {
                 // proceed to the pages to enter data for this particular subject
                 Navigator.push(context, MaterialPageRoute(
                     builder: (context){
-                      return CameraFood2(widget.currentInstitution, targetSubjectInfo, widget.currentFoodStatus);
+                      return FoodCapture(widget.currentInstitution, targetSubjectInfo, widget.currentFoodStatus);
                     }));
               }
               else{
