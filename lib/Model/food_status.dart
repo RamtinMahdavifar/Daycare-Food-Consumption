@@ -6,11 +6,14 @@
 /// portions of food like peels
 /// view: this particular status is used when we don't want to record any data for a meal
 /// but instead want to view that meal and see it's data
+/// preset: used when we are not entering data for a particular meal but are adding
+/// a preset meal to be be used as sort of a template for future data gathering
 enum FoodStatus{
   uneaten,
   eaten,
   container,
-  view
+  view,
+  preset
 }
 
 /// Converts the input string foodStatus to a FoodStatus enum
@@ -27,6 +30,7 @@ FoodStatus parseFoodStatus(String foodStatus){
     case "FoodStatus.eaten": return FoodStatus.eaten;
     case "FoodStatus.container": return FoodStatus.container;
     case "FoodStatus.view": return FoodStatus.view;
+    case "FoodStatus.preset": return FoodStatus.preset;
     default: throw Exception("cannot convert string $foodStatus to a FoodStatus enum");
   }
 }
