@@ -1,3 +1,4 @@
+import 'package:image/image.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
@@ -171,7 +172,7 @@ class _FoodCaptureState extends State<FoodCapture> with
     );
   }
 
-  /// button for capturing image
+  /// repurposed capture image now used as a spacer
   Widget _captureImage() {
     //final CameraController? cameraController = controller;
 
@@ -181,8 +182,8 @@ class _FoodCaptureState extends State<FoodCapture> with
         children: <Widget>[
           IconButton(
             icon: const Icon(Icons.camera_alt),
-            color: Colors.green,
-            onPressed: SScontroller != null ? onTakePictureButtonPressed : null,
+            color: Colors.white,
+            onPressed: () {},
           )
         ]);
   }
@@ -231,8 +232,8 @@ class _FoodCaptureState extends State<FoodCapture> with
                   side: BorderSide(color: Colors.lightGreen, width: 5),
                   borderRadius: new BorderRadius.circular(3)),
             ),
-            child: Text(" Capture Image " + " [SPACE]",
-                style: TextStyle(fontSize: 38, color: Colors.black)),
+            child: Icon(Icons.camera_alt, color: Colors.green, size: 75),
+                //style: TextStyle(fontSize: 38, color: Colors.black)),
             onPressed:
                 SScontroller != null ? onTakePictureButtonPressed : null));
   }
