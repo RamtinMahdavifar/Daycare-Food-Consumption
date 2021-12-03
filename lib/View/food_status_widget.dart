@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 
-import '../Model/variables.dart';
-
 Widget foodStatusButton(
     BuildContext context, String btnName, Widget Function() page) {
   return Flexible(
@@ -13,7 +11,6 @@ Widget foodStatusButton(
     child: ElevatedButton(
       onPressed: () {
         Config.log.v("User clicked: " + btnName);
-        setStatusVar(btnName);
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return page();
         }));

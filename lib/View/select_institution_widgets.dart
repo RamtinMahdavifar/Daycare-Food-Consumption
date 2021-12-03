@@ -7,7 +7,7 @@ import 'package:plate_waste_recorder/Model/database.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 
-import "../Model/variables.dart";
+
 import 'add_institutions_form.dart';
 import 'institution_page.dart';
 
@@ -22,8 +22,6 @@ Widget listedInst(BuildContext context, String name, String address) {
                 address);
             // pass the name of the clicked on institution to the daycare screen
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              setInstituteVar(name);
-              setDATE();
               return InstitutionPage(name, address);
             }));
           },
