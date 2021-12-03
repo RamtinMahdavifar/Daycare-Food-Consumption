@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
-
-import 'package:plate_waste_recorder/View/qr_scan_id.dart';
-
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
-import 'package:plate_waste_recorder/View/qrcode.dart';
-
 import 'package:plate_waste_recorder/View/roster_page.dart';
-import 'package:plate_waste_recorder/View/view_data_widgets.dart';
-
-import '../Model/variables.dart';
-import 'id_input_page.dart';
-import 'package:plate_waste_recorder/View/login_page.dart';
 import 'package:plate_waste_recorder/Model/food_status.dart';
 import 'package:plate_waste_recorder/Model/drive_access.dart';
+
+import 'id_input_page.dart';
 
 class ViewDataPage extends StatefulWidget {
   //Takes the institution name and address to render a page
