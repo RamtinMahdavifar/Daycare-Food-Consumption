@@ -294,6 +294,35 @@ class Database {
     return institutionReference.onValue;
   }
 
+  Future<DataSnapshot> getInstitutionData(InstitutionInfo institutionInfo, ResearchGroupInfo currentResearchGroupInfo) {
+    // ensure the input info objects contain valid database keys
+    assert(institutionInfo.databaseKey.isNotEmpty);
+    assert(currentResearchGroupInfo.databaseKey.isNotEmpty);
+    Config.log.i("reading institution: " + institutionInfo.name +
+        " from the database using database key " +
+        institutionInfo.databaseKey + " for research group: " +
+        currentResearchGroupInfo.name);
+
+    // path to the desired data on the database
+    String dataPath = "";
+    if (kDebugMode) {
+      // app is in debug mode, check a database location specific to the current app
+      // user instead of the normal database location
+      String currentUserID = Authentication()
+          .getCurrentSignedInFirebaseUser()
+          .uid;
+      dataPath = "$currentUserID";
+    }
+    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo
+        .databaseKey}/$_INSTITUTIONSDATALOCATION/${institutionInfo
+        .databaseKey}";
+    DatabaseReference institutionReference = _databaseInstance.reference()
+        .child(dataPath);
+    // ensure data read from this location is stored and synchronized locally
+    institutionReference.keepSynced(true);
+    return institutionReference.once();
+  }
+
 
   /// reads the ResearchGroup object specified by the input researchGroupInfo from the database, function
   /// callback is then called using this ResearchGroup as input
