@@ -26,11 +26,6 @@ import 'food_input_dialog.dart';
 
  */
 
-/// used as a shorter way to determine if a value is null or not
-bool isNull(String? val) {
-  return val == null ? true : false;
-}
-
 class FoodCapture extends StatefulWidget {
   // this page accepts as a parameter when created, an InstitutionInfo object representing
   // the institution the user is currently adding data for
@@ -124,7 +119,7 @@ class _FoodCaptureState extends State<FoodCapture> with
     return Scaffold(
       key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: Text(pageTitle)),
+      appBar: AppBar(title: Text(pageTitle), automaticallyImplyLeading: false),
       body: Column(
           children: <Widget>[
             Expanded(

@@ -32,7 +32,6 @@ class _QR_ScanIDState extends State<QR_ScanID> {
   Widget build(BuildContext context) {
     Config.log.i("building id input page");
     return Container(
-      //appBar: AppBar(title: Text("Scan a Student ID"), leading: backButton(context), actions: [modifyButton()]),
       child: BuildQrView(context),
     );
   }
