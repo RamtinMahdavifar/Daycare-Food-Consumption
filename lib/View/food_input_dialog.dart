@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:plate_waste_recorder/Model/meal_info.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' as image; // import this package with the name image to avoid naming collisions
@@ -20,6 +21,7 @@ import 'package:plate_waste_recorder/Helper/config.dart';
 import 'dart:io';
 import 'package:plate_waste_recorder/Model/database.dart';
 import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
+import 'package:image/image.dart' as i;
 
 
 class FoodInputDialog extends StatefulWidget {
@@ -49,12 +51,28 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
   List<String> FoodItems2 = ["Apple", "Sandwich", "Juice"]; //for String foodItem in existingFoodItems for container status
   List<String> Selected2 = []; //items that get selected once are not suggested again for container status
 
+  Directory? directory;
+
   //XFile? _imageFile;
   // assume our input fields are valid by default
   bool _foodNameValid = true;
   bool _foodWeightValid = true;
   bool _foodCommentsValid = true;
   bool _previousFoodItemSelected = true;
+
+  @override
+  void initState() {
+    super.initState();
+    //this is for the null safety check stuff
+    // TODO: getting errors here:
+    // _ambiguate(WidgetsBinding.instance)?.addObserver(this);
+    //set true on first ever launch, false otherwise
+    getPath();
+
+    //run this on initial start to create the folder
+
+    //SystemChrome.
+  }
 
 
   @override
@@ -228,6 +246,60 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
     return capturedImage;
   }
 
+  /// locates the external storage location where images will be stored on the
+  /// device and then creates an organized file directory for the
+  /// institute and the ID if they do not yet exist
+  void getPath() async {
+    //this could be useful for an issue i was running into with converting a csv to a List
+    //use below line to create a directory for the cropped images
+    directory = await getExternalStorageDirectory();
+    print("EXTERNAL SAVE PATH");
+    print(directory);
+    String newPath = "";
+
+    List<String> paths = directory!.path.split("/");
+
+    for (int x = 1; x < paths.length; x++) {
+      String folder = paths[x];
+      newPath += "/" + folder;
+    }
+    if (getInst()!=null && getID()!=null) {
+      newPath = newPath + "/" + getInst()! + "/" + getID()!;
+      directory = Directory(newPath);
+      print(Text("USING PATH: " + directory!.path));
+    }
+  }
+
+  /// for each ID, this creates a new directory for every new food item submitted
+  /// takes in a String of the name of the new food item that was entered
+  Future<int> newPath(String foodname) async {
+    Directory newDir;
+    String newPath = "";
+    List<String> paths = directory!.path.split("/");
+
+    for (int x = 1; x < paths.length; x++) {
+      String folder = paths[x];
+      newPath += "/" + folder;
+    }
+
+    if (foodname!=null && directory != null) {
+      newPath = newPath + "/" + foodname;
+      newDir = Directory(newPath);
+
+      if (!await newDir.exists()) {
+        await newDir.create(recursive: true);
+        print(Text("CREATED PATH: " + newDir.path));
+        return 1;
+      }
+    } else {
+      print("null foodname");
+    }
+    return 0;
+  }
+
+  T? _ambiguate<T>(T? value) => value;
+
+
   Widget retakePhoto(){
     return ElevatedButton(
         onPressed: () {
@@ -236,6 +308,25 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
         child: const Text("Retake Photo"),
         style: ElevatedButton.styleFrom(primary: Colors.redAccent)
     );
+  }
+
+  /// stores an image to the local device in a specified location set by
+  /// getPath() + newPath(), takes an Image that is stored with the name filename
+  void savePic(i.Image pic, String fileName) async {
+    if (directory != null) {
+      if (!await directory!.exists()) {
+        await directory!.create(recursive: true);
+      }
+      if (await directory!.exists()) {
+        await newPath(getFoodName()!) == 1
+        //make new path
+            ? File(directory!.path + "/$fileName")
+            .writeAsBytesSync(i.encodePng(pic))
+            : print("new path not created");
+      }
+    } else {
+      print("no directory chosen");
+    }
   }
 
   Widget submitData(){
