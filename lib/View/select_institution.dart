@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'select_institution_widgets.dart';
 
+import 'select_institution_widgets.dart';
 
 class ChooseInstitute extends StatefulWidget {
   @override
@@ -9,8 +9,6 @@ class ChooseInstitute extends StatefulWidget {
 
 class _ChooseInstituteState extends State<ChooseInstitute> {
   @override
-
-
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text('Plate Waste Tracker')),
@@ -27,5 +25,4 @@ class _ChooseInstituteState extends State<ChooseInstitute> {
 
     );
   }
-
 }

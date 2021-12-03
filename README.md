@@ -2,8 +2,8 @@
 
 Cross platform application to record plate waste and access nutrition intake in a variety of contexts and settings. Assists in the gathering, maintenance and export of plate waste and nutrition intake data.
 
-## Incremental Deliverable 3:
-Documentation and other artifacts related to incremental deliverable 3 can be found on our [wiki](https://github.com/UniversityOfSaskatchewanCMPT371/term-project-fall-2021-team-2-1/wiki/ID3), additional documents can be found on our google drive [here](https://drive.google.com/drive/folders/1fagtX8sijN0Hs17N98xFa6O1OPY0TXqf?usp=sharing)
+## Incremental Deliverable 4:
+Documentation and other artifacts related to incremental deliverable 4 can be found on our [wiki](https://github.com/UniversityOfSaskatchewanCMPT371/term-project-fall-2021-team-2-1/wiki/ID4), additional documents can be found on our google drive [here](https://drive.google.com/drive/folders/1GL7VMHyOubgjZKnWmu_06rsm3HQs3fQr?usp=sharing)
 
 ## How to Run the App
 1. Download [Nox](https://www.bignox.com/en/download/fullPackage) using any browser
@@ -19,14 +19,14 @@ Documentation and other artifacts related to incremental deliverable 3 can be fo
 
 ![platewasteinstall3](https://user-images.githubusercontent.com/90283384/135784000-b8e158ae-5d54-4f4c-90d4-ea4fb219a9fe.png)
 
-5. Download the latest app APK from the [Build Pipeline](https://github.com/UniversityOfSaskatchewanCMPT371/term-project-fall-2021-team-2-1/actions/runs/1406153392) towards the bottom of the linked page, unzip the downloaded apk artifact and use the file app.apk as the apk to run the app.
+5. Download the latest app APK from the [Build Pipeline](https://github.com/UniversityOfSaskatchewanCMPT371/term-project-fall-2021-team-2-1/actions/runs/1488232268) towards the bottom of the linked page, unzip the downloaded apk artifact and use the file app.apk as the apk to run the app.
 
 6. Drag the Downloaded app.apk file over Nox emulator screen (It will automatically install the APK), after the APK is installed, you should see a plate_waste_recorder application logo in the Nox app, click on this to run the app.
 
 ![platewasteinstall4](https://user-images.githubusercontent.com/90283384/135784003-86284a9d-4d5c-45e0-a1a2-7d07b5f21417.png)
 
 ## How to View Test Coverage Results
-1. Download the coverage_results artifact from our build pipeline [here](https://github.com/UniversityOfSaskatchewanCMPT371/term-project-fall-2021-team-2-1/actions/runs/1406153392) found at the bottom of the page linked.
+1. Download the coverage_results artifact from our build pipeline [here](https://github.com/UniversityOfSaskatchewanCMPT371/term-project-fall-2021-team-2-1/actions/runs/1488232268) found at the bottom of the page linked.
 2. Unzip the coverage_results directory
 3. Open the file index.html in the resulting unzipped directory, this html file will display top level coverage for each code containing directory we have. Clicking on any of the links in the html file will take you to another page showing more specific coverage results. For example from index.html, clicking on the Model link will take you to a new html page showing the coverage of all code in our Model directory where all back-end code is stored:
 ![tempsnip1](https://user-images.githubusercontent.com/90283384/139604829-85754a0e-f9c4-48fd-8b89-4baf0666366d.png)
@@ -41,42 +41,65 @@ You can also use the links at the top left of the page to navigate back to the t
 
 
 ## App Functionality
-As of incremental deliverable 3, the app has the following preliminary functionality:
-- The ability to create new institutions/study locations with some basic information (name, address and number of research subjects for the institution), the ability to record data including dish name, weight, comments for a dish and an image for a meal. Users can choose to take a picture directly or choose a photo from their device's gallery when adding data for a new dish. A basic login page has also been added although actual back-end authentication functionality hasn't yet been implemented. Currently the meal recording page prompts the user for the type of food being entered, this is a temporary placeholder for allowing the user to select the stage of the meal being recorded, for example if a meal is being created before being consumed, after being consumed or if the plate or container for the meal is being recorded.
+As of incremental deliverable 4, the app has the following preliminary functionality:
+- The ability to login/create an account to access the app via Google authentication, users can create new institutions/study locations with some basic information (name, address and number of research subjects for the institution), the roster of students/research subjects for an institution can be viewed from within each institution. Users have the option of inputting meal data, there are several classes of meal data that can be input, uneaten meals that have just been served and have not yet been eaten, eaten meals that are the leftovers/food waste after a research subject has been served and has consumed a meal, and finally containers holding food, for example plates, bowls etc which are used to house the meals themselves. For each article of meal data the user is able to submit a name, photo, comments and weight of the meal. Currently the app also has a placeholder page to display the options that users can use to view data for subjects of an institution. The user is able to specify the subject the meal data corresponds to by either manually entering the id of the target subject or by scanning a QR code tied to that particular subject/individual. Currently the meal submission isn't yet hooked up to our database, the roster page for each institution currently reads placeholder data and data is not yet saved on google drive. 
 
-- Login and navigation to meal recording page: 
+- Login using Google authentication: 
 
-![logingif](https://user-images.githubusercontent.com/90283384/139601195-08a39dc0-f8e8-4898-9cfa-c9322d463169.gif)
-
-- Additional information related to each meal: weight, meal name, comments etc, can be input on this meal creation page: 
-
-![EnterMealFields](https://user-images.githubusercontent.com/90283384/137656511-6e0379b0-38f3-4cbe-b89f-861f2190d28b.gif)
-
-- Pictures of the meal to be added can be either taken directly or added from the device's photo gallery:
-
-![SubmitImage](https://user-images.githubusercontent.com/90283384/137656506-4a833f5c-2992-44ba-b141-1514ae00ab9d.gif)
+![googleauth](https://user-images.githubusercontent.com/90283384/142796577-1dea65d8-7d56-41e5-a60c-ce3c235f1ea6.gif)
 
 - Adding and selecting institutions:
 
 ![Newsubjectfield](https://user-images.githubusercontent.com/90283384/139601344-986bceae-459d-416c-8d7f-38e65687b5bf.gif)
 
-- Currently each button on an individual institution's page takes you to the meal creation page, these essentially act as stubs so new pages can easily be added corresponding to these buttons when such pages are created. 
+- Viewing the roster of subjects for an institution: 
 
-- As previously mentioned other buttons for an institution, like for example the Roster button currently takes you to the meal creation page as a sort of stub. The ability to add or select a research subject to assign a new meal to, the ability to input meal templates ahead of time, and the ability to view meals previously served or enter updated weights and images for a meal after meal consumption haven't yet been added. The institution search functionality from ID1 also hasn't yet been implemented, however we have created a sort of prototype expressing this functionality that has yet to be integrated into the app itself. While we have added a field to specify the number of subjects present in an institution, the back-end functionality for actually generating unique identifiers for these subjects and adding these subjects to the database hasn't yet been implemented. The roster page should also display all current subjects and allow editing of subjects, this also has yet to be implemented.
+![roster](https://user-images.githubusercontent.com/90283384/142796891-7f2831db-b436-4acb-b2f3-40c517dbd1d4.gif)
+
+- Viewing the options to view data for an institution:
+
+![viewdata](https://user-images.githubusercontent.com/90283384/142796916-9d236fbf-c507-4e55-a9d9-1cbc71185c87.gif)
+
+- Navigation to meal submission page and photo capture: 
+
+![captureimage](https://user-images.githubusercontent.com/90283384/142796665-98888c1e-2cba-4dc2-8e2a-1b478afad7c0.gif)
+
+- Currently several buttons that haven't yet been implemented navigate to placeholder pages, for example clicking to edit subjects on the subject roster takes you to such a placeholder
+
+- Several components of the app also haven't been implemented: the ability to input meal templates ahead of time, and the ability to view meals previously served or enter updated weights and images for a meal after meal consumption haven't yet been added. The institution search functionality from ID1 also hasn't yet been implemented. Although we have a field for specifying the number of subjects for an institution when creating an institution, these subjects currently are not added or stored and read from the database, new subjects cannot yet be added or removed either. The roster page currently displays placeholder subjects and doesn't yet link to pages showing data for each subject, features of exporting data and exporting the QR codes of all subjects haven't yet been added. As well meals can currently be submitted but are not stored on the database and cannot be viewed or editted.
 
 ## Fixed Issues
-As of the incremental deliverable 3, the following previously identified issues have been resolved: 
-- Some UI sizing issues have been addressed, notably, font sizes across the app have been increased to make various fields, buttons and text more readable and make better use of available screen size.
+As of the incremental deliverable 4, the following previously identified issues have been resolved: 
+- UI issues related to screen orientation have been fixed, in particular the login page now displays properly in horizontal landscape mode
+- When there are currently no institutions that have been created or stored whatsoever, the app now displays a message indicating that there are currently no institutions instead of crashing for example:
+
+![image](https://user-images.githubusercontent.com/90283384/142801624-060d91a8-0757-4597-990d-ae24cd20b563.png)
+
+
+- Loading animations are now displayed when the app is logging in or reading data from the database.
+- Creating institutions with addresses that already exist on the database now displays a message informing the user that the new institution cannot be created and that another institution with the same address already exists
 - Creating institutions with a blank or empty name or address no longer causes an app crash, instead a new institution is not created and feedback is provided to the user indicating that they must enter a name and address when creating an institution. ie no institutions are created until both a name and address has been entered by the user, for example: 
 
 ![inputvalidationnewfield](https://user-images.githubusercontent.com/90283384/139602133-0d50482d-ced5-4e3d-8337-f37159bc93a3.gif)
 
 
 ## Known Issues
-As of incremental deliverable 3, the following issues are present in the app: 
-- UI for adding meals needs to be refined, meal pictures currently occupy the entire background of the meal addition page, before adding a meal, there is a small label indicating that no meal has been selected. General UI sizing can also be improved to better make use of the entire screen of a device and generally be more appealing, for example text indicating that no picture has been selected can be replaced with an icon to take a new picture.
-- The database has not been stress tested or built for use offline or in conditions of poor network connectivity as of incremental deliverable 1, using the app in these conditions may cause issues. These issues will be dealt with in future.
-- The app may not display itself nicely in certain situations in a horizontal or landscape orientation, for example the login page has yet to be generalized to a horizontal orientation and can look warped if in a landscape or horizontal orientation.
+As of incremental deliverable 4, the following issues are present in the app: 
+- The database has not been stress tested or built for use offline or in conditions of poor network connectivity as of incremental deliverable 4, using the app in these conditions may cause issues. Database settings that can enable storing data offline have been investigated and are planned to be implemented however.
+- The app may not display itself nicely on certain screen sizes, the roster page is an example of this, elements of this page can look quite large on smaller screens.
+- A number of bugs have been identified through the use of a bug party, informal records of these bugs can be found [here](https://drive.google.com/file/d/1ijpJJqRXTqG1MyOiX2M_5yKUY8tQKecA/view), these bugs include issues pertaining to login failure upon authentication expiry if the user uses the back button to navigate back to the login page, several crashes and failures to store data if excessively large amounts of data are entered, in particular large strings when submitting subject IDs or institution names or addresses, lack of input validation during meal submission and subject ID entry and several UI issues - roster page UI shifting in response to different length subject IDs for example.
+- Overall there are an estimated 62 bugs in the system as of incremental deliverable 4.
+
+## Implementation Features
+As of incremental deliverable 4, the following features have been added to our implementation/code base itself:
+- Multi-level logging is present in the app in both back-end and front-end UI.
+- Back-end dart code features assertions and code contracts/specifications describing pre and post-conditions. Assertions and specifications can be found in front-end UI related code albeit to a greatly lesser extent.
+- Depending on build mode, the app reads and writes to different locations of the database, this creates a sort of "sandbox" database when the app is ran in debug mode, when running in debug mode (build mode used by default when running in android studio, can also be specified using flutter run --debug) the app conducts database operations using a location that is specific to the current logged in user of the app, this gives the current logged in user their own independent environment to be used for testing or experimental development. When the app is ran in release mode, (if the app is installed and ran from a release apk or ran using flutter run --release) database operations use regular shared location accessible to all users so the changes made by one user can be seen by others and so on. Below is screenshot taken from the firebase web client showcasing this structure, here we see our regular database locations Research Group Data and Research Groups, these nodes occuring at the highest level are written to and read from when in release mode, there are also several user IDs as top level nodes, a user of the app in debug mode writes and reads data from the Research Group Data and Research Groups nodes under their particular user ID thus separating their data and operations from other users.
+
+![Capture](https://user-images.githubusercontent.com/90283384/142801053-2628e207-26bc-4386-8f8a-923728338bd1.PNG)
+
+
+- Interfaces in particular for Authentication and Database classes and related functionality currently do not exist but are planned for the future time permitting.
 
 ## Spike Prototypes
 Currently we have created the following spike prototypes to explore various potential integrations and functionality:

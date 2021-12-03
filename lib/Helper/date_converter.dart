@@ -13,7 +13,7 @@ final DateFormat dateFormat = DateFormat("yyyy-MM-dd");
 /// Postconditions: returns a string whose format is specified above, any additional
 /// data or fields of the input DateTime object not mentioned above are not included in the returned string,
 /// for example minutes, seconds etc
-String convertDateToString(DateTime date){
+String convertDateToString(DateTime date) {
   Config.log.i("converting date " + date.toString() + " to string");
   String resultingDateString = dateFormat.format(date);
   Config.log.i("string: " + resultingDateString + " resulted from conversion");
@@ -32,11 +32,9 @@ String convertDateToString(DateTime date){
 /// Postconditions: a DateTime such that the date, month and year represented by this DateTime
 /// correspond to the last 1-2 characters, 1-2 characters after the first hyphen and
 /// first 4 characters of the input string.
-DateTime convertStringToDate(String dateString){
+DateTime convertStringToDate(String dateString) {
   Config.log.i("converting string: " + dateString + " to a DateTime object");
   // TODO: add format validation, could use something like try parse or catch any thrown format exceptions.
   // this throws a format exception if dateString isn't in the format yyyy-MM-dd
   return dateFormat.parse(dateString);
 }
-
-
