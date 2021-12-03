@@ -286,7 +286,7 @@ class _CameraFood2State extends State<CameraFood2> with
             Navigator.of(context, rootNavigator: true).pop(); //leave old qr
             Navigator.push(context, MaterialPageRoute(//open new one to scan
                 builder: (context) {
-              return ID_InputPage();
+              return ID_InputPage(widget.currentInstitution, widget.currentFoodStatus);
             }));
           },
         ));

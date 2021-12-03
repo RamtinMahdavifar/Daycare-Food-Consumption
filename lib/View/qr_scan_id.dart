@@ -1,23 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:plate_waste_recorder/Model/institution_info.dart';
+import 'id_input_widget.dart';
+import 'institution_page_widgets.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
-
 import '../Model/variables.dart';
 import 'camera_food2.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:plate_waste_recorder/Model/subject_info.dart';
+import 'package:plate_waste_recorder/Model/food_status.dart';
+
+
 
 /// this is the Qr reading screen, here a viewfinder is built, it scans for an
 /// ID and depending on the context of why a QR is being scanned, ie the foodStatus
 /// it will redirect to the camera screen for data input, or to the view data
 /// screen
-class QR_ScanID extends StatefulWidget {
-  QR_ScanID({Key? key}) : super(key: key);
+class QR_ScanID extends StatefulWidget { // TODO: why is there an _ in this name
+
+  InstitutionInfo currentInstitution;
+  FoodStatus currentFoodStatus;
+  QR_ScanID(this.currentInstitution, this.currentFoodStatus, {Key? key}) : super(key: key);
 
   @override
   State<QR_ScanID> createState() => _QR_ScanIDState();
 }
 
 class _QR_ScanIDState extends State<QR_ScanID> {
-  Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
@@ -33,8 +41,9 @@ class _QR_ScanIDState extends State<QR_ScanID> {
   Widget BuildQrView(BuildContext context) {
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
-            MediaQuery.of(context).size.height < 400)
+        MediaQuery.of(context).size.height < 400)
         ? 150.0
+
         : 350.0;
     // To ensure the Scanner view is properly sizes after rotation
     // we need to listen for Flutter SizeChanged notification and update controller
@@ -51,7 +60,7 @@ class _QR_ScanIDState extends State<QR_ScanID> {
     );
   }
 
-  void _onQRViewCreated(QRViewController controller) async {
+  void _onQRViewCreated(QRViewController controller) async{
     setState(() {
       this.controller = controller;
       if (this.controller != null) {
@@ -61,31 +70,32 @@ class _QR_ScanIDState extends State<QR_ScanID> {
       }
     });
 
-    controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
-        setIDVar(result!.code);
-      });
 
+    controller.scannedDataStream.listen((scanData) {
+      Config.log.i("scanned subject ID ${scanData.code} from QR code");
       controller.stopCamera();
 
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        List<String> inputOptions = ["eaten", "container", "uneaten"];
-        //reassemble();
-        if (getStatus() == "view") {
-          return CameraFood2(); //TODO change this to view data page of scanned ID
-        } else if (inputOptions.contains(getStatus())) {
-          return CameraFood2();
-        } else {
-          throw Exception("Invalid Food Status: not set");
-        }
+      // use our retrieved subject ID to construct a subjectInfo object
+      // TODO: ensure subject with this code actually exists
+      SubjectInfo targetSubjectInfo = SubjectInfo(scanData.code);
+      Navigator.push(context, MaterialPageRoute(
+          builder: (context){
+            if (widget.currentFoodStatus == FoodStatus.view){
+              // we simply want to view data here, go the meal data page
+              return CameraFood2(widget.currentInstitution, targetSubjectInfo, widget.currentFoodStatus); //TODO change this to view data page of scanned ID
+            }else {
+              // our FoodStatus must be eaten, uneaten or container, here we want to input data for these states
+              // navigate to the meal input page
+              return CameraFood2(widget.currentInstitution, targetSubjectInfo, widget.currentFoodStatus);
+            }
+            // on qr found, take to food data input screen, this will be
+            // modified to account for viewing id data and the two different
+            // food data input screens
+          }));
 
-        // on qr found, take to food data input screen, this will be
-        // modified to account for viewing id data and the two different
-        // food data input screens
-      }));
     });
   }
+
 
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
     Config.log.i('${DateTime.now().toIso8601String()}_onPermissionSet $p');
@@ -95,4 +105,7 @@ class _QR_ScanIDState extends State<QR_ScanID> {
       );
     }
   }
+
+
 }
+
