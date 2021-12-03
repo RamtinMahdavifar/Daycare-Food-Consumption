@@ -11,7 +11,6 @@ import "food_capture.dart";
 
 class QRcode extends StatelessWidget {
   QRcode(this.qRdata);
-
   final String qRdata;
 
   @override
