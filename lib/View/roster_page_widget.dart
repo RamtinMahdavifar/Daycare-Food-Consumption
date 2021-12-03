@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
+import 'package:plate_waste_recorder/Helper/qr_code_exporter.dart';
 
 Widget RosterRecord(BuildContext context, String btnName,
     Widget Function() page, String StudentID) {
@@ -142,7 +143,7 @@ Widget addNewId(BuildContext context, String btnName, Widget Function() page) {
 }
 
 Widget exportToPdf(
-    BuildContext context, String btnName, Widget Function() page) {
+    BuildContext context, String btnName) {
   //Button to add new Id in the roster
   //PreCond:
   //          1. Requires context of current page,
@@ -161,10 +162,7 @@ Widget exportToPdf(
               onPressed: () {
                 Config.log
                     .i("User clicked on export data button named: " + btnName);
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  //TODO: Implement the backend code for exporting the data
-                  return page();
-                }));
+                exportQrCode('test.pdf',10);
               },
               child: Row(children: <Widget>[
                 Text(

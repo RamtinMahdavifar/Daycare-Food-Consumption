@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/View/roster_page_widget.dart';
 import 'package:plate_waste_recorder/View/qrcode.dart';
 
+
 class Roster extends StatefulWidget {
   //Display a list of all the student/QR id in a institution
   //Along with the the id's buttons to edit,view or delete a id record is available
@@ -48,7 +49,7 @@ class _RosterState extends State<Roster> {
                       addNewId(context, "Add new ID ", () => MyHome("Test")),
                       SizedBox(width: 10),
                       exportToPdf(
-                          context, "Export QR to PDF ", () => MyHome("Test")),
+                          context, "Export QR to PDF "),
                     ]))
           ],
         ));
