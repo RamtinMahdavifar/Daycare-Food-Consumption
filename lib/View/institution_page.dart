@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/View/roster_page.dart';
 import 'package:plate_waste_recorder/View/view_data_page.dart';
+import 'package:plate_waste_recorder/Model/institution_info.dart';
 
 import 'food_status_page.dart';
 import 'institution_page_widgets.dart';
@@ -49,7 +50,7 @@ class _InstitutionPageState extends State<InstitutionPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     //Navigates to roster page
-                    menuButton(context, "Roster", () => Roster(), 2),
+                    menuButton(context, "Roster", () => Roster(InstitutionInfo(widget.institutionName,widget.institutionAddress)), 2),
                     //idx 2: is the position of roster icon in list of icon categories
                     SizedBox(width: 50),
                     //Navigates to preset page page

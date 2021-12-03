@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
-import 'package:plate_waste_recorder/Helper/icons.dart';
-import 'package:responsive_flutter/responsive_flutter.dart';
-
+import 'package:plate_waste_recorder/Model/institution_info.dart';
 import "../Model/variables.dart";
 import 'camera_food2.dart';
 import 'package:plate_waste_recorder/Helper/icons.dart';
@@ -12,37 +10,8 @@ import 'package:plate_waste_recorder/Model/food_status.dart';
 import 'package:plate_waste_recorder/Model/database.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 
-Widget inputIDButton(BuildContext context) {
-  double width = MediaQuery.of(context).size.width;
-  double height = MediaQuery.of(context).size.height;
-  //It displays a button to manually input the id
-  //PreCond:
-  //          1. Requires context of current page,
-  //
 
-  //PostCond:
-  //          1. Button is displayed on the page
-  //          2. On press the button open a popup window to take the user input for ID
-  return SizedBox(
-      height: height / 12,
-      width: width / 2,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: Colors.blue,
-          shape: RoundedRectangleBorder(
-              side: BorderSide(color: Colors.black, width: 5),
-              borderRadius: new BorderRadius.circular(3)),
-        ),
-        child: Text("Manual ID Entry", style: TextStyle(fontSize: 32)),
-        onPressed: () {
-          //await reassemble();
-          Navigator.push(context, MaterialPageRoute(//open new one to scan
-              builder: (context) {
-            return InputIDForm(); //open the Input id pop box
-          }));
-        },
-      ));
-}
+
 
 class InputIDForm extends StatefulWidget {
   InstitutionInfo currentInstitution;
@@ -54,7 +23,6 @@ class InputIDForm extends StatefulWidget {
 }
 
 class _InputIDFormState extends State<InputIDForm> {
-  //Creates a form to take user input
   final _newIdInputController = TextEditingController();
   final _newIdInputFormKey = GlobalKey<FormState>();
   // assume our input values are valid by default
@@ -68,6 +36,7 @@ class _InputIDFormState extends State<InputIDForm> {
       content: Stack(
         // overflow: Overflow.visible,
         children: <Widget>[
+
           Form(
             key: _newIdInputFormKey,
             child: Column(
@@ -83,18 +52,17 @@ class _InputIDFormState extends State<InputIDForm> {
                         // otherwise if the input ID doesn't belong to a subject we inform the user of this
                         // otherwise we have null ie no error message
                         errorText: _IdInputEmpty ? "Value Can't Be Empty" :
-                          !_IdBelongsToSubject ? "Input ID ${_newIdInputController.value.text} Doesn't Belong To a Subject In This Institution" : null
+                        !_IdBelongsToSubject ? "Input ID ${_newIdInputController.value.text} Doesn't Belong To a Subject In This Institution" : null
                     ),
                     controller: _newIdInputController,
                   ),
                 ),
                 Row(
+
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    formCancel(context),
-                    formSubmit(context)
-                  ], //buttons to perform operations to cancel or submit the input
+                  children: [formCancel(context), formSubmit(context)],
                 ),
+
               ],
             ),
           ),
@@ -102,21 +70,11 @@ class _InputIDFormState extends State<InputIDForm> {
       ),
     );
   }
-
-  Widget formSubmit(BuildContext context) {
-    //It displays a form submit button and validates the user input
-    //PreCond:
-    //          1. Requires context of current page
-    //
-    //PostCond:
-    //          1. Button is displayed on the page
-    //          2. On press the button validates the user input and if its not empty then record exists then it opens
-    //             camera for empty food state to take pictures
-
+  Widget formSubmit(BuildContext context){
     return ElevatedButton(
         onPressed: () async {
           // validate form inputs manually as validate() function of form isn't working
-          String newId = _newIdInputController.value.text;
+          String newId =  _newIdInputController.value.text;
 
 
           Config.log.i("pressed button to submit add input id form with student id: " + newId);
@@ -174,73 +132,62 @@ class _InputIDFormState extends State<InputIDForm> {
             Config.log.w("User Id not provided");
           }
         },
-        child: const Text("Submit"));
+        child: const Text("Submit")
+    );
   }
 
-  Widget formCancel(BuildContext context) {
-    //It displays a form cancel button to close the input pop
-    //PreCond:
-    //          1. Requires context of current page
-    //
-    //PostCond:
-    //          1. Button is displayed on the page
-    //          2. On press the button navigates back to the previous page
+  Widget formCancel(BuildContext context){
     return ElevatedButton(
-        onPressed: () {
+        onPressed: (){
           Config.log.i("cancelling form submission");
           // clear the text fields before exiting the add Institution popup
           this._newIdInputController.clear();
           Navigator.of(context, rootNavigator: true).pop();
         },
-        child: const Text("Cancel"));
+        child: const Text("Cancel")
+    );
   }
 
   @override
-  void dispose() {
+  void dispose(){
     // dispose of created text controllers to avoid memory leaks
     this._newIdInputController.dispose();
     super.dispose();
   }
+
 }
 
-Widget manualInput(BuildContext context, String btnName, Widget Function() page,
-    int iconIndex) {
-  //It displays a a button to input the id manually
-  //PreCond:
-  //          1. Requires context of current page,
-  //          2. Button name as an string which should not be empty
-  //          3. Page function to navigate to the next page
-  //          4. icon index to display the button icon
-  //
-  //PostCond:
-  //          1. Button is displayed on the page
-  //          2. On press the button opens the next page (manual id popup)
 
-  assert(btnName.isNotEmpty);
-  assert(iconIndex >= 0);
+Widget manualInput(BuildContext context, String btnName, Widget Function() page,int iconIndex){
   return Flexible(
       child: SizedBox(
           height: 140,
           width: 300,
           child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return page();
-                }));
-              },
-              child: Column(children: <Widget>[
-                Text(
-                  btnName,
-                  style: TextStyle(
-                    fontSize: ResponsiveFlutter.of(context)
-                        .fontSize(4), // insert your font size here
-                  ),
-                ),
-                Icon(
-                  categories[iconIndex].icon,
-                  color: Colors.orange,
-                  size: 50.0,
-                  semanticLabel: 'Text to announce in accessibility modes',
-                )
-              ]))));
+              onPressed: () {  Navigator.push(context, MaterialPageRoute(
+                  builder: (context){
+                    return page();
+                  })); },
+              child:Column(
+                  children:  <Widget>[
+
+                    Text(btnName,
+                      style: TextStyle(
+                        fontSize: ResponsiveFlutter.of(context).fontSize(4),// insert your font size here
+                      ),),
+
+                    Icon(
+                      categories[iconIndex].icon,
+                      color: Colors.orange,
+                      size: 50.0,
+                      semanticLabel: 'Text to announce in accessibility modes',
+                    )
+
+                  ]
+
+              )
+          )
+
+      )
+  );
 }
