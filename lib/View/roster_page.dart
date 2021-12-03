@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
-import 'select_institution_widgets.dart';
-import 'package:plate_waste_recorder/View/roster_page_widgets.dart';
 import 'package:plate_waste_recorder/View/qrcode.dart';
+import 'package:plate_waste_recorder/View/roster_page_widgets.dart';
 
 class Roster extends StatefulWidget {
   // take the Info of the current institution as a parameter to this page
   InstitutionInfo currentInstitution;
+
   Roster(this.currentInstitution, {Key? key}) : super(key: key);
 
   @override
@@ -16,6 +17,7 @@ class Roster extends StatefulWidget {
 class _RosterState extends State<Roster> {
   @override
   Widget build(BuildContext context) {
+    Config.log.i("building roster page");
     return Scaffold(
         appBar: AppBar(
           title: Text('Roster'),
@@ -32,8 +34,7 @@ class _RosterState extends State<Roster> {
                     children: <Widget>[
                       addNewId(context, "Add new ID ", () => MyHome("Test")),
                       SizedBox(width: 10),
-                      exportToPdf(
-                          context, "Export QR to PDF "),
+                      exportToPdf(context, "Export QR to PDF "),
                     ]))
           ],
         ));
