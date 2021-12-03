@@ -62,17 +62,10 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
   @override
   void initState() {
     super.initState();
-    //this is for the null safety check stuff
-    // TODO: getting errors here:
-    //_ambiguate(WidgetsBinding.instance)?.addObserver(this);
-    //set true on first ever launch, false otherwise
     getPath();
-
     //run this on initial start to create the folder
 
-    //SystemChrome.
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -234,7 +227,7 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
     return widget.currentInstitution.name;
   }
 
-  String getID() {
+  String getSubjectID() {
     String id = widget.currentSubject.subjectId;
     print("ID: " + id.substring(3));
     return id.substring(3);
@@ -264,7 +257,7 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
 
     filename = foodName+
         "/" +
-        getID() +
+        getSubjectID() +
         "_" +
         foodName +
         "_" +
@@ -273,7 +266,7 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
 
     savePic(i.flipHorizontal(capturedImage),
         filename, foodName);
-    Config.log.i("Image ${getID}_${foodName}_${getStatus()}.png Saved!");
+    Config.log.i("Image ${getSubjectID}_${foodName}_${getStatus()}.png Saved!");
     return capturedImage;
   }
 
@@ -295,8 +288,8 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
       String folder = paths[x];
       newPath += "/" + folder;
     }
-    if (getInst()!=null && getID()!=null) {
-      newPath = newPath + "/" + getInst() + "/" + getID();
+    if (getInst()!=null && getSubjectID()!=null) {
+      newPath = newPath + "/" + getInst() + "/" + getSubjectID();
       directory = Directory(newPath);
       Config.log.i("Using Current Path: ${directory!.path}");
     }

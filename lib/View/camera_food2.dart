@@ -66,103 +66,15 @@ class _CameraFood2State extends State<CameraFood2> with
     WidgetsBindingObserver, TickerProviderStateMixin {
   ScreenshotController SScontroller = ScreenshotController();
   QRViewController? QRcontroller;
-  Uint8List? imageFile;
-  File? imgFile; // all these seem to be depricated
   double? width;
   double? height;
-  Directory? appPath;
-  Directory? directory;
 
   @override initState() {
     super.initState();
-
     _ambiguate(WidgetsBinding.instance)?.addObserver(this);
 
-    //getPath();
   }
 
-/*  String getInst() {
-    return widget.currentInstitution.name;
-  }
-
-  String getID() {
-    return widget.currentSubject.subjectId;
-  }
-
-
-  String getStatus(){
-    return widget.currentFoodStatus.toString();
-  }*/
-
-  /// locates the external storage location where images will be stored on the
-  /// device and then creates an organized file directory for the
-  /// institute and the ID if they do not yet exist
-/*  void getPath() async {
-    //this could be useful for an issue i was running into with converting a csv to a List
-    //use below line to create a directory for the cropped images
-    directory = await getExternalStorageDirectory();
-
-    Config.log.i("External Save Path: $directory");
-
-    String newPath = "";
-    List<String> paths = directory!.path.split("/");
-
-    for (int x = 1; x < paths.length; x++) {
-      String folder = paths[x];
-      newPath += "/" + folder;
-    }
-    if (!isNull(getInst()) && !isNull(getID())) {
-      newPath = newPath + "/" + getInst()! + "/" + getID()!;
-      directory = Directory(newPath);
-      Config.log.i("Using Current Path: ${directory!.path}");
-    }
-  }*/
-
-  /// for each ID, this creates a new directory for every new food item submitted
-  /// takes in a string of he name of the new food time that was entered
- /* Future<int> newPath(String foodname) async{
-    Directory newDir;
-    String newPath = "";
-    List<String> paths = directory!.path.split('/');
-
-    for (int x = 1; x < paths.length; x++) {
-      String folder = paths[x];
-      newPath += "/" + folder;
-    }
-    if (foodname != null && directory != null) {
-      newPath = newPath + '/' + foodname;
-      newDir = Directory(newPath);
-
-      if (!await newDir.exists()) {
-        await newDir.create(recursive: true);
-        Config.log.i("New Path Created: ${newDir.path}");
-        return 1;
-      }
-    }else{
-      Config.log.i("null foodName");
-    }
-    return 0;
-  }*/
-
-
-  /// stores an image to the local device in a specified location set by
-  /// getPath() + newPath(), takes an Image that is stored with the name filename
-/*  void savePic(i.Image pic, String fileName) async {
-    if (directory != null) {
-      if (!await directory!.exists()) {
-        await directory!.create(recursive: true);
-      }
-      if (await directory!.exists()) {
-        await newPath(getFoodName()!) == 1
-            //make new path
-            ? File(directory!.path + "/$fileName")
-                .writeAsBytesSync(i.encodePng(pic))
-            : Config.log.i("new path not created");
-      }
-    } else {
-      Config.log.i("no directory chosen");
-    }
-  }*/
 
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -178,37 +90,6 @@ class _CameraFood2State extends State<CameraFood2> with
 
   }
 
-  /// perform the image capture by screenshotting the whole screen, and then
-  /// cropping and horizontally flipping the the captured screenshot, and then
-  /// saving it with savePic with the filename determined by the ID, foodName
-  /// and foodStatus
-/*  void takeShot(String foodName) async {
-    String? path = await FlutterNativeScreenshot.takeScreenshot();
-    String? filename;
-    Config.log.i("Screenshot captured and stored in: $path");
-    i.Image IMG = i.decodePng(
-        File(path!).readAsBytesSync())!; //encode the og image into IMG
-    width != null && height != null
-        ? IMG = i.copyCrop(
-            IMG, 5, 61, (width! / 2).toInt() - 5, (height! - 139).toInt())
-        // starting at coords 5,61, to cut off the appbar, and only get the left half, and dont grab bottom portion with capture button on it
-        // appbar is 56 + size 5 border,
-        : IMG =
-            i.copyCrop(IMG, 400, 100, 500, 500); //resize OG image to be smaller
-
-    filename = foodName! +
-        "/" +
-        getID()! +
-        "_" +
-        foodName! +
-        "_" +
-        getStatus()! +
-        ".png";
-
-    savePic(i.flipHorizontal(IMG),
-        filename); //PUT THIS AS THE FUNCTION FOR ONPRESS IN WIDGEST OF FOOOD_SCANNED_UNEATEN
-
-  }*/
 
   /// permission handler for when you first want to use the camera
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
@@ -415,23 +296,6 @@ class _CameraFood2State extends State<CameraFood2> with
     return Container(child:(Text(currentSubjectID, style: TextStyle(fontSize: 56))));
   }
 }
-
-/*
-class FoodCamera2 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: CameraFood2(),
-    );
-  }
-}
-List<CameraDescription> cameras = [];
-
-Future<void> main() async{
-  //assign avaialbe camera
-  runApp(FoodCamera2());
-}
- */
 // What's this??? This allows a value of typ T or T? to be treated as a val of type T?
 // Why?? because this thing is not finished and more stable versions of the flutter camera API
 // are not expected to release until late 2021
