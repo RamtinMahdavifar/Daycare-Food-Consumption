@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:plate_waste_recorder/View/roster_page_widget.dart';
+import 'package:plate_waste_recorder/Model/institution_info.dart';
+import 'select_institution_widgets.dart';
+import 'package:plate_waste_recorder/View/roster_page_widgets.dart';
 import 'package:plate_waste_recorder/View/qrcode.dart';
 
-
 class Roster extends StatefulWidget {
-  //Display a list of all the student/QR id in a institution
-  //Along with the the id's buttons to edit,view or delete a id record is available
+  // take the Info of the current institution as a parameter to this page
+  InstitutionInfo currentInstitution;
+  Roster(this.currentInstitution, {Key? key}) : super(key: key);
+
   @override
   State<Roster> createState() => _RosterState();
 }
@@ -19,26 +22,7 @@ class _RosterState extends State<Roster> {
         ),
         body: Column(
           children: <Widget>[
-            Expanded(
-                //At the top of page page list all the ids and their methods in the roster format
-                child: ListView(children: <Widget>[
-              RosterRecord(
-                  context, "Type 3", () => QRcode("ID 0"), "0000000123"),
-              RosterRecord(
-                  context, "Type 3", () => QRcode("ID 1"), "0000000456"),
-              RosterRecord(
-                  context, "Type 3", () => QRcode("ID 2"), "0000000123"),
-              RosterRecord(
-                  context, "Type 3", () => QRcode("ID 3"), "0000000456"),
-              RosterRecord(
-                  context, "Type 3", () => QRcode("ID 4"), "0000000123"),
-              RosterRecord(
-                  context, "Type 3", () => QRcode("ID 5"), "0000000456"),
-              RosterRecord(
-                  context, "Type 3", () => QRcode("ID 6"), "0000000123"),
-              RosterRecord(
-                  context, "Type 3", () => QRcode("ID 7"), "0000000456"),
-            ])),
+            Expanded(child: subjectDisplay(widget.currentInstitution)),
             SizedBox(
 
                 //At the bottom of page show button to add a new ID and export the data
