@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/View/roster_page_widget.dart';
 import 'package:plate_waste_recorder/View/qrcode.dart';
 
+
 class Roster extends StatefulWidget {
   //Display a list of all the student/QR id in a institution
   //Along with the the id's buttons to edit,view or delete a id record is available
@@ -22,21 +23,21 @@ class _RosterState extends State<Roster> {
                 //At the top of page page list all the ids and their methods in the roster format
                 child: ListView(children: <Widget>[
               RosterRecord(
-                  context, "Type 3", () => MyHome("ID 0"), "0000000123"),
+                  context, "Type 3", () => QRcode("ID 0"), "0000000123"),
               RosterRecord(
-                  context, "Type 3", () => MyHome("ID 1"), "0000000456"),
+                  context, "Type 3", () => QRcode("ID 1"), "0000000456"),
               RosterRecord(
-                  context, "Type 3", () => MyHome("ID 2"), "0000000123"),
+                  context, "Type 3", () => QRcode("ID 2"), "0000000123"),
               RosterRecord(
-                  context, "Type 3", () => MyHome("ID 3"), "0000000456"),
+                  context, "Type 3", () => QRcode("ID 3"), "0000000456"),
               RosterRecord(
-                  context, "Type 3", () => MyHome("ID 4"), "0000000123"),
+                  context, "Type 3", () => QRcode("ID 4"), "0000000123"),
               RosterRecord(
-                  context, "Type 3", () => MyHome("ID 5"), "0000000456"),
+                  context, "Type 3", () => QRcode("ID 5"), "0000000456"),
               RosterRecord(
-                  context, "Type 3", () => MyHome("ID 6"), "0000000123"),
+                  context, "Type 3", () => QRcode("ID 6"), "0000000123"),
               RosterRecord(
-                  context, "Type 3", () => MyHome("ID 7"), "0000000456"),
+                  context, "Type 3", () => QRcode("ID 7"), "0000000456"),
             ])),
             SizedBox(
 
@@ -45,10 +46,10 @@ class _RosterState extends State<Roster> {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      addNewId(context, "Add new ID ", () => MyHome("Test")),
+                      addNewId(context, "Add new ID ", () => QRcode("Test")),
                       SizedBox(width: 10),
                       exportToPdf(
-                          context, "Export QR to PDF ", () => MyHome("Test")),
+                          context, "Export QR to PDF ", () => QRcode("Test")),
                     ]))
           ],
         ));
