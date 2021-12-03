@@ -36,17 +36,6 @@ class DriveAccess{
     return _instance;
   }
 
-  Future<void> uploadFile() async{
-    // example
-    final Stream<List<int>> mediaStream =
-    Future.value([104, 105]).asStream().asBroadcastStream();
-    var media = new drive.Media(mediaStream, 2);
-    var driveFile = new drive.File();
-    driveFile.name = "hello_world.txt";
-    final result = await _driveAccessApi.files.create(driveFile, uploadMedia: media);
-    print("Upload result: $result");
-  }
-
   void exportDataToDrive(ResearchGroupInfo currentResearchGroupInfo, InstitutionInfo currentInstitutionInfo) async {
     // ensure our input institutionInfo has a valid database key, address and name
     assert(currentInstitutionInfo.name.isNotEmpty);
