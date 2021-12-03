@@ -53,7 +53,7 @@ class _InputIDFormState extends State<InputIDForm> {
 
   @override
   Widget build(BuildContext context) {
-    Config.log.i("building add institution form widget");
+    Config.log.i("building manual id input form");
     return AlertDialog(
       content: Stack(
         // overflow: Overflow.visible,

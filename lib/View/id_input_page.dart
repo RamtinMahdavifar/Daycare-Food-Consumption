@@ -7,7 +7,7 @@ import 'institution_page_widgets.dart';
 import 'qr_scan_id.dart';
 
 class ID_InputPage extends StatefulWidget {
-  //Display a option to scan QR code or manually input the id
+  ///Display a option to scan QR code or manually input the id
 
   ID_InputPage({Key? key}) : super(key: key);
 
