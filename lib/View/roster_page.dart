@@ -15,29 +15,27 @@ class Roster extends StatefulWidget {
 
 class _RosterState extends State<Roster> {
   @override
-
-
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Roster'),),
-      body: Column(
+        appBar: AppBar(
+          title: Text('Roster'),
+        ),
+        body: Column(
           children: <Widget>[
             Expanded(child: subjectDisplay(widget.currentInstitution)),
             SizedBox(
-              height: 100,
-              child:Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                addNewId(context, "Add new ID ", () => LoginPage()),
-                SizedBox(width: 10),
-                exportToPdf(context, "Export QR to PDF ", () => LoginPage()),
-            ]
 
-    )
-
-          )],
-
-    ));
+                //At the bottom of page show button to add a new ID and export the data
+                height: 100,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      addNewId(context, "Add new ID ", () => MyHome("Test")),
+                      SizedBox(width: 10),
+                      exportToPdf(
+                          context, "Export QR to PDF ", () => MyHome("Test")),
+                    ]))
+          ],
+        ));
   }
-
 }
