@@ -10,11 +10,13 @@ class Category {
 
   Category(this.name, this.icon);
 }
+
 ///developer can call the below dictionary in any file to pass the icon value
 ///Also to add new icon value just and new category object in the class
 ///the index of the List start @ 0 so Category[0] will be for Food
 
-List<Category> categories = [ //list to store all the icon with their respective names
+List<Category> categories = [
+  //list to store all the icon with their respective names
   Category('Food', Icons.fastfood),
   Category('Input Data', Icons.drive_file_rename_outline),
   Category('Roster', Icons.view_list),

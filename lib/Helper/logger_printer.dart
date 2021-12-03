@@ -4,12 +4,12 @@ class SimpleLogPrinter extends LogPrinter {
   ///extends simple logPrinter and overrides the log method
 
   final String className;
+
   //Class name of currect file
 
-
   SimpleLogPrinter(this.className);
-  //constructor
 
+  //constructor
 
   @override
   List<String> log(LogEvent event) {

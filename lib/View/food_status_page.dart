@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/Model/food_status.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
+
 import 'food_status_widget.dart';
 import 'id_input_page.dart';
 import 'institution_page_widgets.dart';
 
 class FoodStatusPage extends StatefulWidget {
   InstitutionInfo currentInstitution;
+
   FoodStatusPage(this.currentInstitution, {Key? key}) : super(key: key);
 
   @override
@@ -35,9 +37,18 @@ class _FoodStatusPageState extends State<FoodStatusPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          foodStatusButton(context, "uneaten", () => ID_InputPage(widget.currentInstitution, FoodStatus.uneaten)),
-          foodStatusButton(context, "eaten", () => ID_InputPage(widget.currentInstitution, FoodStatus.eaten)),
-          foodStatusButton(context, "container", () => ID_InputPage(widget.currentInstitution, FoodStatus.container)),
+          foodStatusButton(
+              context,
+              "uneaten",
+              () =>
+                  ID_InputPage(widget.currentInstitution, FoodStatus.uneaten)),
+          foodStatusButton(context, "eaten",
+              () => ID_InputPage(widget.currentInstitution, FoodStatus.eaten)),
+          foodStatusButton(
+              context,
+              "container",
+              () => ID_InputPage(
+                  widget.currentInstitution, FoodStatus.container)),
         ],
       ))),
     );
