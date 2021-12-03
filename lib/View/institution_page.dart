@@ -5,7 +5,7 @@ import 'package:plate_waste_recorder/View/view_data_page.dart';
 
 import 'food_status_page.dart';
 import 'institution_page_widgets.dart';
-import 'upload_data.dart';
+import 'qr_scan_id.dart';
 
 class InstitutionPage extends StatefulWidget {
   //Display a buttons like roster, view data to perform operations for a institution
@@ -49,11 +49,11 @@ class _InstitutionPageState extends State<InstitutionPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     //Navigates to roster page
-                    menuButton(context, "Roster", () => Roster(), 2),
+                    menuButton(context, "Roster", () => Roster(widget.institutionName), 2),
                     //idx 2: is the position of roster icon in list of icon categories
                     SizedBox(width: 50),
                     //Navigates to preset page page
-                    menuButton(context, "Preset", () => UploadData(), 0),
+                    menuButton(context, "Preset", () => QR_ScanID(), 0),
                     //idx 0: is the position of preset icon in list of icon categories
                   ],
                 )),
