@@ -12,6 +12,7 @@ import 'package:plate_waste_recorder/Model/string_image_converter.dart';
 import 'dart:io' as io;
 import 'package:path_provider/path_provider.dart';
 
+
 /// Class used to access google drive to write or read files, this class is defined
 /// using the singleton pattern
 class DriveAccess{
@@ -86,7 +87,9 @@ class DriveAccess{
         //spreadsheetExportData.add(["Data For Subject ${currentSubjectData["_subjectId"].toString()}:"]);
 
         // next add data for all meals the subject has
+
         Map<String, dynamic> mealDataMap = currentSubjectData["_mealData"] as Map<String, dynamic>;
+
         if(mealDataMap == null){
           // our mealDataMap does not exist, we do not have meal data for the current subject
           // indicate that the current subject has no meal data in our exported spreadsheet
