@@ -1,4 +1,5 @@
 import 'dart:convert'; // required for jsonDecode()
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
@@ -12,6 +13,7 @@ import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/View/subject_data_page.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 
 Widget RosterRecord(BuildContext context, String btnName,
@@ -150,7 +152,31 @@ Widget addNewId(BuildContext context, String btnName, Widget Function() page) {
               ]))));
 }
 
-Widget exportToPdf(BuildContext context, String btnName) {
+/// sets a directory path locally on the machine with a folder named after the
+/// institution
+Future<Directory?> getPath(String institutionName) async {
+  Directory? dir = await getExternalStorageDirectory();
+  assert(dir != null);
+  Config.log.i("External Save Path: $dir");
+  String newPath = "";
+  List<String> paths = dir!.path.split("/");
+  for (int x = 1; x < paths.length; x++) {
+    String folder = paths[x];
+    newPath += "/" + folder;
+  }
+  if (institutionName != null) {
+    newPath = newPath + "/" + institutionName;
+    dir = Directory(newPath);
+    Config.log.i("created pdf path: $dir");
+    return dir;
+  } else {
+    Config.log.i("null institution name in path: $dir");
+    return dir;
+  }
+}
+
+
+Widget exportToPdf (BuildContext context, String btnName, InstitutionInfo institution)  {
   //Button to add new Id in the roster
   //PreCond:
   //          1. Requires context of current page,
@@ -166,10 +192,14 @@ Widget exportToPdf(BuildContext context, String btnName) {
           height: 100,
           width: 650,
           child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 Config.log
                     .i("User clicked on export data button named: " + btnName);
-                exportQrCode('test.pdf', 10);
+                //String path;
+                await getPath(institution.name).then((dir) {
+                  exportQrCode('${dir!.path}/test.pdf', 10);
+                });
+
               },
               child: Row(children: <Widget>[
                 Text(

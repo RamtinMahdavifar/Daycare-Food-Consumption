@@ -34,7 +34,7 @@ class _RosterState extends State<Roster> {
                     children: <Widget>[
                       addNewId(context, "Add new ID ", () => MyHome("Test")),
                       SizedBox(width: 10),
-                      exportToPdf(context, "Export QR to PDF "),
+                      exportToPdf(context, "Export QR to PDF ", widget.currentInstitution),
                     ]))
           ],
         ));
