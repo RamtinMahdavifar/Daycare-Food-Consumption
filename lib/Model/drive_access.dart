@@ -92,12 +92,12 @@ class DriveAccess{
           // the meal data submitted for that foodStatus
           mealDataMap.values.forEach((value){
             Map<String, dynamic> mealStatusMap = value as Map<String, dynamic>;
-            // build up a row of data for the current status of the current meal
-            List<String> currentMealStatusRow = [];
-            // add the current subject id to this ongoing row
-            currentMealStatusRow.add(subjectID);
             // extract data from each of the possible meal data states in order
             if(mealStatusMap["uneaten"] != null){
+              // build up a row of data for the current status of the current meal
+              List<String> currentMealStatusRow = [];
+              // add the current subject id to this ongoing row
+              currentMealStatusRow.add(subjectID);
               // the current meal has an uneaten entry submitted add this to our ongoing data
               Map<String, dynamic> mealDataForStatus = mealStatusMap["uneaten"] as Map<String, dynamic>;
               // add the extracted data for this meal status to our existing row of data
@@ -106,6 +106,10 @@ class DriveAccess{
               spreadsheetExportData.add(currentMealStatusRow);
             }
             if(mealStatusMap["eaten"] != null){
+              // build up a row of data for the current status of the current meal
+              List<String> currentMealStatusRow = [];
+              // add the current subject id to this ongoing row
+              currentMealStatusRow.add(subjectID);
               // the current meal has an eaten entry submitted add this to our ongoing data
               Map<String, dynamic> mealDataForStatus = mealStatusMap["eaten"] as Map<String, dynamic>;
               // add the extracted data for this meal status to our existing row of data
@@ -114,6 +118,10 @@ class DriveAccess{
               spreadsheetExportData.add(currentMealStatusRow);
             }
             if(mealStatusMap["container"] != null){
+              // build up a row of data for the current status of the current meal
+              List<String> currentMealStatusRow = [];
+              // add the current subject id to this ongoing row
+              currentMealStatusRow.add(subjectID);
               // the current meal has a container entry submitted add this to our ongoing data
               Map<String, dynamic> mealDataForStatus = mealStatusMap["container"] as Map<String, dynamic>;
               // add the extracted data for this meal status to our existing row of data
