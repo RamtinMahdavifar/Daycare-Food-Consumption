@@ -1,4 +1,3 @@
-import 'package:image/image.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';

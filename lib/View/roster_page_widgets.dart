@@ -3,14 +3,11 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
-import 'package:plate_waste_recorder/Helper/icons.dart';
 import 'package:plate_waste_recorder/Model/institution.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:plate_waste_recorder/View/subject_data_page.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'dart:convert'; // required for jsonDecode()
 import 'package:plate_waste_recorder/Model/database.dart';
 import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
