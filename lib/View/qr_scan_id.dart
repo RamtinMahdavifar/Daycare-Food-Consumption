@@ -57,7 +57,7 @@ class _QR_ScanIDState extends State<QR_ScanID> {
       if (this.controller != null) {
         this.controller!.flipCamera();
       } else {
-        print("null controller used");
+        Config.log.i("null controller used");
       }
     });
 
