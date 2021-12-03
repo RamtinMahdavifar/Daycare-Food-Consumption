@@ -1,13 +1,5 @@
-import 'dart:developer';
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-
-import "../Model/variables.dart";
-import "camera_food2.dart";
 
 class MyHome extends StatelessWidget {
   MyHome(this.qRdata);
@@ -19,11 +11,9 @@ class MyHome extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: Text('Flutter Demo Home Page')),
         body: QrImage(
-            data: qRdata,
-            version: QrVersions.auto,
-            size: 430,
-          )
-    );
+          data: qRdata,
+          version: QrVersions.auto,
+          size: 430,
+        ));
   }
 }
-
