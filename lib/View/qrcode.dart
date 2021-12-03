@@ -7,7 +7,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import "../Model/variables.dart";
-import "camera_food2.dart";
+import "food_capture.dart";
 
 class QRcode extends StatelessWidget {
   QRcode(this.qRdata);
