@@ -267,7 +267,7 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
 
     savePic(i.flipHorizontal(capturedImage),
         filename, foodName);
-    Config.log.i("Image ${getSubjectID}_${foodName}_${getStatus()}.png Saved!");
+    Config.log.i("Image ${getSubjectID()}_${foodName}_${getStatus()}.png Saved!");
     return capturedImage;
   }
 
@@ -315,8 +315,8 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
       if (!await newDir.exists()) {
         await newDir.create(recursive: true);
         Config.log.i("New Path Created: ${newDir.path}");
-        return 1;
       }
+      return 1;
     } else {
       Config.log.i("null foodName");
     }
@@ -346,7 +346,7 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
       if (await directory!.exists()) {
         await newPath(foodName) == 1
         //make new path
-            ? File(directory!.path + "/$fileName")
+            ? File(directory!.path + "/" + fileName)
             .writeAsBytesSync(i.encodePng(pic))
             : Config.log.i("new path not created");
       }
@@ -418,7 +418,7 @@ class _FoodInputDialogState extends State<FoodInputDialog> {
                   " and ID ${this.selectedExistingFoodItem.mealId}, weight: $inputWeight, and comments: $inputComments");
               // our fields are valid, submit the input data to the database
               // get the image the user has submitted
-              takeShot(inputName).then((capturedImage){
+              takeShot(this.selectedExistingFoodItem.name).then((capturedImage){
                 // convert our image to a string
                 String imageString = convertImageToString(capturedImage);
                 // construct a meal using the data we've collected and write this to our database
