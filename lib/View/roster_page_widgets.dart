@@ -167,7 +167,12 @@ Future<Directory?> getPath(String institutionName) async {
   if (institutionName != null) {
     newPath = newPath + "/" + institutionName;
     dir = Directory(newPath);
-    Config.log.i("created pdf path: $dir");
+    if (!await dir.exists()) {
+      await dir.create(recursive: true);
+      Config.log.i("Created PDF Path: $dir");
+    }else{
+      Config.log.i("Using existing Path: $dir");
+    }
     return dir;
   } else {
     Config.log.i("null institution name in path: $dir");
