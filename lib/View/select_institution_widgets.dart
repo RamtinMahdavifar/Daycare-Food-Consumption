@@ -84,7 +84,6 @@ Widget institutionDisplay(BuildContext context) {
       child: StreamBuilder<Event>(
           // use the ResearchGroup with name testResearchGroupName as a sort of stub
           // as we don't yet have adding/joining research groups implemented
-          // TODO: get current ResearchGroup user is in and display it's info here
           stream: Database().getResearchGroupStream(
               ResearchGroupInfo("testResearchGroupName")),
           builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {
@@ -101,7 +100,6 @@ Widget institutionDisplay(BuildContext context) {
                       "connection state none when reading institutions from the database");
                   // display a loading animation here, this will continue until we are
                   // able to connect to the database
-                  // TODO: consider displaying something else here, ex an error message indicating no database connection
                   return Center(
                       child: CircularProgressIndicator(
                     value: null,
@@ -123,8 +121,6 @@ Widget institutionDisplay(BuildContext context) {
                 case ConnectionState.active:
                   Config.log.i(
                       "active connection state when reading institutions from the database");
-                  // TODO: see about using async database function to return a ResearchGroup to do all this
-                  // TODO: instead of having to have the below code to create a ResearchGroup here
                   DataSnapshot researchGroupSnapshot = snapshot.data!.snapshot;
                   if (researchGroupSnapshot.value == null) {
                     // if the retrieved researchGroupSnapshot contains null ie
@@ -167,13 +163,6 @@ Widget institutionDisplay(BuildContext context) {
                             institutionInfo.name,
                             institutionInfo.institutionAddress))
                         .toList();
-                    // TODO: doing one pass of the JSON directly is of course more efficient
-
-                    /*ResearchGroup retrievedResearchGroup = ResearchGroup.fromJSON(researchGroupJSON);
-                    children = retrievedResearchGroup.institutionsMap.values.map(
-                            (institution) =>
-                            listedInst(context, institution.name, institution.institutionAddress)).toList();
-                     */
                     // display these read in institutions in a listview
                     return ListView(children: children);
                   }
