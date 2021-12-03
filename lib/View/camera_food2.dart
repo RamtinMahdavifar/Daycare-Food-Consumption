@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
+
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,6 @@ import 'package:image/image.dart' as i;
 import 'package:path_provider/path_provider.dart';
 import 'package:plate_waste_recorder/View/food_scanned_eaten.dart';
 import 'package:plate_waste_recorder/View/id_input_page.dart';
-//import 'package:camera/camera.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:screenshot/screenshot.dart';
 

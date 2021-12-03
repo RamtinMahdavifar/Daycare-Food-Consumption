@@ -10,7 +10,6 @@ import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import "../Model/variables.dart";
 import 'add_institutions_form.dart';
 import 'institution_page.dart';
-import 'qrcode.dart';
 
 //select_institution page button which navigates to that desired institution_page
 Widget listedInst(BuildContext context, String name, String address) {
@@ -193,9 +192,9 @@ Widget quickfixButton(BuildContext context) {
   return InkWell(
       onTap: () {
         // pass the name of the clicked on institution to the daycare screen
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return MyHome("test");
-        }));
+        //Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //  return MyHome("test");
+        //}));
       },
       child: Icon(
         Icons.edit,

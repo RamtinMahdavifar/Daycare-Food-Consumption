@@ -3,7 +3,6 @@ import 'package:flutter/rendering.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import "../Model/variables.dart";
-//Image.file(File(img!.path))
 
 List<String> FoodItems1 = [
   "Apple",

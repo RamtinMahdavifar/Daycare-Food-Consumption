@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
-import 'package:plate_waste_recorder/View/qrcode.dart';
+import 'package:plate_waste_recorder/View/qr_scan_id.dart';
 import 'package:plate_waste_recorder/View/roster_page.dart';
 import 'package:plate_waste_recorder/View/view_data_widgets.dart';
 
@@ -56,7 +56,7 @@ class _ViewDataPageState extends State<ViewDataPage> {
           ViewDataOption(context, "Export Data", () {
             //View data for individual student using the QR code
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return QRViewExample();
+              return QR_ScanID();
             }));
           }),
         ])));
