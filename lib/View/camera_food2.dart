@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
-
+import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import "package:flutter_native_screenshot/flutter_native_screenshot.dart";
@@ -81,10 +81,10 @@ class _CameraFood2State extends State<CameraFood2>
     //this could be useful for an issue i was running into with converting a csv to a List
     //use below line to create a directory for the cropped images
     directory = await getExternalStorageDirectory();
-    print("EXTERNAL SAVE PATH");
-    print(directory);
-    String newPath = "";
 
+    Config.log.i("External Save Path: $directory");
+
+    String newPath = "";
     List<String> paths = directory!.path.split("/");
 
     for (int x = 1; x < paths.length; x++) {
@@ -94,7 +94,7 @@ class _CameraFood2State extends State<CameraFood2>
     if (!isNull(getInst()) && !isNull(getID())) {
       newPath = newPath + "/" + getInst()! + "/" + getID()!;
       directory = Directory(newPath);
-      print(Text("USING PATH: " + directory!.path));
+      Config.log.i("Using Current Path: ${directory!.path}");
     }
   }
 
@@ -116,11 +116,11 @@ class _CameraFood2State extends State<CameraFood2>
 
       if (!await newDir.exists()) {
         await newDir.create(recursive: true);
-        print(Text("CREATED PATH: " + newDir.path));
+        Config.log.i("New Path Created: ${newDir.path}");
         return 1;
       }
     } else {
-      print("null foodname");
+      Config.log.i("null foodName");
     }
     return 0;
   }
@@ -137,10 +137,10 @@ class _CameraFood2State extends State<CameraFood2>
             //make new path
             ? File(directory!.path + "/$fileName")
                 .writeAsBytesSync(i.encodePng(pic))
-            : print("new path not created");
+            : Config.log.i("new path not created");
       }
     } else {
-      print("no directory chosen");
+      Config.log.i("no directory chosen");
     }
   }
 
@@ -164,8 +164,7 @@ class _CameraFood2State extends State<CameraFood2>
   void takeShot() async {
     String? path = await FlutterNativeScreenshot.takeScreenshot();
     String? filename;
-    print("takeShot: Path!");
-    print(path);
+    Config.log.i("Screenshot captured and stored in: $path");
     i.Image IMG = i.decodePng(
         File(path!).readAsBytesSync())!; //encode the og image into IMG
     width != null && height != null
@@ -291,9 +290,8 @@ class _CameraFood2State extends State<CameraFood2>
   /// user what the image will look like after its been cropped and saved, the
   /// image will be backwards however
   void onTakePictureButtonPressed() async {
-    print("image captured Press");
     QRcontroller == null
-        ? print("No QR Controller active")
+        ? Config.log.i("No QR Controller active")
         : QRcontroller!.pauseCamera();
     if (getStatus() == "uneaten") {
       await showDialog(
@@ -305,11 +303,10 @@ class _CameraFood2State extends State<CameraFood2>
           builder: (_) => foodScannedFirst(context,
               QRcontroller!) //needs to check for null at some point, do this later
           );
-      print("Dialog Code passed");
+
       takeShot();
-      print("takeShot completed");
       QRcontroller!.resumeCamera();
-      print("Image Capture Finish");
+
     } else if (getStatus() == "eaten" || getStatus() == "container") {
       await showDialog(
           //open the dialog first before begining the image capture process
@@ -320,13 +317,10 @@ class _CameraFood2State extends State<CameraFood2>
           builder: (_) => foodScannedSecond(context,
               QRcontroller!) //needs to check for null at some point, do this later
           );
-      print("Dialog Code passed");
       takeShot();
-      print("takeShot completed");
       QRcontroller!.resumeCamera();
-      print("Image Capture Finish");
     } else if (getStatus == "preset") {
-      print("Adding Preset Container Placeholder");
+      Config.log.i("Adding Preset Container Placeholder");
       await showDialog(
           //open the dialog first before begining the image capture process
           barrierColor:
@@ -342,11 +336,9 @@ class _CameraFood2State extends State<CameraFood2>
       throw Exception("Invalid Food Status");
     }
 
-    print("Dialog Code passed");
     takeShot();
-    print("takeShot completed");
     QRcontroller!.resumeCamera();
-    print("Image Capture Finish");
+    Config.log.i("Image Capture Finish");
   }
 
   Widget captureImageButton() {
@@ -411,8 +403,8 @@ class _CameraFood2State extends State<CameraFood2>
     if (!isNull(getID())) {
       return Container(child: (Text(getID()!, style: TextStyle(fontSize: 56))));
     } else {
-      print("NULL ID USED");
-      return Text("INVALID ID");
+      Config.log.i("Null ID used");
+      return Text("INVALID ID: Null ID");
     }
   }
 }
@@ -430,8 +422,6 @@ List<CameraDescription> cameras = [];
 
 Future<void> main() async {
   //assign avaialbe camera
-  print("Start");
-
   runApp(FoodCamera2());
 }
 

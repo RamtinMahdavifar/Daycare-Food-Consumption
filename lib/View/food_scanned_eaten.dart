@@ -31,7 +31,7 @@ bool _weightFoodValid = true;
 //final _newFoodItemKey = GlobalKey<FormState>();
 @override
 
-/// the dialog for entering the data of an image that was caputed.
+/// the dialog for entering the data of an image that was captured.
 Widget foodScannedSecond(BuildContext context, QRViewController controller) {
   print("Image submit dialog opens");
   //controller.pauseCamera();
