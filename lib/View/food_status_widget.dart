@@ -6,6 +6,7 @@ import 'package:responsive_flutter/responsive_flutter.dart';
 import '../Model/variables.dart';
 
 Widget foodStatusButton(
+
     ///widget button to display the food status option
     ///PreCond:
     ///          1. Requires context of current page,
@@ -16,7 +17,9 @@ Widget foodStatusButton(
     ///         1. Button is displayed on the page
     ///          2. On press the button takes the user to the next page which was passed initially in arguments
 
-    BuildContext context, String btnName, Widget Function() page) {
+    BuildContext context,
+    String btnName,
+    Widget Function() page) {
   assert(btnName.isNotEmpty);
 
   return Flexible(
