@@ -199,7 +199,7 @@ Widget exportToPdf (BuildContext context, String btnName, InstitutionInfo instit
                     .i("User clicked on export data button named: " + btnName);
                 //String path;
                 await getPath(institution.name).then((dir) {
-                  exportQrCode('${dir!.path}/test.pdf', 10);
+                  exportQrCode('${dir!.path}/subjectQRcodes.pdf', institution);
                 });
 
               },
@@ -226,7 +226,6 @@ Widget subjectDisplay(InstitutionInfo currentInstitutionInfo) {
       child: StreamBuilder<Event>(
         // use the ResearchGroup with name testResearchGroupName as a sort of stub
         // as we don't yet have adding/joining research groups implemented
-        // TODO: get current ResearchGroup user is in and display it's info here
           stream: Database().getInstitutionStream(currentInstitutionInfo, ResearchGroupInfo("testResearchGroupName")),
           builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {
             if (snapshot.hasError) {
