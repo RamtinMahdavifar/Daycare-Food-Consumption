@@ -12,6 +12,7 @@ import 'package:plate_waste_recorder/Model/string_image_converter.dart';
 import 'dart:io' as io;
 import 'package:path_provider/path_provider.dart';
 
+
 /// Class used to access google drive to write or read files, this class is defined
 /// using the singleton pattern
 class DriveAccess{
@@ -155,7 +156,7 @@ class DriveAccess{
     newImageFile.name = imageFileName;
     newImageFile.mimeType = "image/jpeg";
     final result = await _driveAccessApi.files.create(newImageFile, uploadMedia: drive.Media(sourceImageFile.openRead(), sourceImageFile.lengthSync()));
-    print("Upload result: ${result.toJson()}");
+    Config.log.i("Upload result: ${result.toJson()}");
   }
 
   List<String> _extractDataForMealStatus(String mealStatusString, Map<String, dynamic> currentStatusMealMap){
