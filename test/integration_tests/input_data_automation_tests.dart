@@ -13,12 +13,12 @@ void main() {
       await tester.pumpAndSettle();
 
       //SUT, in this case login the application
-      final emailInput = find.widgetWithText(TextField, "Email");
-      final passwordInput = find.widgetWithText(TextField, "Password");
-      await tester.enterText(emailInput, "123@usask.ca");
-      await tester.enterText(passwordInput, "abc123");
-      await tester.testTextInput.receiveAction(TextInputAction.done);
-      await tester.pumpAndSettle(Duration(seconds: 1));
+      // final emailInput = find.widgetWithText(TextField, "Email");
+      // final passwordInput = find.widgetWithText(TextField, "Password");
+      // await tester.enterText(emailInput, "123@usask.ca");
+      // await tester.enterText(passwordInput, "abc123");
+      // await tester.testTextInput.receiveAction(TextInputAction.done);
+      // await tester.pumpAndSettle(Duration(seconds: 1));
 
       final loginButton = find.widgetWithText(ElevatedButton, "Login");
       await tester.tap(loginButton);
