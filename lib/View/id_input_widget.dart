@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
-import "../Model/variables.dart";
-import 'camera_food2.dart';
 import 'package:plate_waste_recorder/Helper/icons.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 
-
+import "../Model/variables.dart";
+import 'camera_food2.dart';
 
 Widget inputIDButton(BuildContext context) {
   double width = MediaQuery.of(context).size.width;
@@ -14,33 +13,29 @@ Widget inputIDButton(BuildContext context) {
   //PreCond:
   //          1. Requires context of current page,
   //
-  //
+
   //PostCond:
   //          1. Button is displayed on the page
   //          2. On press the button open a popup window to take the user input for ID
   return SizedBox(
-      height: height/12,
-      width: width/2,
+      height: height / 12,
+      width: width / 2,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: Colors.blue,
           shape: RoundedRectangleBorder(
               side: BorderSide(color: Colors.black, width: 5),
-              borderRadius: new BorderRadius.circular(3)
-          ),
+              borderRadius: new BorderRadius.circular(3)),
         ),
         child: Text("Manual ID Entry", style: TextStyle(fontSize: 32)),
         onPressed: () {
           //await reassemble();
-          Navigator.push(context, MaterialPageRoute( //open new one to scan
+          Navigator.push(context, MaterialPageRoute(//open new one to scan
               builder: (context) {
-                return InputIDForm(); //open the Input id pop box
-              }));
-
-
+            return InputIDForm(); //open the Input id pop box
+          }));
         },
-      )
-  );
+      ));
 }
 
 class InputIDForm extends StatefulWidget {
@@ -63,7 +58,6 @@ class _InputIDFormState extends State<InputIDForm> {
       content: Stack(
         // overflow: Overflow.visible,
         children: <Widget>[
-
           Form(
             key: _newIdInputFormKey,
             child: Column(
@@ -71,14 +65,16 @@ class _InputIDFormState extends State<InputIDForm> {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: formEntry("ID", const Icon(Icons.perm_identity), _newIdInputController, this._IdInputFieldValid),
+                  child: formEntry("ID", const Icon(Icons.perm_identity),
+                      _newIdInputController, this._IdInputFieldValid),
                 ),
                 Row(
-
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [formCancel(context), formSubmit(context)], //buttons to perform operations to cancel or submit the input
+                  children: [
+                    formCancel(context),
+                    formSubmit(context)
+                  ], //buttons to perform operations to cancel or submit the input
                 ),
-
               ],
             ),
           ),
@@ -86,7 +82,8 @@ class _InputIDFormState extends State<InputIDForm> {
       ),
     );
   }
-  Widget formSubmit(BuildContext context){
+
+  Widget formSubmit(BuildContext context) {
     //It displays a form submit button and validates the user input
     //PreCond:
     //          1. Requires context of current page
@@ -97,58 +94,54 @@ class _InputIDFormState extends State<InputIDForm> {
     //             camera for empty food state to take pictures
 
     return ElevatedButton(
-        onPressed: (){
+        onPressed: () {
           // validate form inputs manually as validate() function of form isn't working
-          String newId =  _newIdInputController.value.text;
+          String newId = _newIdInputController.value.text;
 
+          Config.log.i(
+              "pressed button to submit add input id form with student id: " +
+                  newId);
 
-          Config.log.i("pressed button to submit add input id form with student id: " + newId);
-
-          setState((){
+          setState(() {
             // update our class variables from within setState so ui which may
             // depend upon these variables is also updated
             this._IdInputFieldValid = newId != null && newId.isNotEmpty;
           });
 
-          if(this._IdInputFieldValid){
-            Config.log.i("user entered id: "+ newId);
+          if (this._IdInputFieldValid) {
+            Config.log.i("user entered id: " + newId);
 
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Opening the Camera" )),
+              const SnackBar(content: Text("Opening the Camera")),
             );
             // clear our text fields before exiting the add Institution popup
             this._newIdInputController.clear();
             Navigator.of(context, rootNavigator: true).pop();
             setIDVar(newId);
-            Navigator.push(context, MaterialPageRoute(
-                builder: (context){
-                  //reassemble();
-                  if (getStatus() == "uneaten"){
-                    return CameraFood2();
-                  }else if (getStatus() == "eaten"){
-                    return CameraFood2();
-                  }
-                  else if (getStatus() == "container"){
-                    return CameraFood2();
-                  }
-                  else{
-                    throw Exception("Invalid Food State");
-                  }
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              //reassemble();
+              if (getStatus() == "uneaten") {
+                return CameraFood2();
+              } else if (getStatus() == "eaten") {
+                return CameraFood2();
+              } else if (getStatus() == "container") {
+                return CameraFood2();
+              } else {
+                throw Exception("Invalid Food State");
+              }
 
-                  // on qr found, take to food data input screen, this will be
-                  // modified to account for viewing id data and the two different
-                  // food data input screens
-                }));
-          }
-          else{
+              // on qr found, take to food data input screen, this will be
+              // modified to account for viewing id data and the two different
+              // food data input screens
+            }));
+          } else {
             Config.log.w("User Id not valid");
           }
         },
-        child: const Text("Submit")
-    );
+        child: const Text("Submit"));
   }
 
-  Widget formCancel(BuildContext context){
+  Widget formCancel(BuildContext context) {
     //It displays a form cancel button to close the input pop
     //PreCond:
     //          1. Requires context of current page
@@ -157,18 +150,17 @@ class _InputIDFormState extends State<InputIDForm> {
     //          1. Button is displayed on the page
     //          2. On press the button navigates back to the previous page
     return ElevatedButton(
-
-        onPressed: (){
+        onPressed: () {
           Config.log.i("cancelling form submission");
           // clear the text fields before exiting the add Institution popup
           this._newIdInputController.clear();
           Navigator.of(context, rootNavigator: true).pop();
         },
-        child: const Text("Cancel")
-    );
+        child: const Text("Cancel"));
   }
 
-  Widget formEntry(String labelName, Icon icon, TextEditingController controller, bool fieldIsValid){
+  Widget formEntry(String labelName, Icon icon,
+      TextEditingController controller, bool fieldIsValid) {
     //It displays a form entry field to take user input
     //PreCond:
     //          1. Requires context of current page
@@ -183,7 +175,7 @@ class _InputIDFormState extends State<InputIDForm> {
 
     return TextFormField(
       validator: (value) {
-        if (value == null || value.isEmpty){
+        if (value == null || value.isEmpty) {
           return 'missing fields';
         }
         return null;
@@ -193,23 +185,21 @@ class _InputIDFormState extends State<InputIDForm> {
           labelText: labelName,
           // if the field isn't valid errorText has the value "Value Can't Be Empty"
           // otherwise errorText is null
-          errorText: !fieldIsValid ? "Value Can't Be Empty" : null
-      ),
+          errorText: !fieldIsValid ? "Value Can't Be Empty" : null),
       controller: controller,
     );
   }
 
   @override
-  void dispose(){
+  void dispose() {
     // dispose of created text controllers to avoid memory leaks
     this._newIdInputController.dispose();
     super.dispose();
   }
-
 }
 
-
-Widget manualInput(BuildContext context, String btnName, Widget Function() page,int iconIndex){
+Widget manualInput(BuildContext context, String btnName, Widget Function() page,
+    int iconIndex) {
   //It displays a a button to input the id manually
   //PreCond:
   //          1. Requires context of current page,
@@ -222,37 +212,30 @@ Widget manualInput(BuildContext context, String btnName, Widget Function() page,
   //          2. On press the button opens the next page (manual id popup)
 
   assert(btnName.isNotEmpty);
-  assert(iconIndex>=0);
+  assert(iconIndex >= 0);
   return Flexible(
       child: SizedBox(
           height: 140,
           width: 300,
           child: ElevatedButton(
-              onPressed: () {  Navigator.push(context, MaterialPageRoute(
-                  builder: (context){
-                    return page();
-                  })); },
-              child:Column(
-                  children:  <Widget>[
-
-                    Text(btnName,
-                      style: TextStyle(
-                        fontSize: ResponsiveFlutter.of(context).fontSize(4),// insert your font size here
-                      ),),
-
-                    Icon(
-                      categories[iconIndex].icon,
-                      color: Colors.orange,
-                      size: 50.0,
-                      semanticLabel: 'Text to announce in accessibility modes',
-                    )
-
-                  ]
-
-              )
-          )
-
-      )
-  );
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return page();
+                }));
+              },
+              child: Column(children: <Widget>[
+                Text(
+                  btnName,
+                  style: TextStyle(
+                    fontSize: ResponsiveFlutter.of(context)
+                        .fontSize(4), // insert your font size here
+                  ),
+                ),
+                Icon(
+                  categories[iconIndex].icon,
+                  color: Colors.orange,
+                  size: 50.0,
+                  semanticLabel: 'Text to announce in accessibility modes',
+                )
+              ]))));
 }
-
