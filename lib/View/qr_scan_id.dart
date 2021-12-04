@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
+import 'food_capture.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/Model/food_status.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:plate_waste_recorder/Model/database.dart';
+import 'package:plate_waste_recorder/Model/research_group_info.dart';
 
-import 'camera_food2.dart';
+
 
 /// this is the Qr reading screen, here a viewfinder is built, it scans for an
 /// ID and depending on the context of why a QR is being scanned, ie the foodStatus
 /// it will redirect to the camera screen for data input, or to the view data
 /// screen
-class QR_ScanID extends StatefulWidget {
-  // TODO: why is there an _ in this name
+class QR_ScanID extends StatefulWidget { // TODO: why is there an _ in this name
 
   InstitutionInfo currentInstitution;
   FoodStatus currentFoodStatus;
-
-  QR_ScanID(this.currentInstitution, this.currentFoodStatus, {Key? key})
-      : super(key: key);
+  QR_ScanID(this.currentInstitution, this.currentFoodStatus, {Key? key}) : super(key: key);
 
   @override
   State<QR_ScanID> createState() => _QR_ScanIDState();
@@ -32,7 +35,6 @@ class _QR_ScanIDState extends State<QR_ScanID> {
   Widget build(BuildContext context) {
     Config.log.i("building id input page");
     return Container(
-      //appBar: AppBar(title: Text("Scan a Student ID"), leading: backButton(context), actions: [modifyButton()]),
       child: BuildQrView(context),
     );
   }
@@ -64,35 +66,50 @@ class _QR_ScanIDState extends State<QR_ScanID> {
       if (this.controller != null) {
         this.controller!.flipCamera();
       } else {
-        print("null controller used");
+        Config.log.i("null controller used");
       }
     });
 
-    controller.scannedDataStream.listen((scanData) {
+
+    controller.scannedDataStream.listen((scanData) async {
       Config.log.i("scanned subject ID ${scanData.code} from QR code");
       controller.stopCamera();
 
       // use our retrieved subject ID to construct a subjectInfo object
       // TODO: ensure subject with this code actually exists
       SubjectInfo targetSubjectInfo = SubjectInfo(scanData.code);
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        if (widget.currentFoodStatus == FoodStatus.view) {
-          // we simply want to view data here, go the meal data page
-          return CameraFood2(
-              widget.currentInstitution,
-              targetSubjectInfo,
-              widget
-                  .currentFoodStatus); //TODO change this to view data page of scanned ID
-        } else {
-          // our FoodStatus must be eaten, uneaten or container, here we want to input data for these states
-          // navigate to the meal input page
-          return CameraFood2(widget.currentInstitution, targetSubjectInfo,
-              widget.currentFoodStatus);
+
+      await Database().institutionHasSubject(
+          ResearchGroupInfo("testResearchGroupName"), widget.currentInstitution,
+          targetSubjectInfo).then((subjectExists) {
+        if (subjectExists) {
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                if (widget.currentFoodStatus == FoodStatus.view) {
+                  // we simply want to view data here, go the meal data page
+                  return FoodCapture(
+                      widget.currentInstitution, targetSubjectInfo, widget
+                      .currentFoodStatus); //TODO change this to view data page of scanned ID
+                } else {
+                  // our FoodStatus must be eaten, uneaten or container, here we want to input data for these states
+                  // navigate to the meal input page
+                  return FoodCapture(
+                      widget.currentInstitution, targetSubjectInfo,
+                      widget.currentFoodStatus);
+                }
+                // on qr found, take to food data input screen, this will be
+                // modified to account for viewing id data and the two different
+                // food data input screens
+              }));
         }
-        // on qr found, take to food data input screen, this will be
-        // modified to account for viewing id data and the two different
-        // food data input screens
-      }));
+        else {
+          Config.log.w(
+              "Input User Id not valid, doesn't correspond to subject within institution");
+          controller.resumeCamera();
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(duration: const Duration(seconds: 2),content: Text(
+              "ID does not belong to: ${widget.currentInstitution.name}")));
+        };
+      });
     });
   }
 

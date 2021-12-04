@@ -1,17 +1,17 @@
-import 'dart:developer';
-import 'dart:io';
-import 'dart:typed_data';
-
+import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:flutter/material.dart';
-import 'package:plate_waste_recorder/Model/food_status.dart';
-import 'package:plate_waste_recorder/Model/institution_info.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/View/id_input_page.dart';
-//import 'package:camera/camera.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:plate_waste_recorder/Model/institution_info.dart';
+import 'package:plate_waste_recorder/Model/food_status.dart';
+
+import 'dart:developer';
 
 import 'food_input_dialog.dart';
+
+
 
 /*
 
@@ -26,25 +26,16 @@ import 'food_input_dialog.dart';
 
  */
 
-/// used as a shorter way to determine if a value is null or not
-bool isNull(String? val) {
-  return val == null ? true : false;
-}
-
-class CameraFood2 extends StatefulWidget {
+class FoodCapture extends StatefulWidget {
   // this page accepts as a parameter when created, an InstitutionInfo object representing
   // the institution the user is currently adding data for
   InstitutionInfo currentInstitution;
   SubjectInfo currentSubject;
   FoodStatus currentFoodStatus;
-
-  CameraFood2(
-      this.currentInstitution, this.currentSubject, this.currentFoodStatus,
-      {Key? key})
-      : super(key: key);
+  FoodCapture(this.currentInstitution, this.currentSubject, this.currentFoodStatus, {Key? key}) : super(key: key);
 
   @override
-  _CameraFood2State createState() => _CameraFood2State();
+  _FoodCaptureState createState() => _FoodCaptureState();
 }
 
 void logError(String code, String? message) {
@@ -55,15 +46,19 @@ void logError(String code, String? message) {
   }
 }
 
-class _CameraFood2State extends State<CameraFood2>
-    with WidgetsBindingObserver, TickerProviderStateMixin {
+class _FoodCaptureState extends State<FoodCapture> with
+    WidgetsBindingObserver, TickerProviderStateMixin {
   ScreenshotController SScontroller = ScreenshotController();
   QRViewController? QRcontroller;
-  Uint8List? imageFile;
-  File? imgFile; // all these seem to be depricated
   double? width;
   double? height;
-  Directory? appPath;
+
+  @override initState() {
+    super.initState();
+    _ambiguate(WidgetsBinding.instance)?.addObserver(this);
+
+  }
+
 
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -109,7 +104,7 @@ class _CameraFood2State extends State<CameraFood2>
     // display a different title for this page depending on the type or status of
     // the food items being entered
     String pageTitle = "";
-    switch (widget.currentFoodStatus) {
+    switch (widget.currentFoodStatus){
       case FoodStatus.uneaten:
         pageTitle = "Capture Uneaten Food Item";
         break;
@@ -126,12 +121,13 @@ class _CameraFood2State extends State<CameraFood2>
     return Scaffold(
       key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: Text(pageTitle)),
-      body: Column(children: <Widget>[
-        Expanded(
-          child: Container(
-              child: Center(
-                  child: Container(
+      appBar: AppBar(title: Text(pageTitle), automaticallyImplyLeading: false),
+      body: Column(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                child: Center(
+                    child: Container(
                       //padding: EdgeInsets.fromLTRB(0.0, 0.0, width!/2 , 0.0),
                       decoration: BoxDecoration(
                           border:
@@ -172,7 +168,7 @@ class _CameraFood2State extends State<CameraFood2>
     );
   }
 
-  /// button for capturing image
+  /// repurposed capture image now used as a spacer
   Widget _captureImage() {
     //final CameraController? cameraController = controller;
 
@@ -182,8 +178,8 @@ class _CameraFood2State extends State<CameraFood2>
         children: <Widget>[
           IconButton(
             icon: const Icon(Icons.camera_alt),
-            color: Colors.green,
-            onPressed: SScontroller != null ? onTakePictureButtonPressed : null,
+            color: Colors.white,
+            onPressed: () {},
           )
         ]);
   }
@@ -203,29 +199,22 @@ class _CameraFood2State extends State<CameraFood2>
   /// user what the image will look like after its been cropped and saved, the
   /// image will be backwards however
   void onTakePictureButtonPressed() async {
-    print("image captured Press");
-    QRcontroller == null
-        ? print("No QR Controller active")
-        : QRcontroller!.pauseCamera();
-    if (widget.currentFoodStatus == FoodStatus.uneaten ||
-        widget.currentFoodStatus == FoodStatus.eaten ||
-        widget.currentFoodStatus == FoodStatus.container) {
-      // take a picture of the food on screen, send this to our uneaten food dialog for submission
-      await showDialog(
-          barrierColor: null,
-          barrierDismissible: false,
-          context: context,
-          builder: (_) => FoodInputDialog(
-              widget.currentInstitution,
-              widget.currentSubject,
-              widget
-                  .currentFoodStatus)); //needs to check for null at some point, do this later
-    }
 
-    print("Dialog Code passed");
-    print("takeShot completed");
+    QRcontroller == null
+        ? Config.log.i("No QR Controller active")
+        : QRcontroller!.pauseCamera();
+    if(widget.currentFoodStatus == FoodStatus.uneaten || widget.currentFoodStatus == FoodStatus.eaten || widget.currentFoodStatus == FoodStatus.container){
+    // take a picture of the food on screen, send this to our uneaten food dialog for submission
+    await showDialog(
+    barrierColor: null,
+    barrierDismissible: false,
+    context: context,
+    builder: (_) => FoodInputDialog(widget.currentInstitution, widget.currentSubject, widget.currentFoodStatus)
+    );//needs to check for null at some point, do this later
+    }
+    //takeShot();
     QRcontroller!.resumeCamera();
-    print("Image Capture Finish");
+    Config.log.i("Image Capture Finish");
   }
 
   Widget captureImageButton() {
@@ -239,8 +228,7 @@ class _CameraFood2State extends State<CameraFood2>
                   side: BorderSide(color: Colors.lightGreen, width: 5),
                   borderRadius: new BorderRadius.circular(3)),
             ),
-            child: Text(" Capture Image " + " [SPACE]",
-                style: TextStyle(fontSize: 38, color: Colors.black)),
+            child: Icon(Icons.camera_alt, color: Colors.green, size: 75),
             onPressed:
                 SScontroller != null ? onTakePictureButtonPressed : null));
   }
@@ -280,8 +268,7 @@ class _CameraFood2State extends State<CameraFood2>
             Navigator.of(context, rootNavigator: true).pop(); //leave old qr
             Navigator.push(context, MaterialPageRoute(//open new one to scan
                 builder: (context) {
-              return ID_InputPage(
-                  widget.currentInstitution, widget.currentFoodStatus);
+              return ID_InputPage(widget.currentInstitution, widget.currentFoodStatus);
             }));
           },
         ));
@@ -290,29 +277,13 @@ class _CameraFood2State extends State<CameraFood2>
   Widget idLabel() {
     String currentSubjectID = widget.currentSubject.subjectId;
     assert(currentSubjectID.isNotEmpty);
-    return Container(
-        child: (Text(currentSubjectID, style: TextStyle(fontSize: 56))));
+    return Container(child:(Text(currentSubjectID, style: TextStyle(fontSize: 56))));
   }
 }
-
-/*
-class FoodCamera2 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: CameraFood2(),
-    );
-  }
-}
-List<CameraDescription> cameras = [];
-
-Future<void> main() async{
-  //assign avaialbe camera
-  print("Start");
-
-  runApp(FoodCamera2());
-}
- */
 // What's this??? This allows a value of typ T or T? to be treated as a val of type T?
 // Why?? because this thing is not finished and more stable versions of the flutter camera API
 // are not expected to release until late 2021
+
+T? _ambiguate<T>(T? value) => value;
+
+

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
-import 'package:plate_waste_recorder/View/qrcode.dart';
+import 'select_institution_widgets.dart';
 import 'package:plate_waste_recorder/View/roster_page_widgets.dart';
-
+import 'package:plate_waste_recorder/View/qrcode.dart';
+import 'package:plate_waste_recorder/View/login_page.dart';
 class Roster extends StatefulWidget {
   // take the Info of the current institution as a parameter to this page
   InstitutionInfo currentInstitution;
-
   Roster(this.currentInstitution, {Key? key}) : super(key: key);
 
   @override
@@ -32,7 +32,7 @@ class _RosterState extends State<Roster> {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      addNewId(context, "Add new ID ", () => MyHome("Test")),
+                      addNewId(context, "Add new ID ", () => QRcode("Test")),
                       SizedBox(width: 10),
                       exportToPdf(context, "Export QR to PDF ", widget.currentInstitution),
                     ]))

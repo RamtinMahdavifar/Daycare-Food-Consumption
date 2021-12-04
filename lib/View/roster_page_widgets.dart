@@ -15,6 +15,9 @@ import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:plate_waste_recorder/View/subject_data_page.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
+import 'package:plate_waste_recorder/Model/database.dart';
+import 'package:firebase_database/firebase_database.dart'; // need to include for the Event data type
+import 'package:plate_waste_recorder/Model/subject_info.dart';
 
 /// displays a student record in a row format with student id and
 /// methods available to perform over record like view, edit and delete.
@@ -231,7 +234,8 @@ Widget subjectDisplay(InstitutionInfo currentInstitutionInfo) {
             if (snapshot.hasError) {
               Config.log.e("errors occurred while reading subjects from the database on roster page, error: " + snapshot.error.toString());
               return Text("errors in database read occurred");
-            } else {
+            }
+            else {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
                   Config.log.w("connection state none when reading subjects from the database");

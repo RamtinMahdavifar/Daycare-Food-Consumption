@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
-import 'package:plate_waste_recorder/View/camera_food2.dart';
+import 'package:plate_waste_recorder/View/food_capture.dart';
 
 
 void main() {
