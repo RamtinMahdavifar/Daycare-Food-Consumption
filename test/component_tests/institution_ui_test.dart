@@ -1,66 +1,65 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:plate_waste_recorder/View/institution_page.dart';
 import 'package:plate_waste_recorder/View/select_institution.dart';
-import 'package:plate_waste_recorder/Model/authentication.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
-
 
 void main() {
   group("Institution UI Tests",() {
     testWidgets('Verify the institution widget is presented', (WidgetTester tester) async {
+
       // Build our app and trigger a frame.
-      // await tester.pumpWidget(ChooseInstitute());
-      // Config.log.i("Component Testing - Institution");
-      // Config.log.i("");
-      // expect(find.widgetWithText(ChooseInstitute, "Plate Waste Tracker"), findsOneWidget);
-      //
-      // //The Text widgets appear exactly once in the widget tree.
-      // expect(find.text("Add Institution"), findsOneWidget);
-      // expect(find.text("Search Institutions"), findsOneWidget);
+      await tester.pumpWidget(MaterialApp(
+          home:  ChooseInstitute())
+      );
+      Config.log.i("Component Testing - Institution");
+      Config.log.i("");
+      expect(find.widgetWithText(ChooseInstitute, "Plate Waste Tracker"), findsOneWidget);
+
+      //The Text widgets appear exactly once in the widget tree.
+      expect(find.text("Add Institution"), findsOneWidget);
+      expect(find.text("Search Institutions"), findsOneWidget);
     });
 
     testWidgets('Verify the AddInstitutionForm widget is presented', (WidgetTester tester) async {
-      // Build our app and trigger a frame.
-      // await tester.pumpWidget(MaterialApp(
-      //     home:  ChooseInstitute()));
-      //
-      // //Tap the "+ Add Institution" button to trigger a dialog
-      // await tester.tap(find.byIcon(Icons.add));
-      // await tester.pump();
-      //
-      // expect(find.byIcon(Icons.location_on_outlined), findsWidgets);
-      //
-      // //The title and the placeholder text are presented correctly
-      // expect(find.widgetWithText(TextFormField, "name"), findsOneWidget);
-      // expect(find.widgetWithText(TextFormField, "address"), findsOneWidget);
-      // expect(find.widgetWithText(TextFormField, "# of subjects:"), findsOneWidget);
-      // expect(find.widgetWithText(ElevatedButton, "Cancel"), findsOneWidget);
-      // expect(find.widgetWithText(ElevatedButton, "Submit"), findsOneWidget);
+      //Build our app and trigger a frame.
+      await tester.pumpWidget(MaterialApp(
+          home:  ChooseInstitute()));
+
+      //Tap the "+ Add Institution" button to trigger a dialog
+      await tester.tap(find.byIcon(Icons.add));
+      await tester.pump();
+
+      expect(find.byIcon(Icons.location_on_outlined), findsWidgets);
+
+      //The title and the placeholder text are presented correctly
+      expect(find.widgetWithText(TextFormField, "name"), findsOneWidget);
+      expect(find.widgetWithText(TextFormField, "address"), findsOneWidget);
+      expect(find.widgetWithText(TextFormField, "# of subjects:"), findsOneWidget);
+      expect(find.widgetWithText(ElevatedButton, "Cancel"), findsOneWidget);
+      expect(find.widgetWithText(ElevatedButton, "Submit"), findsOneWidget);
     });
 
     testWidgets('Verify the institution widget is presented correctly after the AddInstitutionForm is closed', (WidgetTester tester) async {
-      // Build our app and trigger a frame.
-      // await tester.pumpWidget(MaterialApp(
-      //     home: ChooseInstitute()));
-      //
-      // //Tap the "+ Add Institution" button to trigger a dialog
-      // await tester.tap(find.byIcon(Icons.add));
-      // await tester.pump();
-      //
-      // await tester.tap(find.text("Cancel"));
-      // await tester.pump();
-      //
-      // // the AddInstitutionForm widget is closed
-      // expect(find.byIcon(Icons.location_on_outlined), findsNothing);
-      //
-      // expect(find.widgetWithText(ChooseInstitute, "Plate Waste Tracker"), findsOneWidget);
-      //
-      // // The institution page is presented
-      // expect(find.text("Add Institution"), findsOneWidget);
-      // expect(find.text("Search Institutions"), findsOneWidget);
+      //Build our app and trigger a frame.
+      await tester.pumpWidget(MaterialApp(
+          home: ChooseInstitute()));
+
+      //Tap the "+ Add Institution" button to trigger a dialog
+      await tester.tap(find.byIcon(Icons.add));
+      await tester.pump();
+
+      await tester.tap(find.text("Cancel"));
+      await tester.pump();
+
+      // the AddInstitutionForm widget is closed
+      expect(find.byIcon(Icons.location_on_outlined), findsNothing);
+
+      expect(find.widgetWithText(ChooseInstitute, "Plate Waste Tracker"), findsOneWidget);
+
+      // The institution page is presented
+      expect(find.text("Add Institution"), findsOneWidget);
+      expect(find.text("Search Institutions"), findsOneWidget);
     });
 
     testWidgets('Verify InstitutionPage is presented with correct information and widgets', (WidgetTester tester) async {

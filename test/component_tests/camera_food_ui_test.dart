@@ -9,15 +9,15 @@ void main() {
   group("Capture Food Tests",() {
 
     testWidgets('capture food item page tests', (WidgetTester tester) async {
-      // await tester.pumpWidget(MaterialApp(
-      //   home: CameraFood2(),
-      // ));
-      // Config.log.i("Component Testing - capture food item page tests");
-      //
-      // final cameraFoodHeader = find.text("Camera Food");
-      //
-      // Config.log.i("Scan Student ID page header is present");
-      // expect(cameraFoodHeader, findsOneWidget);
+      await tester.pumpWidget(MaterialApp(
+        home: CameraFood2(),
+      ));
+      Config.log.i("Component Testing - capture food item page tests");
+
+      final cameraFoodHeader = find.text("Camera Food");
+
+      Config.log.i("Scan Student ID page header is present");
+      expect(cameraFoodHeader, findsOneWidget);
     });
   });
 }
