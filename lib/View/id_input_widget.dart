@@ -9,8 +9,6 @@ import 'package:plate_waste_recorder/Model/research_group_info.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
 
-import 'camera_food2.dart';
-
 import 'food_capture.dart';
 
 
