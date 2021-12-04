@@ -1,8 +1,9 @@
-import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:plate_waste_recorder/Helper/config.dart';
 
-Widget ViewDataOption(BuildContext context,String optionName, void Function() tapFunction){
+Widget ViewDataOption(
+    BuildContext context, String optionName, void Function() tapFunction) {
   //Button for view data page, button takes the current page context, button name and
   // the function to navigate to next page
   //PreCond:
@@ -19,17 +20,17 @@ Widget ViewDataOption(BuildContext context,String optionName, void Function() ta
   double screenHeight = MediaQuery.of(context).size.height;
   double screenWidth = MediaQuery.of(context).size.width;
   return Card(
-      child: SizedBox(width: screenWidth*0.625, height: screenHeight*0.15,
+      child: SizedBox(
+          width: screenWidth * 0.625,
+          height: screenHeight * 0.15,
           child: ListTile(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0))),
             tileColor: Colors.green,
             title: Center(child: Text(optionName)),
-            onTap: (){
+            onTap: () {
               Config.log.i("User selected the option: $optionName");
               tapFunction();
             },
-          )
-      )
-  );
+          )));
 }
-

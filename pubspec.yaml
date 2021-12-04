@@ -59,6 +59,8 @@ dependencies:
   screenshot: ^1.2.3
   flutter_native_screenshot: ^1.1.2
   image: ^3.0.8
+  pdf: ^3.6.3
+  syncfusion_flutter_pdf: ^19.3.56-beta
 
 
 
