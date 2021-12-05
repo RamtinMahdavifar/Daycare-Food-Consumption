@@ -10,7 +10,7 @@ void main(){
       convertStringToImage(testImageString, "testimagefile.png");
       expect(File("testimagefile.png").existsSync(),true);
 
-      expect(convertImageToString("testimagefile.png"),testImageString);
+      expect(convertImagePathToString("testimagefile.png"),testImageString);
     });
   });
 }

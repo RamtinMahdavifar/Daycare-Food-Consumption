@@ -21,10 +21,10 @@ void main() {
       final pageHeader = find.text("Plate Waste Tracker");
       expect(pageHeader, findsOneWidget);
 
-      // Verify google button is present
+      //Verify google button is present
       // Config.log.i("Testing - google login button present on login page");
-      // final googleButton = find.text("Google");
-      // expect(googleButton,findsOneWidget);
+      // final signInWithGoogle = find.byType(ElevatedButton).evaluate().contains("Sign in with Google");
+      // expect(signInWithGoogle, true);
     });
   });
 }
