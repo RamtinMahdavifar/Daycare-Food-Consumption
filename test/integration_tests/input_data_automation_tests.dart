@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/main.dart' as app;
 
 void main() {
@@ -9,155 +9,145 @@ void main() {
 
   group("Input Data Automation Tests",() {
     testWidgets("input Data Test", (WidgetTester tester) async {
+      Config.log.i("Launch the app");
       app.main();
       await tester.pumpAndSettle();
 
-      //SUT, in this case login the application
-      // final emailInput = find.widgetWithText(TextField, "Email");
-      // final passwordInput = find.widgetWithText(TextField, "Password");
-      // await tester.enterText(emailInput, "123@usask.ca");
-      // await tester.enterText(passwordInput, "abc123");
-      // await tester.testTextInput.receiveAction(TextInputAction.done);
-      // await tester.pumpAndSettle(Duration(seconds: 1));
-
-      final loginButton = find.widgetWithText(ElevatedButton, "Login");
-      await tester.tap(loginButton);
-      await tester.pumpAndSettle();
-
-      // Verify the SelectInstitution widget is presented
+      Config.log.i("Check the SelectInstitution widget is presented");
       final appHeader = find.text("Plate Waste Tracker");
       expect(appHeader, findsOneWidget);
 
-      final addInstitutionButton = find.byIcon(Icons.add);
-      await tester.tap(addInstitutionButton);
-      await tester.pumpAndSettle();
+      final testInstitution = find.bySemanticsLabel("test");
 
-      // Verify the AddInstitutionForm widget is presented
-      expect(find.byIcon(Icons.location_on_outlined), findsOneWidget);
-
-      final institutionName = find.widgetWithText(TextFormField, "name");
-      final institutionAddress = find.widgetWithText(TextFormField, "address");
-      final numberOfSubjects = find.widgetWithText(TextFormField, "# of subjects:");
-
-      await tester.tap(addInstitutionButton);
-      await tester.pumpAndSettle();
-
-      await tester.enterText(institutionName, "University");
-      await tester.enterText(institutionAddress, "No 2 Campus Dr");
-      await tester.enterText(numberOfSubjects, "22");
-      await tester.pumpAndSettle();
-
-      final submitButton = find.widgetWithText(ElevatedButton, "Submit");
-      await tester.tap(submitButton);
-      await tester.pumpAndSettle();
-
-      final firstInstitution = find.bySemanticsLabel("University");
-      await tester.tap(firstInstitution);
+      Config.log.i("Click the Institution with name test");
+      await tester.tap(testInstitution);
       await tester.pumpAndSettle();
 
       final inputDataButton = find.text("Input Data");
+
+      Config.log.i("Click Input Data");
       await tester.tap(inputDataButton);
       await tester.pumpAndSettle();
 
-      //Verify we are in input data page now
+      Config.log.i("Check we are in input data page now");
       final inputDataPageHeader = find.text('Select the food status');
       expect(inputDataPageHeader, findsOneWidget);
 
-      final foodType1Button = find.widgetWithText(ElevatedButton, "Food Type 1");
-      final foodType2Button = find.widgetWithText(ElevatedButton, "Food Type 2");
-      final foodType3Button = find.widgetWithText(ElevatedButton, "Food Type 3");
+      final uneatenButton = find.widgetWithText(ElevatedButton, "uneaten");
+      final eatenButton = find.widgetWithText(ElevatedButton, "eaten");
+      final containerButton = find.widgetWithText(ElevatedButton, "container");
 
-      expect(foodType1Button, findsOneWidget);
-      expect(foodType2Button, findsOneWidget);
-      expect(foodType3Button, findsOneWidget);
+      Config.log.i("uneaten button is presented");
+      expect(uneatenButton, findsOneWidget);
+      Config.log.i("eaten button is presented");
+      expect(eatenButton, findsOneWidget);
+      Config.log.i("container button is presented");
+      expect(containerButton, findsOneWidget);
 
-      final nameInputFields = find.byType(TextField).at(0);
-      final weightInputField = find.byType(TextField).at(1);
-      final commentsInputField = find.byType(TextField).at(2);
-      final galleryButton = find.widgetWithIcon(ElevatedButton, Icons.photo);
-      final cameraButton = find.widgetWithIcon(ElevatedButton, Icons.camera_alt);
-
-      await tester.tap(foodType1Button);
-      await tester.pumpAndSettle();
-      expect(find.text("Upload Data"), findsOneWidget);
-
-      //Verify all the input fields and buttons in upload data forum are presented
-      expect(nameInputFields, findsOneWidget);
-      expect(weightInputField, findsOneWidget);
-      expect(commentsInputField, findsOneWidget);
-      expect(galleryButton, findsOneWidget);
-      expect(cameraButton, findsOneWidget);
-
-      //Input the data to the forum
-      await tester.enterText(nameInputFields, "Apple");
-      await tester.enterText(weightInputField, "20");
-      await tester.enterText(commentsInputField, "Student A had an apple.");
+      Config.log.i("Uneaten Button is presented");
+      await tester.tap(uneatenButton);
       await tester.pumpAndSettle();
 
-      //Verify the data that we entered are presented
-      expect(find.text("Apple"), findsOneWidget);
-      expect(find.text("20"), findsOneWidget);
-      expect(find.text("Student A had an apple."), findsOneWidget);
+      final manualIDButton = find.widgetWithText(ElevatedButton, "Manual ID Entry");
 
-      final backButton = find.byIcon(Icons.arrow_back);
-      await tester.tap(backButton);
+      Config.log.i("Check Manual ID Entry button is present");
+      expect(manualIDButton, findsOneWidget);
+
+      Config.log.i("Click Manual ID Entry button");
+      await tester.tap(manualIDButton);
       await tester.pumpAndSettle();
 
-      //Verify we are in input data page now
-      expect(inputDataPageHeader, findsOneWidget);
+      final inputIDForm = find.widgetWithText(AlertDialog, "ID");
 
-      await tester.tap(foodType2Button);
-      await tester.pumpAndSettle();
-      expect(find.text("Upload Data"), findsOneWidget);
+      Config.log.i("Check the ID entry pop up is presented");
+      expect(inputIDForm, findsOneWidget);
 
-      //Verify all the input fields and buttons in upload data forum are presented
-      expect(nameInputFields, findsOneWidget);
-      expect(weightInputField, findsOneWidget);
-      expect(commentsInputField, findsOneWidget);
-      expect(galleryButton, findsOneWidget);
-      expect(cameraButton, findsOneWidget);
+      final idInputFields = find.widgetWithIcon(TextFormField, Icons.perm_identity);
 
-      //Enter the data to the forum
-      await tester.enterText(nameInputFields, "Grape");
-      await tester.enterText(weightInputField, "11");
-      await tester.enterText(commentsInputField, "Student A had grape.");
+      Config.log.i("Check the ID entry pop up is presented");
+      expect(idInputFields, findsOneWidget);
+
+      Config.log.i("Enter the ID 1");
+      await tester.enterText(idInputFields, "ID 1");
       await tester.pumpAndSettle();
 
-      //Verify the data that we entered are presented
-      expect(find.text("Grape"), findsOneWidget);
-      expect(find.text("11"), findsOneWidget);
-      expect(find.text("Student A had grape."), findsOneWidget);
+      final inputIDCancelButton = find.widgetWithText(ElevatedButton, "Cancel");
+      final inputIDSubmitButton = find.widgetWithText(ElevatedButton, "Submit");
 
-      await tester.tap(backButton);
+      Config.log.i("The buttons for ID Input Dialog are present");
+      expect(inputIDCancelButton, findsOneWidget);
+      expect(inputIDSubmitButton, findsOneWidget);
+
+      Config.log.i("Click Input ID Submit Button");
+      await tester.tap(inputIDSubmitButton);
       await tester.pumpAndSettle();
 
-      //Verify we are in input data page now
-      expect(inputDataPageHeader, findsOneWidget);
+      final foodCaptureHeader = find.text("Capture Uneaten Food Item");
+      Config.log.i("Check the Food Capture widget is presented");
+      expect(foodCaptureHeader, findsOneWidget);
+      
+      final subjectName = find.text("ID 1");
+      Config.log.i("Check the subject name is presented correctly");
+      expect(subjectName, findsOneWidget);
 
-      await tester.tap(foodType3Button);
+      final capturePhotoBtn = find.widgetWithIcon(ElevatedButton, Icons.camera_alt);
+      Config.log.i("Check the Capture Photo Button is presented correctly");
+      expect(capturePhotoBtn, findsOneWidget);
+
+      final viewDataBtn = find.widgetWithText(ElevatedButton, "View Data");
+      Config.log.i("Check the View Data Button is presented correctly");
+      expect(viewDataBtn, findsOneWidget);
+
+      final finishBtn = find.widgetWithText(ElevatedButton, "Finish");
+      Config.log.i("Check the Finish Button is presented correctly");
+      expect(finishBtn, findsOneWidget);
+
+      Config.log.i("Click the Capture Photo Button");
+      await tester.tap(capturePhotoBtn);
       await tester.pumpAndSettle();
-      expect(find.text("Upload Data"), findsOneWidget);
 
-      //Verify all the input fields and buttons in upload data forum are presented
-      expect(nameInputFields, findsOneWidget);
-      expect(weightInputField, findsOneWidget);
-      expect(commentsInputField, findsOneWidget);
-      expect(galleryButton, findsOneWidget);
-      expect(cameraButton, findsOneWidget);
+      Config.log.i("Check the Food Capture widget is presented");
+      expect(foodCaptureHeader, findsOneWidget);
 
-      //Enter the data to the forum
-      await tester.enterText(nameInputFields, "Pineapple");
-      await tester.enterText(weightInputField, "23");
-      await tester.enterText(commentsInputField, "Student A had pineapple.");
+      final foodNameInputField = find.text("Name of Food Item");
+      final foodWeightInputField = find.widgetWithText(TextFormField, "Weight(g)");
+      final foodCommentInputField = find.widgetWithText(TextFormField, "Comments");
+      final foodItemSubmitBtn = find.widgetWithText(ElevatedButton, "Submit");
+      final foodItemRetakePhotoBtn = find.widgetWithText(ElevatedButton, "Retake Photo");
+
+      Config.log.i("Check the input options in Food Item form are presented correctly");
+      expect(foodNameInputField, findsOneWidget);
+      expect(foodWeightInputField, findsOneWidget);
+      expect(foodCommentInputField, findsOneWidget);
+      expect(foodItemSubmitBtn, findsOneWidget);
+      expect(foodItemRetakePhotoBtn, findsOneWidget);
+
+      Config.log.i("Check the food presets are presented correctly");
+      List<String> presetFoodItems = ["Apple", "Sandwich", "Juice"];
+      for (String foodItem in presetFoodItems){
+        final foodItemBtn = find.widgetWithText(ElevatedButton, foodItem);
+        expect(foodItemBtn, findsOneWidget);
+      }
+
+      Config.log.i("Input the data to the forum");
+      final apple = find.widgetWithText(ElevatedButton, "Apple");
+      await tester.tap(apple);
+      await tester.enterText(foodWeightInputField, "20");
+      await tester.enterText(foodCommentInputField, "Student A had an apple.");
+
+      Config.log.i("Click Submit button");
+      await tester.tap(foodItemSubmitBtn);
       await tester.pumpAndSettle();
 
-      //Verify the data that we entered are presented
-      expect(find.text("Pineapple"), findsOneWidget);
-      expect(find.text("23"), findsOneWidget);
-      expect(find.text("Student A had pineapple."), findsOneWidget);
+      Config.log.i("Check we submit the data successfully");
+      expect(capturePhotoBtn, findsOneWidget);
 
-      //TODO: need to figure out how to capturing photo in test
-      //https://github.com/UniversityOfSaskatchewanCMPT371/term-project-fall-2021-team-2-1/issues/10
+      Config.log.i("Click Finish button");
+      await tester.tap(finishBtn);
+      await tester.pumpAndSettle();
+
+      Config.log.i("Check the Finish buton works");
+      expect(manualIDButton, findsOneWidget);
     });
   });
 }
