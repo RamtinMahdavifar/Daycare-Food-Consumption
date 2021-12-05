@@ -35,17 +35,14 @@ class _ViewDataPageState extends State<ViewDataPage> {
                 // to create space between elements
                 SizedBox(height: 80.0),
                 ViewDataOption("Scan QR Code", (){
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context){
-                      return ID_InputPage(InstitutionInfo(widget.institutionName, widget.institutionAddress), FoodStatus.view);
-                    }));
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(duration: const Duration(seconds: 2),content: Text(
+                      "Work in Progress ")));
                 }),
                 SizedBox(height: 80.0),
                 ViewDataOption("Select From Roster", (){
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (context){
-                        return Roster(InstitutionInfo(widget.institutionName, widget.institutionAddress));
-                      }));
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(duration: const Duration(seconds: 2),content: Text(
+                      "Work in Progress ")));
+
                 }),
                 SizedBox(height: 80.0),
                 ViewDataOption("Export Data", (){
