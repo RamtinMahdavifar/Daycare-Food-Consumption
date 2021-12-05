@@ -9,7 +9,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group("Roster Automation Tests",() {
-    testWidgets("Select an Institution test", (WidgetTester tester) async {
+    testWidgets("Select the Roster Buttons", (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
@@ -61,9 +61,9 @@ void main() {
       await tester.tap(selectButton);
       await tester.pumpAndSettle();
 
-      Config.log.i("Tap the Export Data Button");
-      await tester.tap(exportButton);
-      await tester.pumpAndSettle();
+      // Config.log.i("Tap the Export Data Button");
+      // await tester.tap(exportButton);
+      // await tester.pumpAndSettle();
       
     });
   });
