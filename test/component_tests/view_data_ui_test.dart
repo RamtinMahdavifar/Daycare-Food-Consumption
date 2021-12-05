@@ -6,7 +6,7 @@ import 'package:plate_waste_recorder/View/view_data_page.dart';
 void main() {
   group("View Data Component Tests",() {
       testWidgets('view data from institution page tests', (WidgetTester tester) async {
-        // Build our app and trigger a frame.
+        Config.log.i("Build our app and trigger a frame.");
         await tester.pumpWidget(MaterialApp(
           home: ViewDataPage("U of S", "Campus Drive"),
         ));
