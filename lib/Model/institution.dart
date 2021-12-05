@@ -149,14 +149,14 @@ class Institution {
   Map<String, dynamic> toJson() => {
     '_name': this._name,
     '_address': this._address,
-    '_subjectsMap': jsonEncode(this._subjectsMap)
+    '_subjectsMap': this._subjectsMap
   };
 
   Institution.fromJSON(Map<String, dynamic> json)
-  : _name = json["_name"].toString(), _address = json["_address"].toString(),
+      : _name = json["_name"].toString(), _address = json["_address"].toString(),
         _subjectsMap = json["_subjectsMap"]!=null ? (json["_subjectsMap"] as Map<String, dynamic>).map((key, value){
-    return MapEntry<String, SubjectInfo>(key, SubjectInfo.fromJSON(value));
-  }) : Map<String,SubjectInfo>();
+          return MapEntry<String, SubjectInfo>(key, SubjectInfo.fromJSON(value));
+        }) : Map<String,SubjectInfo>();
   // here we need to convert each value of subjects map into a SubjectInfo object
   // by converting from JSON directly to a SubjectInfo, if we do not have a _subjectsMap
   // in our JSON ie json["_subjectsMap"] is null, then no subjects are defined for

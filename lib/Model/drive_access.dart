@@ -12,6 +12,7 @@ import 'package:plate_waste_recorder/Model/string_image_converter.dart';
 import 'dart:io' as io;
 import 'package:path_provider/path_provider.dart';
 
+
 /// Class used to access google drive to write or read files, this class is defined
 /// using the singleton pattern
 class DriveAccess{
@@ -34,17 +35,6 @@ class DriveAccess{
   // access the singleton instance of this class using DriveAccess()
   factory DriveAccess(){
     return _instance;
-  }
-
-  Future<void> uploadFile() async{
-    // example
-    final Stream<List<int>> mediaStream =
-    Future.value([104, 105]).asStream().asBroadcastStream();
-    var media = new drive.Media(mediaStream, 2);
-    var driveFile = new drive.File();
-    driveFile.name = "hello_world.txt";
-    final result = await _driveAccessApi.files.create(driveFile, uploadMedia: media);
-    print("Upload result: $result");
   }
 
   void exportDataToDrive(ResearchGroupInfo currentResearchGroupInfo, InstitutionInfo currentInstitutionInfo) async {
@@ -79,17 +69,22 @@ class DriveAccess{
       // we can write a line to this spreadsheet using a list of values, create a list
       // of lists that represent the lines to be written to this spreadsheet
       List<List<String>> spreadsheetExportData = [];
+      // add a row containing headers for our data
+      spreadsheetExportData.add(["Subject ID", "Date", "Food Name", "Food Status", "Weight", "Comments"]);
       subjectDataMap.values.forEach((value){
-        // first add the subject ID to it's own line of the spreadsheet
+        // first add the subject ID to this ongoing list of data
         Map<String, dynamic> currentSubjectData = value as Map<String, dynamic>;
-        spreadsheetExportData.add(["Data For Subject ${currentSubjectData["_subjectId"].toString()}:"]);
+        // extract the current subject's id, this will be used for successive rows
+        // when we extract meal data
+        String subjectID = currentSubjectData["_subjectId"].toString();
 
         // next add data for all meals the subject has
         Map<String, dynamic> mealDataMap = currentSubjectData["_mealData"] as Map<String, dynamic>;
         if(mealDataMap == null){
           // our mealDataMap does not exist, we do not have meal data for the current subject
-          // indicate that the current subject has no meal data in our exported spreadsheet
-          spreadsheetExportData.add(["No data present for subject"]);
+          // add a row of data containing only the subject ID to indicate the subject
+          // doesn't have any other data associated with it
+          spreadsheetExportData.add([subjectID]);
         }
         else{
           // our mealDataMap does exist, we have meal data for the current subject
@@ -100,27 +95,44 @@ class DriveAccess{
             Map<String, dynamic> mealStatusMap = value as Map<String, dynamic>;
             // extract data from each of the possible meal data states in order
             if(mealStatusMap["uneaten"] != null){
-              // the current meal has an uneaten entry submitted, create a line in our spreadsheet for this data
+              // build up a row of data for the current status of the current meal
+              List<String> currentMealStatusRow = [];
+              // add the current subject id to this ongoing row
+              currentMealStatusRow.add(subjectID);
+              // the current meal has an uneaten entry submitted add this to our ongoing data
               Map<String, dynamic> mealDataForStatus = mealStatusMap["uneaten"] as Map<String, dynamic>;
-              // add the extracted data for this meal status our list of spreadsheet lines
-              spreadsheetExportData.add(_extractDataForMealStatus("uneaten", mealDataForStatus));
+              // add the extracted data for this meal status to our existing row of data
+              currentMealStatusRow.addAll(_extractDataForMealStatus("uneaten", mealDataForStatus));
+              // add our current row to our list of spreadsheet data
+              spreadsheetExportData.add(currentMealStatusRow);
             }
             if(mealStatusMap["eaten"] != null){
-              // the current meal has an uneaten entry submitted, create a line in our spreadsheet for this data
+              // build up a row of data for the current status of the current meal
+              List<String> currentMealStatusRow = [];
+              // add the current subject id to this ongoing row
+              currentMealStatusRow.add(subjectID);
+              // the current meal has an eaten entry submitted add this to our ongoing data
               Map<String, dynamic> mealDataForStatus = mealStatusMap["eaten"] as Map<String, dynamic>;
-              // add the extracted data for this meal status our list of spreadsheet lines
-              spreadsheetExportData.add(_extractDataForMealStatus("eaten", mealDataForStatus));
+              // add the extracted data for this meal status to our existing row of data
+              currentMealStatusRow.addAll(_extractDataForMealStatus("eaten", mealDataForStatus));
+              // add our current row to our list of spreadsheet data
+              spreadsheetExportData.add(currentMealStatusRow);
             }
             if(mealStatusMap["container"] != null){
-              // the current meal has an uneaten entry submitted, create a line in our spreadsheet for this data
+              // build up a row of data for the current status of the current meal
+              List<String> currentMealStatusRow = [];
+              // add the current subject id to this ongoing row
+              currentMealStatusRow.add(subjectID);
+              // the current meal has a container entry submitted add this to our ongoing data
               Map<String, dynamic> mealDataForStatus = mealStatusMap["container"] as Map<String, dynamic>;
-              // add the extracted data for this meal status our list of spreadsheet lines
-              spreadsheetExportData.add(_extractDataForMealStatus("container", mealDataForStatus));
+              // add the extracted data for this meal status to our existing row of data
+              currentMealStatusRow.addAll(_extractDataForMealStatus("container", mealDataForStatus));
+              // add our current row to our list of spreadsheet data
+              spreadsheetExportData.add(currentMealStatusRow);
             }
           });
         }
       });
-
       sheets.ValueRange sheetData = sheets.ValueRange.fromJson({
         "values": spreadsheetExportData
       });
@@ -144,7 +156,7 @@ class DriveAccess{
     newImageFile.name = imageFileName;
     newImageFile.mimeType = "image/jpeg";
     final result = await _driveAccessApi.files.create(newImageFile, uploadMedia: drive.Media(sourceImageFile.openRead(), sourceImageFile.lengthSync()));
-    print("Upload result: ${result.toJson()}");
+    Config.log.i("Upload result: ${result.toJson()}");
   }
 
   List<String> _extractDataForMealStatus(String mealStatusString, Map<String, dynamic> currentStatusMealMap){

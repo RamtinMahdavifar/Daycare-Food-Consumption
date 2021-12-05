@@ -28,7 +28,7 @@ Widget modifyButton() {
 }
 
 Widget menuButton(BuildContext context, String btnName, Widget Function() page,
-    int iconIndex) {
+    int iconIndex, {bool WIP = false}) {
   //menu button to display various options (Roster, presets, view data) under the institution page
   //PreCond:
   //          1. Requires context of current page,
@@ -48,9 +48,15 @@ Widget menuButton(BuildContext context, String btnName, Widget Function() page,
           width: 250,
           child: ElevatedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return page();
-                }));
+                if (WIP){
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(duration: const Duration(seconds: 2),content: Text(
+                      "Work in Progress")));
+                }else{
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return page();
+                  }));
+                }
+
               },
               child: Column(children: <Widget>[
                 Text(

@@ -103,24 +103,6 @@ class Meal{
   }
 
 
-  /// returns the filepath relative to the current directory that contains the meal's
-  /// image, the name of the image file specified by this filepath is composed as follows:
-  /// this._mealId + ".png"
-  /// Preconditions: None
-  /// Postconditions: returns the relative filepath to an image file containing the
-  /// meal's image as described above
-  String getBImageFilePath(){
-
-    // create a filename to export our string before image to, note that this is a before
-    // image
-    // TODO: see how meal ids work as image file names, may need something more readable
-    // TODO: may need to change image formats depending on what format phones use
-    String newImageFileName = this._mealId + ".png";
-    // convert our string before image to an image file
-    convertStringToImage(this._imageString, newImageFileName);
-    return newImageFileName;
-  }
-
   //Meal Id
   String get id{
     return this._mealId;
@@ -151,42 +133,12 @@ class Meal{
     this._comment = newComment;
   }
 
-  //****** Meal Custom methods *****
-
-  //remove a comment
-  void removeComment(){
-    // regardless of whether we have a comment or not, simply set the comment
-    // to an empty string to remove it
-    this.comment = "";
-    Config.log.i("removing comment from meal: " + this._mealId);
-  }
-
 
   MealInfo getMealInfo(){
     // ensure this object has a valid ID and name before creating this info
     assert(this._mealId.isNotEmpty);
     assert(this._mealName.isNotEmpty);
     return MealInfo(this._mealId, this._mealName, this._mealStatus);
-  }
-
-
-
-
-  // TODO: overwrite hashcode(), two equal objects should have the same hashcode
-  @override
-  bool operator ==(Object other){
-    if (other.runtimeType == this.runtimeType){
-      // if other is of type meal, compare fields of both meals
-      Meal otherMeal = other as Meal;
-      return this._mealId == otherMeal._mealId &&
-          this._imageString == otherMeal._imageString &&
-          this._mealStatus == otherMeal._mealStatus &&
-          this._mealName == otherMeal._mealName &&
-          this._mealWeight == otherMeal._mealWeight &&
-          this._comment == otherMeal._comment;
-    }
-    // other object isn't of type Meal, cannot be equal
-    return false;
   }
 
   // @override
@@ -201,7 +153,7 @@ class Meal{
   };
 
 
-  Meal.fromJSON(Map<String, dynamic> json) // TODO: watch out for empty strings or JSON fields, may cause problems
+  Meal.fromJSON(Map<String, dynamic> json)
       : _mealName = json['_mealName'].toString(),
         _mealId = json['_mealId'].toString(),
         _comment = json['_comments'].toString(),

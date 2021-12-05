@@ -1,3 +1,4 @@
+import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:test/test.dart';
 import 'package:plate_waste_recorder/Model/institution.dart';
 import 'package:plate_waste_recorder/Model/institution_info.dart';
@@ -51,11 +52,11 @@ void main(){
   group("institution json", (){
     test("to json",(){
       final Institution testInstitution = Institution("test institution", "test address", 0);
-      expect(testInstitution.toJson(), <String, dynamic>{"_name":"test institution", "_address":"test address", "_subjectsMap":"{}"});
+      expect(testInstitution.toJson(), <String, dynamic>{"_name":"test institution", "_address":"test address", "_subjectsMap":{}});
     });
 
     test("from json",(){
-      final Map<String,dynamic> testJSON = {"_name":"test institution", "_address":"test address", "_subjectsMap":"{}"};
+      final Map<String,dynamic> testJSON = {"_name":"test institution", "_address":"test address", "_subjectsMap":{}};
 
       expect(Institution.fromJSON(testJSON), Institution("test institution", "test address", 0));
     });

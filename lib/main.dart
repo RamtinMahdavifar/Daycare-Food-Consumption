@@ -1,12 +1,28 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:plate_waste_recorder/View/login_page.dart';
+import 'package:plate_waste_recorder/View/select_institution.dart';
+
 class PlateWasteApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Config.log.i("building app...");
+    Widget homePage;
+    if(kDebugMode){
+      // the app is being run in debug mode, send the user directly to the institutions
+      // select page instead of taking the user to the login page for ease of testing
+      Config.log.i("app is running in debug mode, using the institutions select page as a home page");
+      homePage = ChooseInstitute();
+    }
+    else{
+      // the app is not running in debug mode, take the user to the login page
+      // as the default home page
+      Config.log.i("app is not running in debug mode, using the login page as a home page");
+      homePage = LoginPage();
+    }
     return MaterialApp(
         title: 'Plate Waste Tracker',
         theme: ThemeData(
@@ -23,7 +39,7 @@ class PlateWasteApp extends StatelessWidget {
             caption: TextStyle(fontSize: 18.0),
           ),
         ),
-        home: LoginPage(),
+        home: homePage,
     );
   }
 }
