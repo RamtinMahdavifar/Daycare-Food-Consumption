@@ -16,7 +16,7 @@ Future<void> exportQrCode(String filePath, InstitutionInfo currentInstitution) a
   ///PostCond: QR codes are generated for all the given student ids and stored in a PDF file
 
   // read in the subjects for the input institution off the database
-  Database().getInstitutionData(currentInstitution, ResearchGroupInfo("testResearchGroup")).then((dataSnapshot) async {
+  await Database().getInstitutionData(currentInstitution, ResearchGroupInfo("testResearchGroup")).then((dataSnapshot) async {
     // generate our pdf using this data
     if(dataSnapshot.value==null){
       // we have no data for this institution
