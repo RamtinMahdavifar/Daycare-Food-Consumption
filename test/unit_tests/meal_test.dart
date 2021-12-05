@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
+import 'package:flutter/material.dart';
 import 'package:plate_waste_recorder/Model/meal_info.dart';
 import 'package:test/test.dart';
 import 'package:plate_waste_recorder/Model/meal.dart';
@@ -11,6 +11,7 @@ import 'dart:io';
 // if flutter.bat is not part of you PATH environment variable provide the absolute path
 // to flutter.bat, for example use installationdirectory\flutter\bin\flutter test test/meal_test.dart
 void main(){
+  WidgetsFlutterBinding.ensureInitialized();
   group("Meal getters and setters",(){
     test("Meal setters and getters",(){
       Meal testMeal = Meal("test meal", FoodStatus.uneaten, "testImageString", 12.05, "test comment");
