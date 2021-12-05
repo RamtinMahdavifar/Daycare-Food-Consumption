@@ -23,6 +23,22 @@ void main() {
 
       Config.log.i("Scan Student ID page header is present");
       expect(cameraFoodEatenHeader, findsOneWidget);
+
+      final subjectName = find.text("ID 123");
+      Config.log.i("Check the subject name is presented correctly");
+      expect(subjectName, findsOneWidget);
+
+      final capturePhotoBtn = find.widgetWithIcon(ElevatedButton, Icons.camera_alt);
+      Config.log.i("Check the Capture Photo Button is presented correctly");
+      expect(capturePhotoBtn, findsOneWidget);
+
+      final viewDataBtn = find.widgetWithText(ElevatedButton, "View Data");
+      Config.log.i("Check the View Data Button is presented correctly");
+      expect(viewDataBtn, findsOneWidget);
+
+      final finishBtn = find.widgetWithText(ElevatedButton, "Finish");
+      Config.log.i("Check the Finish Button is presented correctly");
+      expect(finishBtn, findsOneWidget);
     });
   });
 }
