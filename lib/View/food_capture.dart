@@ -246,7 +246,8 @@ class _FoodCaptureState extends State<FoodCapture> with
           ),
           child: Text("View Data",
               style: TextStyle(fontSize: 32, color: Colors.black)),
-          onPressed: () {},
+          onPressed: (){ScaffoldMessenger.of(context).showSnackBar(SnackBar(duration: const Duration(seconds: 2),content: Text(
+              "Work in Progress")));},
         ));
   }
 

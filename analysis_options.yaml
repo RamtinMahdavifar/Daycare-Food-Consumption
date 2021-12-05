@@ -8,6 +8,7 @@ analyzer:
     - lib/View/
     - test/
     - lib/Model/
+    - lib/Helper/
 
   errors:
     missing_required_param: warning

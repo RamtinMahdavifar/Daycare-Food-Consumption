@@ -32,7 +32,7 @@ class _RosterState extends State<Roster> {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      addNewId(context, "Add new ID ", () => QRcode("Test")),
+                      addNewId(context, "Add new ID ", () => QRcode("Test"), WIP:true),
                       SizedBox(width: 10),
                       exportToPdf(context, "Export QR to PDF ", widget.currentInstitution),
                     ]))
