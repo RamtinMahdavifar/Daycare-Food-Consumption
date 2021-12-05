@@ -145,7 +145,6 @@ class Institution {
     return this._subjectsMap[subjectID];
   }
 
-  // TODO: update JSON operations
   Map<String, dynamic> toJson() => {
     '_name': this._name,
     '_address': this._address,
@@ -163,7 +162,6 @@ class Institution {
   // this institution on our database simply create an empty subjects map
 
   // define the equality operator
-  // TODO: overwrite hashcode(), two equal objects should have the same hashcode
   @override
   bool operator ==(Object other){
     if (other.runtimeType == this.runtimeType){

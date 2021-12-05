@@ -56,7 +56,7 @@ void main(){
     });
 
     test("from json",(){
-      final Map<String,dynamic> testJSON = {"_name":"test institution", "_address":"test address", "_subjectsMap":{}};
+      final Map<String,dynamic> testJSON = {"_name":"test institution", "_address":"test address", "_subjectsMap":Map<String,dynamic>()};
 
       expect(Institution.fromJSON(testJSON), Institution("test institution", "test address", 0));
     });
