@@ -63,11 +63,9 @@ class _InstitutionPageState extends State<InstitutionPage> {
                     menuButton(
                         context,
                         "Preset",
-                        () => QR_ScanID(
-                            InstitutionInfo(widget.institutionName,
-                                widget.institutionAddress),
-                            FoodStatus.preset),
-                        0),
+                        () => Roster(InstitutionInfo(
+                            widget.institutionName, widget.institutionAddress)),
+                        0, WIP: true),
                     //idx 0: is the position of preset icon in list of icon categories
                   ],
                 )),
@@ -104,4 +102,12 @@ class _InstitutionPageState extends State<InstitutionPage> {
       )),
     );
   }
+}
+
+Widget showInSnackBar(BuildContext context, String message) {
+  return Builder(
+    builder: (context) => SnackBar(content: Text(message), duration: Duration(seconds: 2))
+  ) ;
+    SnackBar(duration: const Duration(seconds: 2),content: Text(
+      "This page is Work In "));
 }
