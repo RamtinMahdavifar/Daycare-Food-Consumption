@@ -4,13 +4,18 @@ import 'package:plate_waste_recorder/View/food_status_page.dart';
 import 'package:plate_waste_recorder/Helper/config.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
+import '../mocks/institution_info_mock.dart';
+
 void main() {
   group("Input Data Component Tests",() {
+    final InstitutionInfoMock currentInstitutionMock = InstitutionInfoMock();
+
     testWidgets('select food status tests', (WidgetTester tester) async {
-      // Build our app and trigger a frame.
+      Config.log.i("Build our app and trigger a frame.");
       await tester.pumpWidget(MaterialApp(
-        home: FoodStatusPage(),
+        home: FoodStatusPage(currentInstitutionMock),
       ));
+
       Config.log.i("Component Test - select food status tests");
       //Verify the input data page header is showing correctly
       final inputDataPageHeader = find.text('Select the food status');
@@ -31,9 +36,9 @@ void main() {
     });
 
     testWidgets('uneaten option tests', (WidgetTester tester) async {
-      // Build our app and trigger a frame.
+      Config.log.i("Build our app and trigger a frame.");
       await tester.pumpWidget(MaterialApp(
-        home: FoodStatusPage(),
+        home: FoodStatusPage(currentInstitutionMock),
       ));
       Config.log.i("Component Test - uneaten option tests");
       //Verify the input data page header is showing correctly
@@ -86,9 +91,9 @@ void main() {
     });
 
     testWidgets('eaten option tests', (WidgetTester tester) async {
-      // Build our app and trigger a frame.
+      Config.log.i("Build our app and trigger a frame.");
       await tester.pumpWidget(MaterialApp(
-        home: FoodStatusPage(),
+        home: FoodStatusPage(currentInstitutionMock),
       ));
       Config.log.i("Component Test - eaten option tests");
       //Verify the input data page header is showing correctly
@@ -141,9 +146,9 @@ void main() {
     });
 
     testWidgets('container option tests', (WidgetTester tester) async {
-      // Build our app and trigger a frame.
+      Config.log.i("Build our app and trigger a frame.");
       await tester.pumpWidget(MaterialApp(
-        home: FoodStatusPage(),
+        home: FoodStatusPage(currentInstitutionMock),
       ));
       Config.log.i("Component Test - container option tests");
       //Verify the input data page header is showing correctly
