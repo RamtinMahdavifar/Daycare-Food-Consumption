@@ -5,13 +5,13 @@ import 'package:test/test.dart';
 // run tests from the terminal using: flutter test test/researcher_info_test.dart
 // if flutter.bat is not part of you PATH environment variable provide the absolute path
 // to flutter.bat, for example use installationdirectory\flutter\bin\flutter test test/researcher_info_test.dart
-void main(){
-  group("researcher info operators",(){
-    test("toString",(){
+void main() {
+  group("researcher info operators", () {
+    test("toString", () {
       ResearcherInfo testResearcherInfo = ResearcherInfo("test researcher");
-      expect(testResearcherInfo.toString(),"test researcher");
+      expect(testResearcherInfo.toString(), "test researcher");
     });
-    test("== operator",(){
+    test("== operator", () {
       ResearcherInfo testResearcherInfo = ResearcherInfo("test researcher");
 
       // test equality vs other objects
@@ -31,17 +31,24 @@ void main(){
     });
   });
 
-  group("json operations",(){
-    test("toJSON",(){
-      final ResearcherInfo testResearcherInfo = ResearcherInfo("test researcher");
-      expect(testResearcherInfo.toJson(), <String, dynamic>{"name":"test researcher", "databaseKey":"test researcher"});
+  group("json operations", () {
+    test("toJSON", () {
+      final ResearcherInfo testResearcherInfo =
+          ResearcherInfo("test researcher");
+      expect(testResearcherInfo.toJson(), <String, dynamic>{
+        "name": "test researcher",
+        "databaseKey": "test researcher"
+      });
     });
 
-    test("fromJSON",(){
-      final Map<String,dynamic> testJSON = {"name":"test researcher", "databaseKey":"test researcher"};
+    test("fromJSON", () {
+      final Map<String, dynamic> testJSON = {
+        "name": "test researcher",
+        "databaseKey": "test researcher"
+      };
 
-      expect(ResearcherInfo.fromJSON(testJSON), ResearcherInfo("test researcher"));
+      expect(
+          ResearcherInfo.fromJSON(testJSON), ResearcherInfo("test researcher"));
     });
   });
-
 }
