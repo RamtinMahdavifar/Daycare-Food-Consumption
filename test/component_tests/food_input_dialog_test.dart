@@ -49,7 +49,7 @@ void main() {
       Config.log.i("Build our app and trigger a frame.");
       await tester.pumpWidget(MaterialApp(
         home: FoodInputDialog(
-            currentInstitutionMock, currentSubjectMock, FoodStatus.uneaten),
+            currentInstitutionMock, currentSubjectMock, FoodStatus.eaten),
       ));
 
       final foodWeightInputField = find.widgetWithText(
@@ -79,7 +79,7 @@ void main() {
       Config.log.i("Build our app and trigger a frame.");
       await tester.pumpWidget(MaterialApp(
         home: FoodInputDialog(
-            currentInstitutionMock, currentSubjectMock, FoodStatus.uneaten),
+            currentInstitutionMock, currentSubjectMock, FoodStatus.container),
       ));
 
       final foodWeightInputField = find.widgetWithText(
