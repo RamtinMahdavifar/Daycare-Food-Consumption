@@ -17,10 +17,36 @@ void main() {
       final appHeader = find.text("Plate Waste Tracker");
       expect(appHeader, findsOneWidget);
 
-      final testInstitution = find.bySemanticsLabel("test");
+      final addInstitutionButton = find.byIcon(Icons.add);
 
-      Config.log.i("Click the Institution with name test");
-      await tester.tap(testInstitution);
+      Config.log.i("Click the Add Institution Button");
+      await tester.tap(addInstitutionButton);
+      await tester.pumpAndSettle();
+
+      Config.log.i("Check the AddInstitutionForm widget is presented");
+      expect(find.byIcon(Icons.location_on_outlined), findsOneWidget);
+
+      final institutionName = find.widgetWithText(TextFormField, "name");
+      final institutionAddress = find.widgetWithText(TextFormField, "address");
+      final numberOfSubjects = find.widgetWithText(TextFormField, "# of subjects:");
+
+      Config.log.i("Fill in the form with some data");
+      await tester.enterText(institutionName, "Saskatoon");
+      await tester.enterText(numberOfSubjects, "11");
+      await tester.enterText(institutionAddress, "Campus Dr");
+      await tester.pumpAndSettle();
+
+      Config.log.i("Click submit button");
+      final submitButton = find.widgetWithText(ElevatedButton, "Submit");
+      await tester.tap(submitButton);
+      await tester.pumpAndSettle();
+
+      Config.log.i("Check Saskatoon should appear in the list view.");
+      final newCreatedInstitution = find.bySemanticsLabel("Saskatoon");
+      expect(newCreatedInstitution, findsOneWidget);
+
+      Config.log.i("Click the Saskatoon");
+      await tester.tap(newCreatedInstitution);
       await tester.pumpAndSettle();
 
       final inputDataButton = find.text("Input Data");
