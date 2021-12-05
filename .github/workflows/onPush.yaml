@@ -24,6 +24,12 @@ jobs:
       
       - name: run flutter doctor
         run: flutter doctor -v
+        
+      - name: run smoke tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          script: flutter drive --driver=test/test_driver/integration_test_driver.dart --target=test/utils/run_integration_tests.dart --no-sound-null-safety
     
       - name: run linter
         run: flutter analyze
