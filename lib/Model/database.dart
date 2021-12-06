@@ -1,8 +1,4 @@
-// import 'package:flutter/material.dart';
-import 'dart:io';
-
 import 'package:firebase_database/firebase_database.dart';
-import 'package:plate_waste_recorder/Model/authentication.dart';
 import 'package:plate_waste_recorder/Model/institution.dart';
 import 'package:plate_waste_recorder/Model/meal.dart';
 import 'package:plate_waste_recorder/Model/research_group_info.dart';
@@ -108,14 +104,7 @@ class Database {
     assert(targetSubject.databaseKey.isNotEmpty);
     // create a path to where this data would be stored on the database and see if
     // data exists for such a path
-    String dataPath = "";
-    if(kDebugMode){
-      // app is in debug mode, check a database location specific to the current app
-      // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
-      dataPath = "$currentUserID";
-    }
-    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_SUBJECTSDATALOCATION/${institutionInfo.databaseKey}/${targetSubject.databaseKey}";
+    String dataPath = "$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_SUBJECTSDATALOCATION/${institutionInfo.databaseKey}/${targetSubject.databaseKey}";
     return _dataExistsAtPath(dataPath);
   }
 
@@ -139,14 +128,7 @@ class Database {
     // ensure the input institution has a database key
     assert(currentInstitutionInfo.databaseKey.isNotEmpty);
     // path to the desired data on the database
-    String dataPath = "";
-    if(kDebugMode){
-      // app is in debug mode, check a database location specific to the current app
-      // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
-      dataPath = "$currentUserID";
-    }
-    dataPath = "$dataPath/$_RESEARCHGROUPROOTLOCATION/${currentResearchGroupInfo.databaseKey}/$_RESEARCHGROUPINSTITUTIONSLOCATION/${currentInstitutionInfo.databaseKey}";
+    String dataPath = "$_RESEARCHGROUPROOTLOCATION/${currentResearchGroupInfo.databaseKey}/$_RESEARCHGROUPINSTITUTIONSLOCATION/${currentInstitutionInfo.databaseKey}";
     // check if the input institution already exists for the input research group
     await _dataExistsAtPath(dataPath).then((dataExists){
       if(dataExists){
@@ -194,14 +176,7 @@ class Database {
 
 
     // path to the desired data on the database
-    String dataPath = "";
-    if(kDebugMode){
-      // app is in debug mode, check a database location specific to the current app
-      // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
-      dataPath = "$currentUserID";
-    }
-    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_INSTITUTIONSDATALOCATION/${currentInstitutionInfo.databaseKey}";
+    String dataPath = "$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_INSTITUTIONSDATALOCATION/${currentInstitutionInfo.databaseKey}";
     DatabaseReference institutionReference = _databaseInstance.reference().child(dataPath);
 
     Config.log.i("Writing institution: " + institution.name + " to the database");
@@ -237,14 +212,7 @@ class Database {
 
 
     // path to the desired data on the database
-    String dataPath = "";
-    if(kDebugMode){
-    // app is in debug mode, check a database location specific to the current app
-    // user instead of the normal database location
-    String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
-    dataPath = "$currentUserID";
-    }
-    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_SUBJECTSDATALOCATION/${currentInstitutionInfo.databaseKey}";
+    String dataPath = "$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_SUBJECTSDATALOCATION/${currentInstitutionInfo.databaseKey}";
     DatabaseReference institutionSubjectsReference = _databaseInstance.reference().child(dataPath);
 
     // convert the map of SubjectInfo objects from our institution to a map containing
@@ -280,14 +248,7 @@ class Database {
 
 
     // path to the desired data on the database
-    String dataPath = "";
-    if(kDebugMode){
-      // app is in debug mode, check a database location specific to the current app
-      // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
-      dataPath = "$currentUserID";
-    }
-    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_INSTITUTIONSDATALOCATION/${institutionInfo.databaseKey}";
+    String dataPath = "$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_INSTITUTIONSDATALOCATION/${institutionInfo.databaseKey}";
     DatabaseReference institutionReference = _databaseInstance.reference().child(dataPath);
     // ensure data read from this location is stored and synchronized locally
     institutionReference.keepSynced(true);
@@ -304,16 +265,7 @@ class Database {
         currentResearchGroupInfo.name);
 
     // path to the desired data on the database
-    String dataPath = "";
-    if (kDebugMode) {
-      // app is in debug mode, check a database location specific to the current app
-      // user instead of the normal database location
-      String currentUserID = Authentication()
-          .getCurrentSignedInFirebaseUser()
-          .uid;
-      dataPath = "$currentUserID";
-    }
-    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo
+    String dataPath = "$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo
         .databaseKey}/$_INSTITUTIONSDATALOCATION/${institutionInfo
         .databaseKey}";
     DatabaseReference institutionReference = _databaseInstance.reference()
@@ -338,14 +290,7 @@ class Database {
 
 
     // path to the desired data on the database
-    String dataPath = "";
-    if(kDebugMode){
-      // app is in debug mode, check a database location specific to the current app
-      // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
-      dataPath = "$currentUserID";
-    }
-    dataPath = "$dataPath/$_RESEARCHGROUPROOTLOCATION/${researchGroupInfo.databaseKey}";
+    String dataPath = "$_RESEARCHGROUPROOTLOCATION/${researchGroupInfo.databaseKey}";
     DatabaseReference researchGroupReference = _databaseInstance.reference().child(dataPath);
 
     // use onValue instead of once() to read data here as we want to read data and
@@ -372,14 +317,7 @@ class Database {
 
 
     // path to the desired data on the database
-    String dataPath = "";
-    if(kDebugMode){
-      // app is in debug mode, check a database location specific to the current app
-      // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
-      dataPath = "$currentUserID";
-    }
-    dataPath = "$dataPath/$_RESEARCHGROUPROOTLOCATION/${researchGroupInfo.databaseKey}";
+    String dataPath = "$_RESEARCHGROUPROOTLOCATION/${researchGroupInfo.databaseKey}";
     DatabaseReference researchGroupReference = _databaseInstance.reference().child(dataPath);
     // ensure data read from this location is stored and synchronized locally
     researchGroupReference.keepSynced(true);
@@ -400,14 +338,7 @@ class Database {
 
 
     // path to the desired data on the database
-    String dataPath = "";
-    if(kDebugMode){
-      // app is in debug mode, check a database location specific to the current app
-      // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
-      dataPath = "$currentUserID";
-    }
-    dataPath = "$dataPath/$_RESEARCHGROUPROOTLOCATION/${researchGroupInfo.databaseKey}";
+    String dataPath = "$_RESEARCHGROUPROOTLOCATION/${researchGroupInfo.databaseKey}";
     DatabaseReference researchGroupReference = _databaseInstance.reference().child(dataPath);
     // convert the ResearchGroup object to JSON before writing to the db, this also
     // converts fields and data structures within this object to JSON
@@ -438,14 +369,7 @@ class Database {
 
 
     // path to the desired data on the database
-    String dataPath = "";
-    if(kDebugMode){
-      // app is in debug mode, check a database location specific to the current app
-      // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
-      dataPath = "$currentUserID";
-    }
-    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_SUBJECTSDATALOCATION/${institutionInfo.databaseKey}/${currentSubjectInfo.databaseKey}";
+    String dataPath = "$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_SUBJECTSDATALOCATION/${institutionInfo.databaseKey}/${currentSubjectInfo.databaseKey}";
     DatabaseReference subjectReference = _databaseInstance.reference().child(dataPath);
 
     // convert our Subject to be added to the database to JSON
@@ -479,14 +403,7 @@ class Database {
 
 
       // path to the desired data on the database
-      String dataPath = "";
-      if(kDebugMode){
-        // app is in debug mode, check a database location specific to the current app
-        // user instead of the normal database location
-        String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
-        dataPath = "$currentUserID";
-      }
-      dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_INSTITUTIONSDATALOCATION/${institutionInfo.databaseKey}/${currentSubjectInfo.databaseKey}";
+      String dataPath = "$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_INSTITUTIONSDATALOCATION/${institutionInfo.databaseKey}/${currentSubjectInfo.databaseKey}";
       DatabaseReference institutionSubjectReference = _databaseInstance.reference().child(dataPath);
 
       // we only want to store our SubjectInfo object under the particular institution
@@ -510,14 +427,7 @@ class Database {
     assert(subjectInstitution.databaseKey.isNotEmpty);
 
     // path to the desired data on the database
-    String dataPath = "";
-    if(kDebugMode){
-      // app is in debug mode, check a database location specific to the current app
-      // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
-      dataPath = "$currentUserID";
-    }
-    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroup.databaseKey}/$_SUBJECTSDATALOCATION/${subjectInstitution.databaseKey}";
+    String dataPath = "$_RESEARCHGROUPDATALOCATION/${currentResearchGroup.databaseKey}/$_SUBJECTSDATALOCATION/${subjectInstitution.databaseKey}";
     DatabaseReference subjectDataReference = _databaseInstance.reference().child(dataPath);
 
     // ensure the data read from this location subjectDataReference is cached locally in case
@@ -539,14 +449,7 @@ class Database {
 
     Config.log.i("writing meal ${currentMealInfo.databaseKey} to the database for subject ${currentSubject.databaseKey} under institution ${subjectInstitution.databaseKey}");
     // path to the desired data on the database
-    String dataPath = "";
-    if(kDebugMode){
-      // app is in debug mode, check a database location specific to the current app
-      // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
-      dataPath = "$currentUserID";
-    }
-    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroup.databaseKey}/$_SUBJECTSDATALOCATION/${subjectInstitution.databaseKey}/${currentSubject.databaseKey}";
+    String dataPath = "$_RESEARCHGROUPDATALOCATION/${currentResearchGroup.databaseKey}/$_SUBJECTSDATALOCATION/${subjectInstitution.databaseKey}/${currentSubject.databaseKey}";
     // When we write a meal to the database, we write the mealInfo object for that meal to a
     // specific separate location than where we write the Meal object itself
     DatabaseReference subjectMealInfoReference = _databaseInstance.reference().child(dataPath).child(_SUBJECTMEALINFOLOCATION).child(currentMealInfo.databaseKey);
@@ -577,14 +480,7 @@ class Database {
     Config.log.i("reading subject meal infos with status ${targetMealStatus.toString()} for subject ${currentSubject.subjectId} "
         "under institution ${subjectInstitution.databaseKey}");
     // path to the desired data on the database
-    String dataPath = "";
-    if(kDebugMode){
-      // app is in debug mode, check a database location specific to the current app
-      // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
-      dataPath = "$currentUserID";
-    }
-    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroup.databaseKey}/$_SUBJECTSDATALOCATION/${subjectInstitution.databaseKey}/${currentSubject.databaseKey}/$_SUBJECTMEALINFOLOCATION";
+    String dataPath = "$_RESEARCHGROUPDATALOCATION/${currentResearchGroup.databaseKey}/$_SUBJECTSDATALOCATION/${subjectInstitution.databaseKey}/${currentSubject.databaseKey}/$_SUBJECTMEALINFOLOCATION";
     
     DatabaseReference subjectMealInfosReference = _databaseInstance.reference().child(dataPath);
     // from this location on the database, read in only those meal Infos who have the desired input status
@@ -595,12 +491,6 @@ class Database {
     subjectMealInfosWithDesiredStatus.keepSynced(true);
     return subjectMealInfosWithDesiredStatus.onValue;
   }
-  
-  // TODO: create method to read data as a stream etc using a query for a particular
-  // TODO: meal status ex subjectMealDataReference.orderByChild("_mealStatus").equalTo("something").
-  // TODO: consider placing values in a horizontally scrolling list view and using stream builder
-  // TODO: only write images to google drive at the point of export, need to keep track of whether images have already been
-  // TODO: uploaded however
 
   /// writes the input Meal in it's entirety to the database in a location relative to the research group
   /// specified by the input ResearchGroupInfo
@@ -618,14 +508,7 @@ class Database {
 
 
     // path to the desired data on the database
-    String dataPath = "";
-    if(kDebugMode){
-      // app is in debug mode, check a database location specific to the current app
-      // user instead of the normal database location
-      String currentUserID = Authentication().getCurrentSignedInFirebaseUser().uid;
-      dataPath = "$currentUserID";
-    }
-    dataPath = "$dataPath/$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_MEALSDATALOCATION/${currentMealInfo.databaseKey}";
+    String dataPath = "$_RESEARCHGROUPDATALOCATION/${currentResearchGroupInfo.databaseKey}/$_MEALSDATALOCATION/${currentMealInfo.databaseKey}";
     DatabaseReference mealReference = _databaseInstance.reference().child(dataPath);
 
     // convert our Meal to be added to the database to JSON

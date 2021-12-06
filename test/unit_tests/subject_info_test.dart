@@ -2,16 +2,16 @@ import 'package:plate_waste_recorder/Model/subject.dart';
 import 'package:plate_waste_recorder/Model/subject_info.dart';
 import 'package:test/test.dart';
 
-void main(){
-  group("subject info getters and setters",(){
-    test("getters", (){
+void main() {
+  group("subject info getters and setters", () {
+    test("getters", () {
       final SubjectInfo testSubjectInfo = SubjectInfo("test ID");
       expect(testSubjectInfo.subjectId, "test ID");
     });
   });
 
-  group("subject info operators",(){
-    test("== operator",(){
+  group("subject info operators", () {
+    test("== operator", () {
       final SubjectInfo testSubjectInfo = SubjectInfo("test ID");
 
       // test equality vs other objects
@@ -31,14 +31,18 @@ void main(){
     });
   });
 
-  group("json operations",(){
-    test("to json",(){
+  group("json operations", () {
+    test("to json", () {
       final SubjectInfo testSubjectInfo = SubjectInfo("test ID");
-      expect(testSubjectInfo.toJson(), <String, dynamic>{"subjectId":"test ID", "databaseKey":"test ID"});
+      expect(testSubjectInfo.toJson(),
+          <String, dynamic>{"subjectId": "test ID", "databaseKey": "test ID"});
     });
 
-    test("from json",(){
-      final Map<String,dynamic> testJSON = {"subjectId":"test ID", "databaseKey":"test ID"};
+    test("from json", () {
+      final Map<String, dynamic> testJSON = {
+        "subjectId": "test ID",
+        "databaseKey": "test ID"
+      };
 
       expect(SubjectInfo.fromJSON(testJSON), SubjectInfo("test ID"));
     });

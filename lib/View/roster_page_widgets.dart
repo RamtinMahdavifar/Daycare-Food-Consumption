@@ -29,7 +29,7 @@ import 'package:plate_waste_recorder/Model/subject_info.dart';
 ///   1. Button is displayed on the page
 ///   2. On press the button takes the user to the next page which was passed initially in arguments
 Widget RosterRecord(BuildContext context,
-    Widget Function() page, String subjectID) {
+    Widget Function() page, String subjectID, {WIP=false}) {
   assert(subjectID.isNotEmpty);
   return Container(
       margin: const EdgeInsets.all(15.0),
@@ -42,9 +42,14 @@ Widget RosterRecord(BuildContext context,
           //Remove student record button
           onPressed: () {
             Config.log.v("User clicked to remover the record for " + subjectID);
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return page();
-            }));
+            if (WIP){
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(duration: const Duration(seconds: 2),content: Text(
+                  "Work in Progress ")));
+            }else{
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return page();
+              }));
+            }
           },
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -72,9 +77,14 @@ Widget RosterRecord(BuildContext context,
           //QR code button to open QR for a particular student
           onPressed: () {
             Config.log.v("User clicked OR code button for " + subjectID);
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return page();
-            }));
+            if (WIP){
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(duration: const Duration(seconds: 2),content: Text(
+                  "Work in Progress")));
+            }else{
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return page();
+              }));
+            }
           },
           style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
@@ -94,9 +104,14 @@ Widget RosterRecord(BuildContext context,
           //Button to edit and view the student record
           onPressed: () {
             Config.log.v("User clicked edit button for " + subjectID);
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return page();
-            }));
+            if (WIP){
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(duration: const Duration(seconds: 2),content: Text(
+                  "Work in Progress")));
+            }else{
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return page();
+              }));
+            }
           },
           style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
@@ -111,7 +126,7 @@ Widget RosterRecord(BuildContext context,
       ]));
 }
 
-Widget addNewId(BuildContext context, String btnName, Widget Function() page) {
+Widget addNewId(BuildContext context, String btnName, Widget Function() page, {bool WIP=false}) {
   //Button to add new Id in the roster
   //PreCond:
   //          1. Requires context of current page,
@@ -131,9 +146,14 @@ Widget addNewId(BuildContext context, String btnName, Widget Function() page) {
               onPressed: () {
                 Config.log
                     .i("User clicked on addNewId button named: " + btnName);
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return page();
-                }));
+                if (WIP){
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(duration: const Duration(seconds: 2),content: Text(
+                      "Work in Progress")));
+                }else{
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return page();
+                  }));
+                }
               },
               child: Row(children: <Widget>[
                 Text(
@@ -299,7 +319,8 @@ Widget subjectDisplay(InstitutionInfo currentInstitutionInfo) {
                       sortedSubjectIDs.sort();
                       Config.log.i(sortedSubjectIDs);
                       List<Widget> sortedSubjectRecords = sortedSubjectIDs.map((id){
-                        return RosterRecord(context, ()=>SubjectDataPage(currentInstitutionInfo, retrievedInstitution.getInstitutionSubject(id)!), id);
+                          return RosterRecord(context, ()=>SubjectDataPage(currentInstitutionInfo, retrievedInstitution.getInstitutionSubject(id)!), id, WIP:true);
+
                       }).toList();
 
                       // display these read in subjects in a listview
