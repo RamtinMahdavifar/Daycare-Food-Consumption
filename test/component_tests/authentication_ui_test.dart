@@ -9,7 +9,7 @@ import 'package:plate_waste_recorder/Helper/config.dart';
 void main() {
   group("Component Testing - Authentication",() {
     testWidgets('login page ui test', (WidgetTester tester) async {
-      // Build our app and trigger a frame.
+      Config.log.i("Build our app and trigger a frame.");
       await tester.pumpWidget(MaterialApp(
         home: LoginPage(),
       ));
@@ -21,10 +21,6 @@ void main() {
       final pageHeader = find.text("Plate Waste Tracker");
       expect(pageHeader, findsOneWidget);
 
-      //Verify google button is present
-      // Config.log.i("Testing - google login button present on login page");
-      // final signInWithGoogle = find.byType(ElevatedButton).evaluate().contains("Sign in with Google");
-      // expect(signInWithGoogle, true);
     });
   });
 }
