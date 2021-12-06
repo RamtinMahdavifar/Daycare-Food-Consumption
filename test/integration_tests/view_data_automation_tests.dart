@@ -60,10 +60,6 @@ void main() {
       Config.log.i("Tap the Select from Roster Button");
       await tester.tap(selectButton);
       await tester.pumpAndSettle();
-
-      // Config.log.i("Tap the Export Data Button");
-      // await tester.tap(exportButton);
-      // await tester.pumpAndSettle();
       
     });
   });

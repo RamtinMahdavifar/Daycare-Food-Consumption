@@ -13,7 +13,7 @@ void main() {
 
     Config.log.i("Build our app and trigger a frame.");
     testWidgets('scan qr code ui test', (WidgetTester tester) async {
-      // Build our app and trigger a frame.
+      Config.log.i("Build our app and trigger a frame.");
       await tester.pumpWidget(MaterialApp(
           home:  QR_ScanID(currentInstitutionMock, FoodStatus.eaten )));
 
