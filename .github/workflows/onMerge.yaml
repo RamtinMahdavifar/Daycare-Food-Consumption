@@ -8,7 +8,7 @@ on:
       
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - uses: subosito/flutter-action@v1
@@ -19,6 +19,12 @@ jobs:
       
       - name: install dart dependencies
         run: dart pub get
+        
+      - name: run smoke tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          script: flutter drive --driver=test/test_driver/integration_test_driver.dart --target=test/utils/run_integration_tests.dart --no-sound-null-safety
                  
 
   build:
@@ -49,15 +55,17 @@ jobs:
         with: 
           name: coverage_results
           path: ./coverage/html/
+          retention-days: 5
           
-      - name: create artifact
+      - name: create apk
         run: flutter build apk --no-sound-null-safety
         
-      - name: upload Artifact
+      - name: upload apk
         uses: actions/upload-artifact@v2
         with: 
           name: apk
           path: ./build/app/outputs/flutter-apk
+          retention-days: 5
           
       
     
